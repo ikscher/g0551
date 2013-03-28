@@ -1,0 +1,308 @@
+{$header}
+<!--衣食住行列表页面-->
+<div id="list_box" class="wp cl">
+	<div class="z h">		         
+		<dl>    
+  		    {if isset($list_channel_title)}
+			  <dt class="{$list_channel_title}_list_channel_title"></dt>
+			{/if}
+			
+			<dd class="clist_channel_content">
+				<ul>
+				<li>
+                    {loop $categoryList $category}
+					    <p class="f2"><a {if $category['category_id']==$category_id}class="selected"{/if} href="index.php?route=product/category&category_id={$category['category_id']}">{$category['name']}</a></p>
+						{loop $category['third_category_list'] $v}
+                             <span class="list_pro"><a   {if $v['category_id']==$category_id}class="selected"{/if} href="index.php?route=product/category&category_id={$v['category_id']}">{$v['name']}</a></span>
+						{/loop}
+                    {/loop}					
+				</li>
+				</ul>
+			</dd>
+		</dl>
+		
+		<dl>
+			<dt class="clist_week_ranking f2 f_b tc">一周销售排行</dt>
+			<dd class="clist_week_ranking_con h">
+			    {loop $hot_products $k $hot}
+				<dl>
+					<dd class="cl h">
+						<div class="clist_week_ranking_con_z z h"><span class="clist_week_imgs h"><a href="index.php?route=product/product&product_id={$hot['product_id']}"><img src="{$hot['image']}"  title="{$hot['name']}"/></a></span><span class="clist_week_ranking_con_ts f_b">{php echo $k+1;}</span></div>
+						<div class="clist_week_ranking_con_y z"><span><a href="index.php?route=product/product&product_id={$hot['product_id']}">{$hot['shortname']}</a></span><span class="f3 f_dh">¥{$hot['price']}</span></div>
+					    <div class="cl_div"></div>
+					</dd>
+				</dl>
+				{/loop}
+			</dd>
+		</dl>
+		
+		<dl>
+			<dt class="clist_week_ranking f2 f_b tc">为你挑选</dt>
+			<dd class="clist_week_ranking_conf">
+				<ul>
+				    {loop $foryou_products $foryou}
+					<dd class="cl h">
+						<div class="clist_week_ranking_con_zw clist_week_imgs z h"><a href="index.php?route=product/product&product_id={$foryou['product_id']}"><img src="{$foryou['image']}" title="{$foryou['name']}" /></a></div>
+						<div class="clist_week_ranking_con_y z"><span><a href="index.php?route=product/product&product_id={$foryou['product_id']}">{$foryou['shortname']}</a></span><span class="f3 f_dh">¥{$foryou['price']}</span></div>
+					<div class="cl_div"></div>
+					</dd>
+					{/loop}
+				</ul>
+			</dd>
+		</dl>
+      
+	</div>
+	
+    
+	<div id="list_y" class="z h">
+        <!--属性搜索条件列表begin-->    
+		<dl><a ><img name="" src="catalog/view/theme/default/image/clad1.gif" width="1000" height="100" alt="" /></a></dl>
+		<dl class="clist_content_classify">
+			{if !empty($searchCondition)}
+				{loop $searchCondition $k $s}
+					{if count($s)>=1}
+						<dd class="cl">
+							<div class="clist_calssify_z z f2">{$k}：</div>
+							<div class="clist_calssify_y z h">
+								<ul>
+								{loop $s $key $v}
+								    {php $aname=explode('|',$v);}
+									{if preg_match('/catalog\/view\/theme\/default\/image\/ico/',$aname[2])}<!--颜色-->
+										<li class="{if in_array($key,$attid)}selected{else}color{/if} h "><a href="javascript:void(0);" data-id="{$key}" data-type="{$aname[0]}" title="{$aname[1]}"  ><img src="{$aname[2]}"  /></a></li>
+									{else}
+										<li><a {if in_array($key,$attid)}class="selected"{/if} href="javascript:void(0);" data-id="{$key}" data-type="{$aname[0]}">{$aname[1]}</a></li>
+									{/if}
+								{/loop}
+								</ul>
+							</div>
+							<div class="cl_div"></div>
+							
+						</dd>
+					{/if}
+				{/loop}
+			{/if}
+		</dl>
+        <!--属性搜索条件列表end-->   
+        
+        <div class="clist_calssify_explore"></div>
+		
+        <!--产品列表开始-->
+		<dl class="clist_pro">
+			<dt class="dt_{if isset($list_channel_title)}{$list_channel_title}{/if}">
+				<ul>
+				    <li  data-id="default" {if $sort=='default'} class="selected"{/if} >默认{if $sort=='default' && $order=='desc'}<img src="catalog/view/theme/default/image/down.png" />{elseif $sort=='default' && $order=='asc' }<img  src="catalog/view/theme/default/image/up.png">{/if}</li>
+				    <li  data-id="viewed"  {if $sort=='viewed'} class="selected"{/if}>人气{if $sort=='viewed' && $order=='desc'}<img src="catalog/view/theme/default/image/down.png">{elseif $sort=='viewed' && $order=='asc' }<img src="catalog/view/theme/default/image/up.png">{/if}</li>
+					<!-- <li {if $sort=='salenum'} class="selected"{/if}>销量 {if $order=='asc'}↓{elseif $order=='desc' }↑{/if}</li> -->
+					<li  data-id="price"   {if $sort=='price'} class="selected"{/if}>价格{if $sort=='price' && $order=='desc'}<img src="catalog/view/theme/default/image/down.png">{elseif $sort=='price' && $order=='asc' }<img src="catalog/view/theme/default/image/up.png">{/if}</li>
+					<!-- <li>价格 ↓ </li> -->
+					<!-- <li>好评 ↓ </li> -->
+					<li  data-id="latest"  {if $sort=='latest'} class="selected"{/if}>最新{if $sort=='latest' && $order=='desc'}<img src="catalog/view/theme/default/image/down.png">{elseif $sort=='latest' && $order=='asc' }<img src="catalog/view/theme/default/image/up.png">{/if}</li>
+					<!-- <li>促销商品</li>	 -->
+					<!-- <a href="index.php?route=product/category&category_id={$category_id}&sort=sort_order&order=asc" ><li {php if($sort == 'sort_order') echo 'class="fist_tab"';} >默认 ↓ </li></a>
+					<a href="index.php?route=product/category&category_id={$category_id}&sort=price&order=asc" ><li {php if($sort == 'price' && $order == 'asc') echo 'class="fist_tab"';} >价格 ↑ </li></a>
+					<a href="index.php?route=product/category&category_id={$category_id}&sort=price&order=desc" ><li {php if($sort == 'price' && $order == 'desc') echo 'class="fist_tab"';} >价格 ↓ </li></a>
+					<a href="index.php?route=product/category&category_id={$category_id}&sort=points&order=asc" ><li {php if($sort == 'points') echo 'class="fist_tab"';} >销量 ↓ </li></a> -->
+					<!--
+					<li>好评 ↓ </li>
+					<li>最新 ↓ </li>
+					<li>促销商品</li>
+					-->	
+				</ul>
+			</dt>
+			<dd class="clist_pro_box h z" >				
+                <ul>
+                {loop $products  $product}
+                    <li><p><a href="index.php?route=product/product&product_id={$product['product_id']}" target="_blank" title="{$product['name']}"><img src="{$product['image']}" width="180" height="180" alt="clothes_pro" /></a></p><p><a href="#" class="f3n">{$product['shortname']}</a></p><p><a href="index.php?route=product/product&product_id={$product['product_id']}" target="_blank" class="f2 f_h">¥{$product['price']}</a></p></li>
+                {/loop}
+                </ul>
+			</dd>
+			<div class="pagination">{$pagination}</div>
+			
+		</dl>
+		<!--产品列表结束-->
+		
+	</div>
+</div>
+
+<!--一周热销产品begin-->
+<div id="list_box_hot" class="wp cl">
+	<div class="list_box_hot">
+		<dl>
+			<dt><img  src="catalog/view/theme/default/image/hot_list.gif" width="104" height="28" /></dt>
+			<dd>
+				<ul>
+				    {loop $recommend_products $recommend}
+				        <li><p><a href="index.php?route=product/product&product_id={$recommend['product_id']}"><img src="{$recommend['image']}" width="180" height="180" title="{$recommend['name']}" /></a></p><p><a href="index.php?route=product/product&product_id={$recommend['product_id']}" class="f3n">{$recommend['shortname']}</a></p><p><span class="f2 f_h">¥{$recommend['price']}</span></p></li>
+				    {/loop}
+				</ul>
+			</dd>
+		</dl>
+	</div>
+</div>
+<!--一周热销产品end-->
+
+<script type="text/javascript">
+    $(".clist_calssify_explore").click(function(){
+        
+        if($(".clist_content_classify").css('display')=='none'){//收缩
+	        $(".clist_content_classify").slideDown('slow');
+			$(this).css({'background':'url(catalog/view/theme/default/image/toggle_bg.gif) no-repeat 0 -80px'});
+        }else{ //展开
+		    $(".clist_content_classify").slideUp('slow');
+			//$(".clist_content_classify").before('<div id="splitline" style="width:998px;border:1px solid #DBDBDB;"></div>');
+			//$(this).css({'border-top':'1px solid #DBDBDB'});
+			$(this).css({'background':'url(catalog/view/theme/default/image/toggle_bg.gif) no-repeat 0 0'});
+		}
+    });
+   
+    $(".clist_pro dt ul li").hover(function(){
+        //$(this).css({'border-left':'1px solid #DA2061','border-top':'1px solid #DA2061','border-right':'1px solid #DA2061'});
+		
+    },function(){
+        //$(this).css({'border-left':'1px solid #CFCFCF','border-top':'1px solid #CFCFCF','border-right':'1px solid #CFCFCF'});
+
+    });
+	
+	$(".clist_pro dd.clist_pro_box ul li").hover(function(){
+        $(this).css({'border':'1px solid #DA2061'});
+    },function(){
+        $(this).css({'border':'1px solid #dbdbdb'});
+    });
+	
+	
+	//排序
+	var orderClass={
+	        init:function(){
+			    var query=location.search;
+				if(query.search(/sort=\w*/i)==-1 && query.search(/order=\w*/i)==-1){
+					$(".clist_pro dt ul li:eq(0) ").addClass('selected');
+					$(".clist_pro dt ul li:eq(0)  ").append("<img src='catalog/view/theme/default/image/down.png' />");
+				}
+			}
+    };
+	
+	$(document).ready(function(){
+	    orderClass.init();
+	});
+	
+   
+    $(".clist_content_classify ul li a").click(function(){
+        var attribute_id=$(this).attr('data-id');
+		var attribute_type=$(this).attr('data-type');
+		//var attribute_type=attribute_type%10;
+		var url='';
+	   
+		var query=location.search;
+        var pairs=query.split('&');
+		var pattern=new RegExp('(a_id'+attribute_type+'=)','gi');
+		if(query.search(pattern)==-1){
+            var url='index.php'+query+'&a_id'+attribute_type+'='+attribute_id;
+		}else{
+		    for(var i=0;i<pairs.length;i++){
+			    var pos=pairs[i].indexOf('=');
+			    if(pos==-1) continue;
+				var name=pairs[i].substring(0,pos);
+				var value=pairs[i].substring(pos+1);
+				if(name=='a_id'+attribute_type){
+		            if(value==attribute_id){ //点击重复的条件，取消条件 
+					    var pn=new RegExp('&'+name+'='+value,'i');
+						var q=query.replace(pn,'');
+						var url='index.php'+q;
+					}else{   //点击同组其他条件选项
+						var pn=new RegExp(name+'='+value,'i');
+						var q=query.replace(pn,name+'='+attribute_id);
+						var url='index.php'+q;
+					}
+					break;
+				}
+			}
+		}
+		
+		url=url.replace(/page=\d*/gi,'page=1'); //指向第一页
+		window.location.href=url;
+    });
+    
+	
+	
+			
+	//点击标签排序
+	$(".clist_pro dt ul li").click(function(){
+		var url;
+		/* dt1ta=$(this).parent().children("li");
+		var index=$.inArray(this,dt1ta);	
+		dt1ta.removeClass("fist_tab").eq(index).addClass("fist_tab"); */
+
+		var query=location.search;
+		//query=query.substr(1);url重写后需要的
+		query="index.php"+query;
+		if($(this).prop('class')=='selected'){
+			
+			var sort=$(this).attr('data-id');
+			if(query.search(/sort=\w*/i)!=-1){
+				query=query.replace(/sort=\w*/i,'sort='+sort);
+			}else{
+				query=query+'&sort='+sort;
+			}
+			
+			if($(this).has('img').length>0 && $(this).children('img').attr('src').search(/down/i)!=-1){//降序点击
+				if(query.search(/order=\w*/i)!=-1){
+					url=query.replace(/order=\w*/i,'order=asc');
+				}else{
+					url=query+'&order=asc';
+				}
+				
+				$(this).children('img').remove();
+				$(this).append("<img src='catalog/view/theme/default/image/up.png' />");
+			}else {  //($(this).children('a').has('img').length>0 && $(this).children('a').children('img').attr('src').search(/up/i)!=-1)升序点击
+				if(query.search(/order=\w*/i)!=-1){
+					url=query.replace(/order=\w*/i,'order=desc');
+				}else{
+					url=query+'&order=desc';
+				}
+				
+		
+				$(".clist_pro dt ul li").children('img').remove();
+				$(this).append("<img src='catalog/view/theme/default/image/down.png' />");
+			}
+			
+			
+		}else{
+			$(".clist_pro dt ul li").removeClass('selected');
+			$(this).addClass('selected');
+			
+			$(".clist_pro dt ul li").children('img').remove();
+			
+			
+			var sort=$(this).attr('data-id');
+			
+			if(query.search(/sort=\w*/i)!=-1){
+				query=query.replace(/sort=\w*/i,'sort='+sort);
+			}else{
+				query=query+'&sort='+sort;
+			}
+			if(query.search(/order=\w*/i)!=-1){
+				url=query.replace(/order=\w*/i,'order=desc');
+			}else{
+				url=query+'&order=desc';
+			}
+			//url='index.php?route=store/list'+'&sort='+sort+'&order=desc';
+			$(this).append("<img src='catalog/view/theme/default/image/down.png' />");
+		}
+		location.href=url;
+		
+		
+	});	
+	
+	
+	$(".clist_calssify_more_btn1").live("click",function(){
+		$(".clist_calssify_more_btn1").html("收起");
+		$(this).removeClass("clist_calssify_more_btn1").addClass("clist_calssify_more_btn2");		
+		$(".other_classify").show(100);
+	});
+	$(".clist_calssify_more_btn2").live("click",function(){
+		$(".clist_calssify_more_btn2").html("展开");
+		$(this).removeClass("clist_calssify_more_btn2").addClass("clist_calssify_more_btn1");		
+		$(".other_classify").hide(100);
+	});
+</script>
+{$footer}

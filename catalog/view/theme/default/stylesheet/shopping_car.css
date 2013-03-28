@@ -1,0 +1,138 @@
+/**购物车**/
+.menu {height:34px;overflow:hidden;}
+.mainContent{width:980px;margin:10px auto 15px auto;}
+
+.buyPhoto{margin:0 auto 10px auto;}
+
+.buyTitle{border-bottom:1px dashed #CCCCCC;padding-top:5px;}
+.successContent{width:820px;margin:auto;padding-top:15px;}
+.successContent div.pay_success{color:#D81257;padding-bottom:15px;font-weight:bold;}
+.successContent h2{font-weight:bold;padding-left:15px;}
+.successContent a{font-weight:bold;color:#D81257;}
+.successContent a:hover{color:#333333;}
+.successContent dl{border-bottom:1px dashed #CCCCCC;margin-bottom:15px;padding:5px 15px 15px 15px;}
+.successContent dt{float:left;width:360px;}
+.successContent dd{float:right;text-align:right;}
+.successContent dd a{padding-left:200px;}
+.successExplain{border-top:1px dashed #CCCCCC;padding-top:15px;padding-bottom:10px;}
+.successExplain span{font-weight:bold;color:#D81257;}
+.successExplain div.container{width:850px;margin:auto;}
+
+.orderDetail{border:1px solid #C8C8C8;margin-top:15px;color:#000000;}
+.orderDetail dt{background:#E6E6E6;color:#333333;font-weight:bold;height:30px;line-height:30px;text-indent:130px;}
+.orderDetail dd{margin-left:160px;line-height:180%;padding-bottom:20px;padding-top:5px;}
+
+.buyContent .clearfix{padding-top:12px;width:100%;}
+.buyContent .clearfix  td{text-align:center;line-height:30px;}
+.buyContent.clearfix  td.photo{width:12%;}
+.buyContent .clearfix  td.productName{width:48%;}
+.buyContent .clearfix  td.quantity{width:10%;}
+.buyContent .clearfix  td.price{width:12%;}
+.buyContent .clearfix  td.total{width:12%;}
+.buyContent .clearfix  td.operator{width:12%;}
+.buyContent .clearfix  tbody tr td  input{height:25px;}
+span.subadd{padding:1px;height:3px;width:3px;border:1px solid #fcd;margin-left:5px;margin-right:5px;}
+.buyContent  thead{background:#F0F0F0;font-weight:bold;}
+/* .buyContent  tbody tr{padding-left:20px;padding-top:5px;padding-bottom:5px;line-height:50px;}  */
+.buyContent div.containue{text-align:right;border-top:1px dashed #E0E0E0;padding-top:10px;margin-top:10px;clear:both;}
+.buyContent div.containue a{margin-right:15px;}
+
+
+
+
+/* .buycart{width:960px; height:40px; border:#fc0 1px solid; line-height:40px; padding-left:20px; background-color:#FFFFCC; color:#f60;}
+.buycart img{margin-top:10px;} */
+
+.bottonLine{border-bottom:1px dashed #CCCCCC;padding-bottom:10px;}
+.paybutton{text-align:right;width:980px;margin:auto;}
+.paybutton ul{margin-left:800px;padding-top:10px;}
+.paybutton ul li{text-align:left;line-height:180%;font-weight:bold;}
+
+.sendAddress {width:98%;margin:10px auto 10px auto;}
+.sendAddress span.mobile{color:#808080;padding-left:10px;padding-right:10px;}
+.sendAddress dl{padding:7px 0 7px 0;border:1px solid #FFFFFF;height:25px;}
+.sendAddress dl.present{font-weight:bold;border:1px solid #FFE5CC;background:url(../image/order/sendIcon.jpg) no-repeat left center #FFF5CC;}
+.sendAddress dt{float:left;width:100px;text-align:right;}
+.sendAddress dt input{margin-right:10px;}
+.sendAddress dd{float:left;}
+.sendAddress div.new{width:746px;margin:auto;}
+.sendInfo{width:746px;margin:10px  auto;overflow:hidden;}
+.sendInfo div.title{clear:both;color:#8E0C3A;padding-top:10px;padding-bottom:5px;background-color:#FFFAE5;width:300px;font-weight:bold}
+.sendInfo dl{padding-top:5px;padding-bottom:5px;height:20px;}
+.sendInfo dt{width:70px;float:left;}
+.sendInfo dd{float:left;}
+.sendInfo .opaddr{margin-top:10px;}
+
+.paymentContent dl{width:746px;margin:15px auto 20px auto;}
+.paymentContent dt{height:28px;line-height:28px;}
+.paymentContent dt span{font-weight:bold;color:#8E0C3A;}
+.paymentContent dd{padding:5px 0 5px 10px;border:1px solid #FFFFFF;}
+.paymentContent dd input{margin-right:5px;}
+.paymentContent dd div.container{width:95%;margin:auto;padding-top:10px;color:#333333;}
+.paymentContent dd.shipping{border:1px solid #E2E2E2;background:#F0F0F0;}
+.paybutton div.moneyinfo{margin-left:785px;padding-top:10px;padding-bottom:10px;line-height:180%;height:90px;}
+.paybutton div.moneyinfo dt{float:left;width:100px;text-align:right;}
+.paybutton div.moneyinfo dd{float:left;width:60px;font-weight:bold;color:#D81257;}
+.paybutton div.remainder{border-top:1px dashed #CCCCCC;color:#333333;padding-bottom:10px;padding-top:10px;}
+.paybutton div.remainder span{color:#D81257;padding-right:10px;}
+
+.storeTitle{border-bottom:1px dashed #CCCCCC;padding-top:5px;height:40px;line-height:40px;text-indent:10px;}
+.order_store{margin-top:20px;border-spacing:1px;margin-bottom:10px;}
+.order_store td.tableTitle{font-size:14px;font-weight:bold;color:#333333;}
+.order_store table td{height:28px;line-height:27px;border-bottom:1px solid #DFDFDF;}
+.storeRemark{height:36px;line-height:36px;}
+.order_store_price{height:26px;line-height:26px;background-color:#F6F6F6;text-align:right;}
+.order_store_price span.pinkfont{margin-right:30px;}
+.orderStoreList td{height:26px;line-height:26px;}
+.orderStoreList td.title{color:#D81257;font-weight:bold;}
+
+.coupon_bor{ height:100px; border:#e1e1e1 1px solid; line-height:30px; padding-left:20px; margin-top:10px;}
+.coupon_bor ul{margin-top:10px;}
+.coupon_bor ul li{padding-top:5px;}
+
+.cart-module .content{
+    padding: 10px;
+    overflow: auto;
+    margin-bottom: 20px;
+	margin-top:20px;
+    border: 1px solid #e1e1e1;
+}
+.cart-module > div { display:none;}
+
+.shoppingAndcheckout{margin-top:20px;}
+
+/* button */
+a.button, input.button {
+	cursor: pointer;
+	color: #FFFFFF;
+	line-height: 12px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	background: url('../image/order/button.png') top left repeat-x;
+	-webkit-border-radius: 7px 7px 7px 7px;
+	-moz-border-radius: 7px 7px 7px 7px;
+	-khtml-border-radius: 7px 7px 7px 7px;
+	border-radius: 7px 7px 7px 7px;
+	-webkit-box-shadow: 0px 2px 2px #DDDDDD;
+	-moz-box-shadow: 0px 2px 2px #DDDDDD;
+	box-shadow: 0px 2px 2px #DDDDDD;
+}
+a.button {
+	display: inline-block;
+	text-decoration: none;
+	padding: 6px 12px 6px 12px;
+}
+input.button {
+	margin: 0;
+	border: 0;
+	height: 24px;
+	padding: 0px 12px 0px 12px;
+}
+a.button:hover, input.button:hover {
+	background: url('../image/order/button-active.png') repeat-x;
+}
+.cart-module > div {
+	display: none;
+}
+

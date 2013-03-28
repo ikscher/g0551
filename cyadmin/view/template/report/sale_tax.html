@@ -1,0 +1,108 @@
+<link rel="stylesheet" type="text/css" href="view/stylesheet/general.css">
+<link rel="stylesheet" type="text/css" href="view/stylesheet/main.css">
+<script type="text/javascript" src="view/javascript/jquery/jquery-1.7.1.min.js"></script><!--这里只能用1.7.1的版本,否则自带的图片处理有问题-->
+<script type="text/javascript" src="view/javascript/jquery/ui/jquery-ui-1.8.16.custom.min.js"></script>
+<link type="text/css" href="view/javascript/jquery/ui/themes/ui-lightness/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
+     
+	<h1><img src="view/image/report.png" alt="" /> {$heading_title}</h1>
+
+    <div class="list-div" id="listDiv">
+      <table class="form">
+        <tr>
+          <td>{$entry_date_start}
+            <input type="text" name="filter_date_start" value="{$filter_date_start}" id="date-start" size="12" /></td>
+          <td>{$entry_date_end}
+            <input type="text" name="filter_date_end" value="{$filter_date_end}" id="date-end" size="12" /></td>
+          <td>{$entry_group}
+            <select name="filter_group">
+              {loop $groups   $groups}
+              {if $groups['value'] == $filter_group}
+              <option value="{$groups['value']}" selected="selected">{$groups['text']}</option>
+               {else}
+              <option value="{$groups['value']}">{$groups['text']}</option>
+              {/if}
+              {/loop}
+            </select></td>
+          <td>{$entry_status}
+            <select name="filter_order_status_id">
+              <option value="0">{$text_all_status}</option>
+              {loop $order_statuses   $order_status}
+              {if $order_status['order_status_id'] == $filter_order_status_id}
+              <option value="{$order_status['order_status_id']}" selected="selected">{$order_status['name']}</option>
+               {else}
+              <option value="{$order_status['order_status_id']}">{$order_status['name']}</option>
+              {/if}
+              {/loop}
+            </select></td>
+          <td style="text-align: right;"><a onclick="filter();" class="button">{$button_filter}</a></td>
+        </tr>
+      </table>
+      <table class="list">
+        <thead>
+          <tr>
+            <td class="left">{$column_date_start}</td>
+            <td class="left">{$column_date_end}</td>
+            <td class="left">{$column_title}</td>
+            <td class="right">{$column_orders}</td>
+            <td class="right">{$column_total}</td>
+          </tr>
+        </thead>
+        <tbody>
+          {if $orders}
+          {loop $orders   $order}
+          <tr>
+            <td class="left">{$order['date_start']}</td>
+            <td class="left">{$order['date_end']}</td>
+            <td class="left">{$order['title']}</td>
+            <td class="right">{$order['orders']}</td>
+            <td class="right">{$order['total']}</td>
+          </tr>
+          {/loop}
+           {else}
+          <tr>
+            <td class="center" colspan="5">{$text_no_results}</td>
+          </tr>
+        {/if}
+        </tbody>
+      </table>
+      <div class="pagination">{$pagination}</div>
+    </div>
+
+<script type="text/javascript"><!--
+function filter() {
+	url = 'index.php?route=report/sale_tax&token={$token}';
+	
+	var filter_date_start = $('input[name=\'filter_date_start\']').attr('value');
+	
+	if (filter_date_start) {
+		url += '&filter_date_start=' + encodeURIComponent(filter_date_start);
+	}
+
+	var filter_date_end = $('input[name=\'filter_date_end\']').attr('value');
+	
+	if (filter_date_end) {
+		url += '&filter_date_end=' + encodeURIComponent(filter_date_end);
+	}
+		
+	var filter_group = $('select[name=\'filter_group\']').attr('value');
+	
+	if (filter_group) {
+		url += '&filter_group=' + encodeURIComponent(filter_group);
+	}
+	
+	var filter_order_status_id = $('select[name=\'filter_order_status_id\']').attr('value');
+	
+	if (filter_order_status_id != 0) {
+		url += '&filter_order_status_id=' + encodeURIComponent(filter_order_status_id);
+	}	
+
+	location = url;
+}
+//--></script> 
+<script type="text/javascript"><!--
+$(document).ready(function() {
+	$('#date-start').datepicker({dateFormat: 'yy-mm-dd'});
+	
+	$('#date-end').datepicker({dateFormat: 'yy-mm-dd'});
+});
+//--></script> 

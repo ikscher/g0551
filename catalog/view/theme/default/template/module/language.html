@@ -1,0 +1,11 @@
+{if count($languages) > 1}
+<form action="{$action}" method="post" enctype="multipart/form-data">
+  <div id="language">{$text_language}<br />
+    {loop $languages   $language}
+    <img src="image/flags/{$language['image']}" alt="{$language['name']}" title="{$language['name']}" onclick="$('input[name=\'language_code\']').attr('value', '{$language['code']}'); $(this).parent().parent().submit();" />
+    {/loop}
+    <input type="hidden" name="language_code" value="" />
+    <input type="hidden" name="redirect" value="{$redirect}" />
+  </div>
+</form>
+{/if}

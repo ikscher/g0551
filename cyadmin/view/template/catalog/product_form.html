@@ -1,0 +1,1443 @@
+<link rel="stylesheet" type="text/css" href="view/stylesheet/general.css">
+<link rel="stylesheet" type="text/css" href="view/stylesheet/main.css">
+
+<script type="text/javascript" src="view/javascript/jquery/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="view/javascript/jquery/ui/jquery-ui-1.8.16.custom.min.js"></script>
+<link type="text/css" href="view/javascript/jquery/ui/themes/ui-lightness/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
+<script type="text/javascript" src="view/javascript/jquery/tabs.js"></script> 
+
+<style>
+.ui-autocomplete {
+    max-height: 200px;
+    overflow-y: auto;
+    <!-- /* prevent horizontal scrollbar */ -->
+    overflow-x: hidden;
+   <!--  /* add padding to account for vertical scrollbar */ -->
+    padding-right: 20px;
+}
+<!-- /* IE 6 doesn't support max-height
+ * we use height instead, but this forces the menu to always be this tall
+ */ -->
+ html .ui-autocomplete {
+    height: 200px;
+}
+
+
+</style>
+
+	
+	
+    <h1><img src="view/image/product.png" alt="" /> {$heading_title}
+        <span class="action-span">
+	      <a href="javascript:;"  onclick="$('#form').submit();" >{$button_save}</a>
+	      <a href="{$refresh}">{$button_refresh}</a>
+		  <a href="{$cancel}">{$button_cancel}</a>
+	    </span>
+    </h1>
+   {if $error_warning}
+      <div class="warning">{$error_warning}</div>
+   {/if}
+   {if $success}
+      <div class="success">{$success}</div>
+   {/if} 
+    <div class="list-div" id="listDiv">
+      <div id="tabs" class="htabs">
+	       <a href="#tab-general">{$tab_general}</a>
+		   <a href="#tab-data">{$tab_data}</a>
+		   <a href="#tab-links">{$tab_links}</a>
+		   <!-- <a href="#tab-attribute">{$tab_attribute}</a> -->
+		   <a href="#tab-option">{$tab_attribute}{$tab_option}</a>
+		   <a href="#tab-discount">{$tab_discount}</a>
+		   <a href="#tab-special">{$tab_special}</a>
+		   <a href="#tab-image">{$tab_image}</a>
+		   <a href="#tab-reward">{$tab_reward}</a>
+		   <!-- <a href="#tab-design">{$tab_design}</a> -->
+	  </div>
+      <form action="{$action}" method="post" enctype="multipart/form-data" id="form">
+	     
+		<!--编辑项目-->
+        <div id="tab-general">
+            <table class="form">
+			
+              <tr>
+                <td><span class="required">*</span> {$entry_name}</td>
+                <td><input type="text" name="product_description[name]" size="100" value="{if isset($product_description['name'])}{$product_description['name']}{/if}" />
+                  <!-- {if isset($error_name)}
+                  <span class="error">{php echo $error_name}</span>
+                  {/if}</td> -->
+              </tr>
+              <tr>
+                <td>{$entry_meta_description}</td>
+                <td><textarea name="product_description[meta_description]" cols="40" rows="5">{if isset($product_description['meta_description'])} {$product_description['meta_description']} {/if}</textarea></td>
+              </tr>
+              <tr>
+                <td>{$entry_meta_keyword}</td>
+                <td><textarea name="product_description[meta_keyword]" cols="40" rows="5">{if isset($product_description['meta_keyword'])} {$product_description['meta_keyword']} {/if}</textarea></td>
+              </tr>
+              <tr>
+                <td>{$entry_description}</td>
+                <td><textarea name="product_description[description]" cols="140" rows="10"  id="descriptions">{if isset($product_description['description'])} {$product_description['description']} {/if}</textarea></td>
+              </tr>
+              <tr>
+                <td>{$entry_tag}</td>
+                <td><input type="text" name="product_description[tag]" value="{if isset($product_description['tag'])} {$product_description['tag']} {/if}" size="80" /></td>
+              </tr>
+            </table>
+         </div>
+      
+        <!--基本信息-->
+        <div id="tab-data">
+          <table class="form">
+            <tr>
+              <td><span class="required">*</span> {$entry_model}</td>
+              <td><input type="text" name="model" value="{$model}" />
+                {if $error_model}
+                <span class="error">{$error_model}</span>
+                {/if}</td>
+            </tr>
+            <tr>
+              <td>{$entry_sku}</td>
+              <td><input type="text" name="sku" value="{$sku}" /></td>
+            </tr>
+            <tr>
+              <td>{$entry_upc}</td>
+              <td><input type="text" name="upc" value="{$upc}" /></td>
+            </tr>
+           
+            <tr>
+              <td>{$entry_location}</td>
+              <td><input type="text" name="location" value="{$location}" /></td>
+            </tr>
+            <tr>
+              <td>{$entry_price}</td>
+              <td><input type="text" name="price" value="{$price}" /></td>
+            </tr>
+			
+			
+    
+            <tr>
+              <td>{$entry_quantity}</td>
+              <td><input type="text" name="quantity" value="{$quantity}"  /></td>
+            </tr>
+            <tr>
+              <td>{$entry_minimum}</td>
+              <td><input type="text" name="minimum" value="{$minimum}" /></td>
+            </tr>
+            <tr>
+              <td>{$entry_subtract}</td>
+              <td><select name="subtract">
+                  {if $subtract}
+                  <option value="1" selected="selected">{$text_yes}</option>
+                  <option value="0">{$text_no}</option>
+                   {else}
+                  <option value="1">{$text_yes}</option>
+                  <option value="0" selected="selected">{$text_no}</option>
+                  {/if}
+                </select></td>
+            </tr>
+            <tr>
+              <td>{$entry_stock_status}</td>
+              <td><select name="stock_status_id">
+                  {loop $stock_statuses   $stock_status}
+                  {if $stock_status['stock_status_id'] == $stock_status_id}
+                  <option value="{$stock_status['stock_status_id']}" selected="selected">{$stock_status['name']}</option>
+                   {else}
+                  <option value="{$stock_status['stock_status_id']}">{$stock_status['name']}</option>
+                 {/if}
+                  {/loop}
+                </select></td>
+            </tr>
+            <tr>
+              <td>{$entry_shipping}</td>
+              <td>{if $shipping}
+                <input type="radio" name="shipping" value="1" checked="checked" />
+                {$text_yes}
+                <input type="radio" name="shipping" value="0" />
+                {$text_no}
+                 {else}
+                <input type="radio" name="shipping" value="1" />
+                {$text_yes}
+                <input type="radio" name="shipping" value="0" checked="checked" />
+                {$text_no}
+                {/if}</td>
+            </tr>
+            <tr>
+              <td>{$entry_keyword}</td>
+              <td><input type="text" name="keyword" value="{$keyword}" /></td>
+            </tr>
+            <tr>
+              <td>{$entry_image}</td>
+              <td><div class="image"><img src="{$thumb}" alt="" id="thumb" /><br />
+                  <input type="hidden" name="image" value="{$image}" id="image" />
+                  <a href="javascript:;" onclick="image_upload('image', 'thumb');">{$text_browse}</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a  href="javascript:;" onclick="$('#thumb').attr('src', '{$no_image}'); $('#image').attr('value', '');">{$text_clear}</a></div></td>
+            </tr>
+            <tr>
+              <td>{$entry_date_available}</td>
+              <td><input type="text" name="date_available" value="{$date_available}" size="12" class="date" /></td>
+            </tr>
+            <tr>
+              <td>{$entry_dimension}</td>
+              <td><input type="text" name="length" value="{$length}" size="10" />
+                <input type="text" name="width" value="{$width}" size="10" />
+                <input type="text" name="height" value="{$height}" size="10" /></td>
+            </tr>
+            <tr>
+              <td>{$entry_length}</td>
+              <td><select name="length_class_id">
+                  {loop $length_classes   $length_class}
+                  {if $length_class['length_class_id'] == $length_class_id}
+                  <option value="{$length_class['length_class_id']}" selected="selected">{$length_class['title']}</option>
+                   {else}
+                  <option value="{$length_class['length_class_id']}">{$length_class['title']}</option>
+                  {/if}
+                  {/loop}
+                </select></td>
+            </tr>
+            <tr>
+              <td>{$entry_weight}</td>
+              <td><input type="text" name="weight" value="{$weight}" /></td>
+            </tr>
+            <tr>
+              <td>{$entry_weight_class}</td>
+              <td><select name="weight_class_id">
+                  {loop $weight_classes   $weight_class}
+                  {if $weight_class['weight_class_id'] == $weight_class_id}
+                  <option value="{$weight_class['weight_class_id']}" selected="selected">{$weight_class['title']}</option>
+                   {else}
+                  <option value="{$weight_class['weight_class_id']}">{$weight_class['title']}</option>
+                  {/if}
+                  {/loop}
+                </select></td>
+            </tr>
+            <tr>
+              <td>{$entry_status}</td>
+              <td><select name="status">
+                  {if $status}
+                  <option value="1" selected="selected">{$text_enabled}</option>
+                  <option value="0">{$text_disabled}</option>
+                   {else}
+                  <option value="1">{$text_enabled}</option>
+                  <option value="0" selected="selected">{$text_disabled}</option>
+                  {/if}
+                </select></td>
+            </tr>
+            <tr>
+              <td>{$entry_sort_order}</td>
+              <td><input type="text" name="sort_order" value="{$sort_order}" size="2" /></td>
+            </tr>
+          </table>
+        </div>
+		
+		<!--关联-->
+        <div id="tab-links">
+          <table class="form">
+            <tr>
+              <td>{$entry_manufacturer}</td>
+              <td><select name="manufacturer_id">
+                  <option value="0" selected="selected">{$text_none}</option>
+                  {loop $manufacturers   $manufacturer}
+                  {if $manufacturer['manufacturer_id'] == $manufacturer_id}
+                  <option value="{$manufacturer['manufacturer_id']}" selected="selected">{$manufacturer['name']}</option>
+                   {else}
+                  <option value="{$manufacturer['manufacturer_id']}">{$manufacturer['name']}</option>
+                 {/if}
+                  {/loop}
+                </select></td>
+            </tr>
+            <tr>
+              <td>{$entry_category}</td>
+              <!-- <td><div class="scrollbox">
+                  {loop $categories   $category}
+				  <div>
+				    <label>
+                    {if in_array($category['category_id'], $product_category)}
+                    <input type="checkbox" name="product_category[]" value="{$category['category_id']}" checked="checked" />
+                    {$category['name']}</label>
+                     {else}
+                    <label><input type="checkbox"  name="product_category[]" value="{$category['category_id']}" />
+                    {$category['name']}
+                    {/if}
+					</label>
+                  </div>
+                  {/loop}
+                </div>
+				</td> -->
+				<td>
+				    {loop $category_dir $k $dir}
+				    <select name="product_category[]" class="{if $k==0}one{elseif $k==1}two{elseif $k==2}three{elseif $k==3}four{/if}d">
+					<option value=''>--请选择--</option>
+						{loop $dir  $v}
+								<option value="{$v['id']}" {if in_array($v['id'],$product_category)}selected="selected"{/if}>{$v['id']}：{$v['name']}</option>
+						{/loop}
+					</select>
+                    {/loop}
+					
+				</td>
+            </tr>
+            <tr>
+              <td>{$entry_store}</td>
+              <td><div class="scrollbox">
+                  
+                 <!--  <div>
+                    {if in_array(0, $product_store)}
+                    <input type="radio" name="product_store[]" value="0" checked="checked" />
+                    {$text_default}
+                     {else}
+                    <input type="radio" name="product_store[]" value="0" />
+                    {$text_default}
+                    {/if}
+                  </div> -->
+				  
+                  {loop $stores   $store}
+                  <div>
+				    
+                    {if in_array($store['store_id'], $product_store)}
+                    <label><input type="radio"  name="product_store" value="{$store['store_id']}" checked="checked" />
+                    {$store['name']}</label>
+                     {else}
+                    <label><input type="radio"  name="product_store" value="{$store['store_id']}" />
+                    {$store['name']}</label>
+                    {/if}
+					
+                  </div>
+                  {/loop}
+                </div></td>
+            </tr>
+            <tr>
+              <td>{$entry_download}</td>
+              <td><div class="scrollbox">
+                  {php $class = 'odd'}
+                  {loop $downloads   $download}
+                  {php $class = ($class == 'even' ? 'odd' : 'even')}
+                  <div class="{$class}">
+                    {if in_array($download['download_id'], $product_download)}
+                    <input type="checkbox" name="product_download[]" value="{$download['download_id']}" checked="checked" />
+                    {$download['name']}
+                     {else}
+                    <input type="checkbox" name="product_download[]" value="{$download['download_id']}" />
+                    {$download['name']}
+                    {/if}
+                  </div>
+                 {/loop}
+                </div></td>
+            </tr>
+            <tr>
+              <td>{$entry_related}</td>
+              <td><input type="text" name="related" value="" /></td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+              <td><div id="product-related" class="scrollbox">
+                  {php $class = 'odd'}
+                  {loop $product_related   $product_related}
+                  {php $class = ($class == 'even' ? 'odd' : 'even')}
+                  <div id="product-related{$product_related['product_id']}" class="{$class}"> {$product_related['name']}<img src="view/image/delete.png" />
+                    <input type="hidden" name="product_related[]" value="{$product_related['product_id']}" />
+                  </div>
+                 {/loop}
+                </div></td>
+            </tr>
+          </table>
+        </div>
+		
+		<!--属性-->
+        <!-- <div id="tab-attribute">
+          <table id="attribute" class="list">
+            <thead>
+              <tr>
+                <td>{$entry_attribute}</td>
+                <td>{$entry_text}</td>
+                <td></td>
+              </tr>
+            </thead>
+            {php $attribute_row = 0}
+            {loop $product_attributes   $product_attribute}
+            <tbody id="attribute-row{$attribute_row}">
+              <tr>
+                <td>{$product_attribute['attribute_group']['name']}：
+				    <input type="text" name="product_attribute[{$attribute_row}][name]" value="{$product_attribute['name']}" />
+                    <input type="hidden" name="product_attribute[{$attribute_row}][attribute_id]" value="{$product_attribute['attribute_id']}" />
+				</td>
+				
+                <td>
+                     <textarea name="product_attribute[{$attribute_row}][text]" cols="40" rows="5">{if isset($product_attribute['text'])} {$product_attribute['text']}{/if}</textarea>
+                </td>
+                <td><a href="javascript:;" onclick="$('#attribute-row{$attribute_row}').remove();" >{$button_remove}</a></td>
+              </tr>
+            </tbody>
+            {php $attribute_row++}
+            {/loop}
+            <tfoot>
+              <tr>
+                <td colspan="2"></td>
+                <td><a  href="javascript:;" onclick="addAttribute();" >{$button_add_attribute}</a></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div> -->
+		
+		
+		<!--选项设置-->
+        <div id="tab-option">
+          <div id="vtab-option" class="vtabs">
+		    <select name="atrributeGroups">
+				{if $attributeGroups}
+				{loop $attributeGroups $ag}
+				    <option value="{$ag['attribute_group_id']}" >{$ag['name']}</option>
+				{/loop}
+				{/if}
+			</select>
+            {php $option_row = 0}
+            {loop $product_options   $product_option}
+            <a href="#tab-option-{$option_row}" id="option-{$option_row}">{if isset($product_option['attribute_group_name'])}{$product_option['attribute_group_name']}{/if}({$product_option['name']})&nbsp;<img src="view/image/delete.png" alt=""  onclick="$('#vtabs a:first').trigger('click'); $('#option-{$option_row}').remove(); $('#tab-option-{$option_row}').remove(); return false;" /></a>
+            {php $option_row++}
+            {/loop}
+            <!-- <span id="option-add">
+            <input name="option" value="" style="width: 130px;" />
+            &nbsp;<img src="view/image/add.png" alt="{$button_add_option}" title="{$button_add_option}" /></span> -->
+			<input type="button" name="addOptions" value="添加属性选项" />
+			</div>
+          {php $option_row = 0}
+          {php $option_value_row = 0}
+          {loop $product_options   $product_option}
+          <div id="tab-option-{$option_row}" class="vtabs-content">
+            <input type="hidden" name="product_option[{$option_row}][product_option_id]" value="{$product_option['product_option_id']}" />
+            <input type="hidden" name="product_option[{$option_row}][name]" value="{$product_option['name']}" />
+			<input type="hidden" name="product_option[{$option_row}][attribute_group_id]" value="{$product_option['attribute_group_id']}" />
+            <input type="hidden" name="product_option[{$option_row}][option_id]" value="{$product_option['option_id']}" />
+            <input type="hidden" name="product_option[{$option_row}][type]" value="{$product_option['type']}" />
+            <table class="form">
+              <tr>
+                <td>{$entry_required}</td>
+                <td><select name="product_option[{$option_row}][required]">
+                    {if $product_option['required']}
+                    <option value="1" selected="selected">{$text_yes}</option>
+                    <option value="0">{$text_no}</option>
+                     {else}
+                    <option value="1">{$text_yes}</option>
+                    <option value="0" selected="selected">{$text_no}</option>
+                     {/if}
+                  </select></td>
+              </tr>
+			
+			 
+              {if $product_option['type'] == 'text'}
+              <tr>
+                <td>{$entry_option_value}</td>
+                <td><input type="text" name="product_option[{$option_row}][option_value]" value="{$product_option['option_value']}" /></td>
+              </tr>
+              {/if}
+              {if $product_option['type'] == 'textarea'}
+              <tr>
+                <td>{$entry_option_value}</td>
+                <td><textarea name="product_option[{$option_row}][option_value]" cols="40" rows="5">{$product_option['option_value']}</textarea></td>
+              </tr>
+              {/if}
+              {if $product_option['type'] == 'file'}
+              <tr style="display: none;">
+                <td>{$entry_option_value}</td>
+                <td><input type="text" name="product_option[{$option_row}][option_value]" value="{$product_option['option_value']}" /></td>
+              </tr>
+              {/if}
+              {if $product_option['type'] == 'date'}
+              <tr>
+                <td>{$entry_option_value}</td>
+                <td><input type="text" name="product_option[{$option_row}][option_value]" value="{$product_option['option_value']}" class="date" /></td>
+              </tr>
+              {/if}
+              {if $product_option['type'] == 'datetime'}
+              <tr>
+                <td>{$entry_option_value}</td>
+                <td><input type="text" name="product_option[{$option_row}][option_value]" value="{$product_option['option_value']}" class="datetime" /></td>
+              </tr>
+              {/if}
+              {if $product_option['type'] == 'time'}
+              <tr>
+                <td>{$entry_option_value}</td>
+                <td><input type="text" name="product_option[{$option_row}][option_value]" value="{$product_option['option_value']}" class="time" /></td>
+              </tr>
+             {/if}
+            </table>
+            {if $product_option['type'] == 'select' || $product_option['type'] == 'radio' || $product_option['type'] == 'checkbox' || $product_option['type'] == 'image'}
+            <table id="option-value{$option_row}" class="list">
+              <thead>
+                <tr>
+				  <!-- <td>{$entry_attribute_group}</td> -->
+                  <td>{$entry_option_value}</td>
+                  <td>{$entry_quantity}</td>
+                  <td>{$entry_subtract}</td>
+                  <td>{$entry_price}</td>
+                  <td>{$entry_option_points}</td>
+                  <td>{$entry_weight}</td>
+                  <td></td>
+                </tr>
+              </thead>
+              {loop $product_option['product_option_value']   $product_option_value}
+              <tbody id="option-value-row{$option_value_row}">
+                <tr>
+				  
+                  <td><select name="product_option[{$option_row}][product_option_value][{$option_value_row}][option_value_id]">
+                      {if isset($option_values[$product_option['option_id']])}
+                      {loop $option_values[$product_option['option_id']]   $option_value}
+                      {if $option_value['option_value_id'] == $product_option_value['option_value_id']}
+                      <option value="{$option_value['option_value_id']},{$option_value['attribute_id']}" selected="selected">{$option_value['name']}</option>
+                       {else}
+                      <option value="{$option_value['option_value_id']},{$option_value['attribute_id']}">{$option_value['name']}</option>
+                      {/if}
+                      {/loop}
+                      {/if}
+                    </select>
+					<input type="hidden" name="product_option[{$option_row}][product_option_value][{$option_value_row}][attribute_id]" value="{$product_option_value['attribute_id']}" />
+                    <input type="hidden" name="product_option[{$option_row}][product_option_value][{$option_value_row}][product_option_value_id]" value="{$product_option_value['product_option_value_id']}" />
+				  </td>
+                  <td><input type="text" name="product_option[{$option_row}][product_option_value][{$option_value_row}][quantity]" value="{$product_option_value['quantity']}" size="3" /></td>
+                  <td><select name="product_option[{$option_row}][product_option_value][{$option_value_row}][subtract]">
+                      {if $product_option_value['subtract']}
+                      <option value="1" selected="selected">{$text_yes}</option>
+                      <option value="0">{$text_no}</option>
+                       {else}
+                      <option value="1">{$text_yes}</option>
+                      <option value="0" selected="selected">{$text_no}</option>
+                      {/if}
+                    </select></td>
+                  <td><select name="product_option[{$option_row}][product_option_value][{$option_value_row}][price_prefix]">
+                      {if $product_option_value['price_prefix'] == '+'}
+                      <option value="+" selected="selected">+</option>
+                       {else}
+                      <option value="+">+</option>
+                     {/if}
+                      {if $product_option_value['price_prefix'] == '-'}
+                      <option value="-" selected="selected">-</option>
+                       {else}
+                      <option value="-">-</option>
+                      {/if}
+                    </select>
+                    <input type="text" name="product_option[{$option_row}][product_option_value][{$option_value_row}][price]" value="{$product_option_value['price']}" size="5" /></td>
+                  <td><select name="product_option[{$option_row}][product_option_value][{$option_value_row}][points_prefix]">
+                      {if $product_option_value['points_prefix'] == '+'}
+                      <option value="+" selected="selected">+</option>
+                       {else}
+                      <option value="+">+</option>
+                      {/if}
+                      {if $product_option_value['points_prefix'] == '-'}
+                      <option value="-" selected="selected">-</option>
+                       {else}
+                      <option value="-">-</option>
+                      {/if}
+                    </select>
+                    <input type="text" name="product_option[{$option_row}][product_option_value][{$option_value_row}][points]" value="{$product_option_value['points']}" size="5" /></td>
+                  <td><select name="product_option[{$option_row}][product_option_value][{$option_value_row}][weight_prefix]">
+                      {if $product_option_value['weight_prefix'] == '+'}
+                      <option value="+" selected="selected">+</option>
+                       {else}
+                      <option value="+">+</option>
+                      {/if}
+                      {if $product_option_value['weight_prefix'] == '-'}
+                      <option value="-" selected="selected">-</option>
+                       {else}
+                      <option value="-">-</option>
+                      {/if}
+                    </select>
+                    <input type="text" name="product_option[{$option_row}][product_option_value][{$option_value_row}][weight]" value="{$product_option_value['weight']}" size="5" /></td>
+                  <td><a href="javascript:;" onclick="$('#option-value-row{$option_value_row}').remove();" class="button">{$button_remove}</a></td>
+                </tr>
+              </tbody>
+              {php $option_value_row++}
+              {/loop}
+              <tfoot>
+                <tr>
+                  <td colspan="6"></td>
+                  <td><a href="javacript:;" onclick="addOptionValue('{$option_row}');" class="button">{$button_add_option_value}</a></td>
+                </tr>
+              </tfoot>
+            </table>
+            <select id="option-values{$option_row}" style="display: none;">
+              {if isset($option_values[$product_option['option_id']])}
+              {loop $option_values[$product_option['option_id']]   $option_value}
+              <option value="{$option_value['option_value_id']},{$option_value['attribute_id']}">{$option_value['name']}</option>
+              {/loop}
+             {/if}
+            </select>
+           {/if}
+          </div>
+          {php $option_row++}
+          {/loop}
+        </div>
+		
+		
+		
+        <div id="tab-discount">
+          <table id="discount" class="list">
+            <thead>
+              <tr>
+                <td>{$entry_customer_group}</td>
+                <td>{$entry_quantity}</td>
+                <td>{$entry_priority}</td>
+                <td>{$entry_price}</td>
+                <td>{$entry_date_start}</td>
+                <td>{$entry_date_end}</td>
+                <td></td>
+              </tr>
+            </thead>
+            {php $discount_row = 0}
+            {loop $product_discounts   $product_discount}
+            <tbody id="discount-row{$discount_row}">
+              <tr>
+                <td><select name="product_discount[{$discount_row}][customer_group_id]">
+                    {loop $customer_groups   $customer_group}
+                    {if $customer_group['customer_group_id'] == $product_discount['customer_group_id']}
+                    <option value="{$customer_group['customer_group_id']}" selected="selected">{$customer_group['name']}</option>
+                     {else}
+                    <option value="{$customer_group['customer_group_id']}">{$customer_group['name']}</option>
+                    {/if}
+                    {/loop}
+                  </select></td>
+                <td><input type="text" name="product_discount[{$discount_row}][quantity]" value="{$product_discount['quantity']}" size="5" /></td>
+                <td><input type="text" name="product_discount[{$discount_row}][priority]" value="{$product_discount['priority']}" size="5" /></td>
+                <td><input type="text" name="product_discount[{$discount_row}][price]" value="{$product_discount['price']}" /></td>
+                <td><input type="text" name="product_discount[{$discount_row}][date_start]" value="{$product_discount['date_start']}" class="date" /></td>
+                <td><input type="text" name="product_discount[{$discount_row}][date_end]" value="{$product_discount['date_end']}" class="date" /></td>
+                <td><a href="javascript:;" onclick="$('#discount-row{$discount_row}').remove();">{$button_remove}</a></td>
+              </tr>
+            </tbody>
+            {php $discount_row++}
+            {/loop}
+            <tfoot>
+              <tr>
+                <td colspan="6"></td>
+                <td><a href="javascirpt:;" onclick="addDiscount();" >{$button_add_discount}</a></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+        <div id="tab-special">
+          <table id="special" class="list">
+            <thead>
+              <tr>
+                <td>{$entry_customer_group}</td>
+                <td>{$entry_priority}</td>
+                <td>{$entry_price}</td>
+                <td>{$entry_date_start}</td>
+                <td>{$entry_date_end}</td>
+                <td></td>
+              </tr>
+            </thead>
+            {php $special_row = 0}
+            {loop $product_specials   $product_special}
+            <tbody id="special-row{$special_row}">
+              <tr>
+                <td><select name="product_special[{$special_row}][customer_group_id]">
+                    {loop $customer_groups   $customer_group}
+                    {if $customer_group['customer_group_id'] == $product_special['customer_group_id']}
+                    <option value="{$customer_group['customer_group_id']}" selected="selected">{$customer_group['name']}</option>
+                     {else}
+                    <option value="{$customer_group['customer_group_id']}">{$customer_group['name']}</option>
+                    {/if}
+                   {/loop}
+                  </select></td>
+                <td><input type="text" name="product_special[{$special_row}][priority]" value="{$product_special['priority']}" size="2" /></td>
+                <td><input type="text" name="product_special[{$special_row}][price]" value="{$product_special['price']}" /></td>
+                <td><input type="text" name="product_special[{$special_row}][date_start]" value="{$product_special['date_start']}" class="date" /></td>
+                <td><input type="text" name="product_special[{$special_row}][date_end]" value="{$product_special['date_end']}" class="date" /></td>
+                <td><a onclick="$('#special-row{$special_row}').remove();" class="button">{$button_remove}</a></td>
+              </tr>
+            </tbody>
+            {php $special_row++}
+            {/loop}
+            <tfoot>
+              <tr>
+                <td colspan="5"></td>
+                <td><a href="javascript:;" onclick="addSpecial();" >{$button_add_special}</a></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+        <div id="tab-image">
+          <table id="images" class="list">
+            <thead>
+              <tr>
+                <td>{$entry_image}</td>
+                <td>{$entry_sort_order}</td>
+                <td></td>
+              </tr>
+            </thead>
+            {php $image_row = 0}
+            {loop $product_images   $product_image}
+            <tbody id="image-row{$image_row}">
+              <tr>
+                <td><div class="image"><img src="{$product_image['thumb']}" alt="" id="thumb{$image_row}" />
+                    <input type="hidden" name="product_image[{$image_row}][image]" value="{$product_image['image']}" id="image{$image_row}" />
+					<input type="hidden" name="product_image[{$image_row}][product_image_id]" value="{$product_image['product_image_id']}"  />
+                    <br />
+                    <a href="javascript:;" onclick="image_upload('image{$image_row}', 'thumb{$image_row}');">{$text_browse}</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="javascript:;" onclick="$('#thumb{$image_row}').attr('src', '{$no_image}'); $('#image{$image_row}').attr('value', '');">{$text_clear}</a></div></td>
+                <td><input type="text" name="product_image[{$image_row}][sort_order]" value="{$product_image['sort_order']}" size="2" /></td>
+                <td><a href="javascript:;" onclick="$('#image-row{$image_row}').remove();" class="button">{$button_remove}</a></td>
+              </tr>
+            </tbody>
+            {php $image_row++}
+            {/loop}
+            <tfoot>
+              <tr>
+                <td colspan="2"></td>
+                <td><a href="javascript:;" onclick="addImage();" class="button">{$button_add_image}</a></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+        <div id="tab-reward">
+          <table class="form">
+            <tr>
+              <td>{$entry_points}</td>
+              <td><input type="text" name="points" value="{$points}" /></td>
+            </tr>
+          </table>
+          <table class="list">
+            <thead>
+              <tr>
+                <td>{$entry_customer_group}</td>
+                <td>{$entry_reward}</td>
+              </tr>
+            </thead>
+            {loop $customer_groups   $customer_group}
+            <tbody>
+              <tr>
+                <td>{$customer_group['name']}</td>
+                <td><input type="text" name="product_reward[{$customer_group['customer_group_id']}][points]" value="{php isset($product_reward[$customer_group['customer_group_id']]) ? $product_reward[$customer_group['customer_group_id']]['points'] : ''}" /></td>
+              </tr>
+            </tbody>
+            {/loop}
+          </table>
+        </div>
+		
+		
+        <!-- <div id="tab-design">
+          <table class="list">
+            <thead>
+              <tr>
+                <td>{$entry_store}</td>
+                <td>{$entry_layout}</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{$text_default}</td>
+                <td><select name="product_layout[0][layout_id]">
+                    <option value=""></option>
+                    {loop $layouts   $layout}
+                    {if isset($product_layout[0]) && $product_layout[0] == $layout['layout_id']}
+                    <option value="{$layout['layout_id']}" selected="selected">{$layout['name']}</option>
+                     {else}
+                    <option value="{$layout['layout_id']}">{$layout['name']}</option>
+                    {/if}
+                    {/loop}
+                  </select></td>
+              </tr>
+            </tbody>
+            {loop $stores   $store}
+            <tbody>
+              <tr>
+                <td>{$store['name']}</td>
+                <td><select name="product_layout[{$store['store_id']}][layout_id]">
+                    <option value=""></option>
+                    {loop $layouts   $layout}
+                    {if isset($product_layout[$store['store_id']]) && $product_layout[$store['store_id']] == $layout['layout_id']}
+                    <option value="{$layout['layout_id']}" selected="selected">{$layout['name']}</option>
+                     {else}
+                    <option value="{$layout['layout_id']}">{$layout['name']}</option>
+                    {/if}
+                    {/loop}
+                  </select></td>
+              </tr>
+            </tbody>
+            {/loop}
+          </table>
+        </div> -->
+		
+		
+      </form>
+</div>
+<script type="text/javascript" src="view/javascript/ckeditor/ckeditor.js"></script> 
+<script type="text/javascript"><!--
+
+CKEDITOR.replace('descriptions', {
+	filebrowserBrowseUrl: 'index.php?route=common/filemanager&token={$token}',
+	filebrowserImageBrowseUrl: 'index.php?route=common/filemanager&token={$token}',
+	filebrowserFlashBrowseUrl: 'index.php?route=common/filemanager&token={$token}',
+	filebrowserUploadUrl: 'index.php?route=common/filemanager&token={$token}',
+	filebrowserImageUploadUrl: 'index.php?route=common/filemanager&token={$token}',
+	filebrowserFlashUploadUrl: 'index.php?route=common/filemanager&token={$token}'
+});
+
+//--></script> 
+<script type="text/javascript"><!--
+$('input[name=\'related\']').autocomplete({
+	delay: 0,
+	source: function(request, response) {
+		$.ajax({
+			url: 'index.php?route=catalog/product/autocomplete&token={$token}&filter_name=' +  encodeURIComponent(request.term),
+			dataType: 'json',
+			success: function(json) { 
+                		
+				response($.map(json, function(item) {
+					return {
+						label: item.name,
+						value: item.product_id
+					}
+				}));
+			}
+		});
+		
+	}, 
+	select: function(event, ui) {
+		$('#product-related' + ui.item.value).remove();
+		
+		$('#product-related').append('<div id="product-related' + ui.item.value + '">' + ui.item.label + '<img  src="view/image/delete.png" /><input type="hidden" name="product_related[]" value="' + ui.item.value + '" /></div>');
+
+		$('#product-related div:odd').attr('class', 'odd');
+		$('#product-related div:even').attr('class', 'even');
+				
+		return false;
+	},
+	focus: function(event, ui) {
+      return false;
+   }
+});
+
+$('#product-related div img').live('click', function() {
+	$(this).parent().remove();
+	
+	$('#product-related div:odd').attr('class', 'odd');
+	$('#product-related div:even').attr('class', 'even');	
+});
+//--></script> 
+<script type="text/javascript"><!--
+var attribute_row = {$attribute_row};
+
+function addAttribute() {
+    if(attribute_row==10){
+	   alert('最多只能设置10个属性！');
+	   return false;
+	}
+	html  = '<tbody id="attribute-row' + attribute_row + '">';
+    html += '  <tr>';
+	html += '    <td><input type="text" name="product_attribute[' + attribute_row + '][name]" value="" /><input type="hidden" name="product_attribute[' + attribute_row + '][attribute_id]" value="" /></td>';
+	html += '    <td>';
+	
+	html += '<textarea name="product_attribute[' + attribute_row + '][text]" cols="40" rows="5"></textarea><br />';
+   
+	html += '    </td>';
+	html += '    <td><a  href="javascript:;" onclick="$(\'#attribute-row' + attribute_row + '\').remove();" class="button">{$button_remove}</a></td>';
+    html += '  </tr>';	
+    html += '</tbody>';
+	
+	$('#attribute tfoot').before(html);
+	
+	attributeautocomplete(attribute_row);
+	
+	attribute_row++;
+}
+
+$.widget('custom.catcomplete', $.ui.autocomplete, {
+	_renderMenu: function(ul, items) {
+		var self = this, currentCategory = '';
+		
+		$.each(items, function(index, item) {
+			if (item.category != currentCategory) {
+				ul.append('<li class="ui-autocomplete-category">' + item.category + '</li>');
+				
+				currentCategory = item.category;
+			}
+			
+			self._renderItem(ul, item);
+		});
+	}
+});
+
+
+function attributeautocomplete(attribute_row) {
+	$('input[name=\'product_attribute[' + attribute_row + '][name]\']').catcomplete({
+		delay: 0,
+		source: function(request, response) {
+			$.ajax({
+				url: 'index.php?route=catalog/attribute/autocomplete&token={$token}&filter_name=' + encodeURIComponent(request.term)+'&productId={$productId}', //encodeURIComponent(
+				dataType: 'json',
+				success: function(json) {			
+					response($.map(json, function(item) {
+					    if(item.name.length>0){
+							return {
+								category: item.attribute_group,
+								label: item.name,
+								value: item.attribute_id
+							}
+						}
+					}));
+				}
+			});
+		}, 
+		select: function(event, ui) {
+			$('input[name=\'product_attribute[' + attribute_row + '][name]\']').attr('value', ui.item.label);
+			$('input[name=\'product_attribute[' + attribute_row + '][attribute_id]\']').attr('value', ui.item.value);
+			
+			return false;
+		},
+		focus: function(event, ui) {
+      		return false;
+   		}
+	});
+}
+
+$('#attribute tbody').each(function(index, element) {
+	attributeautocomplete(index);
+});
+
+
+//--></script> 
+<script type="text/javascript"><!--	
+var option_row = {$option_row};
+
+$("input[name=addOptions]").click(function(){
+
+	
+	var attribute_group_id=$('select[name=atrributeGroups]').val();
+	$.ajax({
+		url: 'index.php?route=catalog/option/autocomplete&token={$token}&attribute_group_id='+attribute_group_id,
+		dataType: 'json',
+		success: function(json) {
+		   
+			$.map(json, function(item) {
+				//alert(item.option_id);
+				/*
+				return {
+					category: item.category,
+					label: item.name,
+					value: item.option_id,
+					type: item.type,
+					option_value: item.option_value,
+					attribute_group_id:item.attribute_group_id
+				}*/
+				
+				html  = '<div id="tab-option-' + option_row + '" class="vtabs-content">';
+				html += '	<input type="hidden" name="product_option[' + option_row + '][product_option_id]" value="" />';
+				html += '	<input type="hidden" name="product_option[' + option_row + '][name]" value="' + item.label + '" />';
+				html += '	<input type="hidden" name="product_option[' + option_row + '][attribute_group_id]" value="'+item.attribute_group_id+'" />'; 
+				html += '	<input type="hidden" name="product_option[' + option_row + '][option_id]" value="' + item.option_id + '" />';
+				html += '	<input type="hidden" name="product_option[' + option_row + '][type]" value="' + item.type + '" />';
+				html += '	<table class="form">';
+				html += '	  <tr>';
+				html += '		<td>{$entry_required}</td>';
+				html += '       <td><select name="product_option[' + option_row + '][required]">';
+				html += '	      <option value="1">{$text_yes}</option>';
+				html += '	      <option value="0">{$text_no}</option>';
+				html += '	    </select></td>';
+				html += '     </tr>';
+				
+				if (item.type == 'text') {
+					html += '     <tr>';
+					html += '       <td>{$entry_option_value}</td>';
+					html += '       <td><input type="text" name="product_option[' + option_row + '][option_value]" value="" /></td>';
+					html += '     </tr>';
+				}
+				
+				if (item.type == 'textarea') {
+					html += '     <tr>';
+					html += '       <td>{$entry_option_value}</td>';
+					html += '       <td><textarea name="product_option[' + option_row + '][option_value]" cols="40" rows="5"></textarea></td>';
+					html += '     </tr>';						
+				}
+				 
+				if (item.type == 'file') {
+					html += '     <tr style="display: none;">';
+					html += '       <td>{$entry_option_value}</td>';
+					html += '       <td><input type="text" name="product_option[' + option_row + '][option_value]" value="" /></td>';
+					html += '     </tr>';			
+				}
+								
+				if (item.type == 'date') {
+					html += '     <tr>';
+					html += '       <td>{$entry_option_value}</td>';
+					html += '       <td><input type="text" name="product_option[' + option_row + '][option_value]" value="" class="date" /></td>';
+					html += '     </tr>';			
+				}
+				
+				if (item.type == 'datetime') {
+					html += '     <tr>';
+					html += '       <td>{$entry_option_value}</td>';
+					html += '       <td><input type="text" name="product_option[' + option_row + '][option_value]" value="" class="datetime" /></td>';
+					html += '     </tr>';			
+				}
+				
+				if (item.type == 'time') {
+					html += '     <tr>';
+					html += '       <td>{$entry_option_value}</td>';
+					html += '       <td><input type="text" name="product_option[' + option_row + '][option_value]" value="" class="time" /></td>';
+					html += '     </tr>';			
+				}
+				
+				html += '  </table>';
+					
+				if (item.type == 'select' || item.type == 'radio' || item.type == 'checkbox' || item.type == 'image') {
+					html += '  <table id="option-value' + option_row + '" class="list">';
+					html += '  	 <thead>'; 
+					html += '      <tr>';
+					html += '        <td>{$entry_option_value}</td>';
+					html += '        <td>{$entry_quantity}</td>';
+					html += '        <td>{$entry_subtract}</td>';
+					html += '        <td>{$entry_price}</td>';
+					html += '        <td>{$entry_option_points}</td>';
+					html += '        <td>{$entry_weight}</td>';
+					html += '        <td></td>';
+					html += '      </tr>';
+					html += '  	 </thead>';
+					html += '    <tfoot>';
+					html += '      <tr>';
+					html += '        <td colspan="6"></td>';
+					html += '        <td><a href="javascript:;" onclick="addOptionValue(' + option_row + ');" class="button">{$button_add_option_value}</a></td>';
+					html += '      </tr>';
+					html += '    </tfoot>';
+					html += '  </table>';
+					html += '  <select id="option-values' + option_row + '" style="display: none;">';
+					
+					for (i = 0; i < item.option_value.length; i++) {
+						html += '  <option value="' + item.option_value[i]['option_value_id'] + ','+item.option_value[i]['attribute_id']+'">' + item.option_value[i]['name'] + '</option>';
+					}
+
+					html += '  </select>';			
+					html += '</div>';	
+				}
+				
+				$('#tab-option').append(html);
+				
+				$('#option-add').before('<a href="#tab-option-' + option_row + '" id="option-' + option_row + '">' + item.label + '&nbsp;<img src="view/image/delete.png" alt="" onclick="$(\'#vtab-option a:first\').trigger(\'click\'); $(\'#option-' + option_row + '\').remove(); $(\'#tab-option-' + option_row + '\').remove(); return false;" /></a>');
+				
+				$('#vtab-option a').tabs();
+				
+				$('#option-' + option_row).trigger('click');		
+				
+				$('.date').datepicker({dateFormat: 'yy-mm-dd'});
+				$('.datetime').datetimepicker({
+					dateFormat: 'yy-mm-dd',
+					timeFormat: 'h:m'
+				});	
+					
+				$('.time').timepicker({timeFormat: 'h:m'});	
+						
+				option_row++;
+				
+				return false;
+			});
+		}
+	});
+	
+	/*
+	select: function(event, ui) {
+		
+	},
+	focus: function(event, ui) {
+      return false;
+   }*/
+});
+
+/*
+$('input[name=\'option\']').catcomplete({
+	delay: 0,
+	source: function(request, response) {
+	    var attribute_group_id=$('select[name=atrributeGroups]').val();
+		$.ajax({
+			url: 'index.php?route=catalog/option/autocomplete&token={$token}&attribute_group_id='+attribute_group_id+'&filter_name=' +  encodeURIComponent(request.term),
+			dataType: 'json',
+			success: function(json) {
+				response($.map(json, function(item) {
+				    
+					return {
+						category: item.category,
+						label: item.name,
+						value: item.option_id,
+						type: item.type,
+						option_value: item.option_value,
+						attribute_group_id:item.attribute_group_id
+					}
+				}));
+			}
+		});
+	}, 
+	select: function(event, ui) {
+		html  = '<div id="tab-option-' + option_row + '" class="vtabs-content">';
+		html += '	<input type="hidden" name="product_option[' + option_row + '][product_option_id]" value="" />';
+		html += '	<input type="hidden" name="product_option[' + option_row + '][name]" value="' + ui.item.label + '" />';
+		html += '	<input type="hidden" name="product_option[' + option_row + '][attribute_group_id]" value="'+ui.item.attribute_group_id+'" />'; 
+		html += '	<input type="hidden" name="product_option[' + option_row + '][option_id]" value="' + ui.item.value + '" />';
+		html += '	<input type="hidden" name="product_option[' + option_row + '][type]" value="' + ui.item.type + '" />';
+		html += '	<table class="form">';
+		html += '	  <tr>';
+		html += '		<td>{$entry_required}</td>';
+		html += '       <td><select name="product_option[' + option_row + '][required]">';
+		html += '	      <option value="1">{$text_yes}</option>';
+		html += '	      <option value="0">{$text_no}</option>';
+		html += '	    </select></td>';
+		html += '     </tr>';
+		
+		if (ui.item.type == 'text') {
+			html += '     <tr>';
+			html += '       <td>{$entry_option_value}</td>';
+			html += '       <td><input type="text" name="product_option[' + option_row + '][option_value]" value="" /></td>';
+			html += '     </tr>';
+		}
+		
+		if (ui.item.type == 'textarea') {
+			html += '     <tr>';
+			html += '       <td>{$entry_option_value}</td>';
+			html += '       <td><textarea name="product_option[' + option_row + '][option_value]" cols="40" rows="5"></textarea></td>';
+			html += '     </tr>';						
+		}
+		 
+		if (ui.item.type == 'file') {
+			html += '     <tr style="display: none;">';
+			html += '       <td>{$entry_option_value}</td>';
+			html += '       <td><input type="text" name="product_option[' + option_row + '][option_value]" value="" /></td>';
+			html += '     </tr>';			
+		}
+						
+		if (ui.item.type == 'date') {
+			html += '     <tr>';
+			html += '       <td>{$entry_option_value}</td>';
+			html += '       <td><input type="text" name="product_option[' + option_row + '][option_value]" value="" class="date" /></td>';
+			html += '     </tr>';			
+		}
+		
+		if (ui.item.type == 'datetime') {
+			html += '     <tr>';
+			html += '       <td>{$entry_option_value}</td>';
+			html += '       <td><input type="text" name="product_option[' + option_row + '][option_value]" value="" class="datetime" /></td>';
+			html += '     </tr>';			
+		}
+		
+		if (ui.item.type == 'time') {
+			html += '     <tr>';
+			html += '       <td>{$entry_option_value}</td>';
+			html += '       <td><input type="text" name="product_option[' + option_row + '][option_value]" value="" class="time" /></td>';
+			html += '     </tr>';			
+		}
+		
+		html += '  </table>';
+			
+		if (ui.item.type == 'select' || ui.item.type == 'radio' || ui.item.type == 'checkbox' || ui.item.type == 'image') {
+			html += '  <table id="option-value' + option_row + '" class="list">';
+			html += '  	 <thead>'; 
+			html += '      <tr>';
+			html += '        <td>{$entry_option_value}</td>';
+			html += '        <td>{$entry_quantity}</td>';
+			html += '        <td>{$entry_subtract}</td>';
+			html += '        <td>{$entry_price}</td>';
+			html += '        <td>{$entry_option_points}</td>';
+			html += '        <td>{$entry_weight}</td>';
+			html += '        <td></td>';
+			html += '      </tr>';
+			html += '  	 </thead>';
+			html += '    <tfoot>';
+			html += '      <tr>';
+			html += '        <td colspan="6"></td>';
+			html += '        <td><a href="javascript:;" onclick="addOptionValue(' + option_row + ');" class="button">{$button_add_option_value}</a></td>';
+			html += '      </tr>';
+			html += '    </tfoot>';
+			html += '  </table>';
+            html += '  <select id="option-values' + option_row + '" style="display: none;">';
+			
+            for (i = 0; i < ui.item.option_value.length; i++) {
+				html += '  <option value="' + ui.item.option_value[i]['option_value_id'] + '">' + ui.item.option_value[i]['name'] + '</option>';
+            }
+
+            html += '  </select>';			
+			html += '</div>';	
+		}
+		
+		$('#tab-option').append(html);
+		
+		$('#option-add').before('<a href="#tab-option-' + option_row + '" id="option-' + option_row + '">' + ui.item.label + '&nbsp;<img src="view/image/delete.png" alt="" onclick="$(\'#vtab-option a:first\').trigger(\'click\'); $(\'#option-' + option_row + '\').remove(); $(\'#tab-option-' + option_row + '\').remove(); return false;" /></a>');
+		
+		$('#vtab-option a').tabs();
+		
+		$('#option-' + option_row).trigger('click');		
+		
+		$('.date').datepicker({dateFormat: 'yy-mm-dd'});
+		$('.datetime').datetimepicker({
+			dateFormat: 'yy-mm-dd',
+			timeFormat: 'h:m'
+		});	
+			
+		$('.time').timepicker({timeFormat: 'h:m'});	
+				
+		option_row++;
+		
+		return false;
+	},
+	focus: function(event, ui) {
+      return false;
+   }
+});
+*/
+//--></script> 
+<script type="text/javascript"><!--		
+var option_value_row = {$option_value_row};
+
+function addOptionValue(option_row) {	
+	html  = '<tbody id="option-value-row' + option_value_row + '">';
+	html += '  <tr>';
+	html += '    <td><select name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][option_value_id]">';
+	html += $('#option-values' + option_row).html();
+	html += '    </select><input type="hidden" name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][attribute_id]" value="" /><input type="hidden" name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][product_option_value_id]" value="" /></td>';
+	html += '    <td><input type="text" name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][quantity]" value="" size="3" /></td>'; 
+	html += '    <td><select name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][subtract]">';
+	html += '      <option value="1">{$text_yes}</option>';
+	html += '      <option value="0">{$text_no}</option>';
+	html += '    </select></td>';
+	html += '    <td><select name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][price_prefix]">';
+	html += '      <option value="+">+</option>';
+	html += '      <option value="-">-</option>';
+	html += '    </select>';
+	html += '    <input type="text" name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][price]" value="" size="5" /></td>';
+	html += '    <td><select name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][points_prefix]">';
+	html += '      <option value="+">+</option>';
+	html += '      <option value="-">-</option>';
+	html += '    </select>';
+	html += '    <input type="text" name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][points]" value="" size="5" /></td>';	
+	html += '    <td><select name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][weight_prefix]">';
+	html += '      <option value="+">+</option>';
+	html += '      <option value="-">-</option>';
+	html += '    </select>';
+	html += '    <input type="text" name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][weight]" value="" size="5" /></td>';
+	html += '    <td><a href="javascript:;" onclick="$(\'#option-value-row' + option_value_row + '\').remove();" class="button">{$button_remove}</a></td>';
+	html += '  </tr>';
+	html += '</tbody>';
+	
+	$('#option-value' + option_row + ' tfoot').before(html);
+
+	option_value_row++;
+}
+/*
+$("select[name$='[option_value_id]']").live('change',function(){
+    $(this).next().val('34');
+});
+*/
+//--></script> 
+<script type="text/javascript"><!--
+var discount_row = {$discount_row};
+
+function addDiscount() {
+	html  = '<tbody id="discount-row' + discount_row + '">';
+	html += '  <tr>'; 
+    html += '    <td><select name="product_discount[' + discount_row + '][customer_group_id]">';
+    {loop $customer_groups   $customer_group}
+    html += '      <option value="{$customer_group['customer_group_id']}">{$customer_group['name']}</option>';
+    {/loop}
+    html += '    </select></td>';		
+    html += '    <td><input type="text" name="product_discount[' + discount_row + '][quantity]" value="" size="5" /></td>';
+    html += '    <td><input type="text" name="product_discount[' + discount_row + '][priority]" value="" size="5" /></td>';
+	html += '    <td><input type="text" name="product_discount[' + discount_row + '][price]" value="" /></td>';
+    html += '    <td><input type="text" name="product_discount[' + discount_row + '][date_start]" value="" class="date" /></td>';
+	html += '    <td><input type="text" name="product_discount[' + discount_row + '][date_end]" value="" class="date" /></td>';
+	html += '    <td><a href="javascript:;" onclick="$(\'#discount-row' + discount_row + '\').remove();" class="button">{$button_remove}</a></td>';
+	html += '  </tr>';	
+    html += '</tbody>';
+	
+	$('#discount tfoot').before(html);
+		
+	$('#discount-row' + discount_row + ' .date').datepicker({dateFormat: 'yy-mm-dd'});
+	
+	discount_row++;
+}
+//--></script> 
+<script type="text/javascript"><!--
+var special_row = {$special_row};
+
+function addSpecial() {
+	html  = '<tbody id="special-row' + special_row + '">';
+	html += '  <tr>'; 
+    html += '    <td><select name="product_special[' + special_row + '][customer_group_id]">';
+    {loop $customer_groups   $customer_group}
+    html += '      <option value="{$customer_group['customer_group_id']}">{$customer_group['name']}</option>';
+    {/loop}
+    html += '    </select></td>';		
+    html += '    <td><input type="text" name="product_special[' + special_row + '][priority]" value="" size="5" /></td>';
+	html += '    <td><input type="text" name="product_special[' + special_row + '][price]" value="" /></td>';
+    html += '    <td><input type="text" name="product_special[' + special_row + '][date_start]" value="" class="date" /></td>';
+	html += '    <td><input type="text" name="product_special[' + special_row + '][date_end]" value="" class="date" /></td>';
+	html += '    <td><a href="javascript:;" onclick="$(\'#special-row' + special_row + '\').remove();" class="button">{$button_remove}</a></td>';
+	html += '  </tr>';
+    html += '</tbody>';
+	
+	$('#special tfoot').before(html);
+ 
+	$('#special-row' + special_row + ' .date').datepicker({dateFormat: 'yy-mm-dd'});
+	
+	special_row++;
+}
+//--></script> 
+<script type="text/javascript"><!--
+function image_upload(field, thumb) {
+	$('#dialog').remove();
+	
+	$('#listDiv').prepend('<div id="dialog" style="padding: 3px 0px 0px 0px;"><iframe src="index.php?route=common/filemanager&token={$token}&field=' + encodeURIComponent(field) + '" style="padding:0; margin: 0; display: block; width: 100%; height: 100%;" frameborder="no" scrolling="auto"></iframe></div>');
+	
+	$('#dialog').dialog({
+		title: '{$text_image_manager}',
+		close: function (event, ui) {
+			if ($('#' + field).attr('value')) {
+				$.ajax({
+					url: 'index.php?route=common/filemanager/image&token={$token}&image=' + encodeURIComponent($('#' + field).attr('value')),
+					dataType: 'text',
+					success: function(text) {
+						$('#' + thumb).replaceWith('<img src="' + text + '" alt="" id="' + thumb + '" />');
+					}
+				});
+			}
+		},	
+		bgiframe: false,
+		width: 800,
+		height: 400,
+		resizable: false,
+		modal: false
+	});
+};
+//--></script> 
+<script type="text/javascript"><!--
+var image_row = {$image_row};
+
+function addImage() {
+    html  = '<tbody id="image-row' + image_row + '">';
+	html += '  <tr>';
+	html += '    <td><div class="image"><img src="{$no_image}" alt="" id="thumb' + image_row + '" /><input type="hidden" name="product_image[' + image_row + '][image]" value="" id="image' + image_row + '" /><br /><a href="javascript:;" onclick="image_upload(\'image' + image_row + '\', \'thumb' + image_row + '\');">{$text_browse}</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="javascript:;" onclick="$(\'#thumb' + image_row + '\').attr(\'src\', \'{$no_image}\'); $(\'#image' + image_row + '\').attr(\'value\', \'\');">{$text_clear}</a></div></td>';
+	html += '    <td><input type="text" name="product_image[' + image_row + '][sort_order]" value="" size="2" /></td>';
+	html += '    <td><a href="javascript:;" onclick="$(\'#image-row' + image_row  + '\').remove();" class="button">{$button_remove}</a></td>';
+	html += '  </tr>';
+	html += '</tbody>';
+	
+	$('#images tfoot').before(html);
+	
+	image_row++;
+}
+//--></script> 
+<script type="text/javascript" src="view/javascript/jquery/ui/jquery-ui-timepicker-addon.js"></script> 
+<script type="text/javascript"><!--
+$('.date').datepicker({dateFormat: 'yy-mm-dd'});
+$('.datetime').datetimepicker({
+	dateFormat: 'yy-mm-dd',
+	timeFormat: 'h:m'
+});
+$('.time').timepicker({timeFormat: 'h:m'});
+//--></script> 
+<script type="text/javascript"><!--
+$('#tabs a').tabpages(); 
+//$('#languages a').tabpages(); 
+$('#vtab-option a').tabpages();
+//--></script> 
+
+<script type="text/javascript">
+  
+  var sel={ 
+            getOne:function(){
+				var id=$('.oned').find("option:selected").val();
+				$.ajax({
+				    url:'index.php?route=catalog/attribute_group/getAjaxCategory&token={$token}&id='+id,
+				    dataType:'json',
+					success:function(json){
+						$('.twod').css({'display':'none'});
+						$('.threed').html('');
+						$('.threed').css({'display':'none'});
+						$('.fourd').html('');
+						$('.fourd').css({'display':'none'});
+					    var l=json.length;
+						
+						var x="<option value=''>--请选择--</option>";
+						if (l>0){
+						    $('.twod').css({'display':'inline'});
+						    for(var i=0;i<l;i++){
+							    x=x+"<option value="+json[i]['id']+">"+json[i]['id']+"："+json[i]['name']+"</option>";
+							}
+						}else{
+						    x='';
+						}
+					     
+						$('.twod').html(x);
+					  
+					},
+					error:function(){
+					    alert('数据返回错误！');
+					}
+				});
+			    
+			},
+			getTwo:function(){
+			    //var url=sel.getUrl();
+				var id=$('.twod').val();
+				$.ajax({
+				    url:'index.php?route=catalog/attribute_group/getAjaxCategory&token={$token}&id='+id,
+				    dataType:'json',
+					success:function(json){
+					    $('.threed').html('');
+						$('.threed').css({'display':'none'});
+						$('.fourd').html('');
+						$('.fourd').css({'display':'none'});
+					    var l=json.length;
+						var x="<option value=''>--请选择--</option>";
+						if (l>0){
+						    $('.threed').css({'display':'inline'});
+						    for(var i=0;i<l;i++){
+							    x=x+"<option value="+json[i]['id']+">"+json[i]['id']+"："+json[i]['name']+"</option>";
+							}
+						}else{
+						    x='';
+						}
+					
+					    $('.threed').html(x);
+						
+					},
+					error:function(){
+					    alert('数据返回错误！');
+					}
+				});
+			    
+			},
+			
+			getThree:function(){
+			    //var url=sel.getUrl();
+				var id=$('.threed').val();
+				$.ajax({
+				    url:'index.php?route=catalog/attribute_group/getAjaxCategory&token={$token}&id='+id,
+				    dataType:'json',
+					success:function(json){
+					    $('.fourd').html('');
+						$('.fourd').css({'display':'none'});
+					    var l=json.length;
+						var x="<option value=''>--请选择--</option>";
+						if (l>0){
+						    $('.fourd').css({'display':'inline'});
+						    for(var i=0;i<l;i++){
+							    x=x+"<option value="+json[i]['id']+">"+json[i]['id']+"："+json[i]['name']+"</option>";
+							}
+						}else{
+						    x='';
+						}
+					
+					    $('.fourd').html(x);
+					},
+					error:function(){
+					    alert('数据返回错误！');
+					}
+				});
+			    
+			},
+			
+			getUrl:function(){
+			    var pathname=location.pathname;
+				var query=location.search;
+				var url=pathname+query;
+				return url;
+			}
+	};
+	
+	$('.oned').bind('change',sel.getOne);
+	$('.twod').bind('change',sel.getTwo);
+	$('.threed').bind('change',sel.getThree);
+
+	
+</script>

@@ -1,0 +1,12 @@
+{if $reviews}
+{loop $reviews   $review}
+<div class="review-list">
+  <div class="author"><b>{$review['author']}</b> {$text_on} {$review['date_added']}</div>
+  <div class="rating"><img src="catalog/view/theme/default/image/stars-{$review['rating'] . '.png'}" alt="{$review['reviews']}" /></div>
+  <div class="text">{$review['text']}</div>
+</div>
+{/loop}
+<div class="pagination">{$pagination}</div>
+ {else}
+<div class="content">{$text_no_reviews}</div>
+{/if}

@@ -1,0 +1,112 @@
+<link rel="stylesheet" type="text/css" href="view/stylesheet/general.css">
+<link rel="stylesheet" type="text/css" href="view/stylesheet/main.css">
+<script type="text/javascript" src="view/javascript/jquery/jquery-1.7.1.min.js"></script><!--这里只能用1.7.1的版本,否则自带的图片处理有问题-->
+<script type="text/javascript" src="view/javascript/jquery/ui/jquery-ui-1.8.16.custom.min.js"></script>
+<link type="text/css" href="view/javascript/jquery/ui/themes/ui-lightness/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
+
+    <h1><img src="view/image/payment.png" alt="" /> {$heading_title}
+        <span class="action-span">
+		     <a href="javascript:;" onclick="$('#form').submit();" class="button">{$button_save}</a>
+			<!--  <a onclick="location = '{$cancel}';" class="button">{$button_cancel}</a> -->
+		</span>
+    </h1>
+    <div class="list-div" id="listDiv">
+     <!--  <div id="tabs" class="htabs"><a href="#tab-general">{$tab_general}</a>
+        {if $voucher_id}
+        <a href="#tab-history">{$tab_voucher_history}</a>
+        {/if}
+      </div> -->
+      <form action="{$action}" method="post" enctype="multipart/form-data" id="form">
+        <div id="tab-general">
+          <table class="form">
+            <tr>
+              <td><span class="required">*</span> {$entry_code}</td>
+              <td><input type="text" name="code" value="{$code}" />
+                {if $error_code}
+                <span class="error">{$error_code}</span>
+                {/if}</td>
+            </tr>
+            <tr>
+              <td><span class="required">*</span> {$entry_from_name}</td>
+              <td><input type="text" name="from_name" value="{$from_name}" />
+                {if $error_from_name}
+                <span class="error">{$error_from_name}</span>
+                {/if}</td>
+            </tr>
+            <tr>
+              <td><span class="required">*</span> {$entry_from_email}</td>
+              <td><input type="text" name="from_email" value="{$from_email}" />
+                {if $error_from_email}
+                <span class="error">{$error_from_email}</span>
+                {/if}</td>
+            </tr>
+            <tr>
+              <td><span class="required">*</span> {$entry_to_name}</td>
+              <td><input type="text" name="to_name" value="{$to_name}" />
+                {if $error_to_name}
+                <span class="error">{$error_to_name}</span>
+                {/if}</td>
+            </tr>
+            <tr>
+              <td><span class="required">*</span> {$entry_to_email}</td>
+              <td><input type="text" name="to_email" value="{$to_email}" />
+                {if $error_to_email}
+                <span class="error">{$error_to_email}</span>
+                {/if}</td>
+            </tr>
+            <tr>
+              <td>{$entry_theme}</td>
+              <td><select name="voucher_theme_id">
+                  {loop $voucher_themes   $voucher_theme}
+                  {if $voucher_theme['voucher_theme_id'] == $voucher_theme_id}
+                  <option value="{$voucher_theme['voucher_theme_id']}" selected="selected">{$voucher_theme['name']}</option>
+                   {else}
+                  <option value="{$voucher_theme['voucher_theme_id']}">{$voucher_theme['name']}</option>
+                  {/if}
+                 {/loop}
+                </select></td>
+            </tr>
+            <tr>
+              <td><span class="required">*</span> {$entry_message}</td>
+              <td><textarea name="message" cols="40" rows="5">{$message}</textarea></td>
+            </tr>
+            <tr>
+              <td>{$entry_amount}</td>
+              <td><input type="text" name="amount" value="{$amount}" />
+                {if $error_amount}
+                <span class="error">{$error_amount}</span>
+                {/if}</td>
+            </tr>
+            <tr>
+              <td>{$entry_status}</td>
+              <td><select name="status">
+                  {if $status}
+                  <option value="1" selected="selected">{$text_enabled}</option>
+                  <option value="0">{$text_disabled}</option>
+                   {else}
+                  <option value="1">{$text_enabled}</option>
+                  <option value="0" selected="selected">{$text_disabled}</option>
+                  {/if}
+                </select></td>
+            </tr>
+          </table>
+        </div>
+        {if $voucher_id}
+        <div id="tab-history">
+          <div id="history"></div>
+        </div>
+        {/if}
+      </form>
+    </div>
+
+{if $voucher_id}
+<script type="text/javascript"><!--
+$('#history .pagination a').live('click', function() {
+	$('#history').load(this.href);
+	
+	return false;
+});			
+
+$('#history').load('index.php?route=sale/voucher/history&token={$token}&voucher_id={$voucher_id}');
+//--></script>
+{/if}

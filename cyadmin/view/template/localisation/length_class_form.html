@@ -1,0 +1,43 @@
+<link rel="stylesheet" type="text/css" href="view/stylesheet/general.css">
+<link rel="stylesheet" type="text/css" href="view/stylesheet/main.css">
+<script type="text/javascript" src="view/javascript/jquery/jquery-1.7.1.min.js"></script><!--这里只能用1.7.1的版本,否则自带的图片处理有问题-->
+<script type="text/javascript" src="view/javascript/jquery/ui/jquery-ui-1.8.16.custom.min.js"></script>
+<link type="text/css" href="view/javascript/jquery/ui/themes/ui-lightness/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
+
+    <h1><img src="view/image/length.png" alt="" /> {$heading_title}
+        <span class="action-span">
+		   <a href="javascript:;" onclick="$('#form').submit();" class="button">{$button_save}</a>
+		   <!-- <a onclick="location = '{$cancel}';" class="button">{$button_cancel}</a> -->
+		</span>
+    </h1>
+	
+    <div class="list-div" id="listDiv">
+      <form action="{$action}" method="post" enctype="multipart/form-data" id="form">
+        <table class="form">
+          <tr>
+            <td><span class="required">*</span> {$entry_title}</td>
+            <td>
+              <input type="text" name="length_class_description[title]" value="{if isset($length_class_description['title'])} {$length_class_description['title']}{/if}" />
+              <!-- <img src="view/image/flags/{$language['image']}" title="{$language['name']}" /><br /> -->
+              {if isset($error_title)}
+              <span class="error">{$error_title}</span><br />
+              {/if}
+             </td>
+          </tr>
+          <tr>
+            <td><span class="required">*</span> {$entry_unit}</td>
+            <td>
+              <input type="text" name="length_class_description[unit]" value="{if isset($length_class_description['unit'])}{$length_class_description['unit']}{/if}" />
+             <!--  <img src="view/image/flags/{$language['image']}" title="{$language['name']}" /><br /> -->
+              {if isset($error_unit)}
+              <span class="error">{$error_unit}</span><br />
+              {/if}
+             </td>
+          </tr>
+          <tr>
+            <td>{$entry_value}</td>
+            <td><input type="text" name="value" value="{$value}" /></td>
+          </tr>
+        </table>
+      </form>
+    </div>

@@ -1,0 +1,210 @@
+<!--修改begin-->
+<!-- <form action="{$action}" method="post" enctype="multipart/form-data" id="form"> -->
+    <table class="form" style="cellspacing:10">
+	  <tr>
+		<td><span class="required">*</span> {$entry_name}</td>
+		<td>
+		  <input type="text" name="attribute_group_name" value="{if isset($attribute_group_name)}{$attribute_group_name}{/if}" />
+		  {if isset($error_name)}
+		  <span class="error">{$error_name}</span><br />
+		  {/if}
+		  </td>
+	  </tr>
+	  
+	  <!--
+	  <tr>
+		<td>{$entry_type}</td>
+		<td>
+		    <select name="attribute_cid0" class="oned">
+				<option value=''>--请选择--</option>
+				{if !empty($firstDir)}
+			        {loop $firstDir $v}
+		                <option value="{$v['id']}" {if $cid0==$v['id']}selected="selected"{/if}>{$v['id']}：{$v['name']}</option>
+					{/loop}
+				{/if}
+			</select>	
+		</td>
+	  </tr>
+	  <tr>
+	    <td></td>
+		<td>
+		    <select name="attribute_cid1" class="twod">
+			    <option value=''>--请选择--</option>
+			    {if !empty($secondDir)}
+			        {loop $secondDir $v}
+		                <option value="{$v['id']}" {if $cid1==$v['id']}selected="selected"{/if}>{$v['id']}：{$v['name']}</option>
+					{/loop}
+				{/if}
+		    </select>
+		</td>
+	  </tr>
+	  
+	  <tr>
+	    <td></td>
+		<td>
+			<select name="attribute_cid2" class="threed">
+			    <option value=''>--请选择--</option>
+			    {if !empty($thirdDir)}
+			        {loop $thirdDir $t}
+		                <option value="{$t['id']}" {if $cid2==$t['id']}selected="selected"{/if}>{$t['id']}：{$t['name']}</option>
+					{/loop}
+				{/if}
+		    </select>
+	    </td>
+	  </tr>
+	  
+	  <tr>
+	    <td></td>
+		<td>
+		    <select name="attribute_cid3" class="fourd">
+			    <option value=''>--请选择--</option>
+			    {if !empty($forthDir)}
+			        {loop $forthDir $f}
+		                <option value="{$f['id']}" {if $cid3==$f['id']}selected="selected"{/if}>{$f['id']}：{$f['name']}</option>
+					{/loop}
+				{/if}
+		    </select>
+		</td>
+	  </tr>
+	  -->
+	  
+	  
+	   <tr>
+		<td>{$entry_option}</td>
+		<td><select name='option_id'>
+		    <option value=''>--请选择--</option>
+			{loop $options $option}
+			    {if $option['type']=='select' || $option['type']=='checkbox' || $option['type']=='radio'}
+					<option value="{$option['option_id']}" {if $option_id==$option['option_id']}selected="selected"{/if}>{$option['type']}</option>
+				{/if}
+			{/loop}
+			
+		    </select></td>
+	  </tr>
+	  <tr><td colspan='2' style="color:red;text-align:right;font-size:13px;">{$entry_option}只选择radio,checkbox,select</td></tr>
+	  
+	   <tr>
+		<td>{$entry_show}</td>
+		<td><select name='isShow'>
+		      <option value=''>--请选择--</option>
+			  <option value='1' {if $isShow=='1'}selected="selected"{/if}>yes</option>
+			  <option value='0' {if $isShow==='0'}selected="selected"{/if}>no</option>
+		    </select></td>
+	  </tr>
+	  
+	  <tr>
+		<td>{$entry_group_type}</td>
+		<td><select name='group_type'>
+		      <option value=''>--请选择--</option>
+			  <option value='1' {if $type==1}selected="selected"{/if}>{$entry_general}</option>
+			  <option value='2' {if $type==2}selected="selected"{/if}>{$entry_price}</option>
+		    </select></td>
+	  </tr>
+	  
+	  <tr>
+		<td>{$entry_sort_order}</td>
+		<td><input type="text" name="sort_order" value="{$sort_order}" size="5" /></td>
+	  </tr>
+	  
+	  <input type='hidden' name='original_option_id' value="{$option_id}" />
+	  <input type='hidden' name='attribute_group_id' value="{$attribute_group_id}" />
+	</table>
+<!-- </form> -->
+<!--修改end-->
+ 
+<script type="text/javascript">
+  
+  var sel={ 
+            getOne:function(){
+				var id=$('.oned').find("option:selected").val();
+				$.ajax({
+				    url:'index.php?route=catalog/attribute_group/getAjaxCategory&token={$token}&id='+id,
+				    dataType:'json',
+					success:function(json){
+					    var l=json.length;
+						var x="<option value=''>--请选择--</option>";
+						if (l>0){
+						    for(var i=0;i<l;i++){
+							    x=x+"<option value="+json[i]['id']+">"+json[i]['id']+"："+json[i]['name']+"</option>";
+							}
+						}else{
+						    x='';
+						}
+					
+					    $('.twod').html(x);
+						$('.threed').html('');
+						$('.fourd').html('');
+					},
+					error:function(){
+					    alert('数据返回错误！');
+					}
+				});
+			    
+			},
+			getTwo:function(){
+			    //var url=sel.getUrl();
+				var id=$('.twod').val();
+				$.ajax({
+				    url:'index.php?route=catalog/attribute_group/getAjaxCategory&token={$token}&id='+id,
+				    dataType:'json',
+					success:function(json){
+					    var l=json.length;
+						var x="<option value=''>--请选择--</option>";
+						if (l>0){
+						    for(var i=0;i<l;i++){
+							    x=x+"<option value="+json[i]['id']+">"+json[i]['id']+"："+json[i]['name']+"</option>";
+							}
+						}else{
+						    x='';
+						}
+					
+					    $('.threed').html(x);
+						$('.fourd').html('');
+					},
+					error:function(){
+					    alert('数据返回错误！');
+					}
+				});
+			    
+			},
+			
+			getThree:function(){
+			    //var url=sel.getUrl();
+				var id=$('.threed').val();
+				$.ajax({
+				    url:'index.php?route=catalog/attribute_group/getAjaxCategory&token={$token}&id='+id,
+				    dataType:'json',
+					success:function(json){
+					    var l=json.length;
+						var x="<option value=''>--请选择--</option>";
+						if (l>0){
+						    for(var i=0;i<l;i++){
+							    x=x+"<option value="+json[i]['id']+">"+json[i]['id']+"："+json[i]['name']+"</option>";
+							}
+						}else{
+						    x='';
+						}
+					
+					    $('.fourd').html(x);
+					},
+					error:function(){
+					    alert('数据返回错误！');
+					}
+				});
+			    
+			},
+			
+			getUrl:function(){
+			    var pathname=location.pathname;
+				var query=location.search;
+				var url=pathname+query;
+				return url;
+			}
+	};
+	
+	$('.oned').bind('change',sel.getOne);
+	$('.twod').bind('change',sel.getTwo);
+	$('.threed').bind('change',sel.getThree);
+
+	
+</script>

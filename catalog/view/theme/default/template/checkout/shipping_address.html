@@ -1,0 +1,130 @@
+{if $addresses}
+<input type="radio" name="shipping_address" value="existing" id="shipping-address-existing" checked="checked" />
+<label for="shipping-address-existing">{$text_address_existing}</label>
+<div id="shipping-existing">
+  <select name="address_id" style="width: 100%; margin-bottom: 15px;" size="5">
+    {loop $addresses   $address}
+    {if $address['address_id'] == $address_id}
+    <option value="{$address['address_id']}" selected="selected">{$address['username']} , {$address['address']},{$address['telephone']},{$address['mobile']},{$address['postcode']}</option>
+     {else}
+    <option value="{$address['address_id']}">{$address['username']} , {$address['address']},{$address['telephone']},{$address['mobile']},{$address['postcode']}</option>
+    {/if}
+    {/loop}
+  </select>
+</div>
+<p>
+  <input type="radio" name="shipping_address" value="new" id="shipping-address-new" />
+  <label for="shipping-address-new">{$text_address_new}</label>
+</p>
+{/if}
+<div id="shipping-new" style="display: {($addresses ? 'none' : 'block')};">
+  <table class="form">
+    <tr>
+      <td><span class="required">*</span> {$entry_username}</td>
+      <td><input type="text" name="username" value="" class="large-field" /></td>
+    </tr>
+    <tr>
+      <td><span class="required">*</span> {$entry_mobile}</td>
+      <td><input type="text" name="mobile" value="" class="large-field" /></td>
+    </tr>
+	
+	<tr>
+      <td><span class="required">*</span> {$entry_telephone}</td>
+      <td><input type="text" name="telephone" value="" class="large-field" /></td>
+    </tr>
+    <tr>
+    <tr>
+      <td>{$entry_company}</td>
+      <td><input type="text" name="company" value="" class="large-field" /></td>
+    </tr>
+    <tr>
+      <td><span class="required">*</span> {$entry_address}</td>
+      <td><input type="text" name="address" value="" class="large-field" /></td>
+    </tr>
+    
+      <td><span id="shipping-postcode-required" class="required">*</span> {$entry_postcode}</td>
+      <td><input type="text" name="postcode" value="" class="large-field" /></td>
+    </tr>
+    <!-- <tr>
+      <td><span class="required">*</span> {$entry_country}</td>
+      <td><select name="country_id" class="large-field">
+          <option value="">{$text_select}</option>
+          {loop $countries   $country}
+          {if $country['country_id'] == $country_id}
+          <option value="{$country['country_id']}" selected="selected">{$country['name']}</option>
+           {else}
+          <option value="{$country['country_id']}">{$country['name']}</option>
+         {/if}
+         {/loop}
+        </select></td>
+    </tr>
+    <tr>
+      <td><span class="required">*</span> {$entry_zone}</td>
+      <td><select name="zone_id" class="large-field">
+        </select></td>
+    </tr> -->
+  </table>
+</div>
+<br />
+<div class="buttons">
+  <div class="right">
+    <input type="button" value="{$button_continue}" id="button-shipping-address" class="button" />
+  </div>
+</div>
+<script type="text/javascript"><!--
+$('#shipping-address input[name=\'shipping_address\']').live('change', function() {
+	if (this.value == 'new') {
+		$('#shipping-existing').hide();
+		$('#shipping-new').show();
+	} else {
+		$('#shipping-existing').show();
+		$('#shipping-new').hide();
+	}
+});
+//--></script> 
+<script type="text/javascript"><!--
+/*
+$('#shipping-address select[name=\'country_id\']').bind('change', function() {
+	$.ajax({
+		url: 'index.php?route=checkout/checkout/country&country_id=' + this.value,
+		dataType: 'json',
+		beforeSend: function() {
+			$('#shipping-address select[name=\'country_id\']').after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
+		},
+		complete: function() {
+			$('.wait').remove();
+		},			
+		success: function(json) {
+			if (json['postcode_required'] == '1') {
+				$('#shipping-postcode-required').show();
+			} else {
+				$('#shipping-postcode-required').hide();
+			}
+			
+			html = '<option value="">{$text_select}</option>';
+			
+			if (json['zone'] != '') {
+				for (i = 0; i < json['zone'].length; i++) {
+        			html += '<option value="' + json['zone'][i]['zone_id'] + '"';
+	    			
+					if (json['zone'][i]['zone_id'] == '{$zone_id}') {
+	      				html += ' selected="selected"';
+	    			}
+	
+	    			html += '>' + json['zone'][i]['name'] + '</option>';
+				}
+			} else {
+				html += '<option value="0" selected="selected">{$text_none}</option>';
+			}
+			
+			$('#shipping-address select[name=\'zone_id\']').html(html);
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+
+$('#shipping-address select[name=\'country_id\']').trigger('change');
+*/
+//--></script>

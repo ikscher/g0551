@@ -1,0 +1,91 @@
+{$header}
+<!--个人中心body_begin-->
+<div class="mainContent clear">
+ 	<!--左侧begin-->
+	{$left}
+ 	<!--左侧end-->
+    <!--右侧begin-->
+	<div class="right">
+         <!--my subscription-->
+        	<div class="account_box">
+			    <div class="ac_bgs clearfix">
+                    <div class="ac_t_l">我的订阅</div>
+                    <div class="ac_t_r">
+                        <div class="ac_t_l_s"><img src="catalog/view/theme/default/image/member/pic_account_title_011.gif" /></div>
+                        <div class="account_contianer">
+                        	<h4 class="line">订阅本站最新动态 &nbsp;&nbsp;&nbsp;&nbsp;<span >{if isset($success)}{$success}{/if}</span></h4>
+                            <div class="line_bot">
+								<div class="content">
+								<!--个人设置-->
+								<form action="{$action}" method="post" enctype="multipart/form-data">
+									 <table class="form" width="650">
+										<tr>
+										  <td align="right">{$entry_newsletter}</td>
+										  <td>{if $newsletter}<label for="sbcp1"><input type="radio" id="sbcp1" name="newsletter" value="1" checked="checked" />
+											是&nbsp;</label>
+											<label for="sbcp2"><input type="radio" id="sbcp2" name="newsletter" value="0"  />
+											否            </label></td>
+											 {else}
+											 <label for="sbcp1"><input type="radio" id="sbcp1" name="newsletter" value="1" />
+											是&nbsp;</label>
+											<label for="sbcp2"><input type="radio" id="sbcp2" name="newsletter" value="0" checked="checked" />
+											否            </label></td>
+											{/if}
+										</tr>
+										<tr>
+										  <td align="right"><!-- <a href="{$back}" class="button"><img src="catalog/view/theme/default/image/cancel.gif" /></a> --></td>
+										  
+										  <td><input class="p_btn_s" type="submit" value="我要订阅" /></td>
+										</tr>
+									  </table>
+								  </form>
+								<!--个人设置结束-->
+								</div>
+							</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end-->
+		 
+    </div>
+</div>
+{$footer}
+
+
+
+
+<!-- {$header}{$column_left}{$column_right}
+<div id="content">{$content_top}
+  <div class="breadcrumb">
+    {loop $breadcrumbs   $breadcrumb}
+    {$breadcrumb['separator']}<a href="{$breadcrumb['href']}">{$breadcrumb['text']}</a>
+    {/loop}
+  </div>
+  <h1>{$heading_title}</h1>
+  <form action="{$action}" method="post" enctype="multipart/form-data">
+    <div class="content">
+      <table class="form">
+        <tr>
+          <td>{$entry_newsletter}</td>
+          <td>{if $newsletter}
+            <input type="radio" name="newsletter" value="1" checked="checked" />
+            {$text_yes}&nbsp;
+            <input type="radio" name="newsletter" value="0" />
+            {$text_no}
+             {else}
+            <input type="radio" name="newsletter" value="1" />
+            {$text_yes}&nbsp;
+            <input type="radio" name="newsletter" value="0" checked="checked" />
+            {$text_no}
+            {/if}</td>
+        </tr>
+      </table>
+    </div>
+    <div class="buttons">
+      <div class="left"><a href="{$back}" class="button">{$button_back}</a></div>
+      <div class="right"><input type="submit" value="{$button_continue}" class="button" /></div>
+    </div>
+  </form>
+  {$content_bottom}</div>
+{$footer} -->

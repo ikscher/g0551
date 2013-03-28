@@ -1,0 +1,191 @@
+{$header}
+<script type="text/javascript" src="catalog/view/javascript/initial_css_jquery.js"></script>
+
+<script type="text/javascript"><!--
+$(function(){$('#promotion').cnckSuperMarquee({distance: 760,duration: 30,time: 6,direction: 'left',navId:'#promotion_nv'});});
+$(function(){$('#brand_c').cnckSuperMarquee({distance: 810,duration: 50,time: 8,direction: 'left',btnGo:{left:'#brand_z',right:'#brand_y'}});});
+MyCYAutoTabCon=setInterval("cnckMyAutoTabCon('#rankingl_list_ta','#rankingl_list_co')",3000);  
+//-->
+</script>
+<!--content begin-->
+<div id="con" class="wp cl">
+	<div id="con_z" class="z">
+		<!--classify_promotion_brand 960*510-->
+		<div class="classify_promotion_brand h">
+			<!--左侧分类列表begin-->
+			{$left}
+            <!--左侧分类列表end-->
+
+			<div class="promotion_box z h">
+				<div id="promotion" class="promotion h">
+				<ul>
+					<li class="z"><img src="catalog/view/theme/default/image/nousefulpic/ad4.gif" width="760" height="420" alt="promotion" /></li>
+					<li class="z"><img src="catalog/view/theme/default/image/nousefulpic/ad1.gif" width="760" height="420" alt="promotion" /></li>
+					<li class="z"><img src="catalog/view/theme/default/image/nousefulpic/ad2.gif" width="760" height="420" alt="promotion" /></li>
+				</ul>				
+				</div>
+				<div id="promotion_nv" class="cl"><ul></ul></div>
+			</div>
+			
+			<div class="brand_box cl h">
+				<div id="brand_z" class="brand_z z"></div>
+				<div id="brand_c" class="brand_c z h">
+					{$brand}
+				</div>
+				<div id="brand_y" class="brand_y z"></div>
+			</div>
+		</div>
+		<!--classify_promotion_brand over-->
+		
+		
+		<!--rankinfg_ad_list over-->
+		
+		<!--foods 960*x-->
+		<div class="live cl h">
+			<dl class="staircase cl">
+				<dt><div class="ltitle"></div></dt>
+				<dd class="live_pro_box h">
+					<!--楼盘大观begin-->
+					    {loop $house $h}
+						    <dl>
+								<dd><a href="index.php?route=product/product&product_id={$h['product_id']}"><img src="{$h['image']}" width="180" height="135" title="{$h['name']}" /></a></dd>
+								<dd class="txt"><a href="index.php?route=product/product&product_id={$h['product_id']}">{$h['shortname']}</a></dd><dd class="txt"><a class="f_h" href="index.php?route=product/product&product_id={$h['product_id']}">均价 ¥{$h['price']}</a></dd>
+							</dl>
+						{/loop}
+					<!--楼盘大观end-->
+				</dd>
+				<dd class="foods_ad cl h"><a href="#"><img src="catalog/view/theme/default/image/nousefulpic/house001_960x90.gif" width="960" height="90" alt="foods_ad" /></a></dd>
+			</dl>
+			<dl class="guesthouse cl">
+				<dt><div class="ltitle"></div></dt>
+				<dd class="live_pro_box h">
+				    <!--宾馆酒店-->
+				    {loop $hotel $v}
+					<dl>
+						<dd><a href="index.php?route=product/product&product_id={$v['product_id']}"><img src="{$v['image']}" width="180" height="135" title="{$v['name']}" /></a></dd>
+						<dd class="txt"><a href="index.php?route=product/product&product_id={$v['product_id']}">{$v['shortname']}</a></dd><dd class="txt"><span class="f_h">价格 ¥{$v['price']}</span></dd>
+					</dl>
+					{/loop}
+					<!--宾馆酒店-->
+				</dd>
+				<dd class="foods_ad cl h"><a href="#"><img src="catalog/view/theme/default/image/nousefulpic/house002_960x90.gif" width="960" height="90" alt="foods_ad" /></a></dd>
+			</dl>
+			<dl class="fitting cl">
+				<dt><div class="ltitle"></div></dt>
+				<dd class="live_pro_box h">
+				    {loop $furniture $f}
+					<dl>
+						<dd><a href="index.php?route=product/product&product_id={$f['product_id']}"><img src="{$f['image']}" width="180" height="135" title="{$f['name']}" /></a></dd>
+						<dd class="txt"><a href="index.php?route=product/product&product_id={$f['product_id']}">{$v['shortname']}</a></dd><dd class="txt"><span class="f_h">价格 ¥{$v['price']}</span></dd>
+					</dl>
+					{/loop}
+				</dd>
+				<dd class="foods_ad cl h"><a href="#"><img src="catalog/view/theme/default/image/nousefulpic/house003_960x90.gif" width="960" height="90" alt="foods_ad" /></a></dd>
+			</dl>
+		</div>
+		<!--clothes over-->
+	</div>
+	
+	
+	
+	<div id="con_y" class="z">
+
+		<!--linfomation_lads 240*510-->
+			<dl class="linfomation h">
+				<dt><font class="f2 f_q z">市场消息</font><a href="#" class="y">更多>></a></dt>
+				<!-- <dd class="tip"><a href="#">楼市天气播报：黄金周宅交不给力</a></dd>
+				<dd class="tip"><a href="#">楼市天气播报：黄金周宅交不给力</a></dd>
+				<dd class="tip"><a href="#">楼市天气播报：黄金周宅交不给力</a></dd>
+				<dd class="tip"><a href="#">楼市天气播报：黄金周宅交不给力</a></dd>
+				<dd class="tip"><a href="#">楼市天气播报：黄金周宅交不给力</a></dd>
+				<dd class="tip"><a href="#">楼市天气播报：黄金周宅交不给力</a></dd> -->
+			</dl>
+			<dl class="lads"><a href="#"><img src="catalog/view/theme/default/image/nousefulpic/house001_240x130.gif" width="240" height="130" alt="lads" /></a></dl>
+			<dl class="lads"><a href="#"><img src="catalog/view/theme/default/image/nousefulpic/house001_240x140.gif" width="240" height="140" alt="lads" /></a></dl>
+		<!--/div-->
+		<!--linfomation_lads over-->
+		
+		<!--ltools_lfaction 240*210+240*90-->
+        <!--
+			<dl class="ltools h">
+				<dt><font class="f2 f_q z">使用工具</font></dt>
+				<dd>
+					<div class="tc"><p><a href="#"><img src="img/ico/tool1.jpg" width="46" height="46" alt="tools" /></a></p><p><a href="#">风格测试</a></p></div>
+					<div class="tc"><p><a href="#"><img src="img/ico/tool2.jpg" width="46" height="46" alt="tools" /></a></p><p><a href="#">装饰问答</a></p></div>
+					<div class="tc"><p><a href="#"><img src="img/ico/tool3.jpg" width="46" height="46" alt="tools" /></a></p><p><a href="#">DIY装修设计</a></p></div>
+					<div class="tc"><p><a href="#"><img src="img/ico/tool4.jpg" width="46" height="46" alt="tools" /></a></p><p><a href="#">装修预算</a></p></div>
+					<div class="tc"><p><a href="#"><img src="img/ico/tool5.jpg" width="46" height="46" alt="tools" /></a></p><p><a href="#">涂料计算器</a></p></div>
+					<div class="tc"><p><a href="#"><img src="img/ico/tool6.jpg" width="46" height="46" alt="tools" /></a></p><p><a href="#">装修百科</a></p></div>
+				</dd>
+			</dl>
+			<dl class="lfaction h">
+				<dd class="tip"><a href="#">建材帮派</a></dd>
+				<dd class="tip"><a href="#">五金电工帮派</a></dd>
+				<dd class="tip"><a href="#">家具帮派</a></dd>
+				<dd class="tip"><a href="#">家饰布艺帮派</a></dd>
+				<dd class="tip"><a href="#">家纺帮派</a></dd>
+				<dd class="tip"><a href="#">品牌入驻</a></dd>
+			</dl>
+            -->
+		<!--ltools_lfaction over-->
+		<!--top_live 240*400-->
+			<dl class="top_live top_live_s h">
+				<dt><font class="f2 f_q">推荐楼盘</font></dt>
+				<!-- <dd class="top_live_ddt"><div class="ldiv1">楼盘名称</div><div class="ldiv2">区属</div><div class="ldiv3">均价</div></dd>
+				<dd><div class="ldiv1"><a href="#">通和易居同辉</a></div><div class="ldiv2"><a href="#">蜀山</a></div><div class="ldiv3"><a class="f_c" href="#">一房一价</a></div></dd>
+				<dd><div class="ldiv1"><a href="#">尚泽国际</a></div><div class="ldiv2"><a href="#">经开</a></div><div class="ldiv3 f_c"><a class="f_c" href="#">5400元/㎡</a></div></dd>
+				<dd><div class="ldiv1"><a href="#">通和易居同辉</a></div><div class="ldiv2"><a href="#">蜀山</a></div><div class="ldiv3 f_c"><a class="f_c" href="#">一房一价</a></div></dd>
+				<dd><div class="ldiv1"><a href="#">尚泽国际</a></div><div class="ldiv2"><a href="#">经开</a></div><div class="ldiv3 f_c"><a class="f_c" href="#">5400元/㎡</a></div></dd>
+				<dd><div class="ldiv1"><a href="#">通和易居同辉</a></div><div class="ldiv2"><a href="#">蜀山</a></div><div class="ldiv3 f_c"><a class="f_c" href="#">一房一价</a></div></dd>
+				<dd><div class="ldiv1"><a href="#">尚泽国际</a></div><div class="ldiv2"><a href="#">经开</a></div><div class="ldiv3 f_c"><a class="f_c" href="#">5400元/㎡</a></div></dd>
+				<dd><div class="ldiv1"><a href="#">通和易居同辉</a></div><div class="ldiv2"><a href="#">蜀山</a></div><div class="ldiv3 f_c"><a class="f_c" href="#">一房一价</a></div></dd>
+				<dd><div class="ldiv1"><a href="#">尚泽国际</a></div><div class="ldiv2"><a href="#">经开</a></div><div class="ldiv3 f_c"><a class="f_c" href="#">5400元/㎡</a></div></dd>
+				<dd><div class="ldiv1"><a href="#">通和易居同辉</a></div><div class="ldiv2"><a href="#">蜀山</a></div><div class="ldiv3 f_c"><a class="f_c" href="#">一房一价</a></div></dd>
+				<dd><div class="ldiv1"><a href="#">尚泽国际</a></div><div class="ldiv2"><a href="#">经开</a></div><div class="ldiv3 f_c"><a class="f_c" href="#">5400元/㎡</a></div></dd> -->
+			</dl>
+		<!--top_ranking over-->
+		<!--lads-------------->
+			<dl><a href="#"><img src="catalog/view/theme/default/image/nousefulpic/house001_240x90.gif" width="240" height="90" alt="fads" /></a></dl>
+		<!--lads-------------->
+		<!--top_live 240*400-->
+			<dl class="top_live top_live_g h">
+				<!-- <dt><font class="f2 f_q">特价酒店</font></dt>
+				<dd><div class="lgdiv1 h">1</div><div class="lgdiv2 h"><a class="f_la" href="#">香港迪斯尼好莱坞酒店</a></div><div class="lgdiv3 h"><a class="f3 f_c" href="#">￥1250起</a></div></dd>
+				<dd><div class="lgdiv1 h">2</div><div class="lgdiv2 h"><a class="f_la" href="#">三亚美高美酒店</a></div><div class="lgdiv3 h"><a class="f3 f_c" href="#">￥950起</a></div></dd>
+				<dd><div class="lgdiv1 h">3</div><div class="lgdiv2 h"><a class="f_la" href="#">香港迪斯尼好莱坞酒店</a></div><div class="lgdiv3 h"><a class="f3 f_c" href="#">￥1250起</a></div></dd>
+				<dd><div class="lgdiv1 h">4</div><div class="lgdiv2 h"><a class="f_la" href="#">三亚美高美酒店</a></div><div class="lgdiv3 h"><a class="f3 f_c" href="#">￥950起</a></div></dd>
+				<dd><div class="lgdiv1 h">5</div><div class="lgdiv2 h"><a class="f_la" href="#">香港迪斯尼好莱坞酒店</a></div><div class="lgdiv3 h"><a class="f3 f_c" href="#">￥1250起</a></div></dd>
+				<dd><div class="lgdiv1 h">6</div><div class="lgdiv2 h"><a class="f_la" href="#">三亚美高美酒店</a></div><div class="lgdiv3 h"><a class="f3 f_c" href="#">￥950起</a></div></dd>
+				<dd><div class="lgdiv1 h">7</div><div class="lgdiv2 h"><a class="f_la" href="#">香港迪斯尼好莱坞酒店</a></div><div class="lgdiv3 h"><a class="f3 f_c" href="#">￥1250起</a></div></dd>
+				<dd><div class="lgdiv1 h">8</div><div class="lgdiv2 h"><a class="f_la" href="#">三亚美高美酒店</a></div><div class="lgdiv3 h"><a class="f3 f_c" href="#">￥950起</a></div></dd>
+				<dd><div class="lgdiv1 h">9</div><div class="lgdiv2 h"><a class="f_la" href="#">香港迪斯尼好莱坞酒店</a></div><div class="lgdiv3 h"><a class="f3 f_c" href="#">￥1250起</a></div></dd>
+				<dd><div class="lgdiv1 h">10</div><div class="lgdiv2 h"><a class="f_la" href="#">三亚美高美酒店</a></div><div class="lgdiv3 h"><a class="f3 f_c" href="#">￥950起</a></div></dd> -->
+			</dl>
+		<!--top_ranking over-->
+		<!--lads-------------->
+			<dl><a href="#"><img src="catalog/view/theme/default/image/nousefulpic/house002_240x90.gif" width="240" height="90" alt="fads" /></a></dl>
+		<!--lads-------------->
+		<!--top_live 240*400-->
+			<dl class="top_live top_live_f h">
+				<dt><font class="f2 f_q">热门风格</font></dt>
+				<!-- <dd>
+					<div class="tc"><p><a href="#"><img src="catalog/view/theme/default/image/nousefulpic/lpros3.gif" width="70" height="70" alt="top_live_f" /></a></p><p><a href="#">简易衣柜</a></p></div>
+					<div class="tc"><p><a href="#"><img src="catalog/view/theme/default/image/nousefulpic/lpros4.gif" width="70" height="70" alt="top_live_f" /></a></p><p><a href="#">皮艺沙发</a></p></div>					
+					<div class="tc"><p><a href="#"><img src="catalog/view/theme/default/image/nousefulpic/lpros4.gif" width="70" height="70" alt="top_live_f" /></a></p><p><a href="#">皮艺沙发</a></p></div>
+					<div class="tc"><p><a href="#"><img src="catalog/view/theme/default/image/nousefulpic/lpros3.gif" width="70" height="70" alt="top_live_f" /></a></p><p><a href="#">简易衣柜</a></p></div>
+					<div class="tc"><p><a href="#"><img src="catalog/view/theme/default/image/nousefulpic/lpros3.gif" width="70" height="70" alt="top_live_f" /></a></p><p><a href="#">简易衣柜</a></p></div>
+					<div class="tc"><p><a href="#"><img src="catalog/view/theme/default/image/nousefulpic/lpros4.gif" width="70" height="70" alt="top_live_f" /></a></p><p><a href="#">皮艺沙发</a></p></div>	
+				</dd> -->
+			</dl>
+		<!--top_ranking over-->
+		<!--lads-------------->
+			<dl><a href="#"><img src="catalog/view/theme/default/image/nousefulpic/house003_240x90.gif" width="240" height="90" alt="fads" /></a></dl>
+		<!--lads-------------->
+	</div>
+</div>
+<div class="cl_div"></div>
+<!--content over-->
+<script type="text/javascript">
+    gotoTop();//返回顶部
+</script>
+{$footer}

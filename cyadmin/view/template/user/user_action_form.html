@@ -1,0 +1,51 @@
+<link rel="stylesheet" type="text/css" href="view/stylesheet/general.css">
+<link rel="stylesheet" type="text/css" href="view/stylesheet/main.css">
+<script type="text/javascript" src="view/javascript/jquery/jquery-1.7.1.min.js"></script>
+
+    <h1><img src="view/image/user.png" alt="" /> {$heading_title}
+        <span class="action-span">
+		    <a href='javascript:void(0)' onclick="$('#form').submit();" class="button">{$button_save}</a>
+			<a href='javascript:void(0)' onclick="location = '{$cancel}';" class="button">{$button_cancel}</a> 
+		</span>
+    </h1>
+	
+    <div class="list-div" id="listDiv">
+      <form action="{$action}" method="post" enctype="multipart/form-data" id="form">
+        <table class="form">
+          <tr>
+            <td><span class="required">*</span> {$column_navcode}</td>
+            <td><input type="text" name="navcode" value="{$navcode}" />
+              {if $error_navcode}
+              <span class="error">{$error_navcode}</span>
+              {/if}</td> 
+          </tr>
+          <tr>
+            <td><span class="required">*</span> {$column_navdesc}</td>
+            <td><input type="text" name="navdesc" value="{$navdesc}" />
+             {if $error_navdesc}
+              <span class="error">{$error_navdesc}</span>
+             {/if}</td> 
+          </tr>
+         
+          <tr>
+            <td>{$column_actioncode}</td>
+            <td><input type="text" name="actioncode" value="{$actioncode}" />
+			{if $error_actioncode}
+              <span class="error">{$error_actioncode}</span>
+             {/if}
+			</td>
+          </tr>
+          
+          <tr>
+            <td>{$column_actiondesc}</td>
+            <td><input type="text" name="actiondesc" value="{$actiondesc}"  />
+			{if $error_actiondesc}
+              <span class="error">{$error_actiondesc}</span>
+             {/if}
+			</td>
+          </tr>
+          
+          
+        </table>
+      </form>
+    </div>

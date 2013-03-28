@@ -1,0 +1,47 @@
+
+<link rel="stylesheet" type="text/css" href="view/stylesheet/general.css">
+<link rel="stylesheet" type="text/css" href="view/stylesheet/main.css">
+<script type="text/javascript" src="view/javascript/jquery/jquery-1.7.1.min.js"></script>
+<style type="text/css">
+tr.over td {
+	background:#cfeefe;
+} 
+</style>
+    <h1><img src="view/image/module.png" alt="" /> {$heading_title}</h1>
+
+    <div class="list-div" id="listDiv">
+      <table class="list">
+        <thead>
+          <tr>
+            <td class="left">{$column_name}</td>
+            <td class="right">{$column_action}</td>
+          </tr>
+        </thead>
+        <tbody>
+          {if $extensions}
+          {loop $extensions   $extension}
+          <tr>
+            <td class="left">{$extension['name']}</td>
+            <td class="right">{loop $extension['action']   $action}
+               <a href="javascript:;" onclick="parent.addTab('编辑模块','{$action[href]}')">{$action['text']}</a>&nbsp;
+              {/loop}</td>
+          </tr>
+           {/loop}
+           {else}
+          <tr>
+            <td class="center" colspan="8">{$text_no_results}</td>
+          </tr>
+         {/if}
+        </tbody>
+      </table>
+    </div>
+<script type="text/javascript">
+$(function(){
+	$(".list tr").mouseover(function(){
+		$(this).addClass("over");
+	}).mouseout(function(){
+		$(this).removeClass("over");	
+	})
+
+});
+</script>

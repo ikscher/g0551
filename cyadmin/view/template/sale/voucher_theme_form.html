@@ -1,0 +1,66 @@
+<link rel="stylesheet" type="text/css" href="view/stylesheet/general.css">
+<link rel="stylesheet" type="text/css" href="view/stylesheet/main.css">
+<script type="text/javascript" src="view/javascript/jquery/jquery-1.7.1.min.js"></script><!--这里只能用1.7.1的版本,否则自带的图片处理有问题-->
+<script type="text/javascript" src="view/javascript/jquery/ui/jquery-ui-1.8.16.custom.min.js"></script>
+<link type="text/css" href="view/javascript/jquery/ui/themes/ui-lightness/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
+    
+	<h1><img src="view/image/payment.png" alt="" /> {$heading_title}
+        <span class="action-span">
+		     <a  href="javascript:;" onclick="$('#form').submit();" class="button">{$button_save}</a>
+			<!--  <a onclick="location = '{$cancel}';" class="button">{$button_cancel}</a> -->
+		</span>
+    </h1>
+	
+    <div class="list-div" id="listDiv">
+      <form action="{$action}" method="post" enctype="multipart/form-data" id="form">
+        <table class="form">
+          <tr>
+            <td><span class="required">*</span> {$entry_name}</td>
+            <td>
+              <input type="text" name="voucher_theme_description" value="{if isset($voucher_theme_description)} {$voucher_theme_description}{/if}" />
+             
+              {if isset($error_name)}
+              <span class="error">{$error_name}</span><br />
+              {/if}
+             </td>
+          </tr>
+          <tr>
+            <td>{$entry_image}</td>
+            <td valign="top"><div class="image"><img src="{$thumb}" alt="" id="thumb" />
+                <input type="hidden" name="image" value="{$image}" id="image" />
+                <br /><a href="javascript:;" onclick="image_upload('image', 'thumb');">{$text_browse}</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="javascript:;" onclick="$('#thumb').attr('src', '{$no_image}'); $('#image').attr('value', '');">{$text_clear}</a></div>
+              {if $error_image}
+              <span class="error">{$error_image}</span>
+              {/if}</td>
+          </tr>
+        </table>
+      </form>
+    </div>
+
+<script type="text/javascript"><!--
+function image_upload(field, thumb) {
+	$('#dialog').remove();
+	
+	$('#listDiv').prepend('<div id="dialog" style="padding: 3px 0px 0px 0px;"><iframe src="index.php?route=common/filemanager&token={$token}&field=' + encodeURIComponent(field) + '" style="padding:0; margin: 0; display: block; width: 100%; height: 100%;" frameborder="no" scrolling="auto"></iframe></div>');
+	
+	$('#dialog').dialog({
+		title: '{$text_image_manager}',
+		close: function (event, ui) {
+			if ($('#' + field).attr('value')) {
+				$.ajax({
+					url: 'index.php?route=common/filemanager/image&token={$token}&image=' + encodeURIComponent($('#' + field).val()),
+					dataType: 'text',
+					success: function(data) {
+						$('#' + thumb).replaceWith('<img src="' + data + '" alt="" id="' + thumb + '" />');
+					}
+				});
+			}
+		},	
+		bgiframe: false,
+		width: 800,
+		height: 400,
+		resizable: false,
+		modal: false
+	});
+};
+//--></script> 

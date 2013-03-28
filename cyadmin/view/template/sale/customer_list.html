@@ -1,0 +1,222 @@
+<link rel="stylesheet" type="text/css" href="view/stylesheet/main.css">
+<link rel="stylesheet" type="text/css" href="view/stylesheet/general.css?v=20130318">
+<script type="text/javascript" src="view/javascript/jquery/jquery-1.7.1.min.js"></script><!--这里只能用1.7.1的版本,否则自带的图片处理有问题-->
+<script type="text/javascript" src="view/javascript/jquery/ui/jquery-ui-1.8.16.custom.min.js"></script>
+<link type="text/css" href="view/javascript/jquery/ui/themes/ui-lightness/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
+
+    <h1><img src="view/image/customer.png" alt="" /> {$heading_title}
+        <span class="action-span">
+		<!-- <a href="{$insert}" class="insert">{$button_insert}</a> -->
+		<a href="javascript:void(0);" class="delete">{$button_delete}</a>
+		<a href="{$refresh}"  class="save">{$button_refresh}</a>
+	    </span>
+    </h1>
+	
+	
+      
+              {$column_name}<input type="text" name="filter_name" value="{$filter_name}" />
+              {$column_email}<input type="text" name="filter_email" value="{$filter_email}" />
+             {$column_customer_group} <select name="filter_customer_group_id">
+                  <option value="*"></option>
+                  {loop $customer_groups   $customer_group}
+                  {if $customer_group['customer_group_id'] == $filter_customer_group_id}
+                  <option value="{$customer_group['customer_group_id']}" selected="selected">{$customer_group['name']}</option>
+                   {else}
+                  <option value="{$customer_group['customer_group_id']}">{$customer_group['name']}</option>
+                  {/if}
+                 {/loop}
+                </select>
+              {$column_status}<select name="filter_status">
+                  <option value="*"></option>
+                  {if $filter_status}
+                  <option value="1" selected="selected">{$text_enabled}</option>
+                   {else}
+                  <option value="1">{$text_enabled}</option>
+                  {/if}
+                  {if !is_null($filter_status) && !$filter_status}
+                  <option value="0" selected="selected">{$text_disabled}</option>
+                   {else}
+                  <option value="0">{$text_disabled}</option>
+                {/if}
+                </select>
+             
+              {$column_ip}<input type="text" name="filter_ip" value="{$filter_ip}" /></td>
+              {$column_date_added}<input type="text" name="filter_date_added" value="{$filter_date_added}" size="12" id="date" />
+              
+              <a href="javascript:void(0);"  onclick="filter();">{$button_filter}</a>
+   
+    	
+    <div class="list-div" id="listDiv">
+      <form action="{$delete}" method="post" enctype="multipart/form-data" id="form" >
+        <table class="list">
+          <thead>
+            <tr>
+              <td width="1" class="center"><input type="checkbox" onclick="$('input[name*=\'selected\']').attr('checked', this.checked);" /></td>
+              <td class="center">{if $sort == 'name'}
+                <a href="{$sort_name}" class="{strtolower($order)}">{$column_name}</a>
+                 {else}
+                <a href="{$sort_name}">{$column_name}</a>
+                {/if}</td>
+              <td class="center">{if $sort == 'c.email'}
+                <a href="{$sort_email}" class="{strtolower($order)}">{$column_email}</a>
+                 {else}
+                <a href="{$sort_email}">{$column_email}</a>
+               {/if}</td>
+              <td class="left">{if $sort == 'customer_group'}
+                <a href="{$sort_customer_group}" class="{strtolower($order)}">{$column_customer_group}</a>
+                 {else}
+                <a href="{$sort_customer_group}">{$column_customer_group}</a>
+               {/if}</td>
+              <td class="center">{if $sort == 'c.status'}
+                <a href="{$sort_status}" class="{strtolower($order)}">{$column_status}</a>
+                 {else}
+                <a href="{$sort_status}">{$column_status}</a>
+               {/if}</td>
+             <!--  <td class="left">{if $sort == 'c.approved'}
+                <a href="{$sort_approved}" class="{strtolower($order)}">{$column_approved}</a>
+                 {else}
+                <a href="{$sort_approved}">{$column_approved}</a>
+                {/if}</td> -->
+              <td class="center">{if $sort == 'c.ip'}
+                <a href="{$sort_ip}" class="{strtolower($order)}">{$column_ip}</a>
+                 {else}
+                <a href="{$sort_ip}">{$column_ip}</a>
+                {/if}</td>
+              <td class="center">{if $sort == 'c.date_added'}
+                <a href="{$sort_date_added}" class="{strtolower($order)}">{$column_date_added}</a>
+                 {else}
+                <a href="{$sort_date_added}">{$column_date_added}</a>
+                {/if}</td>
+              <td class="center">{$column_login}</td>
+              <td class="center">{$column_action}</td>
+            </tr>
+          </thead>
+          <tbody>
+            
+            {if $customers}
+            {loop $customers   $customer}
+            <tr>
+              <td class="center">{if $customer['selected']}
+                <input type="checkbox" name="selected[]" value="{$customer['customer_id']}" checked="checked" />
+                 {else}
+                <input type="checkbox" name="selected[]" value="{$customer['customer_id']}" />
+               {/if}</td>
+              <td class="left">{$customer['username']}</td>
+              <td class="left">{$customer['email']}</td>
+              <td class="left">{$customer['customer_group']}</td>
+              <td class="left">{$customer['status']}</td>
+              <!-- <td class="left">{$customer['approved']}</td> -->
+              <td class="left">{$customer['ip']}</td>
+              <td class="left">{$customer['date_added']}</td>
+              <td></td>
+              <td class="right">{loop $customer['action']   $action}
+                 <a href="{$action['href']}">{$action['text']}</a> 
+                {/loop}</td>
+            </tr>
+            {/loop}
+             {else}
+            <tr>
+              <td class="center" colspan="9">{$text_no_results}</td>
+            </tr>
+           {/if}
+          </tbody>
+        </table>
+      </form>
+      <div class="pagination">{$pagination}</div>
+    </div>
+
+<script type="text/javascript"><!--
+function filter() {
+	url = 'index.php?route=sale/customer&token={$token}';
+	
+	var filter_name = $('input[name=\'filter_name\']').attr('value');
+	
+	if (filter_name) {
+		url += '&filter_name=' + encodeURIComponent(filter_name);
+	}
+	
+	var filter_email = $('input[name=\'filter_email\']').attr('value');
+	
+	if (filter_email) {
+		url += '&filter_email=' + encodeURIComponent(filter_email);
+	}
+
+	
+	var filter_customer_group_id = $('select[name=\'filter_customer_group_id\']').attr('value');
+	
+	if (filter_customer_group_id != '*') {
+		url += '&filter_customer_group_id=' + encodeURIComponent(filter_customer_group_id);
+	}	
+	
+	var filter_status = $('select[name=\'filter_status\']').attr('value');
+	
+	if (filter_status != '*') {
+		url += '&filter_status=' + encodeURIComponent(filter_status); 
+	}	
+	
+	//var filter_approved = $('select[name=\'filter_approved\']').attr('value');
+	
+	//if (filter_approved != '*') {
+	//	url += '&filter_approved=' + encodeURIComponent(filter_approved);
+	//}	
+	
+	var filter_ip = $('input[name=\'filter_ip\']').attr('value');
+	
+	if (filter_ip) {
+		url += '&filter_ip=' + encodeURIComponent(filter_ip);
+	}
+		
+	var filter_date_added = $('input[name=\'filter_date_added\']').attr('value');
+	
+	if (filter_date_added) {
+		url += '&filter_date_added=' + encodeURIComponent(filter_date_added);
+	}
+	
+	location= url;
+}
+
+
+
+//--></script>
+<script type="text/javascript"><!--
+$(document).ready(function() {
+	$('#date').datepicker({dateFormat: 'yy-mm-dd'});
+});
+//--></script>
+<script type="text/javascript">
+$(function(){
+	$(".list tr").mouseover(function(){
+		$(this).addClass("over");
+	}).mouseout(function(){
+		$(this).removeClass("over");	
+	})
+
+});
+
+
+
+function checkForm(){
+    var sum=0;
+    $("input[name^='select']").each(function(i,n){
+		if($(this).prop("checked")==true){
+		   sum++;
+		}
+  
+    });
+  
+    if(sum<1) {
+       alert("请选择要删除的项！");
+	   return false;
+    }
+    
+	return true;
+};
+
+$(".delete").click(function(){
+    if (checkForm()){
+		if(confirm("您确认删除吗?")){
+			$('form').submit();
+		}
+    }		
+});
+</script>

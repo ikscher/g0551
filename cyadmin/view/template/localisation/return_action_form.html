@@ -1,0 +1,28 @@
+<link rel="stylesheet" type="text/css" href="view/stylesheet/general.css">
+<link rel="stylesheet" type="text/css" href="view/stylesheet/main.css">
+<script type="text/javascript" src="view/javascript/jquery/jquery-1.7.1.min.js"></script><!--这里只能用1.7.1的版本,否则自带的图片处理有问题-->
+<script type="text/javascript" src="view/javascript/jquery/ui/jquery-ui-1.8.16.custom.min.js"></script>
+<link type="text/css" href="view/javascript/jquery/ui/themes/ui-lightness/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
+
+    <h1><img src="view/image/order.png" alt="" /> {$heading_title}
+        <span class="action-span">
+		    <a href="javascript:;" onclick="$('#form').submit();" class="button">{$button_save}</a>
+		    <!-- <a onclick="location = '{$cancel}';" class="button">{$button_cancel}</a> -->
+		</span>
+    </h1>
+    <div class="list-div" id="listDiv">
+      <form action="{$action}" method="post" enctype="multipart/form-data" id="form">
+        <table class="form">
+          <tr>
+            <td><span class="required">*</span> {$entry_name}</td>
+            <td>
+              <input type="text" name="return_action" value="{if isset($return_action)} {$return_action}{/if}" />
+             <br />
+              {if isset($error_name)}
+              <span class="error">{$error_name}</span><br />
+               {/if}
+             </td>
+          </tr>
+        </table>
+      </form>
+    </div>

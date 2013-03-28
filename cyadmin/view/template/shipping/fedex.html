@@ -1,0 +1,260 @@
+{$header}
+<div id="content">
+  <div class="breadcrumb">
+    {loop $breadcrumbs   $breadcrumb}
+    {$breadcrumb['separator']}<a href="{$breadcrumb['href']}">{$breadcrumb['text']}</a>
+    {/loop}
+  </div>
+  {if $error_warning}
+  <div class="warning">{$error_warning}</div>
+   {/if}
+            
+  <div class="box">
+    <div class="heading">
+      <h1><img src="view/image/shipping.png" alt="" /> {$heading_title}</h1>
+      <div class="buttons"><a onclick="$('#form').submit();" class="button">{$button_save}</a><a onclick="location = '{$cancel}';" class="button">{$button_cancel}</a></div>
+    </div>
+    <div class="content">
+      <form action="{$action}" method="post" enctype="multipart/form-data" id="form">
+        <table class="form">
+          <tr>
+            <td><span class="required">*</span> {$entry_key}</td>
+            <td><input type="text" name="fedex_key" value="{$fedex_key}" />
+              {if $error_key}
+              <span class="error">{$error_key}</span>
+              {/if}</td>
+          </tr>
+          <tr>
+            <td><span class="required">*</span> {$entry_password}</td>
+            <td><input type="text" name="fedex_password" value="{$fedex_password}" />
+              {if $error_password}
+              <span class="error">{$error_password}</span>
+              {/if}</td>
+          </tr>
+          <tr>
+            <td><span class="required">*</span> {$entry_account}</td>
+            <td><input type="text" name="fedex_account" value="{$fedex_account}" />
+              {if $error_account}
+              <span class="error">{$error_account}</span>
+              {/if}</td>
+          </tr>
+          <tr>
+            <td><span class="required">*</span> {$entry_meter}</td>
+            <td><input type="text" name="fedex_meter" value="{$fedex_meter}" />
+              {if $error_meter}
+              <span class="error">{$error_meter}</span>
+              {/if}</td>
+          </tr>
+          <tr>
+            <td><span class="required">*</span> {$entry_postcode}</td>
+            <td><input type="text" name="fedex_postcode" value="{$fedex_postcode}" />
+              {if $error_postcode}
+              <span class="error">{$error_postcode}</span>
+              {/if}</td>
+          </tr>          
+          <tr>
+            <td>{$entry_test}</td>
+            <td>{if $fedex_test}
+              <input type="radio" name="fedex_test" value="1" checked="checked" />
+              {$text_yes}
+              <input type="radio" name="fedex_test" value="0" />
+              {$text_no}
+               {else}
+              <input type="radio" name="fedex_test" value="1" />
+              {$text_yes}
+              <input type="radio" name="fedex_test" value="0" checked="checked" />
+              {$text_no}
+              {/if}</td>
+          </tr>
+          <tr>
+            <td>{$entry_service}</td>
+            <td><div class="scrollbox">
+               {php $class = 'odd'}
+                {loop $services   $service}
+                {php $class = ($class == 'even' ? 'odd' : 'even')}
+                <div class="{$class}">
+                  {if in_array($service['value'], $fedex_service)}
+                  <input type="checkbox" name="fedex_service[]" value="{$service['value']}" checked="checked" />
+                  {$service['text']}
+                   {else}
+                  <input type="checkbox" name="fedex_service[]" value="{$service['value']}" />
+                  {$service['text']}
+                  {/if}
+                </div>
+               {/loop}
+              </div>
+              <a onclick="$(this).parent().find(':checkbox').attr('checked', true);">{$text_select_all}</a> / <a onclick="$(this).parent().find(':checkbox').attr('checked', false);">{$text_unselect_all}</a></td>
+          </tr>
+          <tr>
+            <td>{$entry_dropoff_type}</td>
+            <td><select name="fedex_dropoff_type">
+                {if $fedex_dropoff_type == 'REGULAR_PICKUP'}
+                <option value="REGULAR_PICKUP" selected="selected">{$text_regular_pickup}</option>
+                 {else}
+                <option value="REGULAR_PICKUP">{$text_regular_pickup}</option>
+                {/if}
+                {if $fedex_dropoff_type == 'REQUEST_COURIER'}
+                <option value="REQUEST_COURIER" selected="selected">{$text_request_courier}</option>
+                 {else}
+                <option value="REQUEST_COURIER">{$text_request_courier}</option>
+                {/if}
+                {if $fedex_dropoff_type == 'DROP_BOX'}
+                <option value="DROP_BOX" selected="selected">{$text_drop_box}</option>
+                 {else}
+                <option value="DROP_BOX">{$text_drop_box}</option>
+               {/if}
+                {if $fedex_dropoff_type == 'BUSINESS_SERVICE_CENTER'}
+                <option value="BUSINESS_SERVICE_CENTER" selected="selected">{$text_business_service_center}</option>
+                 {else}
+                <option value="BUSINESS_SERVICE_CENTER">{$text_business_service_center}</option>
+                {/if}
+                {if $fedex_dropoff_type == 'STATION'}
+                <option value="STATION" selected="selected">{$text_station}</option>
+                 {else}
+                <option value="STATION">{$text_station}</option>
+               {/if}
+              </select></td>
+          </tr>
+          <tr>
+            <td>{$entry_packaging_type}</td>
+            <td><select name="fedex_packaging_type">
+                {if $fedex_packaging_type == 'FEDEX_ENVELOPE'}
+                <option value="FEDEX_ENVELOPE" selected="selected">{$text_fedex_envelope}</option>
+                 {else}
+                <option value="FEDEX_ENVELOPE">{$text_fedex_envelope}</option>
+                {/if}
+                {if $fedex_packaging_type == 'FEDEX_PAK'}
+                <option value="FEDEX_PAK" selected="selected">{$text_fedex_pak}</option>
+                 {else}
+                <option value="FEDEX_PAK">{$text_fedex_pak}</option>
+                {/if}
+                {if $fedex_packaging_type == 'FEDEX_BOX'}
+                <option value="FEDEX_BOX" selected="selected">{$text_fedex_box}</option>
+                 {else}
+                <option value="FEDEX_BOX">{$text_fedex_box}</option>
+               {/if}
+                {if $fedex_packaging_type == 'FEDEX_TUBE'}
+                <option value="FEDEX_TUBE" selected="selected">{$text_fedex_tube}</option>
+                 {else}
+                <option value="FEDEX_TUBE">{$text_fedex_tube}</option>
+               {/if}
+                {if $fedex_packaging_type == 'FEDEX_10KG_BOX'}
+                <option value="FEDEX_10KG_BOX" selected="selected">{$text_fedex_10kg_box}</option>
+                 {else}
+                <option value="FEDEX_10KG_BOX">{$text_fedex_10kg_box}</option>
+                {/if}
+                {if $fedex_packaging_type == 'STATION'}
+                <option value="FEDEX_25KG_BOX" selected="selected">{$text_fedex_25kg_box}</option>
+                 {else}
+                <option value="FEDEX_25KG_BOX">{$text_fedex_25kg_box}</option>
+                {/if}
+                {if $fedex_packaging_type == 'STATION'}
+                <option value="YOUR_PACKAGING" selected="selected">{$text_your_packaging}</option>
+                 {else}
+                <option value="YOUR_PACKAGING">{$text_your_packaging}</option>
+              {/if}                         
+              </select></td>
+          </tr> 
+          <tr>
+            <td>{$entry_rate_type}</td>
+            <td><select name="fedex_rate_type">
+                {if $fedex_rate_type == 'LIST'}
+                <option value="LIST" selected="selected">{$text_list_rate}</option>
+                 {else}
+                <option value="LIST">{$text_list_rate}</option>
+                {/if}
+                {if $fedex_rate_type == 'ACCOUNT'}
+                <option value="ACCOUNT" selected="selected">{$text_account_rate}</option>
+                 {else}
+                <option value="ACCOUNT">{$text_account_rate}</option>
+                {/if}
+              </select></td>
+          </tr>    
+		  <tr>
+            <td>{$entry_display_time}</td>
+            <td>{if $fedex_display_time}
+              <input type="radio" name="fedex_display_time" value="1" checked="checked" />
+              {$text_yes}
+              <input type="radio" name="fedex_display_time" value="0" />
+              {$text_no}
+               {else}
+              <input type="radio" name="fedex_display_time" value="1" />
+              {$text_yes}
+              <input type="radio" name="fedex_display_time" value="0" checked="checked" />
+              {$text_no}
+              {/if}</td>
+          </tr>
+          <tr>
+            <td>{$entry_display_weight}</td>
+            <td>{if $fedex_display_weight}
+              <input type="radio" name="fedex_display_weight" value="1" checked="checked" />
+              {$text_yes}
+              <input type="radio" name="fedex_display_weight" value="0" />
+              {$text_no}
+               {else}
+              <input type="radio" name="fedex_display_weight" value="1" />
+              {$text_yes}
+              <input type="radio" name="fedex_display_weight" value="0" checked="checked" />
+              {$text_no}
+              {/if}</td>
+          </tr>              
+          <tr>
+            <td>{$entry_weight_class}</td>
+            <td><select name="fedex_weight_class_id">
+                {loop $weight_classes   $weight_class}
+                {if $weight_class['weight_class_id'] == $fedex_weight_class_id}
+                <option value="{$weight_class['weight_class_id']}" selected="selected">{$weight_class['title']}</option>
+                 {else}
+                <option value="{$weight_class['weight_class_id']}">{$weight_class['title']}</option>
+                {/if}
+                {/loop}
+              </select></td>
+          </tr>                                
+          <tr>
+            <td>{$entry_tax_class}</td>
+            <td><select name="fedex_tax_class_id">
+                <option value="0">{$text_none}</option>
+                {loop $tax_classes   $tax_class}
+                {if $tax_class['tax_class_id'] == $fedex_tax_class_id}
+                <option value="{$tax_class['tax_class_id']}" selected="selected">{$tax_class['title']}</option>
+                 {else}
+                <option value="{$tax_class['tax_class_id']}">{$tax_class['title']}</option>
+ {/if}
+                {/loop}
+              </select></td>
+          </tr>          
+          <tr>
+            <td>{$entry_geo_zone}</td>
+            <td><select name="fedex_geo_zone_id">
+                <option value="0">{$text_all_zones}</option>
+                {loop $geo_zones   $geo_zone}
+                {if $geo_zone['geo_zone_id'] == $fedex_geo_zone_id}
+                <option value="{$geo_zone['geo_zone_id']}" selected="selected">{$geo_zone['name']}</option>
+                 {else}
+                <option value="{$geo_zone['geo_zone_id']}">{$geo_zone['name']}</option>
+                {/if}
+                {/loop}
+              </select></td>
+          </tr>
+          <tr>
+            <td>{$entry_status ?></td>
+            <td><select name="fedex_status">
+                {if $fedex_status}
+                <option value="1" selected="selected">{$text_enabled}</option>
+                <option value="0">{$text_disabled}</option>
+                 {else}
+                <option value="1">{$text_enabled}</option>
+                <option value="0" selected="selected">{$text_disabled}</option>
+               {/if}
+              </select></td>
+          </tr>
+          <tr>
+            <td>{$entry_sort_order}</td>
+            <td><input type="text" name="fedex_sort_order" value="{$fedex_sort_order}" size="1" /></td>
+          </tr>
+        </table>
+      </form>
+    </div>
+  </div>
+</div>
+{$footer}

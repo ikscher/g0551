@@ -1,0 +1,106 @@
+<link rel="stylesheet" type="text/css" href="view/stylesheet/general.css">
+<link rel="stylesheet" type="text/css" href="view/stylesheet/main.css">
+<script type="text/javascript" src="view/javascript/jquery/jquery-1.7.1.min.js"></script>
+
+<style type="text/css">
+tr.over td {
+	background:#cfeefe;
+} 
+</style>
+    <h1><img src="view/image/setting.png" alt="" /> {$heading_title}
+        <span class="action-span">
+		    <a href="{$insert}" class="button">{$button_insert}</a>
+			<a href="javascript:void(0);"  class="button">{$button_delete}</a>
+			<a href="{$refresh}" class="button">{$button_refresh}</a>
+			
+		</span>
+    </h1>
+    <div class="list-div" id="listDiv">
+      <form action="{$delete}" method="post" enctype="multipart/form-data" id="form" onsubmit="return checkForm();">
+        <table class="list">
+          <thead>
+            <tr>
+              <td  style="text-align: center;"><input type="checkbox" onclick="$('input[name*=\'selected\']').attr('checked', this.checked);" /></td>
+              <td style="text-align:center">ID</td>
+			  <td style="text-align:center">{$column_group}</td>
+			  <td style="text-align:center">{$column_key}</td>
+              <td style="text-align:center">{$column_value}</td>
+              <td style="text-align:center">{$column_serialized}</td>
+			  <td></td>
+		
+            </tr>
+          </thead>
+		  {if !empty($enviorments)}
+          <tbody>
+            
+				{loop $enviorments   $e}
+				<tr>
+				  <td style="text-align: center;">{if $e['selected']}
+					<input type="checkbox" name="selected[]" value="{$e['setting_id']}" checked="checked" />
+					 {else}
+					<input type="checkbox" name="selected[]" value="{$e['setting_id']}" />
+					{/if}</td>
+				  <td class="left">{$e['setting_id']}</td>
+				  <td class="group">{if isset($e['group'])}{$e['group']}{/if}</td>
+				  <td class="left">{if isset($e['key'])}{$e['key']}{/if}</td>
+				  <td class="left">{if isset($e['value'])}{$e['value']}{/if}</td>
+				  <td class="left">{if isset($e['serialized'])}{$e['serialized']}{/if}</td>
+				  <td class="left"><a href="{$e['action']}" >{$text_edit}</a></td>
+				</tr>
+				{/loop}
+				
+           
+          </tbody>
+		  <tfoot>
+				 <tr class="pagination"><td colspan="7">{$pagination}</td></tr>
+				</tfoot>
+		 {else}
+		       <tr><td style="text-align:center" colspan="7">{$text_no_results}</td></tr>
+			 {/if}
+        </table>
+      </form>
+	 
+    </div>
+<script type="text/javascript">
+$(function(){
+	$(".list tr").mouseover(function(){
+		$(this).addClass("over");
+	}).mouseout(function(){
+		$(this).removeClass("over");	
+	})
+
+});
+
+$(".action-span a:eq(1)").click(function(){
+    if(checkForm()){
+		if(confirm('您确认删除吗?')){
+		   $('form').submit();
+		}
+	}
+});
+
+
+function checkForm(){
+    var sum=0;
+    $("input[name^='select']").each(function(i,n){
+		if($(this).prop("checked")==true){
+		   sum++;
+		}
+  
+    });
+  
+    if(sum<1) {
+       alert("请选择要删除的项！");
+	   return false;
+    }
+	
+	return true;
+
+};
+
+$(".group").css({"cursor":"pointer","color":"red"});
+$(".group").click(function(){
+   var group=$(this).text();
+   location.href="index.php?route=setting/enviorment&token={$token}&group="+encodeURIComponent(group);
+});
+</script>

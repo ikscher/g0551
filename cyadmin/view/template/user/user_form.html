@@ -1,0 +1,80 @@
+<link rel="stylesheet" type="text/css" href="view/stylesheet/general.css">
+<link rel="stylesheet" type="text/css" href="view/stylesheet/main.css">
+<script type="text/javascript" src="view/javascript/jquery/jquery-1.7.1.min.js"></script>
+
+    <h1><img src="view/image/user.png" alt="" /> {$heading_title}
+        <span class="action-span">
+		    <a href='javascript:void(0)' onclick="$('#form').submit();" class="button">{$button_save}</a>
+			<a href='javascript:void(0)' onclick="location = '{$cancel}';" class="button">{$button_cancel}</a> 
+		</span>
+    </h1>
+	
+    <div class="list-div" id="listDiv">
+      <form action="{$action}" method="post" enctype="multipart/form-data" id="form">
+        <table class="form">
+          <tr>
+            <td><span class="required">*</span> {$entry_username}</td>
+            <td><input type="text" name="username" value="{$username}" />
+              {if $error_username}
+              <span class="error">{$error_username}</span>
+              {/if}</td>
+          </tr>
+         <!--  <tr>
+            <td><span class="required">*</span> {$entry_firstname}</td>
+            <td><input type="text" name="firstname" value="{$firstname}" />
+              {if $error_firstname}
+              <span class="error">{$error_firstname}</span>
+             {/if}</td>
+          </tr>
+          <tr>
+            <td><span class="required">*</span> {$entry_lastname}</td>
+            <td><input type="text" name="lastname" value="{$lastname}" />
+              {if $error_lastname}
+              <span class="error">{$error_lastname}</span>
+              {/if}</td>
+          </tr> -->
+          <tr>
+            <td>{$entry_email}</td>
+            <td><input type="text" name="email" value="{$email}" /></td>
+          </tr>
+          <tr>
+            <td>{$entry_user_group}</td>
+            <td><select name="user_group_id">
+                {loop $user_groups   $user_group}
+                {if $user_group['user_group_id'] == $user_group_id}
+                <option value="{$user_group['user_group_id']}" selected="selected">{$user_group['name']}</option>
+                 {else}
+                <option value="{$user_group['user_group_id']}">{$user_group['name']}</option>
+                {/if}
+                {/loop}
+              </select></td>
+          </tr>
+          <tr>
+            <td>{$entry_password}</td>
+            <td><input type="password" name="password" value="{$password}"  />
+              {if $error_password}
+              <span class="error">{$error_password}</span>
+              {/if}</td>
+          </tr>
+          <tr>
+            <td>{$entry_confirm}</td>
+            <td><input type="password" name="confirm" value="{$confirm}" />
+              {if $error_confirm}
+              <span class="error">{$error_confirm}</span>
+             {/if}</td>
+          </tr>
+          <tr>
+            <td>{$entry_status}</td>
+            <td><select name="status">
+                {if $status}
+                <option value="0">{$text_disabled}</option>
+                <option value="1" selected="selected">{$text_enabled}</option>
+                 {else}
+                <option value="0" selected="selected">{$text_disabled}</option>
+                <option value="1">{$text_enabled}</option>
+               {/if}
+              </select></td>
+          </tr>
+        </table>
+      </form>
+    </div>

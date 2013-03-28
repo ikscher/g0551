@@ -1,0 +1,125 @@
+@charset "utf-8";
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,form,fieldset,legend,input,button,textarea,p,th,td{margin:0;padding:0}
+h1,h2,h3,h4,h5,h6,input,select,textarea{font-size:100%}
+table{border-collapse:collapse}
+ul,ol{list-style:none}
+em,i,address{font-style:normal}
+fieldset,img{border:0}img{vertical-align:bottom}
+.clearfix:after{content:'.';height:0;display:block;clear:both;visibility:hidden}
+.clearfix{*height:1%}select{height:20px}
+.hidden{display:none}input{outline:0;background:#fff}
+.fl{float:left}
+.fr{float:right}
+.mgc{margin:0 auto}body{font:12px/18px Arial,\5B8B\4F53,sans-serif;color:#787878}
+.clearfont{font:0/0px Arial}
+a,a:hover{text-decoration:none;outline:0;cursor:pointer;color:#4b4344}
+.shadow{box-shadow:0 0 4px #d4d4d7;-webkit-box-shadow:0 0 4px #d4d4d7;border:0 none;border:0 none\9;*border:1px solid #d4d4d7;_border:1px solid #d4d4d7}
+body{background:#f2f0f2;background-image:url(about:blank);background-attachment:fixed}
+.jL_sprite,.IUIT_icon,.IUIT_arrow{background:url(../image/login/Login_sprite.png) no-repeat}
+.login_bg{background:#f2f0f2 url(../image/login/login_bg.jpg) center bottom no-repeat}
+.reg_bg{background:#f2f0f2 url(../image/login/reg_bg.jpg) center bottom no-repeat}
+.baseWidth{width:928px;display:block}
+#header{height:100px;padding-top:15px;padding-bottom:15px;overflow:hidden}
+.logo{width:290px;height:98px;background-position:0 0;float:left;display:block;margin:0 0 0 9px}
+.channel,.channer{width:50px;height:20px;background-position:0 -100px;float:left;display:block;margin:65px 0 0 0}
+.channer{background-position:-50px -100px}
+
+#content{margin:0 0 4px 0;width:431px;position:relative;height:538px;z-index:1}
+.CB_content div.CB_OA_click{height:538px}
+
+.content_bg{position:absolute;top:35px;left:0;display:block;width:431px;z-index:2}
+.CB_top,.CB_bottom{width:431px;height:2px;background-position:0 -400px;display:block}
+.CB_content{width:429px;border:solid #d7d4d6;border-width:0 1px}
+.CB_content div{border:solid #fff;border-width:0 1px;width:427px;height:419px;background:#d9d4d9;filter:alpha(opacity=20);-moz-opacity:.2;-khtml-opacity:.2;opacity:.2;filter:alpha(opacity=20)}
+
+.CB_bottom{background-position:0 -402px}
+.login_form,.reg_form{height:508px;display:block;width:427px;padding:0 0 0 1px;position:relative;z-index:10}
+.nav_bar{height:32px;display:block}
+.nav_bar span{font:12px/32px Arial,\5B8B\4F53;color:#808080;display:inline-block}
+.nav_bar span a{color:#ff6600}
+.nav_bar span a:hover{text-decoration:underline}
+.form_title{width:40px;height:20px;display:block}
+.form_content{display:block;margin-top:26px;padding:0 0 0 34px}
+.input_ul,.input_ul li{display:block}
+.input_ul li,.input_ul li dl{height:36px}
+.input_ul li{padding-bottom:18px;padding-bottom:18px\9;*padding-bottom:16px;_padding-bottom:14px}
+.input_ul li dl{float:left;white-space:nowrap}
+.input_ul .IU_title{width:68px;color:#787878;text-align:right;font:14px/36px \5B8B\4F53}
+.input_ul .IU_title img{margin-top:15px}
+.input_ul .IU_input{text-align:left;padding-left:12px}
+.input_ul .IU_tip{font:12px/36px \5B8B\4F53;padding-left:65px;display:none}
+.input_ul .IU_tip_TL{font:12px/18px \5B8B\4F53;padding-left:65px}
+.input_ul .IU_wrong{position:relative}
+.input_ul .IU_input .IUI_tip{position:absolute;top:-15px;left:12px;display:none}
+.input_ul .IU_wrong .IUI_tip{display:block;height:20px;background-color:#f7ecf1;border:1px solid #db5c95;font:12px/20px \5B8B\4F53;color:#db5c95;padding-left:9px;width:119px}
+.input_ul .IU_wrong .IUI_tip_L{width:179px}
+
+
+.IUIT_content{white-space:nowrap}
+.IUI_box_L,.IUI_box_S{height:16px;border:1px solid #dad8da;padding:9px 0 9px 10px;text-align:left;display:block;font:14px/16px \5B8B\4F53;color:#a6a6a6}
+.IUI_box_L{width:248px}
+.IUI_box_S {width:138px}
+.IUIB_L_Hover,.IUIB_S_Hover,.IU_wrong .IUI_box_L,.IU_wrong .IUI_box_S{color:#808080;border:1px solid #ef96be;height:20px;padding:7px 0 7px 10px;font:18px/20px \5B8B\4F53}
+.IU_code{padding:1px 0 0 9px}
+.IU_code img{width:54px;height:32px;border:1px solid #edebed;display:block;background:#fff}
+.IU_changCode{padding:0 0 0 10px}.IU_changCode a{font:12px/36px \5B8B\4F53;color:#ff6600}
+.IU_submit,.IU_submit_shadow{width:150px;height:40px;display:block;border:0 none}
+.IU_submit_shadow{height:30px}
+.IU_submit{cursor:pointer}
+.IU_tick{background-position:-450px -250px;width:30px}
+
+/*×¢²áÑ¡Ïî*/
+.tabs_list{ height:35px;float:left; }
+.tabs_list li{float:left;background:url(../image/login/reg_tab.png) -135px 0px;margin-right:6px;width:90px; font-family:"Î¢ÈíÑÅºÚ"; font-size:18px;line-height:35px; height:35px;padding-left:40px; }
+.tabs_list li span{color:#000;font-size:18px;}
+.tabs_list li.current{background-position:0 0; line-height:30px; height:35px;width:90px;padding-left:40px;}
+.tabs_list li.current span{color:#FFF;font-size:18px;line-height:35px; } 
+
+.IUIT_icon{background-position:-459px -200px;height:20px;width:17px;display:inline-block}
+.IUI_tip a{color:#ac728c;margin-left:5px}
+.IUIT_arrow{position:absolute;bottom:-5px;left:8px;width:9px;height:5px;background-position:0 -200px}
+.login_form .IU_input_code{padding-bottom:6px}
+.login_form .IU_submit{background-position:-100px -150px}
+.login_form .IU_submit:hover{background-position:-100px -250px}
+.login_form .IU_submit_shadow{background-position:-100px -190px}
+.IU_forgot{padding:24px 0 0 10px}
+.IU_forgot a{color:#ff6600}
+.other_account{padding-top:25px;_padding-top:0;width:340px;display:block}
+.OA_title{text-align:center;display:block;padding-bottom:16px;color:#ff6600;cursor:pointer}
+.OA_title em{display:inline-block;width:10px;height:12px;background-position:0 -150px}
+.OA_click em{background-position:0 -170px}
+.OA_ul li{float:left;padding:0 8px 11px}
+.OA_ul li.OAU_start{padding:0 8px 0 0}
+.OA_ul li.OAU_line{width:1px;padding:2px 0}
+.OA_ul li.OAU_line div{height:16px;width:1px;background:#e6e1e5}
+.OA_ul li a{width:48px;height:20px;padding:0 0 0 22px;color:#808080;display:block;white-space:nowrap}
+.OAU_sina{background-position:0 -300px}
+.OAU_qq{background-position:-100px -300px}
+.OAU_cft{background-position:-200px -300px}
+.OAU_zfb{background-position:-300px -300px}
+.OAU_rr{background-position:-400px -300px}
+.OAU_wy{background-position:-0px -350px}
+.OAU_kx{background-position:-100px -350px}
+.OAU_ty{background-position:-200px -350px}
+.OAU_139{background-position:-300px -350px}
+.OAU_ccb{background-position:-400px -353px}
+.reg_form{width:600px}
+.reg_form .IUI_sex{width:260px;height:36px}
+.reg_form .IU_input_code{padding-bottom:32px}
+.reg_form .IU_input_submit{padding-bottom:34px;overflow:hidden}
+.IU_sex{height:28px;padding:8px 0 0 0}
+.IU_sex label{height:18px;font:14px/18px \5B8B\4F53;padding:0 40px 0 18px;display:inline-block;float:left;cursor:pointer}
+.IUS_noclick{background-position:0 -250px}
+.IUS_click{background-position:0 -270px}
+.reg_form .IU_submit{background-position:-300px -150px}
+.reg_form .IU_submit:hover{background-position:-300px -250px}
+.reg_form .IU_submit_shadow{background-position:-300px -190px}
+.IU_terms_li{padding-top:10px}
+.IU_terms_li .IU_input .IUI_tip{top:-23px}
+.IU_terms{width:10px;height:10px;border:1px solid #b2b1b3;display:block;margin-top:3px;cursor:pointer;background-position:-60px -200px}
+.IU_terms_Hover{background-position:-50px -200px}
+.IU_terms_text{padding:0 0 0 4px}
+.IU_terms_text a{color:#ff6600}
+#footer{height:92px;text-align:center;padding:64px 0 0 0}
+.ft_text{display:block}
+.ft_icon{margin-top:10px}

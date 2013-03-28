@@ -1,0 +1,33 @@
+{if $error}
+<div class="warning">{$error}</div>
+{/if}
+{if $success}
+<div class="success">{$success}</div>
+{/if}
+<table class="list">
+  <thead>
+    <tr>
+      <td class="left"><b>{$column_date_added}</b></td>
+      <td class="left"><b>{$column_comment}</b></td>
+      <td class="left"><b>{$column_status}</b></td>
+      <td class="left"><b>{$column_notify}</b></td>
+    </tr>
+  </thead>
+  <tbody>
+    {if $histories}
+    {loop $histories   $history}
+    <tr>
+      <td class="left">{$history['date_added']}</td>
+      <td class="left">{$history['comment']}</td>
+      <td class="left">{$history['status']}</td>
+      <td class="left">{$history['notify']}</td>
+    </tr>
+    {/loop}
+     {else}
+    <tr>
+      <td class="center" colspan="4">{$text_no_results}</td>
+    </tr>
+   {/if}
+  </tbody>
+</table>
+<div class="pagination">{$pagination}</div>

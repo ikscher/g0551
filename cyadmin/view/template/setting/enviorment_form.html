@@ -1,0 +1,64 @@
+<link rel="stylesheet" type="text/css" href="view/stylesheet/general.css">
+<link rel="stylesheet" type="text/css" href="view/stylesheet/main.css">
+<script type="text/javascript" src="view/javascript/jquery/jquery-1.7.1.min.js"></script>
+
+<!-- {if isset($error_warning)}{$error_warning}{/if} -->
+    <h1><img src="view/image/setting.png" alt="" /> {$heading_title}
+        <span class="action-span">
+		    <a href="javascript:;" onclick="$('#form').submit();" class="button">{$button_save}</a>
+			<a href="{$cancel}" class="button">{$button_cancel}</a> 
+		</span>
+    </h1>
+	
+    <div class="list-div" id="listDiv">
+      <!-- <div id="tabs" class="htabs"><a href="#tab-general">{$tab_general}</a><a href="#tab-store">{$tab_store}</a><a href="#tab-local">{$tab_local}</a><a href="#tab-option">{$tab_option}</a><a href="#tab-image">{$tab_image}</a><a href="#tab-server">{$tab_server}</a></div> -->
+      <form action="{$action}" method="post" enctype="multipart/form-data" id="form">
+        <div id="tab-general">
+            <table class="form">
+		    
+				<tr>
+				  <td><span class="required">*</span> ID</td>
+				  <td><input type="text" name="setting_id" value="{if isset($enviorment['setting_id'])}{$enviorment['setting_id']}{/if}" readonly size="15" />
+				</tr>
+				<tr>
+				  <td><span class="required">*</span> {$column_group}</td>
+				  <td><input type="text" name="group" value="{if isset($enviorment['group'])}{$enviorment['group']}{/if}" size="50" />{if $error_group}
+					<span class="error">{$error_group}
+					 {/if}</td>
+				</tr>
+				<tr>
+				  <td>{$column_key}</td>
+				  <td><input type="text" name="key" value="{if isset($enviorment['key'])}{$enviorment['key']}{/if}" size="40" />{if $error_key}
+					<span class="error">{$error_key}</span>
+					 {/if}</td>
+				</tr>
+				
+				
+				<tr>
+				  <td><span class="required">*</span> {$column_value}</td>
+				  <td><textarea name="val" rows="5" cols="40"> {if isset($enviorment['value'])}{$enviorment['value']}{/if}</textarea>{if $error_value}
+					<span class="error">{$error_value}</span>
+					 {/if}</span>
+					  </td>
+					
+				</tr>
+				
+				
+				<tr>
+				  <td><span class="required">*</span> {$column_serialized}</td>
+				  <td>
+				        <select name="serial">
+							<option {if isset($enviorment['serialized']) && $enviorment['serialized']==0}selected="selected"{/if} value="0">否</option>
+							<option {if isset($enviorment['serialized']) &&  $enviorment['serialized']==1}selected="selected"{/if} value="1">是</option>
+					    </select>
+				</tr>
+				
+			
+            </table>
+        </div>
+       
+       
+        
+       
+      </form>
+    </div>

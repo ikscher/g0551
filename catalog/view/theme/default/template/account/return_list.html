@@ -1,0 +1,97 @@
+{$header}
+<!--个人中心body_begin-->
+<div class="mainContent clear">
+ 	<!--左侧begin-->
+	{$left}
+ 	<!--左侧end-->
+    <!--右侧begin-->
+	<div class="right">
+         <!--商品退换-->
+        	<div class="account_box">
+            	<div class="ac_bgs clearfix">
+                    <div class="ac_t_l">商品退换</div>
+                    <div class="ac_t_r">
+                        <div class="ac_t_l_s"><img src="catalog/view/theme/default/image/member/pic_account_title_09.gif" /></div>
+                        <div class="account_contianer">
+                        	<h4 class="line">退换货申请</h4>
+                            <div class="line_bot">
+								<div class="list">
+								
+								<!-- <form action="{$orderquery}" method="post" >
+								<table width="720" border="0" align="center" cellpadding="0" cellspacing="0"class="nostyle">
+								  <tr>
+									<td width="70">订单编号：</td>
+									<td width="180"><input name="orderno" type="text" size="22" class="searchInput" /></td>
+									<td><input type="submit" class="p_btn_i float_l" style="margin-left:5px;"   value="查&nbsp;询" /></td>
+								  </tr>
+								</table>
+								</form> -->
+								
+								<table width="720" border="0" align="center" cellspacing="1" class="ordercontent">
+								  
+								  <thead>
+									<td width="20%" align="center" bgcolor="#F5EDE2" class="itemTitle">退换号</td>
+									<td width="20%" align="center" bgcolor="#F5EDE2" class="itemTitle">状态</td>
+									<td width="15%" align="center" bgcolor="#F5EDE2" class="itemTitle">新增日期</td>
+									<td width="20%" align="center" bgcolor="#F5EDE2" class="itemTitle">订单号</td>
+									<td align="center" bgcolor="#F5EDE2" class="itemTitle">操作</td>
+								  </thead>
+								  <tbody>
+								  {if $returns}
+	                                    {loop $returns   $return}
+										  <tr bgcolor="#F6F6F6">
+											<td align="center" bgcolor="#FFFFFF">{$return['return_id']}</td>
+											<td align="center" bgcolor="#FFFFFF">￥{$return['status']}</td>
+											<td align="center" bgcolor="#FFFFFF">{$return['date_added']}</td>
+											<td align="center" bgcolor="#FFFFFF">{$return['order_id']}</td>
+											<td align="center" bgcolor="#FFFFFF"><a href="{$return['href']}"><img src="catalog/view/theme/default/image/info.png" alt="{$button_view}" title="{$button_view}" /></a></td>
+										  </tr>
+								       {/loop}
+										 <tr class="pagination"><td colspan="5" align="right">{$pagination}</td></tr>
+								   {else}
+									   <tr class="content"><td colspan="5" align='center'>{$text_empty}</td></tr>
+					
+								   {/if}
+								  </tbody>
+								</table>
+                            <!--个人设置结束-->
+							</div>
+							
+							</div>
+                        </div>
+                    </div>
+                </div>
+            </div>	
+    </div>
+</div>
+<!--
+<div id="content">
+  <div class="breadcrumb">
+    {loop $breadcrumbs   $breadcrumb}
+    {$breadcrumb['separator']}<a href="{$breadcrumb['href']}">{$breadcrumb['text']}</a>
+    {/loop}
+  </div>
+  <h1>{$heading_title}</h1>
+  {if $returns}
+	  {loop $returns   $return}
+	  <div class="return-list">
+		<div class="return-id"><b>{$text_return_id}</b> #{$return['return_id']}</div>
+		<div class="return-status"><b>{$text_status}</b> {$return['status']}</div>
+		<div class="return-content">
+		  <div><b>{$text_date_added}</b> {$return['date_added']}<br />
+			<b>{$text_order_id}</b> {$return['order_id']}</div>
+		  <div><b>{$text_customer}</b> {$return['name']}</div>
+		  <div class="return-info"><a href="{$return['href']}"><img src="catalog/view/theme/default/image/info.png" alt="{$button_view}" title="{$button_view}" /></a></div>
+		</div>
+	  </div>
+	  {/loop}
+	  <div class="pagination">{$pagination}</div>
+   {else}
+      <div class="content">{$text_empty}</div>
+  {/if}
+  <div class="buttons">
+    <div class="right"><a href="{$continue}" class="button">{$button_continue}</a></div>
+  </div>
+  </div>
+-->
+{$footer}

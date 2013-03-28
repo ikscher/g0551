@@ -1,0 +1,976 @@
+<link rel="stylesheet" type="text/css" href="view/stylesheet/general.css">
+<link rel="stylesheet" type="text/css" href="view/stylesheet/main.css">
+<script type="text/javascript" src="view/javascript/jquery/jquery-1.7.1.min.js"></script><!--这里只能用1.7.1的版本,否则自带的图片处理有问题-->
+<script type="text/javascript" src="view/javascript/jquery/ui/jquery-ui-1.8.16.custom.min.js"></script>
+<link type="text/css" href="view/javascript/jquery/ui/themes/ui-lightness/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
+<script type="text/javascript" src="view/javascript/jquery/tabs.js"></script>
+
+    <h1><img src="view/image/setting.png" alt="" /> {$heading_title}
+        <span class="action-span">
+		    <a href="javascript:;" onclick="$('#form').submit();" class="button">{$button_save}</a>
+			<!-- <a onclick="location = '{$cancel}';" class="button">{$button_cancel}</a> -->
+		</span>
+    </h1>
+	
+    <div class="list-div" id="listDiv">
+      <div id="tabs" class="htabs"><a href="#tab-general">{$tab_general}</a><a href="#tab-store">{$tab_store}</a><a href="#tab-local">{$tab_local}</a><a href="#tab-option">{$tab_option}</a><a href="#tab-image">{$tab_image}</a><a href="#tab-mail">{$tab_mail}</a><a href="#tab-fraud">{$tab_fraud}</a><a href="#tab-server">{$tab_server}</a></div>
+      <form action="{$action}" method="post" enctype="multipart/form-data" id="form">
+        <div id="tab-general">
+          <table class="form">
+            <tr>
+              <td><span class="required">*</span> {$entry_name}</td>
+              <td><input type="text" name="config_name" value="{$config_name}" size="40" />
+                {if $error_name}
+                <span class="error">{$error_name}</span>
+                {/if}</td>
+            </tr>
+            <tr>
+              <td><span class="required">*</span> {$entry_owner}</td>
+              <td><input type="text" name="config_owner" value="{$config_owner}" size="40" />
+                {if $error_owner}
+                <span class="error">{$error_owner}</span>
+                {/if}</td>
+            </tr>
+            <tr>
+              <td><span class="required">*</span> {$entry_address}</td>
+              <td><textarea name="config_address" cols="40" rows="5">{$config_address}</textarea>
+                {if $error_address}
+                <span class="error">{$error_address}</span>
+                {/if}</td>
+            </tr>
+            <tr>
+              <td><span class="required">*</span> {$entry_email}</td>
+              <td><input type="text" name="config_email" value="{$config_email}" size="40" />
+                {if $error_email}
+                <span class="error">{$error_email}</span>
+                {/if}</td>
+            </tr>
+            <tr>
+              <td><span class="required">*</span> {$entry_telephone}</td>
+              <td><input type="text" name="config_telephone" value="{$config_telephone}" />
+                {if $error_telephone}
+                <span class="error">{$error_telephone}</span>
+                {/if}</td>
+            </tr>
+            <tr>
+              <td>{$entry_fax}</td>
+              <td><input type="text" name="config_fax" value="{$config_fax}" /></td>
+            </tr>
+          </table>
+        </div>
+        <div id="tab-store">
+          <table class="form">
+            <tr>
+              <td><span class="required">*</span> {$entry_title}</td>
+              <td><input type="text" name="config_title" value="{$config_title}" />
+                {if $error_title}
+                <span class="error">{$error_title}</span>
+                {/if}</td>
+            </tr>
+            <tr>
+              <td>{$entry_meta_description}</td>
+              <td><textarea name="config_meta_description" cols="40" rows="5">{$config_meta_description}</textarea></td>
+            </tr>
+            <tr>
+              <td>{$entry_template}</td>
+              <td><select name="config_template" onchange="$('#template').load('index.php?route=setting/setting/template&token={$token}&template=' + encodeURIComponent(this.value));">
+                  {loop $templates   $template}
+                  {if $template == $config_template}
+                  <option value="{$template}" selected="selected">{$template}</option>
+                   {else}
+                  <option value="{$template}">{$template}</option>
+                  {/if}
+                  {/loop}
+                </select></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td id="template"></td>
+            </tr>
+            <tr>
+              <td>{$entry_layout}</td>
+              <td><select name="config_layout_id">
+                  {loop $layouts   $layout}
+                  {if $layout['layout_id'] == $config_layout_id}
+                  <option value="{$layout['layout_id']}" selected="selected">{$layout['name']}</option>
+                   {else}
+                  <option value="{$layout['layout_id']}">{$layout['name']}</option>
+                 {/if}
+                 {/loop}
+                </select></td>
+            </tr>
+          </table>
+        </div>
+        <div id="tab-local">
+          <table class="form">
+            <tr>
+              <td>{$entry_country}</td>
+              <td><select name="config_country_id">
+                  {loop $countries   $country}
+                  {if $country['country_id'] == $config_country_id}
+                  <option value="{$country['country_id']}" selected="selected">{$country['name']}</option>
+                   {else}
+                  <option value="{$country['country_id']}">{$country['name']}</option>
+                  {/if}
+                 {/loop}
+                </select></td>
+            </tr>
+            <tr>
+              <td>{$entry_zone}</td>
+              <td><select name="config_zone_id">
+                </select></td>
+            </tr>
+            <tr>
+              <td>{$entry_language}</td>
+              <td><select name="config_language">
+                  {loop $languages   $language}
+                  {if $language['code'] == $config_language}
+                  <option value="{$language['code']}" selected="selected">{$language['name']}</option>
+                   {else}
+                  <option value="{$language['code']}">{$language['name']}</option>
+                  {/if}
+                 {/loop}
+                </select></td>
+            </tr>
+            <tr>
+              <td>{$entry_admin_language}</td>
+              <td><select name="config_admin_language">
+                  {loop $languages   $language}
+                  {if $language['code'] == $config_admin_language}
+                  <option value="{$language['code']}" selected="selected">{$language['name']}</option>
+                   {else}
+                  <option value="{$language['code']}">{$language['name']}</option>
+                  {/if}
+                 {/loop}
+                </select></td>
+            </tr>
+            <tr>
+              <td>{$entry_currency}</td>
+              <td><select name="config_currency">
+                  {loop $currencies   $currency}
+                  {if $currency['code'] == $config_currency}
+                  <option value="{$currency['code']}" selected="selected">{$currency['title']}</option>
+                   {else}
+                  <option value="{$currency['code']}">{$currency['title']}</option>
+                   {/if}
+                 {/loop}
+                </select></td>
+            </tr>
+            <tr>
+              <td>{$entry_currency_auto}</td>
+              <td>{if $config_currency_auto}
+                <input type="radio" name="config_currency_auto" value="1" checked="checked" />
+                {$text_yes}
+                <input type="radio" name="config_currency_auto" value="0" />
+                {$text_no}
+                 {else}
+                <input type="radio" name="config_currency_auto" value="1" />
+                {$text_yes}
+                <input type="radio" name="config_currency_auto" value="0" checked="checked" />
+                {$text_no}
+                {/if}</td>
+            </tr>
+            <tr>
+              <td>{$entry_length_class}</td>
+              <td><select name="config_length_class_id">
+                  {loop $length_classes   $length_class}
+                  {if $length_class['length_class_id'] == $config_length_class_id}
+                  <option value="{$length_class['length_class_id']}" selected="selected">{$length_class['title']}</option>
+                   {else}
+                  <option value="{$length_class['length_class_id']}">{$length_class['title']}</option>
+                  {/if}
+                 {/loop}
+                </select></td>
+            </tr>
+            <tr>
+              <td>{$entry_weight_class}</td>
+              <td><select name="config_weight_class_id">
+                  {loop $weight_classes   $weight_class}
+                  {if $weight_class['weight_class_id'] == $config_weight_class_id}
+                  <option value="{$weight_class['weight_class_id']}" selected="selected">{$weight_class['title']}</option>
+                   {else}
+                  <option value="{$weight_class['weight_class_id']}">{$weight_class['title']}</option>
+                  {/if}
+                 {/loop}
+                </select></td>
+            </tr>
+          </table>
+        </div>
+        <div id="tab-option">
+          <h2>{$text_items}</h2>
+          <table class="form">
+            <tr>
+              <td><span class="required">*</span> {$entry_catalog_limit}</td>
+              <td><input type="text" name="config_catalog_limit" value="{$config_catalog_limit}" size="3" />
+                {if $error_catalog_limit}
+                <span class="error">{$error_catalog_limit}</span>
+                {/if}</td>
+            </tr>
+            <tr>
+              <td><span class="required">*</span> {$entry_admin_limit}</td>
+              <td><input type="text" name="config_admin_limit" value="{$config_admin_limit}" size="3" />
+                {if $error_admin_limit}
+                <span class="error">{$error_admin_limit}</span>
+                {/if}</td>
+            </tr>
+          </table>
+          <h2>{$text_product}</h2>
+          <table class="form">
+            <tr>
+              <td>{$entry_product_count}</td>
+              <td>{if $config_product_count}
+                <input type="radio" name="config_product_count" value="1" checked="checked" />
+                {$text_yes}
+                <input type="radio" name="config_product_count" value="0" />
+                {$text_no}
+                 {else}
+                <input type="radio" name="config_product_count" value="1" />
+                {$text_yes}
+                <input type="radio" name="config_product_count" value="0" checked="checked" />
+                {$text_no}
+               {/if}</td>
+            </tr>
+            <tr>
+              <td>{$entry_review}</td>
+              <td>{if $config_review_status}
+                <input type="radio" name="config_review_status" value="1" checked="checked" />
+                {$text_yes}
+                <input type="radio" name="config_review_status" value="0" />
+                {$text_no}
+                 {else}
+                <input type="radio" name="config_review_status" value="1" />
+                {$text_yes}
+                <input type="radio" name="config_review_status" value="0" checked="checked" />
+                {$text_no}
+                {/if}</td>
+            </tr>
+            <tr>
+              <td>{$entry_download}</td>
+              <td>{if $config_download}
+                <input type="radio" name="config_download" value="1" checked="checked" />
+                {$text_yes}
+                <input type="radio" name="config_download" value="0" />
+                {$text_no}
+                 {else}
+                <input type="radio" name="config_download" value="1" />
+                {$text_yes}
+                <input type="radio" name="config_download" value="0" checked="checked" />
+                {$text_no}
+                {/if}</td>
+            </tr>
+            <tr>
+              <td>{$entry_upload_allowed}</td>
+              <td><textarea name="config_upload_allowed" cols="40" rows="5">{$config_upload_allowed}</textarea></td>
+            </tr>
+          </table>
+          <h2>{$text_voucher}</h2>
+          <table class="form">
+            <tr>
+              <td><span class="required">*</span> {$entry_voucher_min}</td>
+              <td><input type="text" name="config_voucher_min" value="{$config_voucher_min}" />
+                {if $error_voucher_min}
+                <span class="error">{$error_voucher_min}</span>
+                {/if}</td>
+            </tr>
+            <tr>
+              <td><span class="required">*</span> {$entry_voucher_max}</td>
+              <td><input type="text" name="config_voucher_max" value="{$config_voucher_max}" />
+                {if $error_voucher_max}
+                <span class="error">{$error_voucher_max}</span>
+                {/if}</td>
+            </tr>
+          </table>
+          <h2>{$text_tax}</h2>
+          <table class="form">
+            <tr>
+              <td>{$entry_tax}</td>
+              <td>{if $config_tax}
+                <input type="radio" name="config_tax" value="1" checked="checked" />
+                {$text_yes}
+                <input type="radio" name="config_tax" value="0" />
+                {$text_no}
+                 {else}
+                <input type="radio" name="config_tax" value="1" />
+                {$text_yes}
+                <input type="radio" name="config_tax" value="0" checked="checked" />
+                {$text_no}
+                {/if}</td>
+            </tr>
+            <tr>
+              <td>{$entry_vat}</td>
+              <td>{if $config_vat}
+                <input type="radio" name="config_vat" value="1" checked="checked" />
+                {$text_yes}
+                <input type="radio" name="config_vat" value="0" />
+                {$text_no}
+                 {else}
+                <input type="radio" name="config_vat" value="1" />
+                {$text_yes}
+                <input type="radio" name="config_vat" value="0" checked="checked" />
+                {$text_no}
+                {/if}</td>
+            </tr>
+            <tr>
+              <td>{$entry_tax_default}</td>
+              <td><select name="config_tax_default">
+                  <option value="">{$text_none}</option>
+                  {if $config_tax_default == 'shipping'}
+                  <option value="shipping" selected="selected">{$text_shipping}</option>
+                   {else}
+                  <option value="shipping">{$text_shipping}</option>
+                  {/if}
+                  {if $config_tax_default == 'payment'}
+                  <option value="payment" selected="selected">{$text_payment}</option>
+                   {else}
+                  <option value="payment">{$text_payment}</option>
+                  {/if}
+                </select></td>
+            </tr>
+            <tr>
+              <td>{$entry_tax_customer}</td>
+              <td><select name="config_tax_customer">
+                  <option value="">{$text_none}</option>
+                  {if $config_tax_customer == 'shipping'}
+                  <option value="shipping" selected="selected">{$text_shipping}</option>
+                   {else}
+                  <option value="shipping">{$text_shipping}</option>
+                 {/if}
+                  {if $config_tax_customer == 'payment'}
+                  <option value="payment" selected="selected">{$text_payment}</option>
+                   {else}
+                  <option value="payment">{$text_payment}</option>
+                  {/if}
+                </select></td>
+            </tr>
+          </table>
+          <h2>{$text_account}</h2>
+          <table class="form">
+            <tr>
+              <td>{$entry_customer_online}</td>
+              <td>{if $config_customer_online}
+                <input type="radio" name="config_customer_online" value="1" checked="checked" />
+                {$text_yes}
+                <input type="radio" name="config_customer_online" value="0" />
+                {$text_no}
+                 {else}
+                <input type="radio" name="config_customer_online" value="1" />
+                {$text_yes}
+                <input type="radio" name="config_customer_online" value="0" checked="checked" />
+                {$text_no}
+               {/if}</td>
+            </tr>          
+            <tr>
+              <td>{$entry_customer_group}</td>
+              <td><select name="config_customer_group_id">
+                  {loop $customer_groups   $customer_group}
+                  {if $customer_group['customer_group_id'] == $config_customer_group_id}
+                  <option value="{$customer_group['customer_group_id']}" selected="selected">{$customer_group['name']}</option>
+                   {else}
+                  <option value="{$customer_group['customer_group_id']}">{$customer_group['name']}</option>
+                  {/if}
+                  {/loop}
+                </select></td>
+            </tr>
+            <tr>
+              <td>{$entry_customer_group_display}</td>
+              <td><div class="scrollbox">
+                  {php $class = 'odd'}
+                  {loop $customer_groups   $customer_group}
+                  {php $class = ($class == 'even' ? 'odd' : 'even')}
+                  <div class="{$class}">
+                    {if in_array($customer_group['customer_group_id'], $config_customer_group_display)}
+                    <input type="checkbox" name="config_customer_group_display[]" value="{$customer_group['customer_group_id']}" checked="checked" />
+                    {$customer_group['name']}
+                     {else}
+                    <input type="checkbox" name="config_customer_group_display[]" value="{$customer_group['customer_group_id']}" />
+                    {$customer_group['name']}
+                    {/if}
+                  </div>
+                  {/loop}
+                </div>
+                {if $error_customer_group_display}
+                <span class="error">{$error_customer_group_display}</span>
+                {/if}</td>
+            </tr>
+            <tr>
+              <td>{$entry_customer_price}</td>
+              <td>{if $config_customer_price}
+                <input type="radio" name="config_customer_price" value="1" checked="checked" />
+                {$text_yes}
+                <input type="radio" name="config_customer_price" value="0" />
+                {$text_no}
+                 {else}
+                <input type="radio" name="config_customer_price" value="1" />
+                {$text_yes}
+                <input type="radio" name="config_customer_price" value="0" checked="checked" />
+                {$text_no}
+                {/if}</td>
+            </tr>
+            <tr>
+              <td>{$entry_account}</td>
+              <td><select name="config_account_id">
+                  <option value="0">{$text_none}</option>
+                  {loop $informations   $information}
+                  {if $information['information_id'] == $config_account_id}
+                  <option value="{$information['information_id']}" selected="selected">{$information['title']}</option>
+                   {else}
+                  <option value="{$information['information_id']}">{$information['title']}</option>
+                  {/if}
+                  {/loop}
+                </select></td>
+            </tr>
+          </table>
+          <h2>{$text_checkout}</h2>
+          <table class="form">
+            <tr>
+              <td>{$entry_cart_weight}</td>
+              <td>{if $config_cart_weight}
+                <input type="radio" name="config_cart_weight" value="1" checked="checked" />
+                {$text_yes}
+                <input type="radio" name="config_cart_weight" value="0" />
+                {$text_no}
+                 {else}
+                <input type="radio" name="config_cart_weight" value="1" />
+                {$text_yes}
+                <input type="radio" name="config_cart_weight" value="0" checked="checked" />
+                {$text_no}
+                {/if}</td>
+            </tr>
+            <tr>
+              <td>{$entry_guest_checkout}</td>
+              <td>{if $config_guest_checkout}
+                <input type="radio" name="config_guest_checkout" value="1" checked="checked" />
+                {$text_yes}
+                <input type="radio" name="config_guest_checkout" value="0" />
+                {$text_no}
+                 {else}
+                <input type="radio" name="config_guest_checkout" value="1" />
+                {$text_yes}
+                <input type="radio" name="config_guest_checkout" value="0" checked="checked" />
+                {$text_no}
+                {/if}</td>
+            </tr>
+            <tr>
+              <td>{$entry_checkout}</td>
+              <td><select name="config_checkout_id">
+                  <option value="0">{$text_none}</option>
+                  {loop $informations   $information}
+                  {if $information['information_id'] == $config_checkout_id}
+                  <option value="{$information['information_id']}" selected="selected">{$information['title']}</option>
+                   {else}
+                  <option value="{$information['information_id']}">{$information['title']}</option>
+                  {/if}
+                  {/loop}
+                </select></td>
+            </tr>
+            <tr>
+              <td>{$entry_order_edit}</td>
+              <td><input type="text" name="config_order_edit" value="{$config_order_edit}" size="3" /></td>
+            </tr>
+            <tr>
+              <td>{$entry_invoice_prefix}</td>
+              <td><input type="text" name="config_invoice_prefix" value="{$config_invoice_prefix}" /></td>
+            </tr>
+            <tr>
+              <td>{$entry_order_status}</td>
+              <td><select name="config_order_status_id">
+                  {loop $order_statuses   $order_status}
+                  {if $order_status['order_status_id'] == $config_order_status_id}
+                  <option value="{$order_status['order_status_id']}" selected="selected">{$order_status['name']}</option>
+                   {else}
+                  <option value="{$order_status['order_status_id']}">{$order_status['name']}</option>
+                 {/if}
+                  {/loop}
+                </select></td>
+            </tr>
+            <tr>
+              <td>{$entry_complete_status}</td>
+              <td><select name="config_complete_status_id">
+                  {loop $order_statuses   $order_status}
+                  {if $order_status['order_status_id'] == $config_complete_status_id}
+                  <option value="{$order_status['order_status_id']}" selected="selected">{$order_status['name']}</option>
+                   {else}
+                  <option value="{$order_status['order_status_id']}">{$order_status['name']}</option>
+               {/if}
+                  {/loop}
+                </select></td>
+            </tr>
+          </table>
+          <h2>{$text_stock}</h2>
+          <table class="form">
+            <tr>
+              <td>{$entry_stock_display}</td>
+              <td>{if $config_stock_display}
+                <input type="radio" name="config_stock_display" value="1" checked="checked" />
+                {$text_yes}
+                <input type="radio" name="config_stock_display" value="0" />
+                {$text_no}
+                 {else}
+                <input type="radio" name="config_stock_display" value="1" />
+                {$text_yes}
+                <input type="radio" name="config_stock_display" value="0" checked="checked" />
+                {$text_no}
+                {/if}</td>
+            </tr>
+            <tr>
+              <td>{$entry_stock_warning}</td>
+              <td>{if $config_stock_warning}
+                <input type="radio" name="config_stock_warning" value="1" checked="checked" />
+                {$text_yes}
+                <input type="radio" name="config_stock_warning" value="0" />
+                {$text_no}
+                 {else}
+                <input type="radio" name="config_stock_warning" value="1" />
+                {$text_yes}
+                <input type="radio" name="config_stock_warning" value="0" checked="checked" />
+                {$text_no}
+               {/if}</td>
+            </tr>
+            <tr>
+              <td>{$entry_stock_checkout}</td>
+              <td>{if $config_stock_checkout}
+                <input type="radio" name="config_stock_checkout" value="1" checked="checked" />
+                {$text_yes}
+                <input type="radio" name="config_stock_checkout" value="0" />
+                {$text_no}
+                 {else}
+                <input type="radio" name="config_stock_checkout" value="1" />
+                {$text_yes}
+                <input type="radio" name="config_stock_checkout" value="0" checked="checked" />
+                {$text_no}
+                {/if}</td>
+            </tr>
+            <tr>
+              <td>{$entry_stock_status}</td>
+              <td><select name="config_stock_status_id">
+                  {loop $stock_statuses   $stock_status}
+                  {if $stock_status['stock_status_id'] == $config_stock_status_id}
+                  <option value="{$stock_status['stock_status_id']}" selected="selected">{$stock_status['name']}</option>
+                   {else}
+                  <option value="{$stock_status['stock_status_id']}">{$stock_status['name']}</option>
+                {/if}
+                  {/loop}
+                </select></td>
+            </tr>
+          </table>
+          <h2>{$text_affiliate}</h2>
+          <table class="form">
+            <tr>
+              <td>{$entry_affiliate}</td>
+              <td><select name="config_affiliate_id">
+                  <option value="0">{$text_none}</option>
+                  {loop $informations   $information}
+                  {if $information['information_id'] == $config_affiliate_id}
+                  <option value="{$information['information_id']}" selected="selected">{$information['title']}</option>
+                   {else}
+                  <option value="{$information['information_id']}">{$information['title']}</option>
+                  {/if}
+                  {/loop}
+                </select></td>
+            </tr>
+            <tr>
+              <td>{$entry_commission}</td>
+              <td><input type="text" name="config_commission" value="{$config_commission}" size="3" /></td>
+            </tr>
+          </table>
+          <h2>{$text_return}</h2>
+          <table class="form">
+            <tr>
+              <td>{$entry_return_status}</td>
+              <td><select name="config_return_status_id">
+                  {loop $return_statuses   $return_status}
+                  {if $return_status['return_status_id'] == $config_return_status_id}
+                  <option value="{$return_status['return_status_id']}" selected="selected">{$return_status['name']}</option>
+                   {else}
+                  <option value="{$return_status['return_status_id']}">{$return_status['name']}</option>
+                  {/if}
+                  {/loop}
+                </select></td>
+            </tr>
+          </table>
+        </div>
+        <div id="tab-image">
+          <table class="form">
+            <tr>
+              <td>{$entry_logo}</td>
+              <td><div class="image"><img src="{$logo}" alt="" id="thumb-logo" />
+                  <input type="hidden" name="config_logo" value="{$config_logo}" id="logo" />
+                  <br />
+                  <a href="javascript:;" onclick="image_upload('logo', 'thumb-logo');">{$text_browse}</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="javascript:;" onclick="$('#thumb-logo').attr('src', '{$no_image}'); $('#logo').attr('value', '');">{$text_clear}</a></div></td>
+            </tr>
+            <tr>
+              <td>{$entry_icon}</td>
+              <td><div class="image"><img src="{$icon}" alt="" id="thumb-icon" />
+                  <input type="hidden" name="config_icon" value="{$config_icon}" id="icon" />
+                  <br />
+                  <a href="javascript:;" onclick="image_upload('icon', 'thumb-icon');">{$text_browse}</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="javascript:;" onclick="$('#thumb-icon').attr('src', '{$no_image}'); $('#icon').attr('value', '');">{$text_clear}</a></div></td>
+            </tr>
+            <tr>
+              <td><span class="required">*</span> {$entry_image_category}</td>
+              <td><input type="text" name="config_image_category_width" value="{$config_image_category_width}" size="3" />
+                x
+                <input type="text" name="config_image_category_height" value="{$config_image_category_height}" size="3" />
+                {if $error_image_category}
+                <span class="error">{$error_image_category}</span>
+                {/if}</td>
+            </tr>
+            <tr>
+              <td><span class="required">*</span> {$entry_image_thumb}</td>
+              <td><input type="text" name="config_image_thumb_width" value="{$config_image_thumb_width}" size="3" />
+                x
+                <input type="text" name="config_image_thumb_height" value="{$config_image_thumb_height}" size="3" />
+                {if $error_image_thumb}
+                <span class="error">{$error_image_thumb}</span>
+                {/if}</td>
+            </tr>
+            <tr>
+              <td><span class="required">*</span> {$entry_image_popup}</td>
+              <td><input type="text" name="config_image_popup_width" value="{$config_image_popup_width}" size="3" />
+                x
+                <input type="text" name="config_image_popup_height" value="{$config_image_popup_height}" size="3" />
+                {if $error_image_popup}
+                <span class="error">{$error_image_popup}</span>
+               {/if}</td>
+            </tr>
+            <tr>
+              <td><span class="required">*</span> {$entry_image_product}</td>
+              <td><input type="text" name="config_image_product_width" value="{$config_image_product_width}" size="3" />
+                x
+                <input type="text" name="config_image_product_height" value="{$config_image_product_height}" size="3" />
+                {if $error_image_product}
+                <span class="error">{$error_image_product}</span>
+               {/if}</td>
+            </tr>
+            <tr>
+              <td><span class="required">*</span> {$entry_image_additional}</td>
+              <td><input type="text" name="config_image_additional_width" value="{$config_image_additional_width}" size="3" />
+                x
+                <input type="text" name="config_image_additional_height" value="{$config_image_additional_height}" size="3" />
+                {if $error_image_additional}
+                <span class="error">{$error_image_additional}</span>
+                {/if}</td>
+            </tr>
+            <tr>
+              <td><span class="required">*</span> {$entry_image_related}</td>
+              <td><input type="text" name="config_image_related_width" value="{$config_image_related_width}" size="3" />
+                x
+                <input type="text" name="config_image_related_height" value="{$config_image_related_height}" size="3" />
+                {if $error_image_related}
+                <span class="error">{$error_image_related}</span>
+                 {/if}</td>
+            </tr>
+            <tr>
+              <td><span class="required">*</span> {$entry_image_compare}</td>
+              <td><input type="text" name="config_image_compare_width" value="{$config_image_compare_width}" size="3" />
+                x
+                <input type="text" name="config_image_compare_height" value="{$config_image_compare_height}" size="3" />
+                {if $error_image_compare}
+                <span class="error">{$error_image_compare}</span>
+                 {/if}</td>
+            </tr>
+            <tr>
+              <td><span class="required">*</span> {$entry_image_wishlist}</td>
+              <td><input type="text" name="config_image_wishlist_width" value="{$config_image_wishlist_width}" size="3" />
+                x
+                <input type="text" name="config_image_wishlist_height" value="{$config_image_wishlist_height}" size="3" />
+                {if $error_image_wishlist}
+                <span class="error">{$error_image_wishlist}</span>
+                 {/if}</td>
+            </tr>
+            <tr>
+              <td><span class="required">*</span> {$entry_image_cart}</td>
+              <td><input type="text" name="config_image_cart_width" value="{$config_image_cart_width}" size="3" />
+                x
+                <input type="text" name="config_image_cart_height" value="{$config_image_cart_height}" size="3" />
+                {if $error_image_cart}
+                <span class="error">{$error_image_cart}</span>
+                 {/if}</td>
+            </tr>
+          </table>
+        </div>
+        <div id="tab-mail">
+          <table class="form">
+            <tr>
+              <td>{$entry_mail_protocol}</td>
+              <td><select name="config_mail_protocol">
+                  {if $config_mail_protocol == 'mail'}
+                  <option value="mail" selected="selected">{$text_mail}</option>
+                   {else}
+                  <option value="mail">{$text_mail}</option>
+                   {/if}
+                  {if $config_mail_protocol == 'smtp'}
+                  <option value="smtp" selected="selected">{$text_smtp}</option>
+                   {else}
+                  <option value="smtp">{$text_smtp}</option>
+                 {/if}
+                </select></td>
+            </tr>
+            <tr>
+              <td>{$entry_mail_parameter}</td>
+              <td><input type="text" name="config_mail_parameter" value="{$config_mail_parameter}" /></td>
+            </tr>
+            <tr>
+              <td>{$entry_smtp_host}</td>
+              <td><input type="text" name="config_smtp_host" value="{$config_smtp_host}" /></td>
+            </tr>
+            <tr>
+              <td>{$entry_smtp_username}</td>
+              <td><input type="text" name="config_smtp_username" value="{$config_smtp_username}" /></td>
+            </tr>
+            <tr>
+              <td>{$entry_smtp_password}</td>
+              <td><input type="text" name="config_smtp_password" value="{$config_smtp_password}" /></td>
+            </tr>
+            <tr>
+              <td>{$entry_smtp_port}</td>
+              <td><input type="text" name="config_smtp_port" value="{$config_smtp_port}" /></td>
+            </tr>
+            <tr>
+              <td>{$entry_smtp_timeout}</td>
+              <td><input type="text" name="config_smtp_timeout" value="{$config_smtp_timeout}" /></td>
+            </tr>
+            <tr>
+              <td>{$entry_alert_mail}</td>
+              <td>{if $config_alert_mail}
+                <input type="radio" name="config_alert_mail" value="1" checked="checked" />
+                {$text_yes}
+                <input type="radio" name="config_alert_mail" value="0" />
+                {$text_no}
+                 {else}
+                <input type="radio" name="config_alert_mail" value="1" />
+                {$text_yes}
+                <input type="radio" name="config_alert_mail" value="0" checked="checked" />
+                {$text_no}
+                 {/if}</td>
+            </tr>
+            <tr>
+              <td>{$entry_account_mail}</td>
+              <td>{if $config_account_mail}
+                <input type="radio" name="config_account_mail" value="1" checked="checked" />
+                {$text_yes}
+                <input type="radio" name="config_account_mail" value="0" />
+                {$text_no}
+                 {else}
+                <input type="radio" name="config_account_mail" value="1" />
+                {$text_yes}
+                <input type="radio" name="config_account_mail" value="0" checked="checked" />
+                {$text_no}
+                 {/if}</td>
+            </tr>
+            <tr>
+              <td>{$entry_alert_emails}</td>
+              <td><textarea name="config_alert_emails" cols="40" rows="5">{$config_alert_emails}</textarea></td>
+            </tr>
+          </table>
+        </div>
+        <div id="tab-fraud">
+          <table class="form">
+            <tr>
+              <td>{$entry_fraud_detection}</td>
+              <td>{if $config_fraud_detection}
+                <input type="radio" name="config_fraud_detection" value="1" checked="checked" />
+                {$text_yes}
+                <input type="radio" name="config_fraud_detection" value="0" />
+                {$text_no}
+                 {else}
+                <input type="radio" name="config_fraud_detection" value="1" />
+                {$text_yes}
+                <input type="radio" name="config_fraud_detection" value="0" checked="checked" />
+                {$text_no}
+                 {/if}</td>
+            </tr>
+            <tr>
+              <td>{$entry_fraud_key}</td>
+              <td><input type="text" name="config_fraud_key" value="{$config_fraud_key}" /></td>
+            </tr>
+            <tr>
+              <td>{$entry_fraud_score}</td>
+              <td><input type="text" name="config_fraud_score" value="{$config_fraud_score}" /></td>
+            </tr>
+            <tr>
+              <td>{$entry_fraud_status}</td>
+              <td><select name="config_fraud_status_id">
+                  {loop $order_statuses   $order_status}
+                  {if $order_status['order_status_id'] == $config_fraud_status_id}
+                  <option value="{$order_status['order_status_id']}" selected="selected">{$order_status['name']}</option>
+                   {else}
+                  <option value="{$order_status['order_status_id']}">{$order_status['name']}</option>
+                   {/if}
+                 {/loop}
+                </select></td>
+            </tr>
+          </table>
+        </div>
+        <div id="tab-server">
+          <table class="form">
+            <tr>
+              <td>{$entry_use_ssl}</td>
+              <td>{if $config_use_ssl}
+                <input type="radio" name="config_use_ssl" value="1" checked="checked" />
+                {$text_yes}
+                <input type="radio" name="config_use_ssl" value="0" />
+                {$text_no}
+                 {else}
+                <input type="radio" name="config_use_ssl" value="1" />
+                {$text_yes}
+                <input type="radio" name="config_use_ssl" value="0" checked="checked" />
+                {$text_no}
+                {/if}</td>
+            </tr>
+            <tr>
+              <td>{$entry_seo_url}</td>
+              <td>{if $config_seo_url}
+                <input type="radio" name="config_seo_url" value="1" checked="checked" />
+                {$text_yes}
+                <input type="radio" name="config_seo_url" value="0" />
+                {$text_no}
+                 {else}
+                <input type="radio" name="config_seo_url" value="1" />
+                {$text_yes}
+                <input type="radio" name="config_seo_url" value="0" checked="checked" />
+                {$text_no}
+                 {/if}</td>
+            </tr>
+            <tr>
+              <td>{$entry_maintenance}</td>
+              <td>{if $config_maintenance}
+                <input type="radio" name="config_maintenance" value="1" checked="checked" />
+                {$text_yes}
+                <input type="radio" name="config_maintenance" value="0" />
+                {$text_no}
+                 {else}
+                <input type="radio" name="config_maintenance" value="1" />
+                {$text_yes}
+                <input type="radio" name="config_maintenance" value="0" checked="checked" />
+                {$text_no}
+                 {/if}</td>
+            </tr>
+            <tr>
+              <td>{$entry_encryption}</td>
+              <td><input type="text" name="config_encryption" value="{$config_encryption}" /></td>
+            </tr>
+            <tr>
+              <td>{$entry_compression}</td>
+              <td><input type="text" name="config_compression" value="{$config_compression}" size="3" /></td>
+            </tr>
+            <tr>
+              <td>{$entry_error_display}</td>
+              <td>{if $config_error_display}
+                <input type="radio" name="config_error_display" value="1" checked="checked" />
+                {$text_yes}
+                <input type="radio" name="config_error_display" value="0" />
+                {$text_no}
+                 {else}
+                <input type="radio" name="config_error_display" value="1" />
+                {$text_yes}
+                <input type="radio" name="config_error_display" value="0" checked="checked" />
+                {$text_no}
+                 {/if}</td>
+            </tr>
+            <tr>
+              <td>{$entry_error_log}</td>
+              <td>{if $config_error_log}
+                <input type="radio" name="config_error_log" value="1" checked="checked" />
+                {$text_yes}
+                <input type="radio" name="config_error_log" value="0" />
+                {$text_no}
+                 {else}
+                <input type="radio" name="config_error_log" value="1" />
+                {$text_yes}
+                <input type="radio" name="config_error_log" value="0" checked="checked" />
+                {$text_no}
+                 {/if}</td>
+            </tr>
+            <tr>
+              <td><span class="required">*</span> {$entry_error_filename}</td>
+              <td><input type="text" name="config_error_filename" value="{$config_error_filename}" />
+                {if $error_error_filename}
+                <span class="error">{$error_error_filename}</span>
+                 {/if}</td>
+            </tr>
+            <tr>
+              <td>{$entry_google_analytics}</td>
+              <td><textarea name="config_google_analytics" cols="40" rows="5">{$config_google_analytics}</textarea></td>
+            </tr>
+          </table>
+        </div>
+      </form>
+    </div>
+
+<script type="text/javascript"><!--
+$('#template').load('index.php?route=setting/setting/template&token={$token}&template=' + encodeURIComponent($('select[name=\'config_template\']').attr('value')));
+//--></script> 
+<script type="text/javascript"><!--
+$('select[name=\'config_country_id\']').bind('change', function() {
+	$.ajax({
+		url: 'index.php?route=setting/setting/country&token={$token}&country_id=' + this.value,
+		dataType: 'json',
+		beforeSend: function() {
+			$('select[name=\'country_id\']').after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
+		},		
+		complete: function() {
+			$('.wait').remove();
+		},			
+		success: function(json) {
+			if (json['postcode_required'] == '1') {
+				$('#postcode-required').show();
+			} else {
+				$('#postcode-required').hide();
+			}
+			
+			html = '<option value="">{$text_select}</option>';
+			
+			if (json['zone'] != '') {
+				for (i = 0; i < json['zone'].length; i++) {
+        			html += '<option value="' + json['zone'][i]['zone_id'] + '"';
+	    			
+					if (json['zone'][i]['zone_id'] == '{$config_zone_id}') {
+	      				html += ' selected="selected"';
+	    			}
+	
+	    			html += '>' + json['zone'][i]['name'] + '</option>';
+				}
+			} else {
+				html += '<option value="0" selected="selected>{$text_none}</option>';
+			}
+			
+			$('select[name=\'config_zone_id\']').html(html);
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+
+$('select[name=\'config_country_id\']').trigger('change');
+//--></script> 
+<script type="text/javascript"><!--
+function image_upload(field, thumb) {
+	$('#dialog').remove();
+	
+	$('#listDiv').prepend('<div id="dialog" style="padding: 3px 0px 0px 0px;"><iframe src="index.php?route=common/filemanager&token={$token}&field=' + encodeURIComponent(field) + '" style="padding:0; margin: 0; display: block; width: 100%; height: 100%;" frameborder="no" scrolling="auto"></iframe></div>');
+	
+	$('#dialog').dialog({
+		title: '{$text_image_manager}',
+		close: function (event, ui) {
+			if ($('#' + field).attr('value')) {
+				$.ajax({
+					url: 'index.php?route=common/filemanager/image&token={$token}&image=' + encodeURIComponent($('#' + field).val()),
+					dataType: 'text',
+					success: function(data) {
+						$('#' + thumb).replaceWith('<img src="' + data + '" alt="" id="' + thumb + '" />');
+					}
+				});
+			}
+		},	
+		bgiframe: false,
+		width: 800,
+		height: 400,
+		resizable: false,
+		modal: false
+	});
+};
+//--></script> 
+<script type="text/javascript"><!--
+$('#tabs a').tabpages();
+//--></script> 

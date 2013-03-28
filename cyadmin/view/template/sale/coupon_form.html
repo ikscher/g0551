@@ -1,0 +1,232 @@
+<link rel="stylesheet" type="text/css" href="view/stylesheet/general.css">
+<link rel="stylesheet" type="text/css" href="view/stylesheet/main.css">
+<script type="text/javascript" src="view/javascript/jquery/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="view/javascript/jquery/ui/jquery-ui-1.8.16.custom.min.js"></script>
+<link type="text/css" href="view/javascript/jquery/ui/themes/ui-lightness/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
+
+
+    <h1><img src="view/image/customer.png" alt="" /> {$heading_title}
+         <span class="action-span">
+		    <a href="javascript:;" onclick="$('#form').submit();" class="button">{$button_save}</a>
+			 <!-- <a onclick="location = '{$cancel}';" class="button">{$button_cancel}</a> -->
+		</span>
+    </h1>
+    <div class="list-div" id="listDiv">
+     <!--  <div id="tabs" class="htabs"><a href="#tab-general">{$tab_general}</a>
+        {if $coupon_id}
+        <a href="#tab-history">{$tab_coupon_history}</a>
+        {/if}
+      </div> -->
+      <form action="{$action}" method="post" enctype="multipart/form-data" id="form">
+        <div id="tab-general">
+          <table class="form">
+            <tr>
+              <td><span class="required">*</span> {$entry_name}</td>
+              <td><input name="name" value="{$name}" />
+                {if $error_name}
+                <span class="error">{$error_name}</span>
+                {/if}</td>
+            </tr>
+            <tr>
+              <td><span class="required">*</span> {$entry_code}</td>
+              <td><input type="text" name="code" value="{$code}" />
+                {if $error_code}
+                <span class="error">{$error_code}</span>
+                {/if}</td>
+            </tr>
+            <tr>
+              <td>{$entry_type}</td>
+              <td><select name="type">
+                  {if $type == 'P'}
+                  <option value="P" selected="selected">{$text_percent}</option>
+                   {else}
+                  <option value="P">{$text_percent}</option>
+                  {/if}
+                  {if $type == 'F'}
+                  <option value="F" selected="selected">{$text_amount}</option>
+                   {else}
+                  <option value="F">{$text_amount}</option>
+                  {/if}
+                </select></td>
+            </tr>
+            <tr>
+              <td>{$entry_discount}</td>
+              <td><input type="text" name="discount" value="{$discount}" /></td>
+            </tr>
+            <tr>
+              <td>{$entry_total}</td>
+              <td><input type="text" name="total" value="{$total}" /></td>
+            </tr>
+            <tr>
+              <td>{$entry_logged}</td>
+              <td>{if $logged}
+                <input type="radio" name="logged" value="1" checked="checked" />
+                {$text_yes}
+                <input type="radio" name="logged" value="0" />
+                {$text_no}
+                 {else}
+                <input type="radio" name="logged" value="1" />
+                {$text_yes}
+                <input type="radio" name="logged" value="0" checked="checked" />
+                {$text_no}
+                {/if}</td>
+            </tr>
+            <tr>
+              <td>{$entry_shipping}</td>
+              <td>{if $shipping}
+                <input type="radio" name="shipping" value="1" checked="checked" />
+                {$text_yes}
+                <input type="radio" name="shipping" value="0" />
+                {$text_no}
+                 {else}
+                <input type="radio" name="shipping" value="1" />
+                {$text_yes}
+                <input type="radio" name="shipping" value="0" checked="checked" />
+                {$text_no}
+                {/if}</td>
+            </tr>
+            <tr>
+              <td>{$entry_category}</td>
+              <td><div class="scrollbox">
+                  {php $class = 'odd'}
+                  {loop $categories   $category}
+                  {php $class = ($class == 'even' ? 'odd' : 'even')}
+                  <div class="{$class}">
+                    <input type="checkbox" name="category[]" value="{$category['category_id']}" />
+                    {$category['name']} </div>
+                  {/loop}
+                </div></td>
+            </tr>
+            <tr>
+              <td>{$entry_product}</td>
+              <td><input type="text" name="product" value="" /></td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+              <td><div id="coupon-product" class="scrollbox">
+                  {php $class = 'odd'}
+                  {loop $coupon_product   $coupon_product}
+                  {php $class = ($class == 'even' ? 'odd' : 'even')}
+                  <div id="coupon-product{$coupon_product['product_id']}" class="{$class}"> {$coupon_product['name']}<img src="view/image/delete.png" />
+                    <input type="hidden" name="coupon_product[]" value="{$coupon_product['product_id']}" />
+                  </div>
+                  {/loop}
+                </div></td>
+            </tr>
+            <tr>
+              <td>{$entry_date_start}</td>
+              <td><input type="text" name="date_start" value="{$date_start}" size="12" id="date-start" /></td>
+            </tr>
+            <tr>
+              <td>{$entry_date_end}</td>
+              <td><input type="text" name="date_end" value="{$date_end}" size="12" id="date-end" /></td>
+            </tr>
+            <tr>
+              <td>{$entry_uses_total}</td>
+              <td><input type="text" name="uses_total" value="{$uses_total}" /></td>
+            </tr>
+            <tr>
+              <td>{$entry_uses_customer}</td>
+              <td><input type="text" name="uses_customer" value="{$uses_customer}" /></td>
+            </tr>
+            <tr>
+              <td>{$entry_status}</td>
+              <td><select name="status">
+                  {if $status}
+                  <option value="1" selected="selected">{$text_enabled}</option>
+                  <option value="0">{$text_disabled}</option>
+                   {else}
+                  <option value="1">{$text_enabled}</option>
+                  <option value="0" selected="selected">{$text_disabled}</option>
+                  {/if}
+                </select></td>
+            </tr>
+          </table>
+        </div>
+        {if $coupon_id}
+        <div id="tab-history">
+          <div id="history"></div>
+        </div>
+        {/if}
+      </form>
+    </div>
+
+<script type="text/javascript"><!--
+$('input[name=\'category[]\']').bind('change', function() {
+	var filter_category_id = this;
+	
+	$.ajax({
+		url: 'index.php?route=catalog/product/autocomplete&token={$token}&filter_category_id=' +  filter_category_id.value + '&limit=10000',
+		dataType: 'json',
+		success: function(json) {
+			for (i = 0; i < json.length; i++) {
+				if ($(filter_category_id).attr('checked') == 'checked') {
+					$('#coupon-product' + json[i]['product_id']).remove();
+					
+					$('#coupon-product').append('<div id="coupon-product' + json[i]['product_id'] + '">' + json[i]['name'] + '<img src="view/image/delete.png" /><input type="hidden" name="coupon_product[]" value="' + json[i]['product_id'] + '" /></div>');
+				} else {
+					$('#coupon-product' + json[i]['product_id']).remove();
+				}			
+			}
+			
+			$('#coupon-product div:odd').attr('class', 'odd');
+			$('#coupon-product div:even').attr('class', 'even');			
+		}
+	});
+});
+
+$('input[name=\'product\']').autocomplete({
+	delay: 0,
+	source: function(request, response) {
+		$.ajax({
+			url: 'index.php?route=catalog/product/autocomplete&token={$token}&filter_name=' +  encodeURIComponent(request.term),
+			dataType: 'json',
+			success: function(json) {		
+				response($.map(json, function(item) {
+					return {
+						label: item.name,
+						value: item.product_id
+					}
+				}));
+			}
+		});
+	}, 
+	select: function(event, ui) {
+		$('#coupon-product' + ui.item.value).remove();
+		
+		$('#coupon-product').append('<div id="coupon-product' + ui.item.value + '">' + ui.item.label + '<img src="view/image/delete.png" /><input type="hidden" name="coupon_product[]" value="' + ui.item.value + '" /></div>');
+
+		$('#coupon-product div:odd').attr('class', 'odd');
+		$('#coupon-product div:even').attr('class', 'even');
+		
+		$('input[name=\'product\']').val('');
+		
+		return false;
+	},
+	focus: function(event, ui) {
+      	return false;
+   	}
+});
+
+$('#coupon-product div img').live('click', function() {
+	$(this).parent().remove();
+	
+	$('#coupon-product div:odd').attr('class', 'odd');
+	$('#coupon-product div:even').attr('class', 'even');	
+});
+//--></script> 
+<script type="text/javascript"><!--
+$('#date-start').datepicker({dateFormat: 'yy-mm-dd'});
+$('#date-end').datepicker({dateFormat: 'yy-mm-dd'});
+//--></script>
+{if $coupon_id}
+<script type="text/javascript"><!--
+$('#history .pagination a').live('click', function() {
+	$('#history').load(this.href);
+	
+	return false;
+});			
+
+$('#history').load('index.php?route=sale/coupon/history&token={$token}&coupon_id={$coupon_id}');
+//--></script>
+{/if}

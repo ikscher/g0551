@@ -1,0 +1,96 @@
+{$header}
+<div id="content">
+  <div class="breadcrumb">
+    {loop $breadcrumbs   $breadcrumb}
+    {$breadcrumb['separator']}<a href="{$breadcrumb['href']}">{$breadcrumb['text']}</a>
+    {/loop}
+  </div>
+  {if $error_warning}
+  <div class="warning">{$error_warning}</div>
+  {/if}
+  <div class="box">
+    <div class="heading">
+      <h1><img src="view/image/payment.png" alt="" /> {$heading_title}</h1>
+      <div class="buttons"><a onclick="$('#form').submit();" class="button">{$button_save}</a><a onclick="location = '{$cancel}';" class="button">{$button_cancel}</a></div>
+    </div>
+    <div class="content">
+      <form action="{$action}" method="post" enctype="multipart/form-data" id="form">
+        <div id="tab-general" class="page">
+          <table class="form">
+            <tr>
+              <td><span class="required">*</span> {$entry_merchant}</td>
+              <td><input type="text" name="klarna_pp_merchant" value="{$klarna_pp_merchant}" />
+                {if $error_merchant}
+                <span class="error">{$error_merchant}</span>
+                {/if}</td>
+            </tr>
+            <tr>
+              <td><span class="required">*</span> {$entry_secret}</td>
+              <td><input type="text" name="klarna_pp_secret" value="{$klarna_pp_secret}" />
+                {if $error_secret}
+                <span class="error">{$error_secret}</span>
+               {/if}</td>
+            </tr>
+            <tr>
+              <td>{$entry_server}</td>
+              <td><select name="klarna_pp_server">
+                  {if $klarna_pp_server == 'live'}
+                  <option value="live" selected="selected">{$text_live}</option>
+                   {else}
+                  <option value="live">{$text_live}</option>
+                  {/if}
+                  {if $klarna_pp_server == 'beta'}
+                  <option value="beta" selected="selected">{$text_beta}</option>
+                   {else}
+                  <option value="beta">{$text_beta}</option>
+                  {/if}
+                </select></td>
+            </tr>
+            <tr>
+              <td>{$entry_order_status}</td>
+              <td><select name="klarna_pp_order_status_id">
+                  {loop $order_statuses   $order_status}
+                  {if $order_status['order_status_id'] == $klarna_pp_order_status_id}
+                  <option value="{$order_status['order_status_id']}" selected="selected">{$order_status['name']}</option>
+                   {else}
+                  <option value="{$order_status['order_status_id']}">{$order_status['name']}</option>
+                  {/if}
+                  {/loop}
+                </select></td>
+            </tr>
+            <tr>
+              <td>{$entry_geo_zone}</td>
+              <td><select name="klarna_pp_geo_zone_id">
+                  <option value="0">{$text_all_zones}</option>
+                  {loop $geo_zones   $geo_zone}
+                  {if $geo_zone['geo_zone_id'] == $klarna_pp_geo_zone_id}
+                  <option value="{$geo_zone['geo_zone_id']}" selected="selected">{$geo_zone['name']}</option>
+                   {else}
+                  <option value="{$geo_zone['geo_zone_id']}">{$geo_zone['name']}</option>
+                 {/if}
+                 {/loop}
+                </select></td>
+            </tr>            
+            <tr>
+              <td>{$entry_status}</td>
+              <td><select name="klarna_pp_status">
+                  {if $klarna_pp_status}
+                  <option value="1" selected="selected">{$text_enabled}</option>
+                  <option value="0">{$text_disabled}</option>
+                   {else}
+                  <option value="1">{$text_enabled}</option>
+                  <option value="0" selected="selected">{$text_disabled}</option>
+                  {/if}
+                </select></td>
+            </tr>
+            <tr>
+              <td>{$entry_sort_order}</td>
+              <td><input type="text" name="klarna_pp_sort_order" value="{$klarna_pp_sort_order}" size="1" /></td>
+            </tr>
+          </table>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{$footer} 

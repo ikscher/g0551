@@ -1,0 +1,57 @@
+
+<!--左侧begin-->
+<div class="left">
+	<div class="leftClass">
+		<dl>
+			<dt>{$store_management}</dt>
+			<dd class="current"><a  href="{$merchants}">{$store_setup}</a></dd>
+			<dd><a  href="{$store}">{$store_list}</a></dd>
+		</dl>
+		<dl>
+			<dt>{$trade_management}</dt>
+			<dd><a href="{$sold}">{$soldproduct}</a></dd>
+			<dd><a href="index.php?route=merchants/return">退换货管理</a></dd>
+			<!--<dd><a href="{$remark}">{$remark_management}</a></dd>-->
+		</dl>
+		<dl>
+			<dt>{$product_management}</dt>
+			<dd><a href="{$release}">{$releaseproduct}</a></dd>
+			<dd><a href="{$sell}">{$sellingproduct}</a></dd>
+			<dd><a href="{$warehouse}">{$baseproduct}</a></dd>
+		</dl>
+		<dl>
+			<dt>{$order_management}</dt>
+			<dd><a href="{$order_}">{$createorder}</a></dd>
+			<dd><a href="{$order}">{$waitingorder}</a></dd>
+			<dd><a href="{$ordering}">{$dealingorder}</a></dd>
+			<dd><a href="{$ordered}">{$dealedorder}</a></dd>
+		</dl>
+		<dl>
+			<dt>{$discount_management}</dt>
+			<dd><a href="{$coupon_add}">{$coupon_adds}</a></dd>
+			<dd><a href="{$coupon}">{$coupons}</a></dd>
+		</dl>
+	</div>
+</div>
+<!--左侧end-->
+
+
+
+<script type="text/javascript">
+
+{if empty($hasShop)}
+	$(".leftClass dd a").click(function(){
+	   alert('您的店铺正在审核状态中...');
+	   return false;
+
+	});
+{/if}
+
+$("dd ").hover(function(){
+   $(this).addClass('current');
+},function(){
+  
+   $(this).removeClass('current');
+});
+
+</script>

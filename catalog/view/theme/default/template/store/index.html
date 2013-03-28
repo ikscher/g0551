@@ -1,0 +1,208 @@
+{$header}
+<link href="catalog/view/theme/default/stylesheet/jquery.treeview.css" rel="stylesheet" />
+<script type="text/javascript" src="catalog/view/javascript/jquery/jquery.treeview.js"></script>
+
+<script type="text/javascript">
+		$(function() {
+			$("#tree").treeview({
+				collapsed: true,
+				animated: "medium",
+				control:".sidetreecontrol",
+				persist: "location"
+			});
+		})
+		
+	</script>
+	
+<!--店铺开始 -->
+<div class="store">
+<!--穿悦LOGO和搜索 -->
+<div class="store_top90">
+	<div class="topl"><a href="index.php?route=common/home" ><img src="catalog/view/theme/default/image/store/store_logo.jpg"/></a></div>
+	<div class="topr">
+	<form id="form___&&*as203" name="frmStore" method="post" action="index.php?route=store/store&store_id={$store_id}">
+	<ul>
+		<li class="searcht">宝贝</li>
+		<li class="searchb"><input name="keyword1" type="text" {if !empty($keyword1)}value="{$keyword1}"{else}value="搜索关键词"{/if} size="50" class="formbor" onFocus="this.value=''"/></li>
+		<li class="searchr"><input type="submit" name="Submit" value="搜 索" class="formbtn"/></li>
+		
+		<!-- <li class="searchr2"><a href="#">高级搜索</a><br><a href="#">使用帮助</a></li> -->
+	</ul></form>
+	</div>
+</div>
+<!--穿悦LOGO和搜索end -->
+<div class="store_baaner">
+</div>
+<!--菜单menu begin -->
+<div class="store_menured">
+	<ul>
+		<li class="menuon"><a href="{$action}"  hidefocus="true">店铺首页</a></li>
+		<li><a href="#" onclick=""  hidefocus="true">店铺介绍</a></li>
+	</ul>
+</div>
+<!--菜单menu end -->
+<!--主体body begin --><div class="store_body">
+<!--左边 begin -->
+<div class="redleft">
+	<div class="rednavbg">搜索店内的宝贝</div>
+	<div class="lsearch">
+	    <form id="formStore"   action="{$action}" method="post" >
+		<ul>
+			<li>关键字：<input name="keyword2" type="text" {if !empty($keyword2)}value="{$keyword2}"{/if} size="20" maxLength="20" class="searchbor"/></li>
+			<li>价&nbsp;&nbsp;格：<input name="priceLower" type="text" {if !empty($priceLower)}value="{$priceLower}"{/if} size="7" maxLength="7" class="searchbor"/> 到 <input name="priceUp" type="text" {if !empty($priceUp)}value="{$priceUp}"{/if} size="8" maxLength="8" class="searchbor"/></li>
+			<li><input type="button" name="clear" value="清 空" class="searchbtn" /><input type="submit" name="submit" value="搜 索" class="searchbtn"/></li>
+		</ul>
+		</form>
+	</div>
+	<div class="rednavbg1">产品分类</div>
+	{if !empty($storeCategories)}<div class="sidetreecontrol"><a href="?#">收缩</a> | <a href="?#">展开</a></div>{/if}
+	<div class="lclass">
+		<ul class="treeview" id="tree">
+		    
+				{loop $storeCategories $a}
+				    <li><a href="index.php?route=store/store&store_id={$store_id}&category_id={$a['cid']}" class="cid" data-value="{$a['cid']}">{$a['cname']}</a>
+						<ul>
+						{if isset($a['sub'])}
+						{loop $a['sub'] $b}
+							<li><a href="index.php?route=store/store&store_id={$store_id}&category_id={$b['cid']}" class="cid" data-value="{$b['cid']}">{$b['cname']}</a>
+							    {if isset($b['sub'])}
+							    <ul>
+							    {loop $b['sub'] $c}
+								    <li><a href="index.php?route=store/store&store_id={$store_id}&category_id={$c['cid']}" class="cid" data-value="{$c['cid']}">{$c['cname']}</a>
+									    {if isset($c['sub'])}
+ 									    <ul> 
+										     
+										     {loop $c['sub'] $k $d}
+											    <li><a href="index.php?route=store/store&store_id={$store_id}&category_id={$d['cid']}" class="cid" data-value="{$d['cid']}">{$d['cname']}</a></li>	
+											 {/loop}
+											 
+										</ul>
+										{/if}
+									
+									</li>
+								
+								{/loop}
+								</ul>
+								{/if}
+							</li>
+						{/loop}
+						{/if}
+						</ul>
+					</li>
+				{/loop}
+			
+		</ul>
+	</div>
+	<div class="rednavbg1">销量排行榜</div>
+	<div class="lranking">
+		<ul>
+		    {if !empty($productSaleTop)}
+				{loop $productSaleTop $v}
+					<li><span class="picbor"><a href="{$v['href']}"><img src="{$v['image']}" title="{$v['name']}"/></a></span>
+						<span class="title"><a href="{$v['href']}">{$v['shortname']}</a><br><b class="price">¥{$v['price']}</b></span>
+					</li>
+				{/loop}
+			{/if}
+		</ul>
+	</div>
+</div>
+<!--左边 end -->
+
+<!--右边 begin -->
+<div class="redright">
+	<div class="rednavbg">店铺所有新品</div>
+	<div class="rproducts">
+		<ul>
+		    {if !empty($store_products)}
+				{loop $store_products $product}
+					<li>
+						<div class="display">
+							<ul>
+							<li class="bor236"><a href="{$product['href']}"><img src="{$product['image']}" title="{$product['name']}" /></a></li>
+							<li ><a href="{$product['href']}">{$product['shortname']}</a></li>
+							<li class="price">¥{$product['price']}</li>
+							<li >已销售：<span class="sales">{$product['hots']}</span>件</li>
+							</ul>
+						</div>
+					</li>
+				{/loop}
+			{else}
+			    <p style="text-align:center">没有数据</p>
+			{/if}
+		</ul>
+	</div>
+	
+	<div class="store_introduce" style="display:none">
+	    <p><span>店铺名称：</span>{$store_info['name']}</p>
+		<!-- <p>店主    ：{$store_info['owner']}</p> -->
+		<p><span>电 话：</span>{$store_info['tel']}</p>
+		<!-- <p>手机    ：{$store_info['mobile']}</p> -->
+		<p><span>地 址：</span>{$store_info['address']}</p>
+		<p><span>简 介：</span>{$store_info['introduce']}</p>
+	</div>
+</div>
+<!--右边 end -->
+
+<div class="pagination">{$pagination}</div>
+<!--主体body end -->
+</div>
+<!--店铺end -->
+</div>
+<script type="text/javascript">
+    $(".store_menured ul li").mouseenter(function(){
+	    $(this).parent().children('li').removeClass('menuon');
+        $(this).addClass('menuon');
+    });
+	
+	//店铺首页
+	$(".store_menured ul li:eq(0)").click(function(){
+	    $(".redright .rednavbg").html('店铺所有产品');
+		$(".store_introduce").css({'display':'none'});
+		$(".rproducts").css({'display':'block'});
+		$(".pagination").css({'display':'block'});
+	});
+	
+	//店铺介绍
+	$(".store_menured ul li:eq(1)").click(function(){
+	    $(".redright .rednavbg").html('店铺介绍');
+		$(".store_introduce").css({'display':'block'});
+		$(".rproducts").css({'display':'none'});
+		$(".pagination").css({'display':'none'});
+	});
+	
+	//$("input[name^=price]").keyup(function(){
+	//    $(this).val($(this).val().replace(/\D/gi,""));
+	//});
+	
+	$("input[name^=price]").keydown(function(e){
+	    var s="48,49,50,51,52,53,54,55,56,57,96,97,98,99,100,101,102,103,104,105,110,190";
+		var k=e.keyCode;
+		if(s.indexOf(k)==-1){
+		    return false;
+		}
+	});
+	
+	$("input[name=clear]").click(function(){
+	    $('#formStore input[type=text]').val('');
+	});
+    
+	
+	//$(".cid").click(function(){
+	//    var cid=$(this).attr('data-value');
+	//	var query='index.php'+location.search;
+	//	query=query.replace(/page=\d*/g,'');
+	//	if(query.search(/category_id=\d*/g)==-1){
+	//	    window.location.href=query+"&category_id="+cid;
+	//	}else{
+	//	    query=query.replace(/(category_id=)\d*/g,'$1'+cid);
+	//		window.location.href=query;
+	//	}
+	//});
+	
+	$('.bor236').hover(function(){
+	    $(this).css({'border':'1px solid #000'});
+	},function(){
+	    $(this).css({'border':'1px solid #CCC'});
+	});
+</script>
+{$footer}

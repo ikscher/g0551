@@ -1,0 +1,108 @@
+<!-- {$header}
+<div id="content">
+  <div class="breadcrumb">
+    {loop $breadcrumbs   $breadcrumb}
+    {$breadcrumb['separator']}<a href="{$breadcrumb['href']}">{$breadcrumb['text']}</a>
+    {/loop}
+  </div>
+  {if $error_warning}
+  <div class="warning">{$error_warning}</div>
+  {/if}
+  {if $success}
+  <div class="success">{$success}</div>
+  {/if}
+  <div class="box">
+    <div class="heading"> -->
+<link rel="stylesheet" type="text/css" href="view/stylesheet/general.css">
+<link rel="stylesheet" type="text/css" href="view/stylesheet/main.css">
+<script type="text/javascript" src="view/javascript/jquery/jquery-1.7.1.min.js"></script><!--这里只能用1.7.1的版本,否则自带的图片处理有问题-->
+<script type="text/javascript" src="view/javascript/jquery/ui/jquery-ui-1.8.16.custom.min.js"></script>
+<link type="text/css" href="view/javascript/jquery/ui/themes/ui-lightness/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
+<style type="text/css">
+tr.over td {
+	background:#cfeefe;
+} 
+</style>
+
+    <h1><img src="view/image/shipping.png" alt="" /> {$heading_title}
+        <span class="action-span">
+	         <a href="javascript:;" onclick="parent.addTab('新增品牌','{$insert}')" class="button">{$button_insert}</a>
+			 <a href="javascript:;" onclick="$('form').submit();" class="button">{$button_delete}</a>
+			 <a href="{$refresh}" />{$button_refresh}</a>
+		</span>
+    </h1>
+	
+    <div class="list-div" id="listDiv">
+      <form action="{$delete}" method="post" enctype="multipart/form-data" id="form" onsubmit="return checkForm();">
+        <table class="list">
+          <thead>
+            <tr>
+              <td width="1" style="text-align: center;"><input type="checkbox" onclick="$('input[name*=\'selected\']').attr('checked', this.checked);" /></td>
+              <td>{if $sort == 'name'}
+                <a href="{$sort_name}" class="{strtolower($order)}">{$column_name}</a>
+                 {else}
+                <a href="{$sort_name}">{$column_name}</a>
+                {/if}</td>
+              <td>{if $sort == 'sort_order'}
+                <a href="{$sort_sort_order}" class="{strtolower($order)}">{$column_sort_order}</a>
+                 {else}
+                <a href="{$sort_sort_order}">{$column_sort_order}</a>
+                {/if}</td>
+              <td>{$column_action}</td>
+            </tr>
+          </thead>
+          <tbody>
+            {if $manufacturers}
+            {loop $manufacturers   $manufacturer}
+            <tr>
+              <td style="text-align: center;">{if $manufacturer['selected']}
+                <input type="checkbox" name="selected[]" value="{$manufacturer['manufacturer_id']}" checked="checked" />
+                 {else}
+                <input type="checkbox" name="selected[]" value="{$manufacturer['manufacturer_id']}" />
+                {/if}</td>
+              <td>{$manufacturer['name']}</td>
+              <td>{$manufacturer['sort_order']}</td>
+              <td>{loop $manufacturer['action']   $action}
+                <a href="javascript:;" onclick="parent.addTab('编辑品牌','{$action[href]}')">{$action['text']}</a>
+                {/loop}</td>
+            </tr>
+            {/loop}
+             {else}
+            <tr>
+              <td class="center" colspan="4">{$text_no_results}</td>
+            </tr>
+            {/if}
+          </tbody>
+        </table>
+      </form>
+      {$pagination}
+    </div>
+
+<script type="text/javascript">
+$(function(){
+	$(".list tr").mouseover(function(){
+		$(this).addClass("over");
+	}).mouseout(function(){
+		$(this).removeClass("over");	
+	})
+
+});
+
+
+
+function checkForm(){
+    var sum=0;
+    $("input[name^='select']").each(function(i,n){
+		if($(this).prop("checked")==true){
+		   sum++;
+		}
+  
+    });
+  
+    if(sum<1) {
+       alert("请选择要删除的项！");
+	   return false;
+    }
+
+};
+</script>

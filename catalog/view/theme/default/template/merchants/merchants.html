@@ -1,0 +1,90 @@
+{$header}
+ 	<!--左侧begin-->
+	{$left}
+ 	<!--左侧end-->
+    <!--右侧begin-->
+	<div class="right"><div class="account_box1">
+		<div class="item_list">
+			<div class="tabs">
+				<ul class="tabs_list">
+					<li class="current"><h1><a href="">店铺设置</a></h1></li>
+				</ul>
+			</div>
+<form action="index.php?route=merchants/merchants/insert" method="post" id="" onsubmit="return checkStore(this)">
+<input name="map_x" type="hidden" value="" />
+<input name="map_y" type="hidden" value="" />
+<input name="logo_url" id="logo_url" type="hidden" value="{$info['logo']}" />
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="right"><em>*</em>店铺名称：</td>
+    <td><input name="name" type="text" class="text4" id="name" maxlength="100" value="{if isset($info['name'])}{$info['name']}{/if}"/></td>
+  </tr>
+  <tr>
+    <td align="right">店铺标志：</td>
+    <td><img src="{$logo_url}" class="shop-pic"/>
+	<p><span class="upload-btn" id="upload_logo">上传图标</span><span class="info-tip img-erro"><i></i>文件格式GIF、JPG、JPEG、PNG文件大小80K以内，建议尺寸80PX*80PX</span></p>	</td>
+  </tr>
+  <tr>
+    <td align="right"><em>*</em>联系地址：</td>
+    <td><select name="province" id="province" onchange="changCity(this.value)">
+			<option value="">请选择省份</option>
+		</select>
+        <select name="city" id="city">
+			<option value="">请选择城市</option>
+		</select>
+        <input name="address" type="text" class="text1" id="address" maxlength="100" value="{if isset($info['address'])}{$info['address']}{/if}"/></td>
+  </tr>
+  <tr>
+    <td align="right"><em>*</em>联系电话：</td>
+    <td><input name="tel" type="text" class="text1" id="tel" maxlength="50" value="{if isset($info['tel'])}{$info['tel']}{/if}"/> （例如：0551-64374866）</td>
+  </tr>
+  <tr>
+    <td align="right"><em>*</em>联系手机：</td>
+    <td><input name="mobile" type="text" class="text4" id="mobile" maxlength="60" value="{if isset($info['mobile'])}{$info['mobile']}{/if}"/></td>
+  </tr>
+  <tr>
+    <td align="right">店铺传真：</td>
+    <td><input name="fax" type="text" class="text4" id="fax" maxlength="60" value="{if isset($info['fax'])}{$info['fax']}{/if}"/></td>
+  </tr>
+  <tr>
+    <td align="right"><em>*</em>店主姓名：</td>
+    <td><input name="owner" type="text" class="text1" id="owner" maxlength="20" value="{if isset($info['owner'])}{$info['owner']}{/if}"/>	</td>
+  </tr>
+  <tr>
+    <td align="right"><em>*</em>店铺介绍：</td>
+    <td><div class="sh-edit" style="width:570px;_margin-left:60px;_margin-top:-18px;">
+        <textarea class="edit" style="width:550px;height:200px" name="introduce" id="introduce">{if isset($info['introduce'])}{$info['introduce']}{/if}</textarea>
+        </div>	</td>
+  </tr>
+  <tr>
+    <td align="right"><em>*</em>店铺位置：</td>
+    <td><div class="map" id="container"></div></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td><input type="submit" class="form-save" value="保存"></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+</form>
+		</div>
+	
+    </div></div>
+    <!--右侧end-->
+{$footer}
+<script charset="utf-8" src="catalog/view/javascript/editor/kindeditor.js"></script>
+<script charset="utf-8" src="catalog/view/javascript/editor/lang/zh_CN.js"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4" charset="utf-8"></script>
+<script id="map" type="text/javascript" src="catalog/view/javascript/baidu_map.js?v=1.0" data-pos="x={$info['map_x']}&y={$info['map_y']}" title="{$info['name']}"></script>
+<script type="text/javascript" src="catalog/view/javascript/merchants.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	showProvince({$info['province']});
+	setEditor();
+	<!-- initMap({$info['map_x']},{$info['map_y']}); -->
+	changCity({$info['province']},{$info['city']});
+});
+</script>

@@ -1,0 +1,21 @@
+<link rel="stylesheet" type="text/css" href="view/stylesheet/general.css">
+<link rel="stylesheet" type="text/css" href="view/stylesheet/main.css">
+<script type="text/javascript" src="view/javascript/jquery/jquery-1.7.1.min.js"></script>
+    <h1><img src="view/image/customer.png" alt="" /> {$heading_title}
+        <span class="action-span">
+		     <a href="javascript:;" onclick="$('#form').submit();" class="button">{$button_save}</a>
+		</span>
+    </h1>
+    <div class="list-div" id="listDiv">
+      <form action="{$action}" method="post" enctype="multipart/form-data" id="form">
+        <table class="form">
+          <tr>
+            <td><span class="required">*</span> {$entry_ip}</td>
+            <td><input type="text" name="ip" value="{$ip}" />
+              {if $error_ip}
+              <span class="error">{$error_ip}</span>
+              {/if}</td>
+          </tr>
+        </table>
+      </form>
+    </div>

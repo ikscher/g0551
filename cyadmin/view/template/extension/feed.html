@@ -1,0 +1,51 @@
+<link rel="stylesheet" type="text/css" href="view/stylesheet/general.css">
+<link rel="stylesheet" type="text/css" href="view/stylesheet/main.css">
+<script type="text/javascript" src="view/javascript/jquery/jquery-1.7.1.min.js"></script><!--这里只能用1.7.1的版本,否则自带的图片处理有问题-->
+<script type="text/javascript" src="view/javascript/jquery/ui/jquery-ui-1.8.16.custom.min.js"></script>
+<link type="text/css" href="view/javascript/jquery/ui/themes/ui-lightness/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
+<style type="text/css">
+tr.over td {
+	background:#cfeefe;
+} 
+</style>
+
+    <h1><img src="view/image/feed.png" alt="" /> {$heading_title}</h1>
+
+    <div class="list-div" id="listDiv">
+      <table class="list">
+        <thead>
+          <tr>
+            <td class="left">{$column_name}</td>
+            <td class="left">{$column_status}</td>
+            <td class="right">{$column_action}</td>
+          </tr>
+        </thead>
+        <tbody>
+          {if $extensions}
+          {loop $extensions   $extension}
+          <tr>
+            <td class="left">{$extension['name']}</td>
+            <td class="left">{$extension['status']}</td>
+            <td class="right">{loop $extension['action']   $action}
+              <a href="{$action['href']}">{$action['text']}</a> 
+             {/loop}</td>
+          </tr>
+          {/loop}
+           {else}
+          <tr>
+            <td class="center" colspan="8">{$text_no_results}</td>
+          </tr>
+         {/if}
+        </tbody>
+      </table>
+    </div>
+<script type="text/javascript">
+$(function(){
+	$(".list tr").mouseover(function(){
+		$(this).addClass("over");
+	}).mouseout(function(){
+		$(this).removeClass("over");	
+	})
+
+});
+</script>

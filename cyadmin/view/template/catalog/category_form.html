@@ -1,0 +1,204 @@
+<link rel="stylesheet" type="text/css" href="view/stylesheet/general.css">
+<link rel="stylesheet" type="text/css" href="view/stylesheet/main.css">
+<script type="text/javascript" src="view/javascript/jquery/jquery-1.7.1.min.js"></script><!--这里只能用1.7.1的版本,否则自带的图片处理有问题-->
+<script type="text/javascript" src="view/javascript/jquery/ui/jquery-ui-1.8.16.custom.min.js"></script>
+<link type="text/css" href="view/javascript/jquery/ui/themes/ui-lightness/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
+
+
+    {if $error_warning}
+	<div class="warning">{$error_warning}</div>
+	{/if}
+
+  <div class="box">
+    <div class="heading">
+    <h1><img src="view/image/category.png" alt="" /> {$heading_title}
+	  <span class="action-span"><a href="{$cancel}" >{$button_cancel}</a></span>
+      <span class="action-span"><a href="javascript:;" onclick="$('#form').submit();" >{$button_save}</a></span>
+    </h1>
+    <div class="list-div" id="listDiv">
+   
+      <form action="{$action}" method="post" enctype="multipart/form-data" id="form">
+            <table class="form">
+              <tr>
+                <td><span class="required">*</span> {$entry_name}</td>
+				
+                <td><input type="text" name="category_description[name]" size="100" value="{if isset($category_description['name'])}{$category_description['name']}{/if}" />{if !empty($category_id)}ID：{$category_id}{/if}
+                <p>{if isset($error_name)}
+                  <span class="error">{$error_name}</span>
+                {/if}</p>
+				</td>
+              </tr>
+              <tr>
+                <td>{$entry_meta_description}</td>
+                <td><textarea name="category_description[meta_description]" cols="40" rows="3">{if isset($category_description['meta_description'])} {$category_description['meta_description']} {/if}</textarea></td>
+              </tr>
+              <tr>
+                <td>{$entry_meta_keyword}</td>
+                <td><textarea name="category_description[meta_keyword]" cols="40" rows="3">{if isset($category_description['meta_keyword'])} {$category_description['meta_keyword']} {/if}</textarea></td>
+              </tr>
+              <tr>
+                <td>{$entry_description}</td>
+                <td><textarea name="category_description[description]" id="description">{if isset($category_description['description'] )}  {$category_description['description']} {/if}</textarea></td>
+              </tr>
+          
+            <tr>
+              <td>{$entry_parent}</td>
+              <td><select name="parent_id" >
+                  <option value="0">{$text_none}</option>
+                  {loop $categories  $category}
+                  {if $category['category_id'] == $parent_id}
+                  <option value="{$category['category_id']},{$category['top']}" selected="selected" >{$category['name']}</option>
+                  {else}
+                  <option value="{$category['category_id']},{$category['top']}">{$category['name']}</option>
+                  {/if}
+                  {/loop}
+                </select>
+				<!-- <a href="index.php?route=catalog/category/update&token={$token}&category_id={$category_id}" >{$button_refresh}</a></td> -->
+            </tr>
+           <!--  <tr>
+              <td>{$entry_attributes}</td>
+              <td class='attributes'>
+			        {if isset($attribute_groups)}
+						{loop $attribute_groups $key $attribute_group}
+							
+							{loop $attribute_group  $k $v}
+								<label class="agp" for="agp{$k}"><input type="checkbox" name="attribute_group[]" id="agp{$k}" value="{$k}"  {if in_array($k,$AttributeGroups)}checked="checked"{/if}/>{$v}</label>
+							{/loop}
+							 <br/>
+						{/loop}
+					{/if}
+			     </td>
+            </tr> -->
+			
+
+			
+              <td>{$entry_image}</td>
+              <td valign="top"><div class="image"><img src="{$thumb}" alt="" id="thumb" />
+                <input type="hidden" name="image" value="{$image}" id="image" />
+                <br /><a  href="javascript:;" onclick="image_upload('image', 'thumb');">{$text_browse}</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a  href="javascript:;" onclick="$('#thumb').attr('src', '{$no_image}'); $('#image').attr('value', '');">{$text_clear}</a></div></td>
+            </tr>
+            <!-- <tr>
+              <td>{$entry_top}</td>
+              <td>{if $top}
+                <input type="checkbox" name="top" value="1" checked="checked" />
+                {else}
+                <input type="checkbox" name="top" value="1" />
+                {/if}</td>
+            </tr> -->
+            <!-- <tr>
+              <td>{$entry_column}</td>
+              <td><input type="text" name="column" value="{$column}" size="1" /></td>
+            </tr>
+            <tr> -->
+              <td>{$entry_sort_order}</td>
+              <td><input type="text" name="sort_order" value="{$sort_order}" size="10" /></td>
+            </tr>
+            <tr>
+              <td>{$entry_status}</td>
+              <td><select name="status">
+                  {if $status}
+                  <option value="1" selected="selected">{$text_enabled}</option>
+                  <option value="0">{$text_disabled}</option>
+                  {else}
+                  <option value="1">{$text_enabled}</option>
+                  <option value="0" selected="selected">{$text_disabled}</option>
+                  {/if}
+                </select></td>
+            </tr>
+          </table>
+        
+		
+		
+      </form>
+    </div>
+
+<script type="text/javascript" src="view/javascript/ckeditor/ckeditor.js"></script> 
+<script type="text/javascript"><!--
+
+CKEDITOR.replace('description', {
+	filebrowserBrowseUrl: 'index.php?route=common/filemanager&token={$token}',
+	filebrowserImageBrowseUrl: 'index.php?route=common/filemanager&token={$token}',
+	filebrowserFlashBrowseUrl: 'index.php?route=common/filemanager&token={$token}',
+	filebrowserUploadUrl: 'index.php?route=common/filemanager&token={$token}',
+	filebrowserImageUploadUrl: 'index.php?route=common/filemanager&token={$token}',
+	filebrowserFlashUploadUrl: 'index.php?route=common/filemanager&token={$token}'
+});
+
+//--></script> 
+<script type="text/javascript"><!--
+function image_upload(field, thumb) {
+	$('#dialog').remove();
+	
+	$('#listDiv').append('<div id="dialog" style="padding: 3px 0px 0px 0px;"><iframe src="index.php?route=common/filemanager&token={$token}&field=' + encodeURIComponent(field) + '" style="padding:0; margin: 0; display: block; width: 100%; height: 100%;" frameborder="no" scrolling="auto"></iframe></div>');
+	
+	$('#dialog').dialog({
+		title: '{$text_image_manager}',
+		close: function (event, ui) {
+			if ($('#' + field).attr('value')) {
+				$.ajax({
+					url: 'index.php?route=common/filemanager/image&token={$token}&image=' + encodeURIComponent($('#' + field).val()),
+					dataType: 'text',
+					success: function(data) {
+						$('#' + thumb).replaceWith('<img src="' + data + '" alt="" id="' + thumb + '" />');
+					}
+				});
+			}
+		},	
+		bgiframe: false,
+		width: 800,
+		height: 400,
+		resizable: false,
+		modal: false
+	});
+};
+
+
+    
+/*
+var sel={
+        change:function(){
+		    var id=$('select[name=parent_id]').val();
+			var id_array=id.split(',');
+			var category_id=id_array[0];
+			var top=id_array[1];
+
+			var attribute_group='';
+			var str='';
+			$.get('index.php?route=catalog/category/getAjaxGroupsByCategory&token={$token}',{category_id:category_id,top:top},function(json){
+			    for(var x in json){
+				    for(var y in json[x]){
+					    attribute_group=json[x][y];
+						str +="<label class='agp' for='agp"+y+"'><input type='checkbox' name='attribute_group[]' id='agp"+y+"' value='"+y+ "' />"+attribute_group+"</label>";
+					   
+					}
+				}
+				$('.form tr td.attributes').html(str);
+			},'json');
+			
+			
+		},
+		intilize:function(){
+		    $.get('index.php?route=catalog/category/getAjaxGroupsByCategory&token={$token}&category_id={$category_id}',function(json){
+				var str='';
+				for(var x in json){
+					for(var y in json[x]){
+						attribute_group=json[x][y];
+						str +="<label class='agp' for='agp"+y+"'><input type='checkbox' name='attribute_group[]' id='agp"+y+"' value='"+y+ "' />"+attribute_group+"</label>";
+					   
+					}
+				}
+				$('.form tr td.attributes').html(str);
+			},'json');
+        }
+    
+	};
+
+	$('select[name=parent_id]').bind('change',sel.change);
+
+
+$('input[name^=attribute_group]').css('cursor','pointer');
+$('.agp').css('cursor','pointer');
+
+*/
+
+//--></script> 

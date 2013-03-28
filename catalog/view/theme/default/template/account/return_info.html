@@ -1,0 +1,125 @@
+{$header}
+<!--个人中心body_begin-->
+<div class="mainContent clear">
+ 	<!--左侧begin-->
+	{$left}
+ 	<!--左侧end-->
+    <!--右侧begin-->
+	<div class="right">
+	    <div class="account_box">
+		     <div class="ac_bgs clearfix">
+                    <div class="ac_t_l">商品退换</div>
+                    <div class="ac_t_r">
+                        <div class="ac_t_l_s"><img src="catalog/view/theme/default/image/member/pic_account_title_09.gif" /></div>
+                        <div class="account_contianer">
+                        	<h4 class="line">{$text_return_detail}</h4>
+                            <div class="line_bot list">
+								
+									<table width="720" border="0" align="center" cellspacing="1" >
+										<thead>
+										  <tr>
+										   <td width="20%" align="center" bgcolor="#F5EDE2" class="itemTitle">{$text_return_id}</td>
+										   <td width="20%" align="center" bgcolor="#F5EDE2" class="itemTitle">{$text_date_added}</td>
+										   <td width="20%" align="center" bgcolor="#F5EDE2" class="itemTitle">{$text_order_id}</td>
+										   <td width="20%" align="center" bgcolor="#F5EDE2" class="itemTitle">{$text_date_ordered}</td>
+										  </tr>
+										</thead>
+										
+										<tbody>
+										  <tr>
+											<td align="center" bgcolor="#FFFFFF"> #{$return_id}</td>
+											<td align="center" bgcolor="#FFFFFF">{$date_added}</td>
+											<td align="center" bgcolor="#FFFFFF">#{$order_id}</td>
+											<td align="center" bgcolor="#FFFFFF">{$date_ordered}</td>
+										  </tr>
+										</tbody>
+									  </table>
+									 <!--  <h2>{$text_product}</h2> -->
+									<table width="720" border="0" align="center" cellspacing="1" >
+										<thead>
+										  <tr>
+											<td width="20%" align="center" bgcolor="#F5EDE2" class="itemTitle">{$column_product}</td>
+											<td width="20%" align="center" bgcolor="#F5EDE2" class="itemTitle">{$column_model}</td>
+											<td width="20%" align="center" bgcolor="#F5EDE2" class="itemTitle">{$column_quantity}</td>
+										  </tr>
+										</thead>
+										<tbody>
+										  <tr>
+											<td align="center" bgcolor="#FFFFFF">{$product}</td>
+											<td align="center" bgcolor="#FFFFFF">{$model}</td>
+											<td align="center" bgcolor="#FFFFFF">{$quantity}</td>
+										  </tr>
+										</tbody>
+									 </table>
+									 
+									<table width="720" border="0" align="center" cellspacing="1" >
+										<thead>
+										  <tr>
+											<td width="20%" align="center" bgcolor="#F5EDE2" class="itemTitle">{$column_reason}</td>
+											<td width="20%" align="center" bgcolor="#F5EDE2" class="itemTitle">{$column_opened}</td>
+											<td width="20%" align="center" bgcolor="#F5EDE2" class="itemTitle">{$column_action}</td>
+										  </tr>
+										</thead>
+										<tbody>
+										  <tr>
+											<td align="center" bgcolor="#FFFFFF">{$reason}</td>
+											<td align="center" bgcolor="#FFFFFF">{$opened}</td>
+											<td align="center" bgcolor="#FFFFFF">{$action}</td>
+										  </tr>
+										</tbody>
+									 </table>
+									 
+									  {if $comment}
+									<table width="720" border="0" align="center" cellspacing="1" >
+										<thead>
+										  <tr>
+											<td width="20%" align="center" bgcolor="#F5EDE2" class="itemTitle">{$text_comment}</td>
+										  </tr>
+										</thead>
+										<tbody>
+										  <tr>
+											<td align="center" bgcolor="#FFFFFF">{$comment}</td>
+										  </tr>
+										</tbody>
+								    </table>
+									 
+								    {/if}
+									  {if $histories}
+									 <!--  <h2>{$text_history}</h2> -->
+									<table width="720" border="0" align="center" cellspacing="1" >
+										<thead>
+										  <tr>
+											<td width="20%" align="center" bgcolor="#F5EDE2" class="itemTitle">{$column_date_added}</td>
+											<td width="20%" align="center" bgcolor="#F5EDE2" class="itemTitle">{$column_status}</td>
+											<td width="20%" align="center" bgcolor="#F5EDE2" class="itemTitle">{$column_comment}</td>
+										  </tr>
+										</thead>
+										<tbody>
+										  {loop $histories   $history}
+										  <tr>
+											<td align="center" bgcolor="#FFFFFF">{$history['date_added']}</td>
+											<td align="center" bgcolor="#FFFFFF">{$history['status']}</td>
+											<td align="center" bgcolor="#FFFFFF">{$history['comment']}</td>
+										  </tr>
+										  {/loop}
+										</tbody>
+									</table>
+									{/if}
+									<div class="buttons">
+										<!-- <a href="{$back}" class="button"><img src="catalog/view/theme/default/image/cancel.gif" /></a> -->
+										
+										<a href="{$continue}"  class="button"><img src="catalog/view/theme/default/image/goon.gif" />
+										<!-- <input type="submit" value="{$button_continue}" class="button" /> -->
+										<!-- <input type="hidden" name="hidden" value="1" /> -->
+									  
+									</div>
+			                   
+							</div>
+						</div>
+					</div>
+				</div>
+		</div>	 
+	</div>
+
+</div>
+{$footer}

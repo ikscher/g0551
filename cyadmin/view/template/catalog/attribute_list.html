@@ -1,0 +1,286 @@
+<link rel="stylesheet" type="text/css" href="view/stylesheet/general.css">
+<link rel="stylesheet" type="text/css" href="view/stylesheet/main.css">
+<script type="text/javascript" src="view/javascript/jquery/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="view/javascript/jquery/ui/jquery-ui-1.8.16.custom.min.js"></script>
+<link type="text/css" href="view/javascript/jquery/ui/themes/ui-lightness/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
+<style type="text/css">
+tr.over td {
+	background:#cfeefe;
+} 
+</style>
+
+
+{if $error_warning}
+<div class="warning">{$error_warning}</div>
+{/if}
+{if $success}
+<div class="success">{$success}</div>
+{/if}
+
+<h1><img src="view/image/order.png" alt="" /> {$heading_title}
+	<span class="action-span">
+	  <a href="javascript:;"  class="button">{$button_insert}</a>
+	  <a href="javascript:;"  title="{$delete}" class="button">{$button_delete}</a>
+	  <a href="{$refresh}" class="button">{$button_refresh}</a>
+	</span>
+</h1>
+
+<div class="list-div" id="listDiv">
+  <form action="{$delete}" method="post" enctype="multipart/form-data" id="form" >
+	<table class="list">
+	  <thead>
+		<tr>
+		  <td width="1" style="text-align: center;"><input type="checkbox" onclick="$('input[name*=\'selected\']').attr('checked', this.checked);" /></td>
+		  <td>ID</td>
+		  <td class="left">{if $sort == 'ad.name'}
+			<a href="{$sort_name}" class="{strtolower($order)}">{$column_name}</a>
+			 {else}
+			<a href="{$sort_name}">{$column_name}</a>
+			{/if}</td>
+		  <td class="left">{if $sort == 'attribute_group'}
+			<a href="{$sort_attribute_group}" class="{strtolower($order)}">{$column_attribute_group}</a>
+			 {else}
+			<a href="{$sort_attribute_group}">{$column_attribute_group}</a>
+			{/if}</td>
+		  <td><a href="{$sort_attribute_group_id}">{$column_attribute_group_id}</a></td>
+		  <!-- <td ><a href="{$sort_type}">{$column_type}</a></td>
+		  <td style="width:10%">子类别1</td><td style="width:10%">子类别2</td><td style="width:10%">子类别3</td> -->
+		  <td class="right">{if $sort == 'a.sort_order'}
+			<a href="{$sort_sort_order}" class="{strtolower($order)}">{$column_sort_order}</a>
+			 {else}
+			<a href="{$sort_sort_order}">{$column_sort_order}</a>
+			{/if}</td>
+		  <td>{$column_show}</td>
+		  <td class="right">{$column_action}</td>
+		</tr>
+	  </thead>
+	  <tbody>
+		{if $attributes}
+		{loop $attributes   $attribute}
+		<tr>
+		  <td style="text-align: center;">{if $attribute['selected']}
+			<input type="checkbox" name="selected[]" value="{$attribute['attribute_id']}" checked="checked" />
+			 {else}
+			<input type="checkbox" name="selected[]" value="{$attribute['attribute_id']}" />
+			{/if}</td>
+		  <td>{$attribute['attribute_id']}</td>
+		  <td class="left">{$attribute['name']}</td>
+		  <td class="attribute_group" >{$attribute['attribute_group']}</td>
+		  <td class="attribute_group_id" data-type="{$attribute['attribute_group_id']}">{$attribute['attribute_group_id']}</td>
+		 <!--  <td class="attribute_type" data-type="{$attribute['type']}">{$attribute['typename']}</td>
+		  <td>{$attribute['description']}</td>
+		  <td>{$attribute['text0']}</td>
+		  <td>{$attribute['text1']}</td> -->
+		  <td class="right">{$attribute['sort_order']}</td>
+		  <td>{if $attribute['isShow']==1}yes{else}no{/if}</td>
+		
+			<td class='operation'><a href="javascript:void(0);"  id="{$attribute['attribute_id']}" >编辑</a></td>
+		</tr>
+		{/loop}
+		 {else}
+		<tr>
+		  <td class="center" colspan="10" >{$text_no_results}</td>
+		</tr>
+		{/if}
+	  </tbody>
+	</table>
+  </form>
+  {$pagination}
+</div>
+
+
+<div id="dialog-form-e" title="编辑属性"></div>
+<div id="dialog-form-i" title="新增属性"></div>
+
+<script type="text/javascript">
+$(function(){
+	$(".list tr").mouseover(function(){
+		$(this).addClass("over");
+	}).mouseout(function(){
+		$(this).removeClass("over");	
+	})
+
+});
+
+var cf={
+        checkForm:function(){
+			var sum=0;
+			$("input[name^='select']").each(function(i,n){
+				if($(this).prop("checked")==true){
+				   sum++;
+				}
+		  
+			});
+		  
+			if(sum<1) {
+			   alert("请选择要删除的项！");
+			   return false;
+			}else{
+			   return true;
+			}
+
+        },
+		submitForm:function(){
+		    if(cf.checkForm()){
+			    $('form').submit();
+			}
+		
+		}
+
+	};
+
+
+$('.action-span a:eq(1)').click(function(){	
+	cf.submitForm();
+});
+
+
+$(".attribute_group").css({'cursor':'pointer','color':'red'});
+$(".attribute_group").click(function(){
+  var pathname=location.pathname;
+  var query=location.search;
+  var url=pathname+query;
+  var url=url+'&attribute_group='+encodeURIComponent($.trim($(this).html()));
+
+  url=url.replace(/&page=\d*/i,'');
+  location.href=url;
+ 
+});
+
+
+$(".attribute_type").css({'cursor':'pointer','color':'red'});
+$(".attribute_type").click(function(){
+  var pathname=location.pathname;
+  var query=location.search;
+  var url=pathname+query;
+  var url=url+'&attribute_type='+$.trim($(this).attr('data-type'));
+  url=url.replace(/&page=\d*/i,'');
+  url=url.replace(/&attribute_group=[\w%]*/i,'');
+  location.href=url;
+ 
+});
+
+
+$(".attribute_group_id").css({'cursor':'pointer','color':'red'});
+$(".attribute_group_id").click(function(){
+  var pathname=location.pathname;
+  var query=location.search;
+  var url=pathname+query;
+  var url=url+'&attribute_group_id='+$.trim($(this).attr('data-type'));
+  url=url.replace(/&page=\d*/i,'');
+  url=url.replace(/&attribute_group=[\w%]*/i,'');
+  url=url.replace(/&attribute_type=[\w%]*/i,'');
+  location.href=url;
+ 
+});
+
+
+
+//编辑
+$(function() {
+	// a workaround for a flaw in the demo system (http://dev.jqueryui.com/ticket/4375), ignore!
+	//$( "#dialog:ui-dialog" ).dialog( "destroy" );
+	
+	$("#dialog-form-e" ).dialog({
+		bgiframe:true, //兼容IE6
+		autoOpen: false,
+		height: 400,
+		width: 300,
+		modal: true,
+		position:['top','left'],
+		buttons: {
+			"确定": function() {
+			    var attribute_id=$('input[name=attribute_id]').val();
+				var attribute_group_id=$('select[name=attribute_group_id]').find("option:selected").val();
+				var sort_order=$('input[name=sort_order]').val();
+				var attribute_name=$('input[name=attribute_name]').val();
+			
+				$.post("index.php?route=catalog/attribute/update&token={$token}",{attribute_id:attribute_id,attribute_name:attribute_name,sort_order:sort_order,attribute_group_id:attribute_group_id},function(str){
+				    if (str=='ok'){
+					    location.href="index.php?route=catalog/attribute&token={$token}&attribute_group_id="+attribute_group_id;
+				    }else{
+					    alert("更新失败！");
+					}
+
+				});
+				
+				$( this ).dialog( "close" );
+
+			},
+			"取消": function() {
+				$( this ).dialog( "close" );
+			}
+		}
+	});
+});
+
+//编辑
+$('.operation a').click(function(){
+    var attribute_id=$(this).attr('id');
+
+	$.ajax({
+	        url:'index.php?route=catalog/attribute/getForm&token={$token}',
+			dataType:'html',
+			type:'get',
+			data:{attribute_id:attribute_id},
+			success:function(str){
+			    $("#dialog-form-e").html(str);
+			},
+			beforeSend:function(){
+			   $("#dialog-form-e").html('正在载入...'); 
+			}
+    });
+	$("#dialog-form-i").html('');
+    $("#dialog-form-e").dialog( "open" );
+});
+
+
+//新增
+$(function() {
+	$("#dialog-form-i" ).dialog({
+		bgiframe:true, //兼容IE6
+		autoOpen: false,
+		height: 400,
+		width: 300,
+		modal: true,
+		position:['top','left'],
+		buttons: {
+		     "确定": function() {
+			    if(!($.trim($('input[name=attribute_name]').val()))) {
+				    alert('属性名称不能为空！');
+					return false;
+				}
+
+				var attribute_group_id=$('select[name=attribute_group_id]').find("option:selected").val();
+				var sort_order=$('input[name=sort_order]').val();
+				var attribute_name=$('input[name=attribute_name]').val();
+				
+				$.post("index.php?route=catalog/attribute/insert&token={$token}",{attribute_group_id:attribute_group_id,sort_order:sort_order,attribute_name:attribute_name},function(str){
+				    if (str=='ok'){
+					    window.location.href="index.php?route=catalog/attribute&token={$token}";
+				    }else{
+					    alert("插入失败！");
+					}
+
+				});
+				$( this ).dialog( "close" );
+			 },	
+			 "取消": function(){
+			    
+				$( this ).dialog( "close" );
+			 }
+		
+		}
+	});
+});
+    
+//新增
+$('.action-span a:eq(0)').click(function(){
+    $.get('index.php?route=catalog/attribute/getForm&token={$token}',function(str){
+        $("#dialog-form-i").html(str);
+    },'html');
+	$("#dialog-form-e").html('');
+    $("#dialog-form-i").dialog( "open" );
+});
+
+</script>

@@ -1,0 +1,240 @@
+{$header}
+<!-- <style type="text/css">
+tr.over td {
+	background:#cfeefe;
+} 
+</style> -->
+<!--个人中心body_begin-->
+<div class="mainContent clear">
+  <!--左侧begin-->
+	{$left}
+ 	<!--左侧end-->
+    <!--右侧begin-->
+	<div class="right">
+        
+		<!--我的订单-->
+        	<div class="account_box">
+            	<div class="ac_bgs clearfix">
+                    <div class="ac_t_l">已买到的宝贝</div>
+                    <div class="ac_t_r">
+                        <div class="ac_t_l_s"><img src="catalog/view/theme/default/image/member/pic_account_title_07.gif" /></div>
+                        <div class="account_contianer">
+                        	<h4 class="line">已买到的宝贝<input type="button" class="p_btn_s r" name="cancel" value="返回" /></h4>
+                            <div class="line_bot">
+							<div class="list">
+								<!--个人设置-->
+								<form action="{$orderquery}" method="post" >
+								<table width="720" border="0" align="center" cellpadding="0" cellspacing="0" class="nostyle">
+								  <tr>
+									<td width="70">订单序号：</td>
+									<td width="180"><input name="orderno" type="text" size="22" class="searchInput" /></td>
+									<td><input type="submit" class="p_btn_s"   value="查询" /></td>
+								  </tr>
+								</table>
+								</form>
+								<!-- <table width="720" border="0" cellspacing="0" cellpadding="0">
+								  <tr>
+									<td width="15" height="24"></td>
+									<td width="116" class="item" >待处理的订单：0</td>
+									<td width="116" class="item" >成交订单：0</td>
+									<td width="116" class="item" >订单总数：0</td>
+									<td>&nbsp;</td>
+								  </tr>
+								</table> -->
+								<table width="100%" border="0" align="center" cellspacing="1" class="ordercontent">
+								  
+								  <thead>
+								    <tr>
+									    <th  bgcolor="#F5EDE2" class="itemTitle"></th>
+										<th width="35%" align="center" bgcolor="#F5EDE2" class="itemTitle">宝贝</th>
+										<th width="10%" align="center" bgcolor="#F5EDE2" class="itemTitle">单价(元)</th>
+										<th width="10%" align="center" bgcolor="#F5EDE2" class="itemTitle">数量</th>
+										<th width="13%" align="center" bgcolor="#F5EDE2" class="itemTitle">实付款(元)</th>
+										<th width="15%" align="center" bgcolor="#F5EDE2" class="itemTitle">
+											<select name="orderstatus">
+												<option value="" {if empty($statusid)}selected=\"selected\"{/if}>订单状态</option>
+												{if !empty($orderstatus)}
+													{loop $orderstatus $v}
+														<option value="{$v['order_status_id']}" {if $statusid==$v['order_status_id']}selected=\"selected\"{/if}>{$v['name']}</option>
+													{/loop}
+												{/if}
+											</select>	
+										</th>
+										<th align="center" bgcolor="#F5EDE2" class="itemTitle">操作</th>
+									</tr>
+								  </thead>
+								  
+								  {if $orders}
+								        
+			                           {loop $orders   $order}
+									    <tbody data-id="{$order['order_id']}">
+										<tr class="sep-row"></tr>
+									        <tr class="order-hd">
+										        <td colspan="7">
+												<span class="no">订单编号：{$order['orderid']}</span>
+												<span class="deal-time">成交时间：{$order['date_added']}</span>
+												<span class="seller">店铺：<a target="_blank" href="index.php?route=store/store&store_id={$order['store_id']}">{if isset($order['store_name'])}{$order['store_name']}{else}{$order['store_id']}{/if}</a></span></td>
+										    </tr>
+											{if !empty($order['products'])}
+											{php $cn=count($order['products']);}
+											{loop $order['products'] $k $product}
+												<tr class="order-bd">
+													<td class="baobei" colspan="2">
+													    <a target="_blank" hidefouce="true" title="查看宝贝详情" href="index.php?route=product/product&product_id={$product['product_id']}" class="pic"><img src="{$product['image']}" alt="查看宝贝详情" /></a>
+													    <div class="desc">
+														    <a class="baibei-name" target="_blank" href="index.php?route=product/product&product_id={$product['product_id']}">{$product['name']}</a>
+														    <div class="spec">{$product['attribute']}</div>
+														</div>
+													</td>
+													<td class="price">{$product['price']}</td>
+													<td class="quantity">{$product['quantity']}</td>
+													{if $k==0}
+													<td class="amount" rowspan="{$cn}">{$order['total']}{if !empty($order['shipping'])}<p class="post-type">(含{$order['shipping']['title']}:{$order['shipping']['text']})</p>{/if}</td>
+													<td class="trade_status" rowspan="{$cn}">{if $order['order_status_id']==4}<a href="javascript:void(0);" onclick="setOrderStatus('accept','确定收货吗，您的款项将打给对方？',{$order['order_id']});">确认收货{else}{$order['status']['name']}{/if}</a><p><a href="{$order['href']}">订单详情</a></p></td>
+													
+													<td rowspan="{$cn}" class="operate">{if $order['status']['order_status_id']==1}<input type="button" class="p_btn_s" id="payOrder" value="付款" /><p><a  class="cancelOrder" data-id="{$order['order_id']}"  data-reorder="{$order['reorder']}" href="javascript:void(0);">取消订单</a></p>{elseif $order['status']['order_status_id']==5 || $order['status']['order_status_id']==6}<a class="deleteOrder" data-id="{$order['order_id']}" href="javascript:void(0);">删除</a> {/if}</td>
+												    {/if}
+												</tr>
+												
+											{/loop}
+											{/if}
+										</tbody>
+								        {/loop}
+									   
+									    <tfoot>
+											<tr class="pagination"><td colspan="7" align="right">{$pagination}</td></tr>
+										</tfoot>
+								   {else}
+								       <tbody>
+											<tr class="content"><td colspan="7" align='center'>{$text_empty}</td></tr>
+					                    </tbody>
+								   {/if}
+								  
+								</table>
+                            <!--个人设置结束-->
+							</div>
+							</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--我的订单end-->
+			
+			
+		  <!-- <h1>{$heading_title}</h1>
+		  {if $orders}
+			  {loop $orders   $order}
+			  <div class="order-list">
+				<div class="order-id"><b>{$text_order_id}</b> #{$order['order_id']}</div>
+				<div class="order-status"><b>{$text_status}</b> {$order['status']}</div>
+				<div class="order-content">
+				  <div><b>{$text_date_added}</b> {$order['date_added']}<br />
+					<b>{$text_products}</b> {$order['products']}</div>
+				  <div><b>{$text_customer}</b> {$order['name']}<br />
+					<b>{$text_total}</b> {$order['total']}</div>
+				  <div class="order-info"><a href="{$order['href']}"><img src="catalog/view/theme/default/image/info.png" alt="{$button_view}" title="{$button_view}" /></a>&nbsp;&nbsp;<a href="{$order['reorder']}"><img src="catalog/view/theme/default/image/reorder.png" alt="{$button_reorder}" title="{$button_reorder}" /></a></div>
+				</div>
+			  </div>
+			  {/loop}
+			  <div class="pagination">{$pagination}</div>
+		   {else}
+			   <div class="content">{$text_empty}</div>
+		  {/if}
+		  <div class="buttons">
+			<div class="right"><a href="{$continue}" class="button">{$button_continue}</a></div>
+		  </div> -->
+  </div>
+
+  
+<!--begin提交订单支付数据到alipay-->
+<div style="display:none">
+    <form id="alipay" name="alipay" action="index.php?route=payment/alipay" method="post">
+	    <input type="hidden" name="WIDseller_email" value="" />
+		<input type="hidden" name="WIDout_trade_no" value="" />
+		<input type="hidden" name="WIDsubject" value="" />
+		<input type="hidden" name="WIDtotal_fee" value="" />
+		<input type="hidden" name="WIDbody" value="" />
+		<input type="hidden" name="WIDshow_url" value="" />
+		<input type="hidden" name="WIDexter_invoke_ip" value="" />
+	</form>
+</div>
+<!--end提交订单支付数据到alipay-->
+
+<script  type="text/javascript">
+    /*
+    $(function(){
+		$(".ordercontent tbody tr.order-bd").mouseover(function(){
+			$(this).addClass("over");
+		}).mouseout(function(){
+			$(this).removeClass("over");	
+		});
+
+	});*/
+    
+	
+	//付款
+	$("#payOrder").click(function(){
+	    var orderid=$.trim($(this).parent().parent().children('td:eq(0)').text());
+		$.post('index.php?route=account/order/pay',{orderid:orderid},function(json){
+		    //alert(json.WIDseller_email);
+			$("#alipay").submit();
+		},'json');
+	});
+	
+	
+	//取消订单
+	$(".cancelOrder").click(function(){
+	    if(confirm("您确认取消订单吗？")){
+		    var order_id=$.trim($(this).attr('data-id'));
+	        //window.location.href=url;
+			$.post('index.php?route=account/order/cancel',{order_id:order_id},function(){
+			    location.href='index.php?route=account/order';
+			});
+	    }
+	});
+	
+	
+	//删除订单
+	$(".deleteOrder").click(function(){
+	    if(confirm("您确认删除订单吗？")){
+		    var order_id=$.trim($(this).attr('data-id'));
+			$.post('index.php?route=account/order/delete',{order_id:order_id},function(str){
+			    if(str=='yes'){
+					location.href='index.php?route=account/order';
+				}else{
+				    alert('删除失败！');
+				}
+			});
+	    }
+	
+	});
+	
+	$("select[name='orderstatus']").change(function(){
+        var statusid=$(this).val();
+		if(isNaN(parseInt(statusid))) {
+		    window.location.href='index.php?route=account/order';
+	    }else{
+		    window.location.href='index.php?route=account/order&statusid='+statusid;
+		}
+	});
+	
+	
+	//设置订单状态
+	function setOrderStatus(action,strMsg,intId){
+		if(confirm(strMsg)){
+			$.post("index.php?route=account/order/"+action,{id:intId},function(str){
+				if(str=="ok"){
+					location.reload();
+				}else{
+					alert(str);
+				}
+			});
+		}
+	}
+	
+	$("input[name=cancel]").click(function(){
+	    location='{$back}';
+	});
+	
+</script>
+{$footer}

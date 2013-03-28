@@ -1,0 +1,137 @@
+{$header}
+{if $success}
+<div class="success">{$success}<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>
+{/if}
+{$column_left}{$column_right}
+<div id="content">{$content_top}
+  <div class="breadcrumb">
+    {loop $breadcrumbs   $breadcrumb}
+    {$breadcrumb['separator']}<a href="{$breadcrumb['href']}">{$breadcrumb['text']}</a>
+     {/loop}
+  </div>
+  <h1>{$heading_title}</h1>
+  {if $products}
+  <table class="compare-info">
+    <thead>
+      <tr>
+        <td class="compare-product" colspan="{count($products) + 1}">{$text_product}</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{$text_name}</td>
+        {loop $products   $product}
+        <td class="name"><a href="{$products[$product['product_id']]['href']}">{$products[$product['product_id']]['name']}</a></td>
+        {/loop}
+      </tr>
+      <tr>
+        <td>{$text_image}</td>
+        {loop $products   $product}
+        <td>{if $products[$product['product_id']]['thumb']}
+          <img src="{$products[$product['product_id']]['thumb']}" alt="{$products[$product['product_id']]['name']}" />
+          {/if}</td>
+        {/loop}
+      </tr>
+      <tr>
+        <td>{$text_price}</td>
+        {loop $products   $product}
+        <td>
+		{if $products[$product['product_id']]['price']}
+            {if !$products[$product['product_id']]['special']}
+              {$products[$product['product_id']]['price']}
+           {else}
+              <span class="price-old">{$products[$product['product_id']]['price']}</span> <span class="price-new">{$products[$product['product_id']]['special']}</span>
+            {/if}
+          {/if}
+		  <td>
+        {/loop}
+      </tr>
+      <tr>
+        <td>{$text_model}</td>
+        {loop $products   $product}
+        <td>{$products[$product['product_id']]['model']}</td>
+        {/loop}
+      </tr>
+      <tr>
+        <td>{$text_manufacturer}</td>
+        {loop $products   $product}
+        <td>{$products[$product['product_id']]['manufacturer']}</td>
+        {/loop}
+      </tr>
+      <tr>
+        <td>{$text_availability}</td>
+        {loop $products   $product}
+        <td>{$products[$product['product_id']]['availability']}</td>
+        {/loop}
+      </tr>
+      <tr>
+        <td>{$text_rating}</td>
+        {loop $products   $product}
+        <td><img src="catalog/view/theme/default/image/stars-{$products[$product['product_id']]['rating']}.png" alt="{$products[$product['product_id']]['reviews']}" /><br />
+          {$products[$product['product_id']]['reviews']}</td>
+        {/loop}
+      </tr>
+      <tr>
+        <td>{$text_summary}</td>
+        {loop $products   $product}
+        <td class="description">{$products[$product['product_id']]['description']}</td>
+        {/loop}
+      </tr>
+      <tr>
+        <td>{$text_weight}</td>
+        {loop $products   $product}
+        <td>{$products[$product['product_id']]['weight']}</td>
+        {/loop}
+      </tr>
+      <tr>
+        <td>{$text_dimension}</td>
+        {loop $products   $product}
+        <td>{$products[$product['product_id']]['length']} x {$products[$product['product_id']]['width']} x {$products[$product['product_id']]['height']}</td>
+        {/loop}
+      </tr>
+    </tbody>
+    {loop $attribute_groups   $attribute_group}
+		<thead>
+		  <tr>
+			<td class="compare-attribute" colspan="{count($products) + 1}">{$attribute_group['name']}</td>
+		  </tr>
+		</thead>
+		{loop $attribute_group['attribute']  $key $attribute}
+			<tbody>
+			  <tr>
+				<td>{$attribute['name']}</td>
+				{loop $products   $product}
+				{if isset($products[$product['product_id']]['attribute'][$key])}
+				<td>{$products[$product['product_id']]['attribute'][$key]}</td>
+				 {else}
+				<td></td>
+				{/if}
+				{/loop}
+			  </tr>
+			</tbody>
+		{/loop}
+    {/loop}
+    <tr>
+      <td></td>
+      {loop $products   $product}
+      <td><input type="button" value="{$button_cart}" onclick="addToCart('{$product['product_id']}');" class="button" /></td>
+      {/loop}
+    </tr>
+    <tr>
+      <td></td>
+      {loop $products   $product}
+      <td class="remove"><a href="{$product['remove']}" class="button">{$button_remove}</a></td>
+      {/loop}
+    </tr>
+  </table>
+  <div class="buttons">
+    <div class="right"><a href="{$continue}" class="button">{$button_continue}</a></div>
+  </div>
+   {else}
+  <div class="content">{$text_empty}</div>
+  <div class="buttons">
+    <div class="right"><a href="{$continue}" class="button">{$button_continue}</a></div>
+  </div>
+  {/if}
+  {$content_bottom}</div>
+{$footer}

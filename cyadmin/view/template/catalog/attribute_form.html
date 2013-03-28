@@ -1,0 +1,89 @@
+<form action="{$action}" method="post" enctype="multipart/form-data" id="form">
+	<table class="form">
+	  <tr>
+		<td><span class="required">*</span> {$entry_name}</td>
+		<td>
+		  <input type="text" name="attribute_name" value="{if isset($attribute_name)} {$attribute_name}{/if}" />
+		  <br />
+		  {if isset($error_name)}
+		  <span class="error">{$error_name}</span><br />
+		  {/if}
+		  </td>
+	  </tr>
+
+	  <tr>
+		<td>{$entry_attribute_group}</td>
+		<td><select name="attribute_group_id">
+			{loop $attribute_groups   $attribute_group}
+			{if $attribute_group['attribute_group_id'] == $attribute_group_id}
+			<option value="{$attribute_group['attribute_group_id']}" {if $attribute_group_id==$attribute_group['attribute_group_id']}selected="selected"{/if}>{$attribute_group['attribute_group_id']}：{$attribute_group['name']}</option>
+			 {else}
+			<option value="{$attribute_group['attribute_group_id']}">{$attribute_group['attribute_group_id']}：{$attribute_group['name']}</option>
+		   {/if}
+			{/loop}
+		  </select></td>
+	  </tr>
+	  
+	  <!-- <tr>
+		<td>{$entry_type}</td>
+		<td>
+		    <input type="text" name="atype" readonly="true" value="{$attribute_group_type}" />
+		    
+		</td>
+	  </tr>
+	  <tr>
+	    <td></td>
+		<td>
+		    <input type="text" name="description"  readonly="true" value="{$attribute_group_description}" />
+		   
+		</td>
+	  </tr>
+	  
+	  <tr>
+	    <td></td>
+		<td>
+			<input type="text" name="text0"  readonly="true" value="{$attribute_group_text0}" />
+	    </td>
+	  </tr>
+	  
+	  <tr>
+	    <td></td>
+		<td>
+		    <input type="text" name="text1"  readonly="true" value="{$attribute_group_text1}" />
+		</td>
+	  </tr> -->
+	  
+	  <tr> 
+		<td>{$entry_sort_order}</td>
+		<td><input type="text" name="sort_order" value="{$sort_order}" size="10" /></td>
+	  </tr>
+	  <input type='hidden' name='attribute_id' value="{$attribute_id}" />
+	</table>
+  </form>
+  
+<script type="text/javascript">
+   var sel={ 
+            getGroupDesc:function(){
+				var id=$('select[name=attribute_group_id]').find("option:selected").val();
+				$.ajax({
+				    type:'POST',
+				    url:'index.php?route=catalog/attribute_group/getAjaxGroup&token={$token}',
+					data:'agid='+id,
+				    dataType:'json',
+					success:function(json){
+					    //$('input[name=atype]').val(json['type']);
+						//$('input[name=description]').val(json['description']);
+						//$('input[name=text0]').val(json['text0']);
+						//$('input[name=text1]').val(json['text1']);
+						
+					   
+					},
+					error:function(){
+					    alert('数据返回错误！');
+					}
+				});
+			    
+            }
+        };
+	$('select[name=attribute_group_id]').bind('change',sel.getGroupDesc);
+</script>

@@ -1,0 +1,173 @@
+{$header}
+<!--个人中心body_begin-->
+<div class="mainContent clear">
+ 	<!--左侧begin-->
+	{$left}
+ 	<!--左侧end-->
+    <!--右侧begin-->
+	<div class="right">
+         <!--my subscription-->
+        	<div class="account_box">
+			    <div class="ac_bgs clearfix">
+                    <div class="ac_t_l">我的秀</div>
+                    <div class="ac_t_r">
+                        <div class="ac_t_l_s"><img src="catalog/view/theme/default/image/member/pic_account_title_011.gif" /></div>
+                        <div class="account_contianer">
+                        	<h4 class="line">秀主题 <span >{if isset($success)}{$success}{/if}</span><input type="button" name="issue" class="p_btn_s r" value="发布" /><input type="button" name="cancel" class="p_btn_s r" value="返回" /></h4>
+                            <div class="line_bot">
+								<div class="content">
+								<!--个人设置-->
+								<div class="listForm" style="margin-bottom:10px;padding:5px;">
+									<form action="{$refresh}" method="post" >
+										{$column_content_id}<input type="text" name="content_id" value="{$content_id}" size="10" />
+										{$column_starttime}<input type="text" name="starttime" value="{$starttime}"  size="12"/>
+										{$column_endtime}<input type="text" name="endtime" value="{$endtime}" size="12" />
+										{$column_title}<input type="text" name="title" value="{$title}" />
+										{$column_isShow}
+											<select name="isShow">
+												<option  value=""  {if $isShow==''}selected="selected"{/if}>--全部--</option>
+												<option  value="1" {if $isShow==1}selected="selected"{/if}>显示</option>
+												<option  value="2" {if $isShow==2}selected="selected"{/if}>删除</option>
+												<option  value="3" {if $isShow==3}selected="selected"{/if}>不显示</option>
+											</select>	
+										<input type="reset"  name="rst" value="重置" style="cursor:pointer" />
+										<input type="submit" name="sbt" value="提交" style="cursor:pointer" />
+									</form>
+								</div>
+
+								<div class="listShow">
+								  <form action="{$delete}" method="post" enctype="multipart/form-data" id="form">
+									<table  border="1" align="center" cellpadding="0" cellspacing="0" >
+									  <thead>
+										<tr>
+										  <td class="center" width="5%" ><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
+										  <td class="center" width="5%">{$column_content_id}</td>
+										  <td class="center" width="5%">{$column_imageUrl}</td>
+										  <td class="center">{$column_favoriate}</td>
+										  <td class="center">{$column_share}</td>
+										  <td class="center" width="12%">{$column_createtime}</td>
+										  <td class="center" width="38%">{$column_title}</td>
+										  <td class="center">{$column_isShow}</td>
+										  <td class="center" width="9%">{$column_action}</td>
+										</tr>
+									  </thead>
+									  <tbody>
+										{if isset($contents)}
+										{loop $contents  $content}
+											<tr>
+											  <td style="text-align: center;">{if $content['selected']}
+												<input type="checkbox" name="selected[]" value="{$content['content_id']}" checked="checked" />
+												{else}
+												<input type="checkbox" name="selected[]" value="{$content['content_id']}" />
+												{/if}
+											 </td>
+											  <td class="center">{$content['content_id']}</td>
+											  <td class="center"><img src="{$content['imageUrl']}" /></td>
+											  <td class="center">{$content['favoriate']}</td>
+											  <td class="center">{$content['share']}</td>
+											  <td class="center">{$content['createtime']}</td>
+											  <td class="center"><a href="index.php?route=product/joy/joyDetail&id={$content['content_id']}" target="_blank"> {$content['title']}</a></td>
+											  <td  class="center">{if $content['isShow']==1}显示{elseif $content['isShow']==2}删除{else}不显示{/if}</td>
+											  <td class="center">{loop $content['action']  $action}
+												<a  class="{$action['class']}" href="{$action['href']}">{$action['text']}</a>
+												{/loop}</td>
+											</tr>
+										{/loop}
+										 
+										{else}
+										<tr>
+										  <td class="center" colspan="9">{$text_no_results}</td>
+										</tr>
+									   {/if}
+									  </tbody>
+									  <tfoot><tr><td class="center"><input type="submit"  class="delete" value="{$text_delete}" /></td><td colspan="8" class="center">{$pagination}</td></tr></tfoot>
+									</table>
+								  </form>
+								  
+								</div>
+								<!--个人设置结束-->
+								</div>
+							</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end-->
+		 
+    </div>
+</div>
+{$footer}
+
+<script type="text/javascript">
+$(function(){
+	$(".listShow tbody tr").mouseover(function(){
+		$(this).addClass("over");
+	}).mouseout(function(){
+		$(this).removeClass("over");	
+	})
+
+});
+
+function checkForm(){
+    var sum=0;
+    $("input[name^='select']").each(function(i,n){
+		if($(this).prop("checked")==true){
+		   sum++;
+		}
+  
+    });
+  
+    if(sum<1) {
+       alert("请选择要删除的项！");
+	   return false;
+    }
+	
+	return true;
+
+};
+
+
+ $("td .delete").click(function(){
+    if(checkForm()){
+	    if(confirm('你确认删除吗？')){
+			$('#form').submit();
+		}
+	}
+ });
+
+ $("td a.deleteid").click(function(){
+    if(!confirm("您确认删除吗？")){
+	    return false;
+	}
+ });
+ 
+ $(":reset").click(function(){
+　　var resetArr = $(this).parents("form").find(":text");
+    var len=resetArr.length;
+　　for(var i=0;i<len ; i++){
+　　　　resetArr.eq(i).val("");
+　　}
+　　return false;　　//一定要return false，阻止reset按钮功能，不然值又会变成aa
+});
+
+$("input[name=cancel]").click(function(){
+   location='{$back}';
+});
+
+$("input[name=issue]").click(function(){
+   location='{$insert}';
+});
+</script>
+
+
+
+<script type="text/javascript" src="catalog/view/javascript/jquery/ui/jquery-ui-1.8.16.custom.min.js"></script> 
+<link rel="stylesheet" type="text/css" href="catalog/view/javascript/jquery/ui/themes/ui-lightness/jquery-ui-1.8.16.custom.css" /> 
+<script type="text/javascript" src="catalog/view/javascript/jquery/ui/jquery-ui-timepicker-addon.js"></script> 
+<script type="text/javascript" src="catalog/view/javascript/jquery/ui/i18n/jquery.ui.datepicker-zh-CN.js"></script> 
+<script type="text/javascript"><!--
+$("input[name=starttime],input[name=endtime]").datepicker({
+    dateFormat: 'yy-mm-dd',
+	numberOfMonths: 2 //显示两个月
+});
+//--></script> 

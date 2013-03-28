@@ -1,0 +1,119 @@
+<!-- {$header}
+<div id="content">
+  <div class="breadcrumb">
+    {loop $breadcrumbs   $breadcrumb}
+    {$breadcrumb['separator']}<a href="{$breadcrumb['href']}">{$breadcrumb['text']}</a>
+    {/loop}
+  </div>
+  {if $error_warning}
+  <div class="warning">{$error_warning}</div>
+  {/if}
+  <div class="box">
+    <div class="heading"> -->
+<link rel="stylesheet" type="text/css" href="view/stylesheet/general.css">
+<link rel="stylesheet" type="text/css" href="view/stylesheet/main.css">
+<script type="text/javascript" src="view/javascript/jquery/jquery-1.7.1.min.js"></script><!--这里只能用1.7.1的版本,否则自带的图片处理有问题-->
+<script type="text/javascript" src="view/javascript/jquery/ui/jquery-ui-1.8.16.custom.min.js"></script>
+<link type="text/css" href="view/javascript/jquery/ui/themes/ui-lightness/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
+<style type="text/css">
+tr.over td {
+	background:#cfeefe;
+} 
+</style>
+
+    <h1><img src="view/image/shipping.png" alt="" /> {$heading_title}
+        <span class="action-span">
+		     <a href="javascript:;" onclick="$('#form').submit();" class="button">{$button_save}</a>
+		</span>
+    </h1>
+	{if $error_warning}
+      <div class="warning">{$error_warning}</div>
+    {/if}
+    <div class="list-div" id="listDiv">
+      <!-- <div id="tabs" class="htabs"><a href="#tab-general">{$tab_general}</a></div> -->
+      <form action="{$action}" method="post" enctype="multipart/form-data" id="form">
+        <div id="tab-general">
+          <table class="form">
+            <tr>
+              <td><span class="required">*</span> {$entry_name}</td>
+              <td><input type="text" name="name" value="{$name}" size="100" />
+                {if $error_name}
+                <span class="error">{$error_name}</span>
+                {/if}</td>
+            </tr>
+            <tr>
+              <td>{$entry_store}</td>
+              <td><div class="scrollbox">
+                  {php $class = 'even'}
+                  <div class="{$class}">
+                    {if in_array(0, $manufacturer_store)}
+                    <input type="checkbox" name="manufacturer_store[]" value="0" checked="checked" />
+                    {$text_default}
+                     {else}
+                    <input type="checkbox" name="manufacturer_store[]" value="0" />
+                    {$text_default}
+                    {/if}
+                  </div>
+                  {loop $stores   $store}
+                  {php $class = ($class == 'even' ? 'odd' : 'even')}
+                  <div class="{$class}">
+                    {if in_array($store['store_id'], $manufacturer_store)}
+                    <input type="checkbox" name="manufacturer_store[]" value="{$store['store_id']}" checked="checked" />
+                    {$store['name']}
+                     {else}
+                    <input type="checkbox" name="manufacturer_store[]" value="{$store['store_id']}" />
+                    {$store['name']}
+                    {/if}
+                  </div>
+                  {/loop}
+                </div></td>
+            </tr>
+            <tr>
+              <td>{$entry_keyword}</td>
+              <td><input type="text" name="keyword" value="{$keyword}" /></td>
+            </tr>
+            <tr>
+              <td>{$entry_image}</td>
+              <td valign="top"><div class="image"><img src="{$thumb}" alt="" id="thumb" />
+                <input type="hidden" name="image" value="{$image}" id="image" />
+                <br /><a href="javascript:;" onclick="image_upload('image', 'thumb');">{$text_browse}</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="javascript:;" onclick="$('#thumb').prop('src', '{$no_image}'); $('#image').prop('value', '');">{$text_clear}</a></div></td>
+            </tr>
+            <tr>
+              <td>{$entry_sort_order}</td>
+              <td><input type="text" name="sort_order" value="{$sort_order}" size="1" /></td>
+            </tr>
+          </table>
+        </div>
+      </form>
+    </div>
+
+<script type="text/javascript"><!--
+function image_upload(field, thumb) {
+	$('#dialog').remove();
+	
+	$('#listDiv').prepend('<div id="dialog" style="padding: 3px 0px 0px 0px;"><iframe src="index.php?route=common/filemanager&token={$token}&field=' + encodeURIComponent(field) + '" style="padding:0; margin: 0; display: block; width: 100%; height: 100%;" frameborder="no" scrolling="auto"></iframe></div>');
+	
+	$('#dialog').dialog({
+		title: '{$text_image_manager}',
+		close: function (event, ui) {
+			if ($('#' + field).attr('value')) {
+				$.ajax({
+					url: 'index.php?route=common/filemanager/image&token={$token}&image=' + encodeURIComponent($('#' + field).val()),
+					dataType: 'text',
+					success: function(data) {
+						$('#' + thumb).replaceWith('<img src="' + data + '" alt="" id="' + thumb + '" />');
+					}
+				});
+			}
+		},	
+		bgiframe: false,
+		width: 800,
+		height: 400,
+		resizable: false,
+		modal: false
+	});
+};
+//--></script> 
+<script type="text/javascript"><!--
+$('#tabs a').tabs(); 
+//--></script> 

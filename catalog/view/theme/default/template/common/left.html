@@ -1,0 +1,58 @@
+<div class="classify z h">
+	<ul class="classify_z z">
+		<li class="classify_z_lc1">所有商品</li>
+		<li class="classify_z_l{if $list_channel_title=='148'}o{else}c{/if}2"><font class="fonts">服饰</font></li>
+		<li class="classify_z_l{if $list_channel_title=='219'}o{else}c{/if}3"><font class="fonts">食品</font></li>
+		<li class="classify_z_l{if $list_channel_title=='279'}o{else}c{/if}4"><font class="fonts">家居</font></li>
+		<li class="classify_z_l{if $list_channel_title=='324'}o{else}c{/if}5"><font class="fonts">旅游</font></li>
+		<li class="classify_z_l{if $list_channel_title=='332'}o{else}c{/if}6"><font class="fonts">娱乐</font></li>
+	</ul>
+	<ul class="classify_y z">
+		<li class="classify_y_lo1 dn">                        
+		{loop $list_category $key1 $list}
+            {loop $list $key2 $list2}
+			    <dl class="all">
+				   <dt class="f_dh"><a href="index.php?route=product/category&category_id={$list2['category_id']}">{php echo $list2['name']}</a></dt>
+				   <dd class="f_dh">
+				   {loop $list2['third_category_list'] $list3}
+					   <a href="index.php?route=product/category&category_id={$list3['category_id']}">{$list3['name']}</a>
+				   {/loop}
+				   </dd>
+				</dl>
+            {/loop}
+		{/loop}
+		</li> 
+		
+		{php $k=2;}
+		{loop $list_category $key1 $list}
+
+		<li class="classify_y_lo{$k} {if $key1==$list_channel_title}{else}dn{/if}"  >
+		    {loop $list $key2 $list2}
+			<dl>
+			   <dt class="f_b"><a href="index.php?route=product/category&category_id={$list2['category_id']}" class="f_b">{php echo $list2['name']}</a></dt>
+			   <dd class="f_b">
+			   {loop $list2['third_category_list'] $list3}
+			       <a href="index.php?route=product/category&category_id={$list3['category_id']}" class="f_b">{$list3['name']}</a>
+			   {/loop}
+			   </dd>
+			</dl>	
+		    {/loop}
+ 
+		</li>
+		{php $k++;}
+		{/loop}
+		<!--
+		<li class="classify_y_lo6 dn">
+			<dl><dt class="f_b">品牌招商正在进行</dt></dl>
+			
+			<dl><dt class="f_b">品牌展示</dt><dd class="f_b"></dd></dl>
+			<dl><dt class="f_b">品牌展示</dt></dl>
+			<dl><dt class="f_b">品牌展示</dt></dl>
+			<dl><dt class="f_b">品牌展示</dt></dl>
+			<dl><dt class="f_b">品牌展示</dt></dl>
+			<dl><dt class="f_b">品牌展示</dt></dl>
+			<dl><dt class="f_b">品牌展示</dt></dl>
+			
+		</li>-->
+	</ul>
+</div>

@@ -1,0 +1,42 @@
+<div class="left">
+  <h2>{$text_new_customer}</h2>
+  <p>{$text_checkout}</p>
+  <label for="register">
+    {if $account == 'register'}
+    <input type="radio" name="account" value="register" id="register" checked="checked" />
+     {else}
+    <input type="radio" name="account" value="register" id="register" />
+    {/if}
+    <b>{$text_register}</b></label>
+  <br />
+  {if $guest_checkout}
+  <label for="guest">
+    {if $account == 'guest'}
+    <input type="radio" name="account" value="guest" id="guest" checked="checked" />
+     {else}
+    <input type="radio" name="account" value="guest" id="guest" />
+    {/if}
+    <b>{$text_guest}</b></label>
+  <br />
+  {/if}
+  <br />
+  <p>{$text_register_account}</p>
+  <input type="button" value="{$button_continue}" id="button-account" class="button" />
+  <br />
+  <br />
+</div>
+<div id="login" class="right">
+  <h2>{$text_returning_customer}</h2>
+  <p>{$text_i_am_returning_customer}</p>
+  <b>{$entry_email}</b><br />
+  <input type="text" name="email" value="" />
+  <br />
+  <br />
+  <b>{$entry_password}</b><br />
+  <input type="password" name="password" value="" />
+  <br />
+  <a href="{$forgotten}">{$text_forgotten}</a><br />
+  <br />
+  <input type="button" value="{$button_login}" id="button-login" class="button" /><br />
+  <br />
+</div>

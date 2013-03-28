@@ -1,0 +1,71 @@
+{if $products || $vouchers}
+<div class="mini-cart-info">
+  <table>
+	{loop $products   $product}
+	<tr class="count">
+	  <td class="image">{if $product['thumb']}
+		<a href="{$product['href']}"><img src="{$product['thumb']}" alt="{$product['name']}" title="{$product['name']}" /></a>
+		{/if}</td>
+	  <td class="name"><a href="{$product['href']}" title="{$product['allname']}">{$product['name']}</a>
+		<div>
+		  {loop $product['option']   $option}
+		  - <small>{$option['attribute_group_name']} {$option['value']}</small><br />
+		  {/loop}
+		</div></td>
+	  <td class="quantity">x&nbsp;{$product['quantity']}</td>
+	  <td class="total">{$product['total']}</td>
+	  <td class="remove"><img src="catalog/view/theme/default/image/remove-small.png" alt="{$button_remove}" title="{$button_remove}" data-id="{$product['key']}" /></td>
+	   <!-- onclick="(getURLVar('route') == 'checkout/cart' || getURLVar('route') == 'checkout/checkout') ? location = 'index.php?route=checkout/cart&remove={$product['key']}' : $('.car-content').load('index.php?route=module/cart&remove={$product['key']}' + ' .car-content > *');" /> -->
+	</tr>
+	{/loop}
+	{loop $vouchers   $voucher}
+	<tr class="count">
+	  <td class="image"></td>
+	  <td class="name">{$voucher['description']}</td>
+	  <td class="quantity">x&nbsp;1</td>
+	  <td class="total">{$voucher['amount']}</td>
+	  <td class="remove"><img src="catalog/view/theme/default/image/remove-small.png" alt="{$button_remove}" title="{$button_remove}" onclick="(getURLVar('route') == 'checkout/cart' || getURLVar('route') == 'checkout/checkout') ? location = 'index.php?route=checkout/cart&remove={$voucher['key']}' : $('.car-content').load('index.php?route=module/cart&remove={$voucher['key']}' + ' .car-content > *');" /></td>
+	</tr>
+	{/loop}
+  </table>
+</div>
+<div class="mini-cart-total">
+  <table>
+	{loop $totals   $total}
+	<tr>
+	  <td class="right"><b>{$total['title']}:</b></td>
+	  <td class="right">{$total['text']}</td>
+	</tr>
+	{/loop}
+  </table>
+</div>
+<div class="checkout"><a href="{$cart}">{$text_cart}</a> | <a href="{$checkout}">{$text_checkout}</a></div>
+ {else}
+<div class="empty">{$text_empty}</div>
+{/if}
+<script type="text/javascript" >
+    $('.remove img').click(function(){
+	    var self=$(this);
+	    $(this).parent().parent().remove();
+		var product_id=$(this).attr('data-id');
+		if(getURLVar('route') == 'checkout/cart' || getURLVar('route') == 'checkout/checkout') {
+		    location.href = 'index.php?route=checkout/cart&remove='+product_id;
+		}else{
+		    $.get('index.php?route=module/cart&remove='+product_id,function(){
+			    var quantity=$.trim(self.parent().parent().find('.quantity').text()).match(/\d+/g);
+				var total=$.trim($('#cart-total a').text()).match(/\d+/g);
+				total=total - quantity;
+				if (total<0) return false;
+				$('#cart-total a').html($('#cart-total a').text().replace(/\d+/g,total));
+				
+				//´©ÔÃ´©ÔÃ³µ
+				$(".tmMCBotLink .tmMCNum").html($('#cart-total a').text().replace(/\d+/g,total));
+				$(".tmMCHdLeft span.tmMCNum").html($('#cart-total a').text().replace(/\d+/g,total));
+			});
+		}
+	});
+	
+	
+	
+</script>
+

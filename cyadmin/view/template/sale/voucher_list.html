@@ -1,0 +1,147 @@
+<link rel="stylesheet" type="text/css" href="view/stylesheet/general.css">
+<link rel="stylesheet" type="text/css" href="view/stylesheet/main.css">
+<script type="text/javascript" src="view/javascript/jquery/jquery-1.7.1.min.js"></script><!--这里只能用1.7.1的版本,否则自带的图片处理有问题-->
+<script type="text/javascript" src="view/javascript/jquery/ui/jquery-ui-1.8.16.custom.min.js"></script>
+<link type="text/css" href="view/javascript/jquery/ui/themes/ui-lightness/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
+<style type="text/css">
+tr.over td {
+	background:#cfeefe;
+} 
+</style>
+
+    <h1><img src="view/image/payment.png" alt="" /> {$heading_title}
+        <span class="action-span">
+		    <a href="javascript:;" onclick="parent.addTab('新增礼品券','{$insert}')" class="button">{$button_insert}</a>
+			<a href="javascript:;" onclick="$('#form').submit();" class="button">{$button_delete}</a>
+		</span>
+    </h1>
+    <div class="list-div" id="listDiv">
+      <form action="{$delete}" method="post" enctype="multipart/form-data" id="form" onsubmit="return checkForm()">
+        <table class="list">
+          <thead>
+            <tr>
+              <td width="1" style="text-align: center;"><input type="checkbox" onclick="$('input[name*=\'selected\']').attr('checked', this.checked);" /></td>
+              <td class="left">{if $sort == 'v.code'}
+                <a href="{$sort_code}" class="{strtolower($order)}">{$column_code}</a>
+                 {else}
+                <a href="{$sort_code}">{$column_code}</a>
+                {/if}</td>
+              <td class="left">{if $sort == 'v.from_name'}
+                <a href="{$sort_from}" class="{strtolower($order)}">{$column_from}</a>
+                 {else}
+                <a href="{$sort_from}">{$column_from}</a>
+                {/if}</td>
+              <td class="left">{if $sort == 'v.to_name'}
+                <a href="{$sort_to}" class="{strtolower($order)}">{$column_to}</a>
+                 {else}
+                <a href="{$sort_to}">{$column_to}</a>
+                {/if}</td>
+              <td class="right">{if $sort == 'v.amount'}
+                <a href="{$sort_amount}" class="{strtolower($order)}">{$column_amount}</a>
+                 {else}
+                <a href="{$sort_amount}">{$column_amount}</a>
+               {/if}</td>
+              <td class="left">{if $sort == 'theme'}
+                <a href="{$sort_theme}" class="{strtolower($order)}">{$column_theme}</a>
+                 {else}
+                <a href="{$sort_theme}">{$column_theme}</a>
+                {/if}</td>
+              <td class="left">{if $sort == 'v.status'}
+                <a href="{$sort_status}" class="{strtolower($order)}">{$column_status}</a>
+                 {else}
+                <a href="{$sort_status}">{$column_status}</a>
+                {/if}</td>
+              <td class="left">{if $sort == 'v.date_added'}
+                <a href="{$sort_date_added}" class="{strtolower($order)}">{$column_date_added}</a>
+                 {else}
+                <a href="{$sort_date_added}">{$column_date_added}</a>
+               {/if}</td>
+              <td class="right">{$column_action}</td>
+            </tr>
+          </thead>
+          <tbody>
+            {if $vouchers}
+            {loop $vouchers   $voucher}
+            <tr>
+              <td style="text-align: center;">{if $voucher['selected']}
+                <input type="checkbox" name="selected[]" value="{$voucher['voucher_id']}" checked="checked" />
+                 {else}
+                <input type="checkbox" name="selected[]" value="{$voucher['voucher_id']}" />
+                {/if}</td>
+              <td class="left">{$voucher['code']}</td>
+              <td class="left">{$voucher['from']}</td>
+              <td class="left">{$voucher['to']}</td>
+              <td class="right">{$voucher['amount']}</td>
+              <td class="left">{$voucher['theme']}</td>
+              <td class="left">{$voucher['status']}</td>
+              <td class="left">{$voucher['date_added']}</td>
+              <td class="right">[ <a onclick="sendVoucher('{$voucher['voucher_id']}');">{$text_send}</a> ]
+                {loop $voucher['action']   $action}
+                [ <a href="{$action['href']}">{$action['text']}</a> ]
+                {/loop}</td>
+            </tr>
+             {/loop}
+             {else}
+            <tr>
+              <td class="center" colspan="9">{$text_no_results}</td>
+            </tr>
+           {/if}
+          </tbody>
+        </table>
+      </form>
+      <div class="pagination">{$pagination}</div>
+    </div>
+
+<script type="text/javascript"><!--
+function sendVoucher(voucher_id) {
+	$.ajax({
+		url: 'index.php?route=sale/voucher/send&token={$token}&voucher_id=' + voucher_id,
+		type: 'post',
+		dataType: 'json',
+		beforeSend: function() {
+			$('.success, .warning').remove();
+			$('.box').before('<div class="attention"><img src="view/image/loading.gif" alt="" /> {$text_wait}</div>');
+		},
+		complete: function() {
+			$('.attention').remove();
+		},
+		success: function(json) {
+			if (json['error']) {
+				$('.box').before('<div class="warning">' + json['error'] + '</div>');
+			}
+			
+			if (json['success']) {
+				$('.box').before('<div class="success">' + json['success'] + '</div>');
+			}		
+		}
+	});
+}
+//--></script> 
+<script type="text/javascript">
+$(function(){
+	$(".list tr").mouseover(function(){
+		$(this).addClass("over");
+	}).mouseout(function(){
+		$(this).removeClass("over");	
+	})
+
+});
+
+
+
+function checkForm(){
+    var sum=0;
+    $("input[name^='select']").each(function(i,n){
+		if($(this).prop("checked")==true){
+		   sum++;
+		}
+  
+    });
+  
+    if(sum<1) {
+       alert("请选择要删除的项！");
+	   return false;
+    }
+
+};
+</script>

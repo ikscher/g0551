@@ -1,0 +1,182 @@
+<?php echo $header;?>
+<style type="text/css">
+tr.over td {
+	background:#cfeefe;
+} 
+.button{
+    cursor:pointer;
+	background:url(catalog/view/theme/default/image/member/del_blue.jpg);
+	width:70px;
+	height:24px;
+	border-top-width: 0px;
+	border-right-width: 0px;
+	border-bottom-width: 0px;
+	border-left-width: 0px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+}
+</style>
+
+
+ 
+ <!--个人中心body_begin-->
+<div class="mainContent clear">
+ 	<!--左侧begin-->
+	<?php echo $left;?>
+ 	<!--左侧end-->
+    <!--右侧begin-->
+	<div class="right">
+        	
+			  <!--编辑帐户-->
+        	<div class="account_box">
+            	<div class="ac_bgs clearfix">
+                    <div class="ac_t_l">收藏列表</div>
+                    <div class="ac_t_r">
+                        <div class="ac_t_l_s"><img src="catalog/view/theme/default/image/member/pic_account_title_06.gif" /></div>
+                        <div class="account_contianer">
+                        	<h4 class="line">我的收藏列表<input type="button" name="cancel" value="返回" class="p_btn_s r" /></h4>
+                            <div class="line_bot">
+							<div class="list">
+                        	<!--收藏列表-->
+							<form action="<?php echo $wishlist;?>" method="POST" >
+							<table width="720" border="0" align="center">
+							  <tr>
+								<td width="26" align="center" bgcolor="#F3EBE0" class="itemTitle"><input type="checkbox" id="chooseall" /></td>
+								<td width="80" align="center" bgcolor="#F3EBE0" class="itemTitle">商品图片</td>
+								<td align="center" bgcolor="#F3EBE0" class="itemTitle">商品名称</td>
+								<td width="80" align="center" bgcolor="#F3EBE0" class="itemTitle">价格</td>
+								<td width="60" align="center" bgcolor="#F3EBE0" class="itemTitle">人气</td>
+								<td width="100" align="center" bgcolor="#F3EBE0" class="itemTitle">收藏时间</td>
+								<td width="80" align="center" bgcolor="#F3EBE0" class="itemTitle">操作</td>
+							  </tr>
+							 
+							  <?php if($products) { ?>
+								  <?php foreach((array)$products as $product) {?>
+								  <tr>
+									<td align="center" bgcolor="#FFFFFF"><span class="itemTitle">
+									  <input type="checkbox" name="pid[]"   value="<?php echo $product['product_id'];?>" />
+									</span></td>
+									<td align="center" bgcolor="#FFFFFF">
+									     <?php if($product['thumb']) { ?>
+                                        <a href="<?php echo $product['href'];?>"><img src="<?php echo $product['thumb'];?>" alt="<?php echo $product['name'];?>" title="<?php echo $product['name'];?>" width="60" height="49"/></a>
+                                         <?php } ?>	</td>
+									<td align="center" bgcolor="#FFFFFF"><a href="<?php echo $product['href'];?>"><?php echo $product['name'];?></a></td>
+									<td align="center" bgcolor="#FFFFFF">
+									 <?php if($product['price']) { ?>
+										<?php if(!$product['special']) { ?>
+										  <?php echo $product['price'];?>
+										<?php } else { ?>
+										  <s><?php echo $product['price'];?></s> <b><?php echo $product['special'];?></b>
+										 <?php } ?>
+									  
+									 <?php } ?>
+									</td>
+									<td align="center" bgcolor="#FFFFFF"><?php echo $product['viewed'];?></td>
+									<td align="center" bgcolor="#FFFFFF"><?php echo $product['time'];?></td>
+									<td align="center" bgcolor="#FFFFFF">
+									<!-- <a class="dbuy" data-id="<?php echo $product['product_id'];?>" href="javascript:void(0);" ><img src="catalog/view/theme/default/image/member/lk_buy.jpg" width="70" height="24"  /></a><br /> -->
+									<input type="hidden" name="product_id" value="<?php echo $product['product_id'];?>" />
+									  <a  class="remove" data-id="<?php echo $product['product_id'];?>" href="javascript:void(0);">删除商品</a></td>
+								  </tr>
+								  <?php } ?>
+								   <tr class="pagination"><td colspan="7" align="center"><?php echo $pagination;?></td></tr>
+							  <?php } else { ?>
+							      <tr><td colspan="7" align="center" bgcolor="#F9F3EE">没有数据</td></tr>
+							  <?php } ?>
+							  
+							  
+							  <tr>
+								<td colspan="7" align="left" bgcolor="#F9F3EE">
+								  <table width="200" border="0" cellspacing="0" cellpadding="0" class="nostyle">
+									<tr>
+									  <td width="30" align="center"><!-- <input type="checkbox" id="chooseall2" /> --></td>
+									  <!-- <td width="40" ></td> -->
+									  <!-- <input type="hidden" name="remove" value="1" /> -->
+									  <td><input type="submit" id="sbt" value=""  class="button"><!-- <img src="catalog/view/theme/default/image/member/del_blue.jpg" width="70" height="24" /> --></td>
+									</tr>
+								  </table></td>
+							  </tr>
+							</table>
+							</form>
+                            <!--收藏列表结束-->
+							</div>
+							</div>
+                        </div>
+                    </div>
+					
+					
+                </div>
+            </div>
+            <!--编辑帐户end-->
+			
+			
+			
+			
+ 	
+</div>
+
+ <!--个人中心body_end-->
+
+<script type="text/javascript">
+
+$(function(){
+	$(".list tr").mouseover(function(){
+		$(this).addClass("over");
+	}).mouseout(function(){
+		$(this).removeClass("over");	
+	});
+
+})
+
+
+$(".remove").click(function(){ 
+    if(confirm("您确认删除吗?")){
+		var pid=$(this).attr('data-id');
+		var url='index.php?route=account/wishlist&remove='+pid;
+		location.href=url;
+    }
+});
+
+
+var choose={
+			//全选
+			choose_all:function(){
+				if($("#chooseall").prop("checked")){
+					$("input[name='pid[]']").prop("checked",true);
+				}else{
+					$("input[name='pid[]']").prop("checked",false);
+				}
+			},
+			
+			//判断是否选择了产品
+			 check_form:function(){
+			    
+				var k=0;
+				$("input[name^=pid]").each(function(){
+					if($(this).prop("checked")==true){
+					   k=k+1;
+					}   
+				});
+
+				if(k==0) {
+					alert("请选择  要删除的产品，可以选择多项！");
+					return false;
+				}    
+				
+				if(confirm("您确认要删除么？")) return true;
+				
+				return false;
+			}
+		 };
+		 
+		$("#chooseall").bind('click',choose.choose_all);
+		$("#sbt").bind('click',choose.check_form);
+
+$("input[name=cancel]").click(function(){
+    location="<?php echo $back;?>";
+});	
+ 
+</script>
+<?php echo $footer;?>

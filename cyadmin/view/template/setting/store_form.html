@@ -1,0 +1,153 @@
+<link rel="stylesheet" type="text/css" href="view/stylesheet/general.css">
+<link rel="stylesheet" type="text/css" href="view/stylesheet/main.css">
+<script type="text/javascript" src="view/javascript/jquery/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="view/javascript/jquery/ui/jquery-ui-1.8.16.custom.min.js"></script>
+<link type="text/css" href="view/javascript/jquery/ui/themes/ui-lightness/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
+
+    <h1><img src="view/image/setting.png" alt="" /> 商城设置
+        <span class="action-span">
+		    <a href="javascript:;" onclick="$('#form').submit();" class="button">{$button_save}</a>
+			<a href="{$cancel}" class="button">{$button_cancel}</a> 
+		</span>
+    </h1>
+	
+    <div class="list-div" id="listDiv">
+      <!-- <div id="tabs" class="htabs"><a href="#tab-general">{$tab_general}</a><a href="#tab-store">{$tab_store}</a><a href="#tab-local">{$tab_local}</a><a href="#tab-option">{$tab_option}</a><a href="#tab-image">{$tab_image}</a><a href="#tab-server">{$tab_server}</a></div> -->
+      <form action="{$action}" method="post" enctype="multipart/form-data" id="form">
+        <div id="tab-general">
+            <table class="form">
+		    
+				<tr>
+				  <td><span class="required">*</span> 店铺名称</td>
+				  <td><input type="text" name="name" value="{if isset($store['name'])}{$store['name']}{/if}" size="80" />{if $error_storename}
+					<span class="error">{$error_storename}</span>
+					 {/if}</td></td>
+				</tr>
+				<tr>
+				  <td>简称</td>
+				  <td><input type="text" name="shortname" value="{if isset($store['shortname'])}{$store['shortname']}{/if}" size="50" /></td>
+				</tr>
+				<tr>
+				  <td>店主</td>
+				  <td><input type="text" name="owner" value="{if isset($store['owner'])}{$store['owner']}{/if}" size="40" /></td>
+				</tr>
+				
+				<tr>
+				  <td>logo</td>
+				  <td>
+				     <div class="image">
+					    <img src="{if isset($store['imageUrl'])}{$store['imageUrl']}{/if}" alt="" id="thumb" /><br />
+                        <input type="hidden" name="logo" value="{if isset($store['logo'])}{$store['logo']}{/if}" id="logo" />
+                        <a href="javascript:;" onclick="image_upload('logo', 'thumb');">{$text_browse}</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a  href="javascript:;" onclick="$('#thumb').attr('src', '{$no_image}'); $('#logo').attr('value', '');">{$text_clear}</a>
+					</div></td>
+				</tr>
+				
+				<tr>
+				  <td><span class="required">*</span> 电话</td>
+				  <td><input type="text" name="telphone" value="{if isset($store['tel'])}{$store['tel']}{/if}" size="40" />{if $error_telphone}
+					<span class="error">{$error_telphone}</span>
+					 {/if}</td>
+				</tr>
+				<tr>
+				  <td><span class="required">*</span> 手机</td>
+				  <td><input type="text" name="mobile" value="{if isset($store['mobile'])}{$store['mobile']}{/if}" size="40" />{if $error_mobile}
+					<span class="error">{$error_mobile}</span>
+					 {/if}</td>
+				</tr>
+				
+				<tr><td>传真</td>
+				  <td><input type="text" name="fax" value="{if isset($store['fax'])}{$store['fax']}{/if}" /></td>
+				</tr>
+				<tr>
+				  <td><span class="required">*</span> 地址</td>
+				  <td><input name="address" type="text" value="{if isset($store['address'])}{$store['address']}{/if}" />
+					{if $error_address}
+					<span class="error">{$error_address}</span>
+					 {/if}</td>
+				</tr>
+				<tr>
+				  <td><span class="required">*</span> 简介</td>
+				  <td><textarea name="introduce" rows="5" cols="40"> {if isset($store['introduce'])}{$store['introduce']}{/if}</textarea>{if $error_introduce}
+					<span class="error">{$error_introduce}</span>
+					 {/if}</td>
+					
+				</tr>
+				<tr>
+				  <td><span class="required">*</span> 开店时间</td>
+				  <td><input type="text" name="createtime" value="{if isset($store['createtime'])}{$store['createtime']}{/if}"  size="20" disabled/></td>
+				</tr>
+				
+				<tr>
+				  <td>宝贝数量</td>
+				  <td><input type="text" name="quantity" value="{if isset($store['quantity'])}{$store['quantity']}{/if}" /></td>
+				</tr>
+				
+				<tr>
+				  <td>售出数量</td>
+				  <td><input type="text" name="soldnum" value="{if isset($store['soldnum'])}{$store['soldnum']}{/if}" /></td>
+				</tr>
+				
+				<tr>
+				  <td><span class="required">*</span> 是否在用</td>
+				  <td>
+				        <select name="status">
+					        <option {if isset($store['status']) && $store['status']==1}selected="selected"{/if} value="1">在用</option>
+							<option {if isset($store['status']) && $store['status']==0}selected="selected"{/if} value="0">停用</option>
+					    </select>
+				</tr>
+				
+				<tr>
+				  <td><span class="required">*</span> 审核</td>
+				  <td>
+				        <select name="hasShop">
+							<option {if isset($store['hasShop']) && $store['hasShop']==0}selected="selected"{/if} value="0">封锁</option>
+							<option {if isset($store['hasShop']) && $store['hasShop']==1}selected="selected"{/if} value="1">开通</option>
+					    </select>
+				</tr>
+				
+			
+            </table>
+        </div>
+       
+       
+        
+       
+      </form>
+    </div>
+
+<script type="text/javascript" src="view/javascript/jquery/ui/jquery-ui-timepicker-addon.js"></script> 
+<script type="text/javascript"><!--
+$('.date').datetimepicker({dateFormat: 'yy-mm-dd'});
+$('.datetime').datetimepicker({
+	dateFormat: 'yy-mm-dd',
+	timeFormat: 'h:m'
+});
+//--></script> 
+
+<script type="text/javascript"><!--
+function image_upload(field, thumb) {
+	$('#dialog').remove();
+	
+	$('#listDiv').prepend('<div id="dialog" style="padding: 3px 0px 0px 0px;"><iframe src="index.php?route=common/filemanager&token={$token}&field=' + encodeURIComponent(field) + '" style="padding:0; margin: 0; display: block; width: 100%; height: 100%;" frameborder="no" scrolling="auto"></iframe></div>');
+	
+	$('#dialog').dialog({
+		title: '{$text_image_manager}',
+		close: function (event, ui) {
+			if ($('#' + field).attr('value')) {
+				$.ajax({
+					url: 'index.php?route=common/filemanager/image&token={$token}&image=' + encodeURIComponent($('#' + field).val()),
+					dataType: 'text',
+					success: function(data) {
+						$('#' + thumb).replaceWith('<img src="' + data + '" alt="" id="' + thumb + '" />');
+					}
+				});
+			}
+		},	
+		bgiframe: false,
+		width: 800,
+		height: 400,
+		resizable: false,
+		modal: false
+	});
+};
+//--></script> 

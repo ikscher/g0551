@@ -1,0 +1,55 @@
+{$header}
+<link rel="stylesheet" type="text/css" href="catalog/view/theme/default/stylesheet/css.css" media="screen" />
+	<div class="nav">
+		<ul>
+		<li id="lin"><a href="index.php?route=store/index&store_id={$category['store_id']}">店 铺 首 页</a></li>
+		{loop $categories $menu}
+		<li><a href="index.php?route=store/category&store_id={$menu['store_id']}&parent_id={$menu['parent_id']}&category_id={$menu['category_id']}">{$menu['name']}</a></li>
+		{/loop}
+		</ul>
+	</div>
+	<div class="main">
+		<div class="left_list">
+			<dl>
+			<dd class="clist_channel_content">
+				<ul>
+				<li>
+					<p class="f2"><em></em><a href="index.php?route=store/category&store_id={$category['store_id']}&parent_id={$category['parent_id']}&category_id={$category['category_id']}">{$category['name']}</a></p>
+                    {loop $child_categories $category}
+                        <p class="list_pro"><a href="index.php?route=store/category&store_id={$category['store_id']}&parent_id={$category['parent_id']}&category_id={$category['category_id']}">{$category['name']}</a></p>
+                    {/loop}					
+				</li>
+                
+               {loop $categories $category}
+                    {php if($category['category_id'] == $category_id) continue;}
+                <li>
+    				<p class="f2"><em></em><a href="index.php?route=store/category&store_id={$category['store_id']}&parent_id={$category['parent_id']}&category_id={$category['category_id']}">{$category['name']}</a></p>
+    			</li>	
+               {/loop}
+				</ul>
+			</dd>
+		</dl>
+		</div>
+				<div class="rmain">
+					<div class="r1">商 &nbsp;</h4>品</div>
+					<div class="r2">
+					{if isset($store_pro)}
+					{loop $store_pro $result}
+						<dl>
+							<dt><a href="{$result['href']}"><img src="{$result['image']}" width="169" height="170" border="0" /></a></dt>
+							<dd>
+								<div class="txt"><a href="{$result['href']}">{$result['name']}</a></div>
+								<div>一口价&nbsp;&nbsp;&nbsp;<span>{$result['price']}</span></div>
+							</dd>
+						</dl>
+					{/loop}
+					{/if}
+				  </div>
+				  {if isset($pagination)}
+				  <div class="page">	{$pagination} </div>
+				  {/if}				  
+				</div>
+			</div>
+		</div>
+
+{$footer}

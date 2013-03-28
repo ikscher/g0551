@@ -1,0 +1,274 @@
+{$header}
+<link rel="stylesheet" href='catalog/view/theme/default/stylesheet/search.css' type="text/css" />
+
+<!-- <div class="search_ad"><img src="images/search_ad.jpg" /></div> -->
+<div class="search_menu">
+  <table width="100%" height="35">
+    <tr>
+      <!-- <td width="2" valign="top"><img src="images/searchTitleLeft.jpg" width="2" height="35" /></td> -->
+      <td align="left" valign="top">
+	  <!-- <ul class="clearfix">
+		  <li class="current"><a href="#">所有商品</a></li>
+		  <li><a href="#">服装专区</a></li>
+		  <li><a href="#">食品专区</a></li>
+		  <li><a href="#">家居专区</a></li>
+	  </ul> -->
+	  </td>
+      <td align="right" valign="top">搜索结果约为{$total}条，用时{$spend}秒</td>
+      <!-- <td width="20" align="right"><img src="images/searchTitleRight.jpg" width="2" height="35" /></td> -->
+    </tr>
+  </table>
+</div>
+
+<div class="searchContent">
+	<!-- <div class="keyleft">关键字：<span class="fd71257">礼物</span> 搜索</div> -->
+	<div class="keyright">
+		<ul>
+		    <li class="bor"><input type="text" class="s_input" name="filter_name" placeholder="搜索关键词"  {if !empty($filter_name)} value="{$filter_name}" {else}  onclick="this.value='';" {/if} size="50"  /><input type="button"value="搜 索" class="s_but"/>
+			</li>
+		</ul>
+	</div> 
+	<div class="searchSort clear">
+	    <span class="display"><b>{$text_display}</b> {$text_list} <b>|</b> <a onclick="display('grid');">{$text_grid}</a></span>
+		<span class="limit">显示：
+			  <select name="limit">
+				{loop $limits  $limits}
+					{if $limits['value'] == $limit}
+					    <option value="{$limits['href']}" selected="selected">{$limits['text']}</option>
+					{else}
+					<option value="{$limits['href']}">{$limits['text']}</option>
+					{/if}
+				{/loop}
+			  </select>
+		</span>	
+		<span class="sort">排序方式：
+		  <select onchange="location = this.value;">
+			{loop $sorts  $sorts}
+				{if $sorts['value'] == $sort . '-' . $order}
+				   <option value="{$sorts['href'];}" selected="selected">{$sorts['text']}</option>
+				{else}
+				   <option value="{$sorts['href']}">{$sorts['text']}</option>
+				{/if}
+			{/loop}
+		  </select>
+		</span>
+	</div>
+	
+	<div class="product-grid">
+	    {if !empty($products)}
+		    {loop $products $p}
+			<div>
+				<dl>
+					<dt class="image"><a href="{$p['href']}"><img src="{$p['thumb']}" width="182" height="182" title="{$p['name']}" /></a></dt>
+					<dd class="name"><a href="{$p['href']}">{$p['shortname']}</a></dd>
+					<dd class="salenum">销售数量：{$p['hots']}</dd>
+					<dd class="price">{$p['price']}元</dd>
+					<!-- <dd class="cart"><a data-id="{$p['product_id']}">{$button_cart}</a></dd> -->
+			        <dd class="wishlist"><a  data-id="{$p['product_id']}">{$button_wishlist}</a></dd>
+					<!-- <dd class="compare"><a data-id="{$p['product_id']}">{$button_compare}</a></dd> -->
+				</dl>
+			</div>
+			{/loop}
+	    {else}
+		    <p class="noresult">没有数据</p>
+		{/if}
+	</div>
+	{if !empty($pagination)}<div class="pagination">{$pagination}</div>{/if}
+	
+	<div class="likeProduct clearfix">
+		<h2>店铺热卖产品</h2>
+		{loop $hotProduct $h}
+			<dl>
+				<dt><a href="{$h['href']}"><img src="{$h['thumb']}" width="182" height="182" title="{$h['name']}" /></a></dt>
+				<dd><a href="{$h['href']}">{$h['shortname']}</a></dd>
+				<dd class="price">商品价格：{$h['price']}元</dd>
+			</dl>
+		{/loop}
+	
+	</div>
+	
+</div>
+<script type="text/javascript">
+$('.bor input[name=\'filter_name\']').keydown(function(e) {
+	if (e.keyCode == 13) {
+		$('.s_but').trigger('click');
+	}
+});
+
+$('.s_but').bind('click', function() {
+	url = 'index.php?route=search/search';
+	
+	var filter_name = $('.bor input[name=\'filter_name\']').attr('value');
+
+	if(filter_name.indexOf('搜索')>=0){
+	   return false;
+	}
+	if (filter_name) {
+		url += '&filter_name=' + encodeURIComponent(filter_name);
+	}
+	/*var filter_category_id = $('#content select[name=\'filter_category_id\']').attr('value');
+	
+	if (filter_category_id > 0) {
+		url += '&filter_category_id=' + encodeURIComponent(filter_category_id);
+	}
+	
+	var filter_sub_category = $('#content input[name=\'filter_sub_category\']:checked').attr('value');
+	
+	if (filter_sub_category) {
+		url += '&filter_sub_category=true';
+	}
+		
+	var filter_description = $('#content input[name=\'filter_description\']:checked').attr('value');
+	
+	if (filter_description) {
+		url += '&filter_description=true';
+	}*/
+	location = url;
+});
+
+function display(view) {
+	if (view == 'list') {
+		$('.product-grid').attr('class', 'product-list');
+		
+		$('.product-list > div').each(function(index, element) {
+			
+			var html='<dl>';
+
+			var image = $(element).find('.image').html();
+
+			image=image.replace(/width=['"]?\d['"]?/,"width='80'").replace(/height=['"]?\d['"]?/,"height='80'");
+			if (image != null) { 
+				html += '<dt class="image">' + image + '</dt>';
+			}
+			
+			html += '  <dd class="wishlist">' + $(element).find('.wishlist').html() + '</dd>';
+			//html += '  <dd class="cart">' + $(element).find('.cart').html() + '</dd>';
+			
+			//html += '  <dd class="compare">' + $(element).find('.compare').html() + '</dd>';
+			
+			html += '<dd class="name">' + $(element).find('.name').html() + '</dd>';
+			
+			var salenum = $(element).find('.salenum').html();
+			
+			if (salenum != null) {
+				html += '<dd class="salenum">' + salenum + '</dd>';
+			}
+			
+			var price = $(element).find('.price').html();
+			
+			if (price != null) {
+				html += '<dd class="price">' + price  + '</dd>';
+			}
+						
+		    html+='</dl>';
+			//html += '  <dd class="description">' + $(element).find('.description').html() + '</dd>';
+			
+				
+
+						
+			$(element).html(html);
+		});		
+		
+		$('.display').html('<b>{$text_display}</b> {$text_list} <b>|</b> <a onclick="display(\'grid\');">{$text_grid}</a>');
+		
+		$.cookie('display', 'list'); 
+	} else {
+		$('.product-list').attr('class', 'product-grid');
+		
+		$('.product-grid > div').each(function(index, element) {
+			html = '<dl>';
+			
+			var image = $(element).find('.image').html();
+            image=image.replace(/width=['"]?\d['"]?/,"width='182'").replace(/height=['"]?\d['"]?/,"height='182'");
+			if (image != null) {
+				html += '<dt class="image">' + image + '</dt>';
+			}
+			
+			var name=$(element).find('.name').html();
+			html += '<dd class="name">' + name + '</dd>';
+			
+			var salenum = $(element).find('.salenum').html();
+			
+			if (salenum != null) {
+				html += '<dd class="salenum">' + salenum + '</dd>';
+			}
+			
+			//html += '<dd class="description">' + $(element).find('.description').html() + '</dd>';
+			
+			var price = $(element).find('.price').html();
+			
+			if (price != null) {
+				html += '<dd class="price">' + price  + '</dd>';
+			}	
+					
+			
+						
+			//html += '<dd class="cart">' + $(element).find('.cart').html() + '</dd>';
+			html += '<dd class="wishlist">' + $(element).find('.wishlist').html() + '</dd>';
+			//html += '<dd class="compare">' + $(element).find('.compare').html() + '</dd>';
+			
+			html+='</dl>';
+			$(element).html(html);
+		});	
+					
+		$('.display').html('<b>{$text_display}</b> <a onclick="display(\'list\');">{$text_list}</a> <b>|</b> {$text_grid}');
+		
+		$.cookie('display', 'grid');
+	}
+}
+
+var view = $.cookie('display');
+
+if (view) {
+	display(view);
+} else {
+	display('list');
+}
+
+
+$(".product-grid div dl").live('mouseenter',function(){
+    $(this).css({'border':'1px solid #000000'});
+}).live('mouseleave',function(){
+    $(this).css({'border':'1px solid #ffffff'});
+});
+
+
+$(".product-list div").live('mouseenter',function(){
+    $(this).css({'background-color':'#4adddc'});
+}).live('mouseleave',function(){
+    $(this).css({'background-color':'#ffffff'});
+});
+
+$("select[name=limit]").change(function(){
+   var url=$(this).val();
+   window.location.href=url;
+});
+
+
+
+//添加到购物车
+$(".cart a").live('click',function(){
+    var product_id=$(this).attr('data-id');
+    {if empty($customer_id)}
+	    var referer='{$referer}';
+	    location.href="index.php?route=account/login&referer="+encodeURIComponent(referer);
+	{else}
+        addToCart(product_id); 
+	{/if}
+});
+
+
+//添加到收藏夹
+$(".wishlist a").live('click',function(){
+    var product_id=$(this).attr('data-id');
+    {if empty($customer_id)}
+	    var referer='{$referer}';
+	    location.href="index.php?route=account/login&referer="+encodeURIComponent(referer);
+	{else}
+	    addToWishList(product_id);
+    {/if}
+});
+
+
+</script> 
+{$footer}

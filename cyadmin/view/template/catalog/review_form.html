@@ -1,0 +1,133 @@
+<!-- {$header}
+<div id="content">
+  <div class="breadcrumb">
+    {loop $breadcrumbs   $breadcrumb}
+    {$breadcrumb['separator']}<a href="{$breadcrumb['href']}">{$breadcrumb['text']}</a>
+    {/loop}
+  </div>
+  {if $error_warning}
+  <div class="warning">{$error_warning}</div>
+  {/if}
+  <div class="box">
+    <div class="heading"> -->
+<link rel="stylesheet" type="text/css" href="view/stylesheet/general.css">
+<link rel="stylesheet" type="text/css" href="view/stylesheet/main.css">
+<script type="text/javascript" src="view/javascript/jquery/jquery-1.7.1.min.js"></script><!--这里只能用1.7.1的版本,否则自带的图片处理有问题-->
+<script type="text/javascript" src="view/javascript/jquery/ui/jquery-ui-1.8.16.custom.min.js"></script>
+<link type="text/css" href="view/javascript/jquery/ui/themes/ui-lightness/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
+
+    <h1><img src="view/image/review.png" alt="" /> {$heading_title}
+        <span class="action-span">
+		   <a href="javascript:;" onclick="$('#form').submit();" class="button">{$button_save}</a>
+		</span>
+    </h1>
+	
+    <div class="list-div" id="listDiv">
+      <form action="{$action}" method="post" enctype="multipart/form-data" id="form">
+        <table class="form">
+          <tr>
+            <td><span class="required">*</span> {$entry_author}</td>
+            <td><input type="text" name="author" value="{$author}" />
+              {if $error_author}
+              <span class="error">{$error_author}</span>
+              {/if}</td>
+          </tr>
+		  
+		 
+		  
+          <tr>
+            <td>{$entry_product}</td>
+            <td><input type="text" name="product" value="{$product}" />
+               <input type="hidden" name="product_id" value="{$product_id}" /> 
+               {if $error_product}
+              <span class="error">{$error_product}</span>
+              {/if}</td> 
+          </tr>
+          <tr>
+            <td><span class="required">*</span> {$entry_text}</td>
+            <td><textarea name="text" cols="60" rows="8">{$text}</textarea>
+              {if $error_text}
+              <span class="error">{$error_text}</span>
+              {/if}<td>
+          </tr>
+          <tr>
+            <td>{$entry_rating}</td>
+            <td><b class="rating">{$entry_bad}</b>&nbsp;
+              {if $rating == 1}
+              <input type="radio" name="rating" value="1" checked />
+               {else}
+              <input type="radio" name="rating" value="1" />
+              {/if}
+              &nbsp;
+              {if $rating == 2}
+              <input type="radio" name="rating" value="2" checked />
+               {else}
+              <input type="radio" name="rating" value="2" />
+              {/if}
+              &nbsp;
+              {if $rating == 3}
+              <input type="radio" name="rating" value="3" checked />
+               {else}
+              <input type="radio" name="rating" value="3" />
+              {/if}
+              &nbsp;
+              {if $rating == 4}
+              <input type="radio" name="rating" value="4" checked />
+               {else}
+              <input type="radio" name="rating" value="4" />
+              {/if}
+              &nbsp;
+              {if $rating == 5}
+              <input type="radio" name="rating" value="5" checked />
+               {else}
+              <input type="radio" name="rating" value="5" />
+              {/if}
+              &nbsp; <b class="rating">{$entry_good}</b>
+              {if $error_rating}
+              <span class="error">{$error_rating}</span>
+              {/if}</td>
+          </tr>
+          <tr>
+            <td>{$entry_status}</td>
+            <td><select name="status">
+                {if $status}
+                <option value="1" selected="selected">{$text_enabled}</option>
+                <option value="0">{$text_disabled}</option>
+                 {else}
+                <option value="1">{$text_enabled}</option>
+                <option value="0" selected="selected">{$text_disabled}</option>
+                {/if}
+              </select></td>
+          </tr>
+        </table>
+      </form>
+    </div>
+
+<script type="text/javascript"><!--
+$('input[name=\'product\']').autocomplete({
+	delay: 0,
+	source: function(request, response) {
+		$.ajax({
+			url: 'index.php?route=catalog/product/autocomplete&token={$token}&filter_name=' +  encodeURIComponent(request.term),
+			dataType: 'json',
+			success: function(json) {		
+				response($.map(json, function(item) {
+					return {
+						label: item.name,
+						value: item.product_id
+					}
+				}));
+			}
+		});
+	},
+	select: function(event, ui) {
+		$('input[name=\'product\']').val(ui.item.label);
+		$('input[name=\'product_id\']').val(ui.item.value);
+		
+		return false;
+	},
+	focus: function(event, ui) {
+      	return false;
+   	}
+});
+//--></script> 

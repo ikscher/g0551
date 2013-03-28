@@ -1,0 +1,134 @@
+{$header}
+<!--个人中心body_begin-->
+<div class="mainContent clear">
+ 	<!--左侧begin-->
+	{$left}
+  <!-- <div class="breadcrumb">
+    {loop $breadcrumbs   $breadcrumb}
+    {$breadcrumb['separator']}<a href="{$breadcrumb['href']}">{$breadcrumb['text']}</a>
+    {/loop}
+  </div> -->
+  <div class="right">
+         <!--商品退换-->
+        	<div class="account_box">
+            	<div class="ac_bgs clearfix">
+                    <div class="ac_t_l">商品退换</div>
+                    <div class="ac_t_r">
+                        <div class="ac_t_l_s"><img src="catalog/view/theme/default/image/member/pic_account_title_09.gif" /></div>
+                        <div class="account_contianer">
+                        	<h4 class="line">退换货申请</h4>
+                            <div class="line_bot">
+							    
+										
+									<form action="{$action}" method="post" enctype="multipart/form-data">
+									     <div class="errorinfo">
+											{if isset($errorinfo)}
+												{php $j=0;}
+												{loop $errorinfo $v}
+												   {if $v}
+													   {php $j=$j+1;}
+													     {if $j>1} {php echo $j -1 }，{/if}{$v}
+												   {/if}
+												{/loop}
+											{/if}
+										 </div>
+										 <div class="return-detail">
+										    <ul class="return-op">
+											    <li><h4>{$text_order}</h4></li>
+												<li><span class="required">*</span> {$entry_username}<input type="text" name="username" value="{$username}" class="large-field" /></li>
+												
+												<li><span class="required">*</span> {$entry_email}<input type="text" name="email" value="{$email}" class="large-field" /></li>
+											
+												<li><span class="required">*</span> {$entry_telephone}<input type="text" name="telephone" value="{$telephone}" class="large-field" /></li>
+											
+												<li><span class="required">*</span> {$entry_order_id}<input type="text" name="order_id" value="{$order_id}" class="large-field" /></li>
+											
+												<li>{$entry_date_ordered}<input type="text" name="date_ordered" value="{$date_ordered}" class="large-field date" /></li>
+												
+										    </ul>
+										    
+											<ul class="return-op">
+												  <li><h4>{$text_product}</h4></li>
+
+												  <li><span class="required">*</span>{$entry_product}<input type="text" name="product" value="{$product}" /></li>
+												  
+												  <li><span class="required">*</span>{$entry_model}<input type="text" name="model" value="{$model}" /></li>
+	
+												  <li>{$entry_quantity}<input type="text" name="quantity" value="{$quantity}" /></li>
+										    </ul> 
+										 
+											
+											
+											<ul class="return-op">
+											    <li><h4><span class="required">*</span>{$entry_reason}</h4></li>
+												
+												{loop $return_reasons   $return_reason}
+												    {if $return_reason['return_reason_id'] == $return_reason_id}
+												        <li><input type="radio" name="return_reason_id" value="{$return_reason['return_reason_id']}" id="return-reason-id{$return_reason['return_reason_id']}" checked="checked" /> <label for="return-reason-id{$return_reason['return_reason_id']}">{$return_reason['name']}</label></li>
+									
+												    {else}
+												 
+													    <li><input type="radio" name="return_reason_id" value="{$return_reason['return_reason_id']}" id="return-reason-id{$return_reason['return_reason_id']}" /><label for="return-reason-id{$return_reason['return_reason_id']}">{$return_reason['name']}</label></li>
+												    {/if}
+												 {/loop}
+												
+												
+											</ul>
+										</div>
+											  
+											  
+										<div class="return-opened"><b>{$entry_opened}</b>
+											{if $opened}
+											    <input type="radio" name="opened" value="1" id="opened" checked="checked" />
+											{else}
+											    <input type="radio" name="opened" value="1" id="opened" />
+											{/if}
+											<label for="opened">{$text_yes}</label>
+											{if !$opened}
+											<input type="radio" name="opened" value="0" id="unopened" checked="checked" />
+											 {else}
+											<input type="radio" name="opened" value="0" id="unopened" />
+											{/if}
+											<label for="unopened">{$text_no}</label>
+											<br />
+											<br />
+											{$entry_fault_detail}<br />
+											<textarea name="comment" cols="110" rows="6">{$comment}</textarea>
+										</div>
+										
+										<div class="return-captcha"><h4>{$entry_captcha}</h4>
+										    <ul>
+											   <li><input type="text" name="captcha" value="{$captcha}" /></li>
+											   <li><img src="index.php?route=account/return/captcha" alt="" /></li>
+											</ul>
+										 </div>
+										
+										</div>
+										
+										
+										<div class="buttons">
+										    <a href="{$back}" class="button"><img src="catalog/view/theme/default/image/cancel.gif" /></a>
+										    
+											<input type="image"  id="sbt" src="catalog/view/theme/default/image/goon.gif" />
+											<!-- <input type="submit" value="{$button_continue}" class="button" /> -->
+											<!-- <input type="hidden" name="hidden" value="1" /> -->
+										  
+										</div>
+									</form>
+							  
+						    </div>
+						</div>
+				    </div>
+				</div>
+		    </div>
+    </div>
+</div>
+<script type="text/javascript"><!--
+$(document).ready(function() {
+	$('.date').datepicker({dateFormat: 'yy-mm-dd'});
+});
+
+
+
+//--></script> 
+{$footer}

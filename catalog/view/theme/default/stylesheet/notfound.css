@@ -1,0 +1,7 @@
+.notfound{margin: 0 auto;width:980px;}
+.notfound{background:url(../image/nf003.jpg) left center no-repeat;height: 300px; color:#666666;}
+
+.notfound ul{list-style:none;margin:0px;padding-top:110px;padding-left: 260px;}
+.notfound ul li{font-size:16px;margin:20px;}
+.notfound li img{ position:relative;margin-left:60px;}
+

@@ -1,0 +1,52 @@
+{if !isset($redirect)}
+<div class="checkout-product">
+  <table>
+    <thead>
+      <tr>
+        <td class="name">{$column_name}</td>
+        <td class="model">{$column_model}</td>
+        <td class="quantity">{$column_quantity}</td>
+        <td class="price">{$column_price}</td>
+        <td class="total">{$column_total}</td>
+      </tr>
+    </thead>
+    <tbody>
+      {loop $products   $product}
+      <tr>
+        <td class="name"><a href="{$product['href']}">{$product['name']}</a>
+          {loop $product['option']   $option}
+          <br />
+          &nbsp;<small> - {$option['name']}: {$option['value']}</small>
+          {/loop}</td>
+        <td class="model">{$product['model']}</td>
+        <td class="quantity">{$product['quantity']}</td>
+        <td class="price">{$product['price']}</td>
+        <td class="total">{$product['total']}</td>
+      </tr>
+      {/loop}
+      {loop $vouchers   $voucher}
+      <tr>
+        <td class="name">{$voucher['description']}</td>
+        <td class="model"></td>
+        <td class="quantity">1</td>
+        <td class="price">{$voucher['amount']}</td>
+        <td class="total">{$voucher['amount']}</td>
+      </tr>
+      {/loop}
+    </tbody>
+    <tfoot>
+      {loop $totals   $total}
+      <tr>
+        <td colspan="4" class="price"><b>{$total['title']}:</b></td>
+        <td class="total">{$total['text']}</td>
+      </tr>
+      {/loop}
+    </tfoot>
+  </table>
+</div>
+<div class="payment">{$payment}</div>
+ {else}
+<script type="text/javascript"><!--
+location = '{$redirect}';
+//--></script> 
+{/if}

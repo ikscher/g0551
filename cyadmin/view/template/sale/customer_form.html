@@ -1,0 +1,300 @@
+<link rel="stylesheet" type="text/css" href="view/stylesheet/general.css">
+<link rel="stylesheet" type="text/css" href="view/stylesheet/main.css">
+<script type="text/javascript" src="view/javascript/jquery/jquery-1.7.1.min.js"></script><!--这里只能用1.7.1的版本,否则自带的图片处理有问题-->
+<script type="text/javascript" src="view/javascript/jquery/ui/jquery-ui-1.8.16.custom.min.js"></script>
+<script type="text/javascript" src="view/javascript/jquery/tabs.js"></script>
+<link type="text/css" href="view/javascript/jquery/ui/themes/ui-lightness/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
+
+    <h1><img src="view/image/customer.png" alt="" /> {$heading_title}
+        <span class="action-span">
+		    <a href="javascript:;" onclick="$('#form').submit();" class="button">{$button_save}</a>
+		   <a href="{$cancel}" class="button">{$button_cancel}</a> 
+		</span>
+    </h1>
+    <div class="list-div" id="listDiv">
+      
+      <form action="{$action}" method="post" enctype="multipart/form-data" id="form">
+        <div id="tab-general">
+          <div id="vtabs" class="vtabs"><a href="#tab-customer">{$tab_general}</a>
+            {php $address_row = 1}
+            {loop $addresses   $address}
+            <a href="#tab-address-{$address_row}" id="address-{$address_row}">{php echo $tab_address . ' ' . $address_row}&nbsp;<img src="view/image/delete.png" alt="" onclick="$('#vtabs a:first').trigger('click'); $('#address-{$address_row}').remove(); $('#tab-address-{$address_row}').remove(); return false;" /></a>
+            {php $address_row++}
+            {/loop}
+            <span id="address-add">{$button_add_address}&nbsp;<img src="view/image/add.png" alt="" onclick="addAddress();" /></span></div>
+          <div id="tab-customer" class="vtabs-content">
+            <table class="form">
+              <tr>
+                <td><span class="required">*</span> {$entry_username}</td>
+                <td><input type="text" name="username" value="{$username}" />
+                  {if $error_username}
+                  <span class="error">{$error_username}</span>
+                  {/if}</td>
+              </tr>
+          
+              <tr>
+                <td><span class="required">*</span> {$entry_email}</td>
+                <td><input type="text" name="email" value="{$email}" />
+                  {if $error_email}
+                  <span class="error">{$error_email}</span>
+                  {/if}</td>
+              </tr>
+              <tr>
+                <td><span class="required">*</span> {$entry_telephone}</td>
+                <td><input type="text" name="telephone" value="{$telephone}" />
+                  {if $error_telephone}
+                  <span class="error">{$error_telephone}</span>
+                  {/if}</td>
+              </tr>
+              <tr>
+                <td>{$entry_mobile}</td>
+                <td><input type="text" name="mobile" value="{$mobile}" /></td>
+              </tr>
+              <tr>
+                <td>{$entry_password}</td>
+                <td><input type="password" name="password" value="{$password}"  />
+                  <br />
+                  {if $error_password}
+                  <span class="error">{$error_password}</span>
+                  {/if}</td>
+              </tr>
+              <tr>
+                <td>{$entry_confirm}</td>
+                <td><input type="password" name="confirm" value="{$confirm}" />
+                  {if $error_confirm}
+                  <span class="error">{$error_confirm}</span>
+                  {/if}</td>
+              </tr>
+              <tr>
+                <td>{$entry_newsletter}</td>
+                <td><select name="newsletter">
+                    {if $newsletter}
+                    <option value="1" selected="selected">{$text_enabled}</option>
+                    <option value="0">{$text_disabled}</option>
+                     {else}
+                    <option value="1">{$text_enabled}</option>
+                    <option value="0" selected="selected">{$text_disabled}</option>
+                    {/if}
+                  </select></td>
+              </tr>
+              <tr>
+                <td>{$entry_customer_group}</td>
+                <td><select name="customer_group_id">
+                    {loop $customer_groups   $customer_group}
+                    {if $customer_group['customer_group_id'] == $customer_group_id}
+                    <option value="{$customer_group['customer_group_id']}" selected="selected">{$customer_group['name']}</option>
+                     {else}
+                    <option value="{$customer_group['customer_group_id']}">{$customer_group['name']}</option>
+                    {/if}
+                    {/loop}
+                  </select></td>
+              </tr>
+              <tr>
+                <td>{$entry_status}</td>
+                <td><select name="status">
+                    {if $status}
+                    <option value="1" selected="selected">{$text_open}</option>
+                    <option value="0">{$text_lock}</option>
+                     {else}
+                    <option value="1">{$text_open}</option>
+                    <option value="0" selected="selected">{$text_lock}</option>
+                   {/if}
+                  </select></td>
+              </tr>
+            </table>
+          </div>
+		  
+		  
+         {php $address_row = 1}
+          {loop $addresses   $address}
+          <div id="tab-address-{$address_row}" class="vtabs-content">
+            <input type="hidden" name="address[{$address_row}][address_id]" value="{$address['address_id']}" />
+            <table class="form">
+              <tr>
+                <td><span class="required">*</span> {$entry_username}</td>
+                <td><input type="text" name="address[{$address_row}][username]" value="{$address['username']}" />
+                  {if isset($error_address_username[$address_row])}
+                  <span class="error">{php echo $error_address_username[$address_row]}</span>
+                  {/if}</td>
+              </tr>
+             
+              
+              <tr>
+                <td><span class="required">*</span> {$entry_address}</td>
+                <td><input type="text" name="address[{$address_row}][address]" value="{$address['address']}" />
+                  {if isset($error_address_address[$address_row])}
+                  <span class="error">{php echo $error_address_address[$address_row]}</span>
+                  {/if}</td>
+              </tr>
+			  
+			   <tr>
+                <td><span class="required">*</span> {$entry_telephone}</td>
+                <td><input type="text" name="address[{$address_row}][telephone]" value="{$address['telephone']}" />
+                  {if isset($error_address_telephone[$address_row])}
+                  <span class="error">{php echo $error_address_telephone[$address_row]}</span>
+                  {/if}</td>
+              </tr>
+			  
+			   <tr>
+                <td><span class="required">*</span> {$entry_mobile}</td>
+                <td><input type="text" name="address[{$address_row}][mobile]" value="{$address['mobile']}" />
+                  {if isset($error_address_mobile[$address_row])}
+                  <span class="error">{php echo $error_address_mobile[$address_row]}</span>
+                  {/if}</td>
+              </tr>
+             
+            
+              <tr>
+                <td><span id="postcode-required{$address_row}" class="required">*</span> {$entry_postcode}</td>
+                <td><input type="text" name="address[{$address_row}][postcode]" value="{$address['postcode']}" /></td>
+              </tr>
+             
+              <tr>
+                <td>{$entry_default}</td>
+                <td>{if $address['address_id'] == $address_id || !$addresses}
+                  <input type="radio" name="address[{$address_row}][default]" value="1" checked="checked" /></td>
+                 {else}
+                <input type="radio" name="address[{$address_row}][default]" value="0" />
+                  </td>
+                {/if}
+              </tr>
+            </table>
+          </div>
+          {php $address_row++}
+         {/loop}
+        </div>
+		
+       
+       
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<script type="text/javascript"><!--
+var address_row = {$address_row};
+
+function addAddress() {	
+	html  = '<div id="tab-address-' + address_row + '" class="vtabs-content" style="display: none;">';
+	html += '  <input type="hidden" name="address[' + address_row + '][address_id]" value="" />';
+	html += '  <table class="form">'; 
+	html += '    <tr>';
+    html += '	   <td><span class="required">*</span> {$entry_username}</td>';
+    html += '	   <td><input type="text" name="address[' + address_row + '][username]" value="" /></td>';
+    html += '    </tr>';
+
+    html += '    <tr>';
+    html += '      <td>{$entry_telephone}</td>';
+    html += '      <td><input type="text" name="address[' + address_row + '][telephone]" value="" /></td>';
+    html += '    </tr>';	
+
+			
+    html += '    <tr>';
+    html += '      <td><span class="required">*</span> {$entry_address}</td>';
+    html += '      <td><input type="text" name="address[' + address_row + '][address]" value="" /></td>';
+    html += '    </tr>';
+   
+    html += '    <tr>';
+    html += '      <td><span class="required">*</span> {$entry_mobile}</td>';
+    html += '      <td><input type="text" name="address[' + address_row + '][mobile]" value="" /></td>';
+    html += '    </tr>';
+    html += '    <tr>';
+    html += '      <td><span id="postcode-required' + address_row + '" class="required">*</span> {$entry_postcode}</td>';
+    html += '      <td><input type="text" name="address[' + address_row + '][postcode]" value="" /></td>';
+    html += '    </tr>';
+
+  
+	html += '    <tr>';
+    html += '      <td>{$entry_default}</td>';
+    html += '      <td><input type="radio" name="address[' + address_row + '][default]" value="1" checked="checked"/></td>';
+    html += '    </tr>';
+    html += '  </table>';
+    html += '</div>';
+	
+	$('#tab-general').append(html);
+	
+	//$('select[name=\'address[' + address_row + '][country_id]\']').trigger('change');	
+	
+	$('#address-add').before('<a href="#tab-address-' + address_row + '" id="address-' + address_row + '">{$tab_address} ' + address_row + '&nbsp;<img src="view/image/delete.png" alt="" onclick="$(\'#vtabs a:first\').trigger(\'click\'); $(\'#address-' + address_row + '\').remove(); $(\'#tab-address-' + address_row + '\').remove(); return false;" /></a>');
+		 
+	$('.vtabs a').tabpages();
+	
+	$('#address-' + address_row).trigger('click');
+	
+	address_row++;
+}
+//--></script> 
+
+<script type="text/javascript"><!--
+
+/*
+function addBlacklist(ip) {
+	$.ajax({
+		url: 'index.php?route=sale/customer/addblacklist&token={$token}',
+		type: 'post',
+		dataType: 'json',
+		data: 'ip=' + encodeURIComponent(ip),
+		beforeSend: function() {
+			$('.success, .warning').remove();
+			
+			$('.box').before('<div class="attention"><img src="view/image/loading.gif" alt="" /> Please wait!</div>');			
+		},
+		complete: function() {
+			$('.attention').remove();
+		},			
+		success: function(json) {
+			if (json['error']) {
+				 $('.box').before('<div class="warning" style="display: none;">' + json['error'] + '</div>');
+				
+				$('.warning').fadeIn('slow');
+			}
+						
+			if (json['success']) {
+                $('.box').before('<div class="success" style="display: none;">' + json['success'] + '</div>');
+				
+				$('.success').fadeIn('slow');
+				
+				$('#' + ip.replace(/\./g, '-')).replaceWith('<a id="' + ip.replace(/\./g, '-') + '" onclick="removeBlacklist(\'' + ip + '\');">{$text_remove_blacklist}</a>');
+			}
+		}
+	});	
+}
+
+function removeBlacklist(ip) {
+	$.ajax({
+		url: 'index.php?route=sale/customer/removeblacklist&token={$token}',
+		type: 'post',
+		dataType: 'json',
+		data: 'ip=' + encodeURIComponent(ip),
+		beforeSend: function() {
+			$('.success, .warning').remove();
+			
+			$('.box').before('<div class="attention"><img src="view/image/loading.gif" alt="" /> Please wait!</div>');				
+		},
+		complete: function() {
+			$('.attention').remove();
+		},			
+		success: function(json) {
+			if (json['error']) {
+				 $('.box').before('<div class="warning" style="display: none;">' + json['error'] + '</div>');
+				
+				$('.warning').fadeIn('slow');
+			}
+			
+			if (json['success']) {
+				 $('.box').before('<div class="success" style="display: none;">' + json['success'] + '</div>');
+				
+				$('.success').fadeIn('slow');
+				
+				$('#' + ip.replace(/\./g, '-')).replaceWith('<a id="' + ip.replace(/\./g, '-') + '" onclick="addBlacklist(\'' + ip + '\');">{$text_add_blacklist}</a>');
+			}
+		}
+	});	
+};
+*/
+//--></script> 
+<script type="text/javascript"><!--
+$('.htabs a').tabpages();
+$('.vtabs a').tabpages();
+//--></script> 

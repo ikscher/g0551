@@ -1,0 +1,72 @@
+<link rel="stylesheet" type="text/css" href="view/stylesheet/general.css">
+<link rel="stylesheet" type="text/css" href="view/stylesheet/main.css">
+<script type="text/javascript" src="view/javascript/jquery/jquery-1.7.1.min.js"></script><!--这里只能用1.7.1的版本,否则自带的图片处理有问题-->
+<script type="text/javascript" src="view/javascript/jquery/ui/jquery-ui-1.8.16.custom.min.js"></script>
+<link type="text/css" href="view/javascript/jquery/ui/themes/ui-lightness/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
+<style type="text/css">
+tr.over td {
+	background:#cfeefe;
+} 
+</style>
+    <h1><img src="view/image/report.png" alt="" /> {$heading_title}
+        <span class="action-span"><a  href="javascript:;" >{$button_reset}</a></div>
+    </h1>
+    <div class="list-div" id="listDiv">
+      <table class="list">
+        <thead>
+          <tr>
+            <td class="left">{$column_name}</td>
+            <td class="left">{$column_model}</td>
+            <td class="right">{$column_viewed}</td>
+            <td class="right">{$column_percent}</td>
+          </tr>
+        </thead>
+        <tbody>
+          {if $products}
+          {loop $products   $product}
+          <tr>
+            <td class="left">{$product['name']}</td>
+            <td class="left">{$product['model']}</td>
+            <td class="right">{$product['viewed']}</td>
+            <td class="right">{$product['percent']}</td>
+          </tr>
+          {/loop}
+           {else}
+          <tr>
+            <td class="center" colspan="4">{$text_no_results}</td>
+          </tr>
+          {/if}
+        </tbody>
+      </table>
+      {$pagination}
+    </div>
+<script type="text/javascript">
+$(function(){
+	$(".list tr").mouseover(function(){
+		$(this).addClass("over");
+	}).mouseout(function(){
+		$(this).removeClass("over");	
+	})
+
+});
+
+$("h1 span a").click(function(){
+  //onclick="parent.addTab('重置商品浏览统计','{$reset}');" class="button"
+  if(confirm("您确定要重新设置商品浏览次数吗？")){
+     $.ajax({
+	     type:'post',
+		 url:'index.php?route=report/product_viewed/reset&token={$token}',
+		 dataType:'json',
+		 success:function(str){
+		    if (str.x=='ok'){
+			   alert('重置成功！');
+			}
+		 
+		 }
+	 
+	 });
+  
+  }
+  
+});
+</script>

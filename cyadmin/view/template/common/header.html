@@ -1,0 +1,259 @@
+<!DOCTYPE HTML>
+<html dir="{$direction}" lang="{$lang}">
+<head>
+<meta charset="UTF-8" />
+<title>{$title}</title>
+<base href="{$base}" />
+{if $description}
+<meta name="description" content="{$description}" />
+{/if}
+{if $keywords}
+<meta name="keywords" content="{$keywords}" />
+{/if}
+
+{if $icon}
+<link href="{$icon}" rel="icon" />
+{/if}
+<!-- {loop $links   $link}
+<link href="{$link['href']}" rel="{$link['rel']}" />
+{/loop} -->
+<!-- <link rel="stylesheet" type="text/css" href="view/stylesheet/stylesheet.css" />  -->
+<!-- {loop $styles   $style}
+<link rel="{$style['rel']}" type="text/css" href="{$style['href']}" media="{$style['media']}" />
+{/loop} -->
+
+
+<!-- <link rel="stylesheet" type="text/css" href="../themes/icon.css"> -->
+<script type="text/javascript" src="view/javascript/jquery/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="view/javascript/jquery/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="view/javascript/jquery/outlook.js"></script>
+<link rel="stylesheet" type="text/css" href="view/stylesheet/easyui.css">
+<!-- <script type="text/javascript" src="view/javascript/jquery/ui/jquery-ui-1.8.16.custom.min.js"></script>
+<link type="text/css" href="view/javascript/jquery/ui/themes/ui-lightness/jquery-ui-1.8.16.custom.css" rel="stylesheet" /> -->
+<!-- <script type="text/javascript" src="view/javascript/jquery/tabs.js"></script> -->
+<!-- <script type="text/javascript" src="view/javascript/jquery/superfish/js/superfish.js"></script> -->
+
+<!-- {loop $scripts   $script}
+<script type="text/javascript" src="{$script}"></script>
+{/loop} -->
+
+<script type="text/javascript">
+//-----------------------------------------
+// Confirm Actions (delete, uninstall)
+//-----------------------------------------
+$(document).ready(function(){
+    // Confirm Delete
+    $('#form').submit(function(){
+        if ($(this).attr('action').indexOf('delete',1) != -1) {
+            if (!confirm('{$text_confirm}')) {
+                return false;
+            }
+        }
+    });
+    	
+    // Confirm Uninstall
+    $('a').click(function(){
+        if ($(this).attr('href') != null && $(this).attr('href').indexOf('uninstall', 1) != -1) {
+            if (!confirm('{$text_confirm}')) {
+                return false;
+            }
+        }
+    });
+});
+</script>
+</head>
+<body class="easyui-layout">
+
+    <!-- {if $logged} -->
+	   <div data-options="region:'north',border:false" style="padding-top:5px;overflow: hidden; height: 30px;background: url(view/image/header.png) #7f99be repeat-x center 50%;line-height: 20px;color: #fff; font-family: Verdana, 微软雅黑,黑体">
+	   <span style="position:absolute;top:{if $GLOBALS['ccid']}-6px{else}2px{/if};left:190px;">
+		
+		</span> 
+		<span style="float:right; padding-right:20px;" class="head"> 
+			<!-- {if (!empty($chang_user) && !empty($_GET['change_uid'])) || !empty($GLOBALS['_MooCookie']['change_identity'])}  -->
+				<span style="font-weight:bold;color:red;font-size:14px;"> 您当前登录的用户名是：{$username}, ID是:{$userid}。 <!-- <a href="index.php?action=login&h=logout_change_identify">返回我的身份</a>  -->
+					<span onclick="parent.location.href='index.php'" style="cursor:pointer;font-size:14px;color:#fff;" id="change_identify"></span> 
+				</span> 
+			<!-- {/if} -->
+		
+		
+		当前登录管理员：{$username} ID：{$userid}   身份： <a href="index.php?route=common/logout" id="loginOut">安全退出</a> <a href="{$home}"> 商城首页</a></span> <span style="padding-left:10px; font-size: 16px; font-family:微软雅黑,黑体"> <img src="view/image/top_logo.png" width="20" height="20" align="absmiddle" /> 安徽穿悦电子网络商城后台管理系统 </span> 
+
+		
+		</div>
+	<!-- {else}
+       <div class="div1"></div>
+	{/if} -->
+	
+    <!-- {if $logged} -->
+    <div class="div3"><img src="view/image/lock.png" alt="" style="position: relative; top: 3px;" />&nbsp;{$logged}</div>
+    <!-- {/if} -->
+  </div>
+  <!-- {if $logged} -->
+  
+  <div data-options="region:'west',split:true" title="导航菜单" style="width:200px;padding1:1px;overflow:hidden;">
+		<div class="easyui-accordion" data-options="fit:true,border:false">
+			<div title="{$text_catalog}" style="padding:10px;overflow:auto;">
+				  <p><a data-role="{$category}">{$text_category}</a></p>
+				  <p><a data-role="{$product}">{$text_product}</a></p>
+				  <!-- <p><a class="parent">{$text_attribute}</a> -->
+					
+				  <p><a data-role="{$attribute}">{$text_attribute}</a></p>
+				  <p><a data-role="{$attribute_group}">{$text_attribute_group}</a></p>
+				  <p><a data-role="{$category_to_attribute_group}">{$text_category_to_attribute_group}</a></p>
+				
+				 
+				  <p><a data-role="{$option}">{$text_option}</a></p>
+				  <p><a data-role="{$manufacturer}">{$text_manufacturer}</a></p>
+				  <p><a data-role="{$download}">{$text_download}</a></p>
+				  <p><a data-role="{$review}">{$text_review}</a></p>
+				  <p><a data-role="{$information}">{$text_information}</a></p>
+			</div>
+			
+			<div title="{$text_extension}" data-options="selected:true" style="padding:10px;">
+				  <p><a data-role="{$module}">{$text_module}</a></p>
+				  <p><a data-role="{$shipping}">{$text_shipping}</a></p>
+				  <p><a data-role="{$payment}">{$text_payment}</a></p>
+				  <p><a data-role="{$total}">{$text_total}</a></p>
+				  <p><a data-role="{$feed}">{$text_feed}</a></p>
+			</div>
+			
+			<div title="{$text_sale}" style="padding:10px">
+				  <p><a data-role="{$order}">{$text_order}</a></p>
+				  <p><a data-role="{$return}">{$text_return}</a></p>
+				 <!--  <p><a class="parent">{$text_customer}</a>
+					<ul> -->
+					  <p><a data-role="{$customer}">{$text_customer}</a></p>
+					  <p><a data-role="{$customer_group}">{$text_customer_group}</a></p>
+					  <p><a data-role="{$customer_blacklist}">{$text_customer_blacklist}</a></p>
+				<!-- 	</ul>
+				  </p> -->
+				  <p><a data-role="{$affiliate}">{$text_affiliate}</a></p>
+				  <p><a data-role="{$coupon}">{$text_coupon}</a></p>
+				 <!--  <p><a class="parent">{$text_voucher}</a>
+					<ul> -->
+					  <p><a data-role="{$voucher}">{$text_voucher}</a></p>
+					  <p><a data-role="{$voucher_theme}">{$text_voucher_theme}</a></p>
+					<!-- </ul>
+				  </p> -->
+				  <p><a data-role="{$contact}">{$text_contact}</a></p>
+			</div>
+			
+			<div title="{$text_system}" style="padding:10px">
+			          <p><a data-role="{$setting}">{$text_setting}</a></p>
+					  <!-- <p><a class="parent">{$text_design}</a>
+						<ul> -->
+						<!--   <p><a data-role="{$layout}">{$text_layout}</a></p>
+						  <p><a data-role="{$banner}">{$text_banner}</a></p> -->
+					<!-- 	</ul>
+					  </p> -->
+					 <!--  <p><a class="parent">{$text_users}</a>
+						<ul> -->
+						  <p><a data-role="{$user}">{$text_user}</a></p>
+						  <p><a data-role="{$user_group}">{$text_user_group}</a></p>
+						  <p><a data-role="{$user_action}">{$text_user_action}</a></p>
+					<!-- 	</ul>
+					  </p> -->
+					 <!--  <p><a class="parent">{$text_localisation}</a>
+						<ul> -->
+						 <!--  <p><a data-role="{$language}">{$text_language}</a></p>
+						  <p><a data-role="{$currency}">{$text_currency}</a></p> -->
+						  <p><a data-role="{$stock_status}">{$text_stock_status}</a></p>
+						  <p><a data-role="{$order_status}">{$text_order_status}</a></p>
+						  <!-- <p><a class="parent">{$text_return}</a>
+							<ul> -->
+							  <p><a data-role="{$return_status}">{$text_return_status}</a></p>
+							  <p><a data-role="{$return_action}">{$text_return_action}</a></p>
+							  <p><a data-role="{$return_reason}">{$text_return_reason}</a></p>
+							<!-- </ul>
+						  </p> -->
+						 <!--  <p><a data-role="{$country}">{$text_country}</a></p>
+						  <p><a data-role="{$zone}">{$text_zone}</a></p>
+						  <p><a data-role="{$geo_zone}">{$text_geo_zone}</a></p> -->
+						 <!--  <p><a class="parent">{$text_tax}</a>
+							<ul> -->
+							  <!-- <p><a data-role="{$tax_class}">{$text_tax_class}</a></p>
+							  <p><a data-role="{$tax_rate}">{$text_tax_rate}</a></p> -->
+						<!-- 	</ul>
+						  </p> -->
+						  <p><a data-role="{$length_class}">{$text_length_class}</a></p>
+						  <p><a data-role="{$weight_class}">{$text_weight_class}</a></p>
+						<!-- </ul>
+					  </p> -->
+					  <p><a data-role="{$error_log}">{$text_error_log}</a></p>
+					  <p><a data-role="{$update}">{$text_update}</a></p>
+					  <p><a data-role="{$enviorment}">{$text_enviorment}</a></p>
+					  <!-- <p><a data-role="{$backup}">{$text_backup}</a></p> -->
+			</div>
+			
+			<div title="{$text_reports}" style="padding:10px">
+			         <!-- <p><a class="parent">{$text_sale}</a>
+						<ul> -->
+						  <p><a data-role="{$report_sale_order}">{$text_report_sale_order}</a></p>
+						  <p><a data-role="{$report_sale_tax}">{$text_report_sale_tax}</a></p>
+						  <p><a data-role="{$report_sale_shipping}">{$text_report_sale_shipping}</a></p>
+						  <p><a data-role="{$report_sale_return}">{$text_report_sale_return}</a></p>
+						  <p><a data-role="{$report_sale_coupon}">{$text_report_sale_coupon}</a></p>
+						<!-- </ul>
+					  </p> -->
+					 <!--  <p><a class="parent">{$text_product}</a>
+						<ul> -->
+						  <p><a data-role="{$report_product_viewed}">{$text_report_product_viewed}</a></p>
+						  <p><a data-role="{$report_product_purchased}">{$text_report_product_purchased}</a></p>
+						<!-- </ul>
+					  </p> -->
+					<!--   <p><a class="parent">{$text_customer}</a>
+						<ul> -->
+						  <p><a data-role="{$report_customer_onpne}">{$text_report_customer_online}</a></p>
+						  <p><a data-role="{$report_customer_order}">{$text_report_customer_order}</a></p>
+						  <p><a data-role="{$report_customer_reward}">{$text_report_customer_reward}</a></p>
+						  <p><a data-role="{$report_customer_credit}">{$text_report_customer_credit}</a></p>
+						<!-- </ul>
+					  </p> -->
+					 <!--  <p><a class="parent">{$text_affiliate}</a>
+						<ul> -->
+						  <p><a data-role="{$report_affiliate_commission}">{$text_report_affiliate_commission}</a></p>
+						<!-- </ul>
+					  </p> -->
+			</div>
+			
+			<div title="{$text_show}" style="padding:10px;">
+			    <p><a data-role="{$show_contents}">{$text_show_contents}</a></p>
+				<p><a data-role="{$show_comments}">{$text_show_comments}</a></p>
+			</div>
+			
+			<div title="{$text_help}"  style="padding:10px">
+			        <p><a onClick="window.open('http://www.opencart.com');">{$text_opencart}</a></p>
+					  <p><a onClick="window.open('http://www.opencart.com/index.php?route=documentation/introduction');">{$text_documentation}</a></p>
+					  <p><a onClick="window.open('http://forum.opencart.com');">{$text_support}</a></p>
+			</div>
+		</div>
+	</div>
+	
+	<!-- content -->
+	<div data-options="region:'center'">  <!-- title="Main Title" style="overflow:hidden;" -->
+	    <div id="tt" class="easyui-tabs" data-options="tools:'#tab-tools',fit:true" >
+		
+			<!-- <div title="Tab1" style="padding:20px;overflow:hidden;"> 
+				<div style="margin-top:20px;">
+					<h3>jQuery EasyUI framework help you build your web page easily.</h3>
+					<ul>
+						<li>easyui is a collection of user-interface plugin based on jQuery.</li> 
+						<li>using easyui you don't write many javascript code, instead you defines user-interface by writing some HTML markup.</li> 
+						<li>easyui is very easy but powerful.</li> 
+					</ul>
+				</div>
+			</div>
+			<div title="Tab2" data-options="closable:true" style="padding:20px;">This is Tab2 width close button.</div> -->
+
+<!--以下footer部分-->			
+<!-- 		
+        </div>
+	</div>
+  
+  
+ 
+ {/if}
+
+</body>
+</html> -->

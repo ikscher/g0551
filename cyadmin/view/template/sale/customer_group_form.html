@@ -1,0 +1,57 @@
+<link rel="stylesheet" type="text/css" href="view/stylesheet/general.css">
+<link rel="stylesheet" type="text/css" href="view/stylesheet/main.css">
+<script type="text/javascript" src="view/javascript/jquery/jquery-1.7.1.min.js"></script><!--这里只能用1.7.1的版本,否则自带的图片处理有问题-->
+<script type="text/javascript" src="view/javascript/jquery/ui/jquery-ui-1.8.16.custom.min.js"></script>
+<link type="text/css" href="view/javascript/jquery/ui/themes/ui-lightness/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
+<script type="text/javascript" src="view/javascript/jquery/tabs.js"></script>
+
+    <h1><img src="view/image/customer.png" alt="" /> {$heading_title}
+        <span class="action-span">
+		     <a href="javascript:;" onclick="$('#form').submit();" class="button">{$button_save}</a>
+			 <a href = "{$cancel}" class="button">{$button_cancel}</a>
+		</span>
+    </h1>
+    <div class="list-div" id="listDiv">
+      <form action="{$action}" method="post" enctype="multipart/form-data" id="form">
+        <table class="form">
+          <tr>
+            <td><span class="required">*</span> {$entry_name}</td>
+            <td>
+              <input type="text" name="customer_group_description[name]" value="{if isset($customer_group_description[name])}{$customer_group_description[name]}{/if}" />
+              
+              {if isset($error_name)}
+              <span class="error">{$error_name}</span><br />
+              {/if}
+             </td>
+          </tr>
+         
+          <tr>
+            <td>{$entry_description}</td>
+            <td><textarea name="customer_group_description[description]" cols="40" rows="5">{if isset($customer_group_description['description'])} {$customer_group_description['description']}{/if}</textarea>
+              
+          </tr>
+         
+          <tr>
+            <td>{$entry_approval}</td>
+            <td>{if $approval}
+              <input type="radio" name="approval" value="1" checked="checked" />
+              {$text_yes}
+              <input type="radio" name="approval" value="0" />
+              {$text_no}
+               {else}
+              <input type="radio" name="approval" value="1" />
+              {$text_yes}
+              <input type="radio" name="approval" value="0" checked="checked" />
+              {$text_no}
+              {/if}</td>
+          </tr>
+         
+         
+          
+          <tr>
+            <td>{$entry_sort_order}</td>
+            <td><input type="text" name="sort_order" value="{$sort_order}" size="10" /></td>
+          </tr>
+        </table>
+      </form>
+    </div>

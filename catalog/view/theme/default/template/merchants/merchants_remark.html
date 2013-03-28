@@ -1,0 +1,140 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+{$header}
+ 	<!--左侧begin-->
+	{$left}
+ 	<!--左侧end-->
+    <!--右侧begin-->
+	<div class="right">
+		<div class="tab_bor">
+			<div class="credit">
+				<ul>
+					<li class="credit_left"><img src="images/cre_ico.gif" width="14" height="16" /> <strong>卖家累积信用：</strong><strong class="txt_color"> 8</strong></li>
+					<li class="credit_right">好评率：<span class="color_f60">100.00%</span></li>
+				</ul>
+			</div>
+			<table width="790" height="150" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#e6e6e6" >
+			  <tr>
+				<td height="28" align="center" bgcolor="#f3f3f3">&nbsp;</td>
+				<td height="28" align="center" bgcolor="#f3f3f3">最近1周</td>
+				<td height="28" align="center" bgcolor="#f3f3f3">最近1个月</td>
+				<td height="28" align="center" bgcolor="#f3f3f3">最近6个月</td>
+				<td height="28" align="center" bgcolor="#f3f3f3">最近6个月</td>
+				<td height="28" align="center" bgcolor="#f3f3f3">总计</td>
+			  </tr>
+			  <tr>
+				<td align="center" bgcolor="#FFFFFF"><img src="images/icon_v1.gif" width="17" height="16" /> 好评</td>
+				<td bgcolor="#FFFFFF" align="center" class="txt_color">0</td>
+				<td bgcolor="#FFFFFF" align="center" class="txt_color">0</td>
+				<td bgcolor="#FFFFFF" align="center" class="txt_color">0</td>
+				<td align="center" bgcolor="#FFFFFF" class="txt_color">0</td>
+				<td align="center" bgcolor="#FFFFFF">0</td>
+			  </tr>
+			  <tr>
+				<td align="center" bgcolor="#FFFFFF"><img src="images/icon_v2.gif" width="17" height="16" /> 中评</td>
+				<td bgcolor="#FFFFFF" align="center" class="txt_color">0</td>
+				<td bgcolor="#FFFFFF" align="center" class="txt_color">0</td>
+				<td bgcolor="#FFFFFF" align="center" class="txt_color">0</td>
+				<td align="center" bgcolor="#FFFFFF" class="txt_color">0</td>
+				<td align="center" bgcolor="#FFFFFF">0</td>
+			  </tr>
+			  <tr>
+				<td align="center" bgcolor="#FFFFFF"><img src="images/icon_v3.gif" width="17" height="16" /> 差评</td>
+				<td bgcolor="#FFFFFF" align="center" class="txt_color">0</td>
+				<td bgcolor="#FFFFFF" align="center" class="txt_color">0</td>
+				<td bgcolor="#FFFFFF" align="center"class="txt_color">0</td>
+				<td align="center" bgcolor="#FFFFFF"class="txt_color">0</td>
+				<td align="center" bgcolor="#FFFFFF">0</td>
+			  </tr>
+			  <tr>
+				<td align="center" bgcolor="#FFFFFF">总计</td>
+				<td bgcolor="#FFFFFF" align="center"class="txt_color">0</td>
+				<td bgcolor="#FFFFFF" align="center"class="txt_color">0</td>
+				<td bgcolor="#FFFFFF" align="center"class="txt_color">0</td>
+				<td align="center" bgcolor="#FFFFFF"class="txt_color">0</td>
+				<td align="center" bgcolor="#FFFFFF">0</td>
+			  </tr>
+			</table>
+	    </div>
+        <div class="">
+			<ul class="rate-tab rate-tab-orange clearfix">                				
+				<li class="selected"><a href=""><span>来自买家的评价</span></a></li>
+			</ul>
+			<table class='show-rate-table'>
+			<thead>
+				<tr>
+					<th class='rate'>
+						<select onchange='choseGoodOrBad(this.value);'>
+							<option  selected='selected'  value='1'>评价</option>
+							<option  value='2'>好评</option>
+							<option  value='3'>中评</option>
+							<option  value='4'>差评</option>
+						</select>
+					</th>
+					<th class='comment'>
+						<select onchange='showContent(this.value);'>
+							<option  selected='selected'  value=''>评论</option>
+							<option  value='1'>有评论内容</option>
+							<option  value='0'>无评论内容</option>
+						</select>
+					</th>
+					<th class='ratee'>评价人</th>
+					<th class='things'>宝贝信息</th>
+					<th class='operate'>操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td class='rate'><span class='rate-icon rate-ok'>好评</span></td>
+					<td class="reviews-cnt"><p class='rate' style='text-align:left;width:200px;'>好评！</p><span class='date'>[2012-08-21 11:04:24]</span></td>
+					<td>商家：<a href='' class="txt_color">手拉手话费专营店</a></td>
+					<td><p class='auction'><a href=''class="txt_color">闪电手机充值&amp;mdash;&amp;mdash;安徽移动...</a><span class='price'><em>98.59</em>元</span></p></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td class='rate'><span class='rate-icon rate-ok'>好评</span></td>
+					<td class="reviews-cnt"><p class='rate' style='text-align:left;width:200px;'>好评！</p><span class='date'>[2012-08-21 11:04:24]</span></td>
+					<td>商家：<a href='' class="txt_color">手拉手话费专营店</a></td>
+					<td><p class='auction'><a href=''class="txt_color">闪电手机充值&amp;mdash;&amp;mdash;安徽移动...</a><span class='price'><em>98.59</em>元</span></p></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td class='rate'><span class='rate-icon rate-ok'>好评</span></td>
+					<td class="reviews-cnt"><p class='rate' style='text-align:left;width:200px;'>好评！</p><span class='date'>[2012-08-21 11:04:24]</span></td>
+					<td>商家：<a href='' class="txt_color">手拉手话费专营店</a></td>
+					<td><p class='auction'><a href=''class="txt_color">闪电手机充值&amp;mdash;&amp;mdash;安徽移动...</a><span class='price'><em>98.59</em>元</span></p></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td class='rate'><span class='rate-icon rate-ok'>好评</span></td>
+					<td class="reviews-cnt"><p class='rate' style='text-align:left;width:200px;'>好评！</p><span class='date'>[2012-08-21 11:04:24]</span></td>
+					<td>商家：<a href='' class="txt_color">手拉手话费专营店</a></td>
+					<td><p class='auction'><a href=''class="txt_color">闪电手机充值&amp;mdash;&amp;mdash;安徽移动...</a><span class='price'><em>98.59</em>元</span></p></td>
+					<td></td>
+				</tr>
+			</tbody>
+			</table>
+			<!--begin  页脚批量操作和列表翻页 begin-->
+			<div class="page">
+				<table>
+				   <tr><td colspan="9"></td></tr>
+					<tr>
+						<td colspan="9">
+						<div class="operations">
+						<ul class="page-nav inline-block">
+						<li class="prev-page"></li>	                												                	        		        	        	    <li class="curr-page"><a href="#" class="selected" onclick="return changePage('1')">1</a></li>
+						<li><a href="#" onclick="return changePage('2')">2</a></li>
+						<li class="next-page"><a href="#" onclick="return changePage('2')">下一页</a></li>
+						</ul>
+						</div>
+						</td>
+					</tr>		
+				</table>
+			</div>
+		<!--页脚翻页end-->
+		</div>
+    </div>
+ 	<!--右侧end-->
+
+{$footer}
