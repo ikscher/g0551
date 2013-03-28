@@ -33,11 +33,6 @@ define('DB_PASSWORD', '123456');
 define('DB_DATABASE', 'g0551'); 
 
 
-/* define('DB_HOSTNAME', '192.168.1.252');
-define('DB_USERNAME', 'root');
-define('DB_PASSWORD', 'root');
-define('DB_DATABASE', 'opencart'); */
 
 define('DB_PREFIX', '');
-
 ?>
