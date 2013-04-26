@@ -80,14 +80,15 @@ class ControllerMerchantsRelease extends Controller {
 		
 		$product_options=array();
 		$attributeGroups=array();
-		$results=array();
+		$groups=array();
+		// $results=array();
 		
 		
 		
 		//选项标签页 ：产品所在的属性组  model(getAttribute) option(getOptionValues) 
 		
 		if(!empty($product_id)){
-			$results=$this->model_catalog_product->getProductOptions($product_id);
+			/* $results=$this->model_catalog_product->getProductOptions_old($product_id);
 
 			$attributes=array();
 			if(!empty($results)){
@@ -96,10 +97,10 @@ class ControllerMerchantsRelease extends Controller {
 					$v['attribute']=$attributes;
 					$attributeGroups[]=$v;//(1)获取选项属性组
 				}
-			}
-	        
-			$attributeGroups_other=$this->model_catalog_product->getProductAttributes($product_id,true);//获取一般属性组(3)
-			
+			} */
+	        // var_dump($attributeGroups);
+			$attributeGroups_other=$this->model_catalog_product->getProductAttributes($product_id,false);//
+			 
 			
 			//属性ID为空 ，并且是一般属性 ,此种情况出现在产品的编辑状态下（有属性组，但没有选择属性）
 			// attribute_id: |45|33|27|47| 产品的属性，option_attribute_id:|45|33|27|，产品的隐藏属性49没有显示
@@ -110,9 +111,8 @@ class ControllerMerchantsRelease extends Controller {
 			
 			$attributeGroups_other2=$this->model_merchants_release->getAttributesByCid($category_id['category_id'],$option_attribute_group);//(2)
             
+			$attributeGroups=array_merge($attributeGroups_other,$attributeGroups_other2);
 			
-			$attributeGroups_other=array_merge($attributeGroups_other,$attributeGroups_other2);
-			//var_dump($attributeGroups_other2);
 			 
 			/* $attributeGroups_other= array(
 			        'product_option_id'    => '',
@@ -127,7 +127,7 @@ class ControllerMerchantsRelease extends Controller {
 			); */
 			
 			//从other里面删除product_option出现的attribute_group_id
-            foreach($attributeGroups_other as $key=>$ago){
+            /* foreach($attributeGroups_other as $key=>$ago){
 			    $agoid=$ago['attribute_group_id'];
 			    foreach($attributeGroups as $ag){
 				    if($agoid==$ag['attribute_group_id']){
@@ -135,13 +135,26 @@ class ControllerMerchantsRelease extends Controller {
 					}
 				   
 				}
-			} 
+			}  */
 			
-			$attributeGroups=array_merge($attributeGroups,$attributeGroups_other);//获取到产品的所有属性组 
+			//$attributeGroups=array_merge($attributeGroups,$attributeGroups_other);//获取到产品的所有属性组 
 			
+			$sort_order=array();
+			foreach ($attributeGroups as $key => $value) {
+				$sort_order[$key] = $value['gtype'];
+			}
 			
+			array_multisort($sort_order, SORT_DESC, $attributeGroups);
+			  // var_dump($attributeGroups);
+			
+			foreach($attributeGroups as $k=>$v){
+				if($v['gtype']==1) continue;
+				$groups[$k]['attribute_group_name']=$v['attribute_group_name'];
+				$groups[$k]['attribute_group_id']=$v['attribute_group_id'];
+			}
+			$this->data['groups']=$groups;
 			//获取选项属性组
-			$product_options2=array();
+			/* $product_options2=array();
 			$option_attribute_group2=$this->model_catalog_product->getGroupIDByAttributeID($product_id,true);
 			
 			$option_attribute_group2=$this->model_merchants_release->getAttributesByCid($category_id['category_id'],$option_attribute_group2);//(2)
@@ -149,18 +162,44 @@ class ControllerMerchantsRelease extends Controller {
 			    if($ago2['gtype']==2){
 				    $product_options2[]=$ago2;
 				}
+			} */
+		  	
+			$this->data['product_options']=array();
+			$product_options = $this->model_catalog_product->getProductOptions($product_id);	
+			foreach($product_options as $v){
+			    $composite_id=$v['composite_id'];
+				$composite_id=explode('|',$composite_id);
+				foreach($composite_id as $id){
+				    if(empty($id)) continue;
+				    $attribute_name=$this->model_catalog_product->getAttributeNameById($id);
+					$v['attribute'][$id]=$attribute_name;
+				}
+				$v['attribute_id']=implode('_',$composite_id);
+				$this->data['product_options'][]=$v;
 			}
+               // var_dump($this->data['product_options']);
+            //$product_options = array_merge($product_options,$product_options2);	
 		
-			$product_options = $this->model_catalog_product->getProductOptions($product_id);		
-            $product_options = array_merge($product_options,$product_options2);	
-
 		}else{
 		    $category_id=$this->request->get["cid"];
 			if(!empty($category_id)){
 				$attributeGroups=$this->model_merchants_release->getAttributesByCid($category_id);
 				
-				$product_options=$attributeGroups;
+				foreach($attributeGroups as $k=>$v){
+				if($v['gtype']==1) continue;
+					$groups[$k]['attribute_group_name']=$v['attribute_group_name'];
+					$groups[$k]['attribute_group_id']=$v['attribute_group_id'];
+				}
+				$this->data['groups']=$groups;
+				
+				$sort_order=array();
+				foreach ($attributeGroups as $key => $value) {
+					$sort_order[$key] = $value['gtype'];
+				}
+				
+				array_multisort($sort_order, SORT_DESC, $attributeGroups);
 			}
+
 		}
 		
 		
@@ -173,8 +212,8 @@ class ControllerMerchantsRelease extends Controller {
 		$this->data["category_id"]=$this->request->get["cid"];
 		$this->data['attributeGroups']=json_encode($attributeGroups);
 			
-		$this->data['product_options'] = array();
-	    
+		
+		/*
 		foreach ($product_options as $product_option) {
 			if ($product_option['type'] == 'select' || $product_option['type'] == 'radio' || $product_option['type'] == 'checkbox' || $product_option['type'] == 'image') {
 				$product_option_value_data = array();
@@ -219,7 +258,7 @@ class ControllerMerchantsRelease extends Controller {
 				);				
 			}
 		}
-	
+	    
 		//选项列表
 		$this->data['option_values'] = array();
 
@@ -231,7 +270,7 @@ class ControllerMerchantsRelease extends Controller {
 				}
 			}
 		} 
-		
+		*/
 		
 		
 		//获取商品图片列表
@@ -292,6 +331,7 @@ class ControllerMerchantsRelease extends Controller {
 		$description     =isset($this->request->post["description"])?$this->request->post["description"]:"";
 		$product_option = isset($this->request->post['product_option'])?$this->request->post['product_option']:'';
 		
+		 // var_dump($product_option);exit;
 		if($category_id=="" || !is_numeric($category_id))$this->showMessage("对不起，参数不正确！");
 		if($name=="")$this->showMessage("对不起，请输入宝贝名称！");
 		if($price=="" || !is_numeric($price))$this->showMessage("对不起，宝贝价格必须输入一个数值！");

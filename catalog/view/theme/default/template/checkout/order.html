@@ -4,7 +4,7 @@
 <div class="mainContent clear">
 	<!-- <div class="buyPhoto"><img src="images/ad/xhy_012.jpg" width="980" height="210" /></div> -->
 	<div class="buyPhoto"><img src="catalog/view/theme/default/image/order/shopping_steps.jpg" width="980" height="50" /></div>
-	<div class="buyTitle"><img src="catalog/view/theme/default/image/order/consignee.jpg" width="224" height="30" /></div>
+	<div class="buyTitle"><a name="sendAddress_" id="sendAddress_" >&nbsp;</a><img src="catalog/view/theme/default/image/order/consignee.jpg" width="224" height="30" /></div>
 	<div class="sendAddress">
 	    {loop $addresses $address}
 		<dl {if $address['status']==1}class="present"{/if} id="{$address['address_id']}">
@@ -29,21 +29,7 @@
 			<dd><input  type="text" name="username" size="20" />
 			</dd>
 		</dl>
-		<!-- <dl class="clearfix">
-			<dt>地　　区：</dt>
-			<dd>
-			<select name="">
-				<option>--请选择省--</option>
-			</select>
-			<select name="">
-				<option>--请选择地区--</option>
-			</select>
-			<select name="">
-				<option>--请选择城市--</option>
-			</select>
-			<span class="star">*</span>
-			</dd>
-		</dl> -->
+		
 		<dl>
 			<dt>收货地址：</dt>
 			<dd><input name="address" type="text" /> <span class="star">*</span></dd>
@@ -59,7 +45,7 @@
 		</dl>
 		<dl>
 			<dt>固定电话：</dt>
-			<dd><input type="text" name="telephone" size="20" />
+			<dd><input type="text" name="telphone" size="20" />
 			</dd>
 		</dl>
 		<div class="opaddr">
@@ -69,43 +55,34 @@
 	</div>
 	
 	
-	<!-- <div class="buyTitle"><img src="images/payment_title2.jpg" width="237" height="30" /></div>
+	<div class="buyTitle"><a name="payment_" id="payment_" >&nbsp;</a><img src="catalog/view/theme/default/image/order/payment_method.jpg" width="280" height="30" /></div>
 	<div class="paymentContent">
 		<dl class="clearfix">
 			<dt>
 				<span>支付方式：</span>
 			</dt>
-			<dd class="current">
-				<input type="radio" /> 支付宝(支付宝特约商家)
-				<div class="container">
-				  <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                    <tr>
-                      <td width="100" style="vertical-align:top;"><img src="images/zhifubao.jpg" width="86" height="30" /></td>
-                      <td>支付宝是国内最大的独立第三方支付平台<br />
-                        由于24小时未付款的订单将会被系统自动取消，为了避免您的损失请您尽快完成在线或联系客服进行支付，感谢您的支付和配合。</td>
-                    </tr>
-                  </table>
-				</div>
-			</dd>
-			<dd><input type="radio" /> 网银支付(支持15家国内银行网上支付，需开通网上银行功能)</dd>
+			{if $payment_methods}
+			    {loop $payment_methods $payment_method}
+					<dd ><input  name="payment_method" type="radio" value="{$payment_method['code']}"/>{$payment_method['title']}</dd>
+				{/loop}
+			{/if}
 		</dl>
-	</div> -->
+	</div>
 	
-    {if $shipping_required}
-		<div class="buyTitle"><img src="catalog/view/theme/default/image/order/shipping_method.jpg" width="280" height="30" /></div>
-		<div class="paymentContent">
-			<dl class="clearfix">
-				<dt>
-					<span>配送方式：</span>(各大城市隔天送达，合肥市区：10元；其它地区：20元)
-				</dt>
-				
-				<dd><input type="radio" name="shippingmethod" id="shippingmethod1" value="1,快递公司"  {if $shippingMethod==1}checked="checked"{/if} /><span>快递公司</span></dd>
-				<dd><input type="radio" name="shippingmethod" id="shippingmethod2" value="2,EMS邮政专递" {if $shippingMethod==2}checked="checked"{/if} /><span>EMS邮政专递</span></dd>
-				<dd><input type="radio" name="shippingmethod" id="shippingmethod3" value="3,货到付款" {if $shippingMethod==3}checked="checked"{/if} /><span>货到付款</span></dd>
-				<dd><input type="radio" name="shippingmethod" id="shippingmethod4" value="4,上门自提" {if $shippingMethod==4}checked="checked"{/if} /><span>上门自提</span></dd>
-			</dl>
-		</div>
-	{/if}
+    
+	<div class="buyTitle"><a name="shipping_" id="shipping_" >&nbsp;</a><img src="catalog/view/theme/default/image/order/shipping_method.jpg" width="280" height="30" /></div>
+	<div class="shippingContent">
+		<dl class="clearfix">
+			<dt>
+				<span>配送方式：</span>
+			</dt>
+			
+			<dd><input type="radio" name="shipping_method"  value="express,快递公司"  {if isset($shipping_method['code']) && $shipping_method['code']=='express'}checked="checked"{/if} /><span>快递公司</span></dd>
+			<dd><input type="radio" name="shipping_method"  value="ems,EMS邮政专递" {if isset($shipping_method['code']) && $shipping_method['code']=='ems'}checked="checked"{/if} /><span>EMS邮政专递</span></dd>
+			<dd><input type="radio" name="shipping_method"  value="diy,上门自提" {if isset($shipping_method['code']) && $shipping_method['code']=='diy'}checked="checked"{/if} /><span>上门自提</span></dd>
+		</dl>
+	</div>
+	
 	<div class="buyTitle"><img src="catalog/view/theme/default/image/order/shopping_list.jpg" width="218" height="30" /></div>
 	<div class="buyContent bottonLine">
 		<table class="clearfix">
@@ -127,9 +104,6 @@
 				  <span class="stock">***</span>
 				  {/if}
 				  <div>
-					{loop $product['option']   $option}
-					<small><!-- {$option['attribute_group_name']}: --> {$option['value']}</small>
-					{/loop}
 					{loop $product['attribute']   $attribute}
 					<small>{$attribute['name']}</small> 
 					{/loop}
@@ -160,60 +134,67 @@
 	<div class="paybutton">
 		<div class="moneyinfo">
 			{loop $totals   $total}
-			  <dl class="clearfix">
+			  <dl>
 				<dt>{$total['title']}:</dt>
 				<dd>{$total['text']}</dd>
 			  </dl>
 			{/loop}
 		</div>
 		
-		<div>
-		    {if empty($dbuy)}<a href="{$cart}"><img src="catalog/view/theme/default/image/order/returnCart.jpg" width="161" height="33" /></a>{/if}
-		    <a class="submit"> <img src="catalog/view/theme/default/image/order/submitOrder.jpg" width="160" height="33" /></a>
+		<div class="cl">
+			<!-- {if empty($dbuy)}<a href="{$cart}"><img src="catalog/view/theme/default/image/order/returnCart.jpg" width="161" height="33" /></a>{/if} -->
+			<a class="submit"> <img src="catalog/view/theme/default/image/order/submitOrder.jpg" width="160" height="33" /></a>
 		</div>
+		
 	</div>
 </div>
-<input type="hidden" name="dbuy" {if isset($dbuy)} value="{$dbuy}"{else} value="" {/if} />
-<!--begin提交订单支付数据到alipay-->
-<div style="display:none">
-    <form id="alipay" name="alipay" action="index.php?route=payment/alipay" method="post">
-	    <input type="hidden" name="WIDseller_email" value="" />
-		<input type="hidden" name="WIDout_trade_no" value="" />
-		<input type="hidden" name="WIDsubject" value="" />
-		<input type="hidden" name="WIDtotal_fee" value="" />
-		<input type="hidden" name="WIDbody" value="" />
-		<input type="hidden" name="WIDshow_url" value="" />
-		<input type="hidden" name="WIDexter_invoke_ip" value="" />
-	</form>
-</div>
-<!--end提交订单支付数据到alipay-->
+<!-- <input type="hidden" name="dbuy" {if isset($dbuy)} value="{$dbuy}"{else} value="" {/if} /> -->
+<input type="hidden" name="payment_method_code" value="{$payment_method_code}" />
 <script type="text/javascript">
    //提交订单
    $(".paybutton .submit").click(function(){
         {if $shipping_required}
 			var flag=false;
-			$(".paymentContent dl dd input").each(function(i,w){
+			$(".shippingContent dl dd input").each(function(i,w){
 				if($(this).attr("checked")=='checked'){
 				   flag=true;
 				   return false;//退出循环
 				}
 			});
 			
-			if(flag==false) {
+			if(flag===false) {
 				alert('请选择配送方式！');
+				location.hash="#shipping_";
 				return false;
 			}
 			
-			var flag2=false;
+			//================================
+			var flag_=false;
 			$(".sendAddress dl dt input").each(function(i,w){
 				if($(this).attr("checked")=='checked'){
-				   flag2=true;
+				   flag_=true;
 				   return false;
 				}
 			});
 			
-			if(flag2==false) {
+			if(flag_===false) {
 				alert('请选择收货地址！');
+				location.hash="#sendAddress_";
+				return false;
+			}
+			
+			//================================
+			var flag__=false;
+			$(".paymentContent dl dd input").each(function(i,w){
+				if($(this).attr("checked")=='checked'){
+				   flag__=true;
+				   return false;//退出循环
+				}
+			});
+			
+			if(flag__===false) {
+				alert('请选择支付方式！');
+				location.hash="#payment_";
 				return false;
 			}
 		{/if}
@@ -223,29 +204,32 @@
 	        type:'POST',
 	        url:'index.php?route=checkout/confirm_order',
 			dataType:'json',
-			data:$('.paymentContent input[name=\'shippingmethod\']:checked ,input[name=\'dbuy\'],input[type=\'hidden\']'),
+			data:$('.shippingContent input[name=\'shipping_method\']:checked ,.paymentContent input[name=\'payment_method\']:checked,input[type=\'hidden\']'),// ,input[name=\'dbuy\']
 			success:function(json){
-                
+                console.log(json['redirect']);
 			    if (json['redirect']){
 				    location.href=json['redirect'];
 					return false;
 				}else if (typeof json['redirect']=='undefined'){
-				    $('input[name=WIDseller_email]').val(json['WIDseller_email']);
-					$('input[name=WIDout_trade_no]').val(json['WIDout_trade_no']);
-					$('input[name=WIDsubject]').val(json['WIDsubject']);
-					$('input[name=WIDtotal_fee]').val(json['WIDtotal_fee']);
-					$('input[name=WIDbody]').val(json['WIDbody']);
-					$('input[name=WIDshow_url]').val(json['WIDshow_url']);
-					$('input[name=WIDexter_invoke_ip]').val(json['WIDexter_invoke_ip']);
-					
-					$("#alipay").submit();
+				    //window.location.href='{$payment_action}';
+					var payment_method_code=$('input[name=payment_method_code]').val();
+					console.log(payment_method_code);
+					$.ajax({
+					    url:'index.php?route=payment/'+payment_method_code,
+						type:'post',
+						dataType:'json',
+						success:function(json_){
+						    console.log(json_);
+						    location.href=json_['action'];
+						}
+					});
 				}
 			}
 		});
    
    });
 
-   //MOUSE 
+   //MOUSE 收货地址
    $(".sendAddress dl").each(function(){
       $(this).mouseenter(function(){
 	     if($(this).prop('class')=='present'){
@@ -262,15 +246,41 @@
 	  });
    });
    
+   //支付方式
+    $(".paymentContent dl dd").each(function(){
+        $(this).mouseenter(function(){
+	        if($(this).prop('class')!='payment'){
+		       $(this).addClass('payment');
+		    }
+	    }).mouseleave(function(){
+	       if($(this).prop('class')=='payment'){
+		     $(this).removeClass('payment');
+		   }
+		}).click(function(){
+	        $(this).children('input[type=radio]').prop("checked","checked");
+			$.ajax({
+			    url:'index.php?route=checkout/checkout/paymentMethod',
+				type:'post',
+				dataType:'json',
+				data:$('input[name=\'payment_method\']:checked'),
+				success:function(json){
+				    if(json['code']){
+						$('input[name=payment_method_code]').val(json['code']);
+					}
+				}
+			});
+		})
+	});
+   
    //货运方式
-   $(".paymentContent dl dd").each(function(){
+   $(".shippingContent dl dd").each(function(){
         $(this).mouseenter(function(){
 	        if($(this).prop('class')!='shipping'){
 		       $(this).addClass('shipping');
 		    }
 	    }).mouseleave(function(){
 	       if($(this).prop('class')=='shipping'){
-		      $(this).removeClass('shipping');
+		     $(this).removeClass('shipping');
 		   }
 	    }).click(function(){
 	        $(this).children('input[type=radio]').prop("checked","checked");
@@ -278,7 +288,7 @@
 			    url:'index.php?route=checkout/checkout/shippingMethod',
 				type:'post',
 				dataType:'json',
-				data:$('input[name=\'shippingmethod\']:checked'),
+				data:$('input[name=\'shipping_method\']:checked'),
 				beforeSend: function() {
 					$('.moneyinfo').html('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
 				},
@@ -286,11 +296,11 @@
 					$('.wait').remove();
 				},	
 				success:function(json){ 
-				    //alert(json['cost']);
-			        var dbuy='{$dbuy}';
+				    console.log(json['cost']);
+			        //var dbuy='{$dbuy}';
 				    $.ajax({
 						url: 'index.php?route=checkout/checkout/refreshTotal',
-						data:'dbuy='+dbuy,
+						//data:'dbuy='+dbuy,
 						dataType: 'html',
 						success: function(html) {
 							$('.moneyinfo').html(html);
@@ -396,22 +406,22 @@
 		   arr.push("手机号已经存在！");
 		}
 	   
-	    if(telephone){
-			var telephone=$.trim($(".sendInfo input[name=telephone]").val());
-			if(!(/(^0\d{2,3}-?)?\d{7,8}$/.test(telephone))) {
-			   arr.push("输入的电话不正确!");
+	    if(telphone){
+			var telphone=$.trim($(".sendInfo input[name=telphone]").val());
+			if(!(/(^0\d{2,3}-?)?\d{7,8}$/.test(telphone))) {
+			   arr.push("输入的电话格式不正确!");
 			}
 	    }
 		
 	    var address=$.trim($(".sendInfo input[name=address]").val());
 	    if(!(/^[\w\u4E00-\u9FA5]{5,}$/.test(address))) {
-	       arr.push("输入的地址不正确!");
+	       arr.push("输入的地址格式不正确，不少于5个字符!");
 	    }
 	   
 	    if(postcode){
 			var postcode=$(".sendInfo input[name=postcode]").val();
 			if(!(/^[1-9][0-9]{5,5}$/.test(postcode))) {
-			   arr.push("输入的邮编不正确!");
+			   arr.push("输入的邮编格式不正确!");
 			}
 	    }
 		
@@ -423,7 +433,7 @@
 	   
 	    }
 	   
-	    $.post('index.php?route=account/address/insert',{username:username,mobile:mobile,telephone:telephone,address:address,postcode:postcode},function(data){
+	    $.post('index.php?route=account/address/insert',{username:username,mobile:mobile,telphone:telphone,address:address,postcode:postcode},function(data){
 		    if (data){
 			    alert("新增成功!");
 			    var dl=$("<dl id='"+data+"'><dt><input  name='addressopt' type='radio'  /></dt><dd>"+address+' '+username+"<span class='mobile'> "+mobile+"</span></dd> </dl>");

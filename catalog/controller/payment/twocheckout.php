@@ -25,7 +25,7 @@ class ControllerPaymentTwoCheckout extends Controller {
 		$this->data['zip'] = $order_info['payment_postcode'];
 		$this->data['country'] = $order_info['payment_country'];
 		$this->data['email'] = $order_info['email'];
-		$this->data['phone'] = $order_info['telephone'];
+		$this->data['phone'] = $order_info['telphone'];
 		
 		if ($this->cart->hasShipping()) {
 			$this->data['ship_street_address'] = $order_info['shipping_address_1'];

@@ -9,7 +9,7 @@
 	<div class="order_details_box">
 		<div class="order_information">
 			<ul>
-			<li><span>收货地址：</span> {$order['username']} ，{$order['mobile']} ，{$order['telephone']} ，{$order['address']} ，{$order['postcode']} </li>
+			<li><span>收货地址：</span> {$order['username']} ，{$order['mobile']} ，{$order['telphone']} ，{$order['address']} ，{$order['postcode']} </li>
 			<li><span>买家留言：</span> {$order['comment']}</li>
 			</ul>
 			<ul>
@@ -24,7 +24,7 @@
 					<td align="right">手机：</td>
 					<td align="left">{$order['user_mobile']}</td>
 					<td align="right">电话：</td>
-					<td align="left">{$order['user_telephone']}</td>
+					<td align="left">{$order['user_telphone']}</td>
 				    <td align="right">邮箱：</td>
 				    <td align="left">{$order['email']}</td>
 				</tr>
@@ -37,7 +37,7 @@
 				<table>
 				<tr>
 					<td align="right">订单编号：</td>
-					<td width="160">{$order['orderid']}</td>
+					<td width="160">{$order['order_id']}</td>
 					<td align="right">成交时间：</td>
 					<td width="150">{$order['date_added']} </td>
 					<td align="right">支付宝交易号：</td>

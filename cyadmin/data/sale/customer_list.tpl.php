@@ -62,6 +62,8 @@
                  <?php } else { ?>
                 <a href="<?php echo $sort_email;?>"><?php echo $column_email;?></a>
                <?php } ?></td>
+			   <td>店铺ID</td>
+			   <td>店铺名称</td>
               <td class="left"><?php if($sort == 'customer_group') { ?>
                 <a href="<?php echo $sort_customer_group;?>" class="{strtolower(<?php echo $order;?>)}"><?php echo $column_customer_group;?></a>
                  <?php } else { ?>
@@ -103,6 +105,8 @@
                <?php } ?></td>
               <td class="left"><?php echo $customer['username'];?></td>
               <td class="left"><?php echo $customer['email'];?></td>
+			  <td class="left"><?php echo $customer['store_id'];?></td>
+			  <td class="left"><?php echo $customer['storename'];?></td>
               <td class="left"><?php echo $customer['customer_group'];?></td>
               <td class="left"><?php echo $customer['status'];?></td>
               <!-- <td class="left"><?php echo $customer['approved'];?></td> -->

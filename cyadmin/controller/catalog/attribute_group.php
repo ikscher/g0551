@@ -10,6 +10,7 @@ class ControllerCatalogAttributeGroup extends Controller {
 		
 		$this->load->model('catalog/attribute_group');
 		
+		
     	$this->getList();
   	}
      
@@ -295,6 +296,7 @@ class ControllerCatalogAttributeGroup extends Controller {
 		$this->load->model('catalog/attribute_group');
 		$this->load->model('catalog/option');
 		
+		$this->data['flag']=isset($this->request->get['flag'])?$this->request->get['flag']:'';
 		//取所有的选项
 		$this->data['options']=array();
 		$this->data['options']=$this->model_catalog_option->getOptions();

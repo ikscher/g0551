@@ -101,34 +101,7 @@ $(document).ready(function(){
 		
 
 		
-		/*
-		var dt2ta;
-		$(".dt_foods ul li").click(function(){
-			dt2ta=$(this).parent().children("li");
-			var index=$.inArray(this,dt2ta);	
-			dt2ta.removeClass("fist_tab").eq(index).addClass("fist_tab");
-		});	
-		var dt3ta;
-		$(".dt_house ul li").click(function(){
-			dt3ta=$(this).parent().children("li");
-			var index=$.inArray(this,dt3ta);	
-			dt3ta.removeClass("fist_tab").eq(index).addClass("fist_tab");
-		});	
-		var dt4ta;
-		$(".dt_travel ul li").click(function(){
-			dt4ta=$(this).parent().children("li");
-			var index=$.inArray(this,dt4ta);	
-			dt4ta.removeClass("fist_tab").eq(index).addClass("fist_tab");
-		});	
-		var dt5ta;
-		$(".dt5 ul li").click(function(){
-			dt5ta=$(this).parent().children("li");
-			dt5co=$(".pro_info_tab").children("dd");
-			var index=$.inArray(this,dt5ta);	
-			dt5ta.removeClass("fist_tab").eq(index).addClass("fist_tab");
-			dt5co.addClass("dn").eq(index).removeClass("dn");
-		});	
-		*/
+		
 		
 		var cshta;
 		/*

@@ -119,7 +119,7 @@ class ControllerPaymentPPPro extends Controller {
 		$request .= '&FIRSTNAME=' . urlencode($order_info['payment_firstname']);
 		$request .= '&LASTNAME=' . urlencode($order_info['payment_lastname']);
 		$request .= '&EMAIL=' . urlencode($order_info['email']);
-		$request .= '&PHONENUM=' . urlencode($order_info['telephone']);
+		$request .= '&PHONENUM=' . urlencode($order_info['telphone']);
 		$request .= '&IPADDRESS=' . urlencode($this->request->server['REMOTE_ADDR']);
 		$request .= '&STREET=' . urlencode($order_info['payment_address_1']);
 		$request .= '&CITY=' . urlencode($order_info['payment_city']);

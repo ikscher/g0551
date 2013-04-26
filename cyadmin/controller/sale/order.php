@@ -508,7 +508,7 @@ class ControllerSaleOrder extends Controller {
 		$this->data['entry_username'] = $this->language->get('entry_username');
 
 		$this->data['entry_email'] = $this->language->get('entry_email');
-		$this->data['entry_telephone'] = $this->language->get('entry_telephone');
+		$this->data['entry_telphone'] = $this->language->get('entry_telphone');
 		$this->data['entry_mobile'] = $this->language->get('entry_mobile');
 		$this->data['entry_order_status'] = $this->language->get('entry_order_status');
 		$this->data['entry_comment'] = $this->language->get('entry_comment');	
@@ -577,10 +577,10 @@ class ControllerSaleOrder extends Controller {
 			$this->data['error_email'] = '';
 		}
 		
- 		if (isset($this->error['telephone'])) {
-			$this->data['error_telephone'] = $this->error['telephone'];
+ 		if (isset($this->error['telphone'])) {
+			$this->data['error_telphone'] = $this->error['telphone'];
 		} else {
-			$this->data['error_telephone'] = '';
+			$this->data['error_telphone'] = '';
 		}
 						
  		if (isset($this->error['payment_username'])) {
@@ -785,12 +785,12 @@ class ControllerSaleOrder extends Controller {
       		$this->data['email'] = '';
     	}
 				
-    	if (isset($this->request->post['telephone'])) {
-      		$this->data['telephone'] = $this->request->post['telephone'];
+    	if (isset($this->request->post['telphone'])) {
+      		$this->data['telphone'] = $this->request->post['telphone'];
     	} elseif (!empty($order_info)) { 
-			$this->data['telephone'] = $order_info['telephone'];
+			$this->data['telphone'] = $order_info['telphone'];
 		} else {
-      		$this->data['telephone'] = '';
+      		$this->data['telphone'] = '';
     	}
 		
     	/* if (isset($this->request->post['fax'])) {
@@ -1038,8 +1038,8 @@ class ControllerSaleOrder extends Controller {
       		$this->error['email'] = $this->language->get('error_email');
     	}
 		
-    	if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
-      		$this->error['telephone'] = $this->language->get('error_telephone');
+    	if ((utf8_strlen($this->request->post['telphone']) < 3) || (utf8_strlen($this->request->post['telphone']) > 32)) {
+      		$this->error['telphone'] = $this->language->get('error_telphone');
     	}
 		
         /* if ((utf8_strlen($this->request->post['payment_address']) < 3) || (utf8_strlen($this->request->post['payment_address']) > 128)) {
@@ -1213,7 +1213,7 @@ class ControllerSaleOrder extends Controller {
 			$this->data['text_customer'] = $this->language->get('text_member');
 			$this->data['text_customer_group'] = $this->language->get('text_member_group');
 			$this->data['text_email'] = $this->language->get('text_email');
-			$this->data['text_telephone'] = $this->language->get('text_telephone');
+			$this->data['text_telphone'] = $this->language->get('text_telphone');
 			$this->data['text_fax'] = $this->language->get('text_fax');
 			$this->data['text_total'] = $this->language->get('text_total');
 			$this->data['text_reward'] = $this->language->get('text_reward');		
@@ -1417,7 +1417,7 @@ class ControllerSaleOrder extends Controller {
 			}
 
 			$this->data['email'] = $order_info['email'];
-			$this->data['telephone'] = $order_info['telephone'];
+			$this->data['telphone'] = $order_info['telphone'];
 			// $this->data['fax'] = $order_info['fax'];
 			$this->data['comment'] = nl2br($order_info['comment']);
 			$this->data['shipping_method'] = $order_info['shipping_method'];
@@ -2205,7 +2205,7 @@ class ControllerSaleOrder extends Controller {
 		$this->data['text_invoice_no'] = $this->language->get('text_invoice_no');
 		$this->data['text_invoice_date'] = $this->language->get('text_invoice_date');
 		$this->data['text_date_added'] = $this->language->get('text_date_added');
-		$this->data['text_telephone'] = $this->language->get('text_telephone');
+		$this->data['text_telphone'] = $this->language->get('text_telphone');
 		$this->data['text_fax'] = $this->language->get('text_fax');
 		$this->data['text_to'] = $this->language->get('text_to');
 		$this->data['text_company_id'] = $this->language->get('text_company_id');
@@ -2244,12 +2244,12 @@ class ControllerSaleOrder extends Controller {
 				if ($store_info) {
 					$store_address = $store_info['config_address'];
 					$store_email = $store_info['config_email'];
-					$store_telephone = $store_info['config_telephone'];
+					$store_telphone = $store_info['config_telphone'];
 					$store_fax = $store_info['config_fax'];
 				} else {
 					$store_address = $this->config->get('config_address');
 					$store_email = $this->config->get('config_email');
-					$store_telephone = $this->config->get('config_telephone');
+					$store_telphone = $this->config->get('config_telphone');
 					$store_fax = $this->config->get('config_fax');
 				}
 				
@@ -2380,10 +2380,10 @@ class ControllerSaleOrder extends Controller {
 					'store_url'          => rtrim($order_info['store_url'], '/'),
 					'store_address'      => nl2br($store_address),
 					'store_email'        => $store_email,
-					'store_telephone'    => $store_telephone,
+					'store_telphone'    => $store_telphone,
 					'store_fax'          => $store_fax,
 					'email'              => $order_info['email'],
-					'telephone'          => $order_info['telephone'],
+					'telphone'          => $order_info['telphone'],
 					'shipping_address'   => $shipping_address,
 					'shipping_method'    => $order_info['shipping_method'],
 					'payment_address'    => $payment_address,

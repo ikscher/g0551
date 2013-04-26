@@ -9,6 +9,7 @@ class ControllerAccountEdit extends Controller {
 		
 		$this->load->model('account/customer');
 		
+		
 		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
 			$this->model_account_customer->editCustomer($this->request->post);
 			
@@ -21,30 +22,34 @@ class ControllerAccountEdit extends Controller {
 		$this->data['button_continue'] = $this->language->get('button_continue');
 		$this->data['button_back'] = $this->language->get('button_back');
 
-
+        $this->data['upload'] = $this->url->link('account/upload','','SSL');
 		$this->data['action'] = $this->url->link('account/edit', '', 'SSL');
 
 		if ($this->request->server['REQUEST_METHOD'] != 'POST') {
 			$customer_info = $this->model_account_customer->getCustomer($this->customer->getId());
+			$this->data['avatar']=isset($customer_info['avatar'])?$customer_info['avatar']:'';
+		}else{
+		    $x= $this->model_account_customer->getCustomer($this->customer->getId());
+			$this->data['avatar']=$x['avatar'];
 		}
 
         if (isset($this->request->post['username'])) {
 			$this->data['username'] = $this->request->post['username'];
 		} elseif (isset($customer_info)) {
-			$this->data['username'] = $customer_info['username'];
+			$this->data['username'] = isset($customer_info['username'])?$customer_info['username']:'';
 		} else {
 			$this->data['username'] = '';
 		}
 		
+		
+		
 		if (isset($this->request->post['nickname'])) {
 			$this->data['nickname'] = $this->request->post['nickname'];
 		} elseif (isset($customer_info)) {
-			$this->data['nickname'] = $customer_info['nickname'];
+			$this->data['nickname'] = isset($customer_info['nickname'])?$customer_info['nickname']:'';
 		} else {
 			$this->data['nickname'] = '';
 		}
-		
-		
 		/* if (isset($this->request->post['address'])) {
 			$this->data['address'] = $this->request->post['address'];
 		} elseif (isset($customer_info)) {
@@ -58,7 +63,7 @@ class ControllerAccountEdit extends Controller {
 		if (isset($this->request->post['mobile'])) {
 			$this->data['mobile'] = $this->request->post['mobile'];
 		} elseif (isset($customer_info)) {
-			$this->data['mobile'] = $customer_info['mobile'];
+			$this->data['mobile'] = isset($customer_info['mobile'])?$customer_info['mobile']:'';
 		} else {
 			$this->data['mobile'] = '';
 		}
@@ -66,17 +71,17 @@ class ControllerAccountEdit extends Controller {
 		if (isset($this->request->post['email'])) {
 			$this->data['email'] = $this->request->post['email'];
 		} elseif (isset($customer_info)) {
-			$this->data['email'] = $customer_info['email'];
+			$this->data['email'] = isset($customer_info['email'])?$customer_info['email']:'';
 		} else {
 			$this->data['email'] = '';
 		}
 
-		if (isset($this->request->post['telephone'])) {
-			$this->data['telephone'] = $this->request->post['telephone'];
+		if (isset($this->request->post['telphone'])) {
+			$this->data['telphone'] = $this->request->post['telphone'];
 		} elseif (isset($customer_info)) {
-			$this->data['telephone'] = $customer_info['telephone'];
+			$this->data['telphone'] = isset($customer_info['telphone'])?$customer_info['telphone']:'';
 		} else {
-			$this->data['telephone'] = '';
+			$this->data['telphone'] = '';
 		}
 
 		/* if (isset($this->request->post['postcode'])) {
@@ -126,8 +131,8 @@ class ControllerAccountEdit extends Controller {
 			$this->error['warning'] = $this->language->get('error_exists');
 		}
 
-		if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
-			$this->error['telephone'] = $this->language->get('error_telephone');
+		if ((utf8_strlen($this->request->post['telphone']) < 3) || (utf8_strlen($this->request->post['telphone']) > 32)) {
+			$this->error['telphone'] = $this->language->get('error_telphone');
 		}
 
 		if (!$this->error) {

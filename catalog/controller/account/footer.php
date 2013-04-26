@@ -26,7 +26,7 @@ class ControllerAccountFooter extends Controller {
 		$this->data['text_aboutus'] = $this->language->get('text_aboutus');
 		$this->data['text_company'] = $this->language->get('text_company');
 		
-		$this->data['telephone']=$this->language->get('telephone');
+		$this->data['telphone']=$this->language->get('telphone');
 		$this->data['address']=$this->language->get('address');
 		$this->data['icp']=$this->language->get('icp');
 		$this->data['bottom']=$this->language->get('bottom');

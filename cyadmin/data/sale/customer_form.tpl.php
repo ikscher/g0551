@@ -40,10 +40,10 @@
                   <?php } ?></td>
               </tr>
               <tr>
-                <td><span class="required">*</span> <?php echo $entry_telephone;?></td>
-                <td><input type="text" name="telephone" value="<?php echo $telephone;?>" />
-                  <?php if($error_telephone) { ?>
-                  <span class="error"><?php echo $error_telephone;?></span>
+                <td><span class="required">*</span> <?php echo $entry_telphone;?></td>
+                <td><input type="text" name="telphone" value="<?php echo $telphone;?>" />
+                  <?php if($error_telphone) { ?>
+                  <span class="error"><?php echo $error_telphone;?></span>
                   <?php } ?></td>
               </tr>
               <tr>
@@ -128,10 +128,10 @@
               </tr>
 			  
 			   <tr>
-                <td><span class="required">*</span> <?php echo $entry_telephone;?></td>
-                <td><input type="text" name="address[<?php echo $address_row;?>][telephone]" value="<?php echo $address['telephone'];?>" />
-                  <?php if(isset($error_address_telephone[$address_row])) { ?>
-                  <span class="error"><?php echo $error_address_telephone[$address_row]?></span>
+                <td><span class="required">*</span> <?php echo $entry_telphone;?></td>
+                <td><input type="text" name="address[<?php echo $address_row;?>][telphone]" value="<?php echo $address['telphone'];?>" />
+                  <?php if(isset($error_address_telphone[$address_row])) { ?>
+                  <span class="error"><?php echo $error_address_telphone[$address_row]?></span>
                   <?php } ?></td>
               </tr>
 			  
@@ -185,8 +185,8 @@ function addAddress() {
     html += '    </tr>';
 
     html += '    <tr>';
-    html += '      <td><?php echo $entry_telephone;?></td>';
-    html += '      <td><input type="text" name="address[' + address_row + '][telephone]" value="" /></td>';
+    html += '      <td><?php echo $entry_telphone;?></td>';
+    html += '      <td><input type="text" name="address[' + address_row + '][telphone]" value="" /></td>';
     html += '    </tr>';	
 
 			

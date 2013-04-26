@@ -5,6 +5,7 @@ class ModelTotalSubTotal extends Model {
 	& store 代表分店铺形式统计金额
 	*/
 	public function getTotal(&$total_data, &$total,$flag=false,$store=false) {
+	    $sort_order=$this->config->get('sub_total_sort_order');
 	    if($store==false){ //所有购物车的产品都统计在一块
 			$this->load->language('total/sub_total');
 			
@@ -21,7 +22,7 @@ class ModelTotalSubTotal extends Model {
 				'title'      => $this->language->get('text_sub_total'),
 				'text'       => number_format($sub_total,2,'.',','),
 				'value'      => $sub_total,
-				'sort_order' => $this->config->get('sub_total_sort_order')
+				'sort_order' => isset($sort_order)?$sort_order:0
 			);
 			
 			$total += $sub_total;
@@ -49,13 +50,14 @@ class ModelTotalSubTotal extends Model {
 					'title'      => $this->language->get('text_sub_total'),
 					'text'       => number_format($v,2,'.',','),
 					'value'      => $v,
-					'sort_order' => $this->config->get('sub_total_sort_order')
+					'sort_order' => isset($sort_order)?$sort_order:0
 				);
 				
 				if(!isset($total[$k])) $total[$k]=0;
-				$total[$k] += $v;
+				//$total[$k] += $v;
+				$total[$k]=0.01;
 			}
-		
+		    
 		}
 	}
 }

@@ -147,7 +147,8 @@ function addToCart(product_id, quantity) {
 				
 				if(json['error']['attribute']){
 				    for (j in json['error']['attribute']) {
-						$('#attribute-' + j).append('<span class="error">' + json['error']['attribute'][j] + '</span>');
+						//$('#attribute-' + j).append('<span class="error">' + json['error']['attribute'][j] + '</span>');
+						$('.attributes').append('<span class="error">' + json['error']['attribute'][j] + '</span>');
 					}
 				}
 				
@@ -179,7 +180,7 @@ function addToCart(product_id, quantity) {
 				$(".tmMCTopBorder").css({'display':'block'});
 				
 				//动画移动到底部购物车
-				$(".goodscar").before("<span  class=\"square\" style=\"position:absolute; left:300px;top:300px;background-color:#fff; width:50px;height:50px; border:1px solid black;\"><img src='"+json['cartimage']+"'</span>");
+				$(".goodscar").before("<span  class=\"square\" style=\"position:absolute; left:300px;top:300px;background-color:#fff; width:50px;height:50px; border:1px solid black;z-index:1000;\"><img src='"+json['cartimage']+"'</span>");
 			
 				$(".square").animate({top:$("#J_CommonBottomBar").offset().top, left: $("#J_CommonBottomBar").offset().left+100, width: 50, height:50},'slow',function(){$(this).remove();}).fadeOut('slow');
 				
@@ -224,6 +225,7 @@ function dBuy(product_id, quantity) {
 		data: $('.product_info input[type=\'text\'], .product_info input[type=\'hidden\'], .product_info input[type=\'radio\']:checked, .product_info input[type=\'checkbox\']:checked, .product_info select, .product_info textarea'),
 		dataType: 'json',
 		success: function(json) {
+		    console.log(json);
 		    $('.success, .warning, .attention, .information, .error').remove();
 			
 			if (json['error']) {
@@ -243,7 +245,8 @@ function dBuy(product_id, quantity) {
 				
 				if(json['error']['attribute']){
 				    for (i in json['error']['attribute']) {
-						$('#attribute-' + i).append('<span class="error">' + json['error']['attribute'][i] + '</span>');
+						/* $('#attribute-' + i ).append('<span class="error">' + json['error']['attribute'][i] + '</span>'); */
+						$('.attributes').append('<span class="error">' + json['error']['attribute'][i] + '</span>');
 					}
 				}
 				
@@ -255,7 +258,7 @@ function dBuy(product_id, quantity) {
 			}
 			
 			if (json['success']) {
-			    window.location.href='index.php?route=checkout/checkout&dbuy=1';
+			    window.location.href='index.php?route=checkout/checkout';
 			}
 		}
 	});
@@ -366,3 +369,5 @@ function gotoTop(min_height){
 		};
 	});
 };
+
+

@@ -71,7 +71,7 @@ tr.over td {
 										<tr class="sep-row"></tr>
 									        <tr class="order-hd">
 										        <td colspan="7">
-												<span class="no">订单编号：{$order['orderid']}</span>
+												<span class="no">订单编号：{$order['order_id']}</span>
 												<span class="deal-time">成交时间：{$order['date_added']}</span>
 												<span class="seller">店铺：<a target="_blank" href="index.php?route=store/store&store_id={$order['store_id']}">{if isset($order['store_name'])}{$order['store_name']}{else}{$order['store_id']}{/if}</a></span></td>
 										    </tr>
@@ -174,8 +174,8 @@ tr.over td {
 	
 	//付款
 	$("#payOrder").click(function(){
-	    var orderid=$.trim($(this).parent().parent().children('td:eq(0)').text());
-		$.post('index.php?route=account/order/pay',{orderid:orderid},function(json){
+	    var order_id=$.trim($(this).parent().parent().children('td:eq(0)').text());
+		$.post('index.php?route=account/order/pay',{order_id:order_id},function(json){
 		    //alert(json.WIDseller_email);
 			$("#alipay").submit();
 		},'json');

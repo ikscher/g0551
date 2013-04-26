@@ -3,7 +3,7 @@
 class ControllerModuleCartBottom extends Controller {
 	public function index() {
 		
-	
+	    
 		
 		//购物车的物品数量（件）
 		$this->data['countProducts']=0;
@@ -22,8 +22,7 @@ class ControllerModuleCartBottom extends Controller {
 		$this->load->model('setting/extension');
 		
 		$total_data = array();					
-		$total = 0;
-		//$taxes = $this->cart->getTaxes();
+		$total=0;//$total = 0;
 		
 		// Display prices
 		if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
@@ -41,7 +40,7 @@ class ControllerModuleCartBottom extends Controller {
 				if ($this->config->get($result['code'] . '_status')) {
 					$this->load->model('total/' . $result['code']);
 		
-					$this->{'model_total_' . $result['code']}->getTotal($total_data, $total);
+					$this->{'model_total_' . $result['code']}->getTotal($total_data, $total,isset($this->session->data['dbuy_flag'])?$this->session->data['dbuy_flag']:false);
 				}
 				
 				$sort_order = array(); 
@@ -64,10 +63,7 @@ class ControllerModuleCartBottom extends Controller {
 		$this->data['text_checkout'] = $this->language->get('text_checkout');
 		
 		$this->data['button_remove'] = $this->language->get('button_remove');
-		
-		$this->load->library('func');
-		$gfunc=new Func();
-		
+	
 		$this->load->model('tool/image');
 		
 		$this->data['products'] = array();
@@ -79,7 +75,7 @@ class ControllerModuleCartBottom extends Controller {
 				$image = '';
 			}
 							
-			$option_data = array();
+			/* $option_data = array();
 			
 			foreach ($product['option'] as $option) {
 				if ($option['type'] != 'file') {
@@ -95,7 +91,7 @@ class ControllerModuleCartBottom extends Controller {
 					'value' => (utf8_strlen($value) > 20 ? utf8_substr($value, 0, 20) . '..' : $value),
 					'type'  => $option['type']
 				);
-			}
+			} */
 			
 			// Display prices
 			if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
@@ -115,9 +111,9 @@ class ControllerModuleCartBottom extends Controller {
 				'key'      => $product['key'],
 				'thumb'    => $image,
 				'allname'  => $product['name'],
-				'name'     => $gfunc->OcCutstr($product['name'],18,'...'),
+				'name'     => OcCutstr($product['name'],18,'...'),
 				'model'    => $product['model'], 
-				'option'   => $option_data,
+				//'option'   => $option_data,
 				'quantity' => $product['quantity'],
 				'price'    => $price,	
 				'total'    => $total,	

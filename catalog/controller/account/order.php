@@ -92,7 +92,6 @@ class ControllerAccountOrder extends Controller {
 				$voucher_total = $this->model_account_order->getTotalOrderVouchersByOrderId($result['order_id']);
 				$this->data['orders'][] = array(
 					'order_id'   => $result['order_id'],
-					'orderid'    => $result['orderid'],
 					'store_id'   => $result['store_id'],
 					'store_name' => $result['store_name'],
 					'shipping'=> $this->model_account_order->getOrderTotals($result['order_id'],'shipping'),
@@ -150,12 +149,27 @@ class ControllerAccountOrder extends Controller {
 						$v['image'] = false;
 					}       
 					
+					
+					if(!empty($v['attribute'])){
+					    $sql="select attribute_id,name from ".DB_PREFIX."attribute_description where attribute_id in ({$v['attribute']})";
+						$v['attribute']=null;//$v['attribute']是属性ID，置空值，用来以下存储属性名
+					    $query_=$this->db->query($sql);
+						$attribute_data=$query_->rows;
+						
+						foreach($attribute_data as $ga){
+							$v['attribute'] .= $ga['name'];
+						}
+						
+					}
+		
 					$products[]=$v;
+					
 				}
+				
+				
 				
 				$this->data['orders'][] = array(
 					'order_id'   => $result['order_id'],
-					'orderid'    => $result['orderid'],
 					'store_id'   => $result['store_id'],
 					'store_name' => $result['store_name'],
 					'products'   => $products,
@@ -320,7 +334,7 @@ class ControllerAccountOrder extends Controller {
 			);
             
 			$this->data['shipping_username']=$order_info['shipping_username'];
-			$this->data['shipping_telephone']=$order_info['telephone'];
+			$this->data['shipping_telphone']=$order_info['telphone'];
 			$this->data['shipping_mobile']=$order_info['mobile'];
 			$this->data['shipping_postcode']=$order_info['shipping_postcode'];
 			$this->data['order_status']=$this->model_account_order->getOrderStatus($order_info['order_status_id']);
@@ -333,13 +347,14 @@ class ControllerAccountOrder extends Controller {
 
 			$this->data['shipping_method'] = $order_info['shipping_method'];
 			
-			$this->data['products'] = array();
+			$this->data['order_products'] = array();
 			
-			$products = $this->model_account_order->getOrderProducts($this->request->get['order_id']);
+			$order_products = $this->model_account_order->getOrderProducts($this->request->get['order_id']);
 
-      		foreach ($products as $product) {
+      		foreach ($order_products as $product) {
 				$option_data = array();
 				
+				/*
 				$options = $this->model_account_order->getOrderOptions($this->request->get['order_id'], $product['order_product_id']);
 
          		foreach ($options as $option) {
@@ -353,14 +368,26 @@ class ControllerAccountOrder extends Controller {
 						'name'  => $option['type'],
 						'value' => (utf8_strlen($value) > 20 ? utf8_substr($value, 0, 20) . '..' : $value)
 					);					
-        		}
+        		} */
+				if(!empty($product['attribute'])){
+					$sql="select attribute_id,name from ".DB_PREFIX."attribute_description where attribute_id in ({$product['attribute']})";
+					$product['attribute']=null;//$v['attribute']是属性ID，置空值，用来以下存储属性名
+					$query_=$this->db->query($sql);
+					$attribute_data=$query_->rows;
+					
+					foreach($attribute_data as $ga){
+						$product['attribute'] .= $ga['name'];
+					}
+					
+				}
+				
 
-        		$this->data['products'][] = array(
+        		$this->data['order_products'][] = array(
 				    'product_id'=>$product['product_id'],
           			'name'     => $product['name'],
           			'model'    => $product['model'],
 					'href'     =>'index.php?route=product/product&product_id='.$product['product_id'],
-          			'option'   => $option_data,
+          			'attribute'   => $product['attribute'],
           			'quantity' => $product['quantity'],
           			'price'    => number_format($product['price'] ,2,'.',','),
 					'total'    => number_format($product['total'] ,2,'.',','),
@@ -422,31 +449,7 @@ class ControllerAccountOrder extends Controller {
 
       		$this->data['button_continue'] = $this->language->get('button_continue');
 			
-			$this->data['breadcrumbs'] = array();
-
-			$this->data['breadcrumbs'][] = array(
-				'text'      => $this->language->get('text_home'),
-				'href'      => $this->url->link('common/home'),
-				'separator' => false
-			);
 			
-			$this->data['breadcrumbs'][] = array(
-				'text'      => $this->language->get('text_account'),
-				'href'      => $this->url->link('account/account', '', 'SSL'),
-				'separator' => $this->language->get('text_separator')
-			);
-
-			$this->data['breadcrumbs'][] = array(
-				'text'      => $this->language->get('heading_title'),
-				'href'      => $this->url->link('account/order', '', 'SSL'),
-				'separator' => $this->language->get('text_separator')
-			);
-			
-			$this->data['breadcrumbs'][] = array(
-				'text'      => $this->language->get('text_order'),
-				'href'      => $this->url->link('account/order/info', 'order_id=' . $order_id, 'SSL'),
-				'separator' => $this->language->get('text_separator')
-			);
 												
       		$this->data['continue'] = $this->url->link('account/order', '', 'SSL');
 			 			
@@ -468,16 +471,16 @@ class ControllerAccountOrder extends Controller {
 	//订单付款
 	public function pay(){
 	    $this->load->model('account/order');
-		if (!empty($this->request->post['orderid'])) {
+		if (!empty($this->request->post['order_id'])) {
 			$order_info = $this->model_account_order->getOrder($this->request->post['orderid']);
 			
 			if ($order_info) {
-				$order_products = $this->model_account_order->getOrderProducts($this->request->post['orderid']);
+				$order_products = $this->model_account_order->getOrderProducts($this->request->post['order_id']);
 						
 				foreach ($order_products as $order_product) {
 					$option_data = array();
 							
-					$order_options = $this->model_account_order->getOrderOptions($this->request->post['orderid'], $order_product['order_product_id']);
+					$order_options = $this->model_account_order->getOrderOptions($this->request->post['order_id'], $order_product['order_product_id']);
 							
 					foreach ($order_options as $order_option) {
 						if ($order_option['type'] == 'select' || $order_option['type'] == 'radio') {
@@ -514,11 +517,11 @@ class ControllerAccountOrder extends Controller {
 	*/
 	public function Accept() {
 	
-		$orderid=isset($this->request->post['id'])?intval($this->request->post['id']):0;
-		if($orderid==0 || !is_numeric($orderid)) $this->showMessage("对不起，订单不存在！");
+		$order_id=isset($this->request->post['id'])?intval($this->request->post['id']):0;
+		if($order_id==0 || !is_numeric($order_id)) $this->showMessage("对不起，订单不存在！");
 
 		$this->load->model('merchants/order');
-		$result=$this->model_merchants_order->setOrderState($orderid,5,4);
+		$result=$this->model_merchants_order->setOrderState($order_id,5,4);
 		if($result!="ok"){
 			exit("对不起,操作失败！");
 		}

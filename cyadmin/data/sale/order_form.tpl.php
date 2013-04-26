@@ -81,10 +81,10 @@
                <?php } ?></td>
             </tr>
             <tr>
-              <td><span class="required">*</span> <?php echo $entry_telephone;?></td>
-              <td><input type="text" name="telephone" value="<?php echo $telephone;?>" />
-                <?php if($error_telephone) { ?>
-                <span class="error"><?php echo $error_telephone;?></span>
+              <td><span class="required">*</span> <?php echo $entry_telphone;?></td>
+              <td><input type="text" name="telphone" value="<?php echo $telphone;?>" />
+                <?php if($error_telphone) { ?>
+                <span class="error"><?php echo $error_telphone;?></span>
                 <?php } ?></td>
             </tr>
             <tr>
@@ -567,7 +567,7 @@ $('input[name=\'customer\']').catcomplete({
 						customer_group_id: item['customer_group_id'],
 						username: item['username'],
 						email: item['email'],
-						telephone: item['telephone'],
+						telphone: item['telphone'],
 						fax: item['fax'],
 						address: item['address']
 					}
@@ -581,7 +581,7 @@ $('input[name=\'customer\']').catcomplete({
 		$('input[name=\'username\']').prop('value', ui.item['username']);
 
 		$('input[name=\'email\']').prop('value', ui.item['email']);
-		$('input[name=\'telephone\']').prop('value', ui.item['telephone']);
+		$('input[name=\'telphone\']').prop('value', ui.item['telphone']);
 		$('input[name=\'fax\']').prop('value', ui.item['fax']);
 			
 		html = '<option value="0"><?php echo $text_none;?></option>'; 
@@ -1160,8 +1160,8 @@ $('#button-product, #button-voucher, #button-update').live('click', function() {
 					$('input[name=\'email\']').after('<span class="error">' + json['error']['email'] + '</span>');
 				}
 				
-				if (json['error']['telephone']) {
-					$('input[name=\'telephone\']').after('<span class="error">' + json['error']['telephone'] + '</span>');
+				if (json['error']['telphone']) {
+					$('input[name=\'telphone\']').after('<span class="error">' + json['error']['telphone'] + '</span>');
 				}	
 			
 				// Payment Address

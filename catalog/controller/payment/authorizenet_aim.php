@@ -72,7 +72,7 @@ class ControllerPaymentAuthorizeNetAim extends Controller {
 		$data['x_state'] = html_entity_decode($order_info['payment_zone'], ENT_QUOTES, 'UTF-8');
 		$data['x_zip'] = html_entity_decode($order_info['payment_postcode'], ENT_QUOTES, 'UTF-8');
 		$data['x_country'] = html_entity_decode($order_info['payment_country'], ENT_QUOTES, 'UTF-8');
-		$data['x_phone'] = $order_info['telephone'];
+		$data['x_phone'] = $order_info['telphone'];
 		$data['x_customer_ip'] = $this->request->server['REMOTE_ADDR'];
 		$data['x_email'] = $order_info['email'];
 		$data['x_description'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');

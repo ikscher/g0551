@@ -74,8 +74,13 @@
 		<td><select name='option_id'>
 		    <option value=''>--请选择--</option>
 			{loop $options $option}
+                
 			    {if $option['type']=='select' || $option['type']=='checkbox' || $option['type']=='radio'}
-					<option value="{$option['option_id']}" {if $option_id==$option['option_id']}selected="selected"{/if}>{$option['type']}</option>
+				    {if isset($flag)}
+					    <option value="{$option['option_id']}" {if $option['type']=='checkbox'}selected="selected"{/if}>{$option['type']}</option>
+				    {else}
+					    <option value="{$option['option_id']}" {if $option_id==$option['option_id']}selected="selected"{/if}>{$option['type']}</option>
+					{/if}
 				{/if}
 			{/loop}
 			

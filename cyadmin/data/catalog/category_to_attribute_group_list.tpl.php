@@ -1,15 +1,11 @@
-<link rel="stylesheet" type="text/css" href="view/stylesheet/general.css">
+
 <link rel="stylesheet" type="text/css" href="view/stylesheet/main.css">
+<link rel="stylesheet" type="text/css" href="view/stylesheet/general.css">
 <script type="text/javascript" src="view/javascript/jquery/jquery-1.7.1.min.js"></script>
 <script type="text/javascript" src="view/javascript/jquery/ui/jquery-ui-1.8.16.custom.min.js"></script>
 <link type="text/css" href="view/javascript/jquery/ui/themes/ui-lightness/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
 
 
-<style type="text/css">
-tr.over td {
-	background:#cfeefe;
-} 
-</style>
 
 <?php if($error_warning) { ?>
 <div class="warning"><?php echo $error_warning;?></div>
@@ -40,6 +36,7 @@ tr.over td {
 		
 		
 		  <td style="text-align:center"><?php echo $column_type;?></td>
+		  <td>价格属性</td>
 		  <td class="right"><?php echo $column_action;?></td>
 		</tr>
 	  </thead>
@@ -56,8 +53,8 @@ tr.over td {
 		  <td class="attribute_group_name"><?php echo $attribute_group['name'];?></td>
 		 
 		  <td class="attribute_group_type" data-type="<?php echo $attribute_group['category_id'];?>"><?php echo $attribute_group['ctype'];?></td>
-
-		  <td class='operation'><a href="javascript:void(0);"  id="<?php echo $attribute_group['id'];?>" >删除</a></td>
+          <td data-id="<?php echo $attribute_group['id'];?>"><?php if($attribute_group['type']==2) { ?><input type="checkbox" class="priceAttr" name="priceAttr" value="<?php echo $attribute_group['is_pa'];?>" <?php if($attribute_group['is_pa']) { ?>checked="checked"<?php } ?> /><?php } ?></td>
+		  <td class='operation'><a href="javascript:void(0);"  data-id="<?php echo $attribute_group['id'];?>" >删除</a></td>
 		</tr>
 		<?php } ?>
 		 <?php } else { ?>
@@ -138,6 +135,28 @@ $(".attribute_group_type").click(function(){
  
 });
 
+
+//价格属性ajax
+$(".priceAttr").click(function(){
+    var id=$(this).parent().attr('data-id');
+	var is_pa;
+	
+	if($(this).val()==0) {
+	    $(this).val(1);
+	    is_pa=1;
+	}else{
+	    $(this).val(0);
+	    is_pa=0;
+	}
+	console.log(id+','+is_pa);
+	$.post('index.php?route=catalog/category_to_attribute_group/setPriceAttributeValid&token=<?php echo $token;?>',{id:id,is_pa:is_pa},function(str){
+	    if(str=='yes'){
+		   alert('设置成功！');
+		}else{
+		   alert('设置失败！');
+		}
+	});
+});
 /*
 //编辑
 $(function() {
@@ -228,18 +247,19 @@ $('.operation a').click(function(){
 */
 
 $('.operation a').click(function(){
-    var id=$(this).attr('id');
-	var category_id=$(this).parent().prev().attr('data-type');
-	var attribute_group_id=$.trim($(this).parent().prev().prev().prev().text());
+    var id=$(this).attr('data-id');
+	var category_id=$(this).parent().prev().prev().attr('data-type');
+	var attribute_group_id=$.trim($(this).parent().prev().prev().prev().prev().text());
 
 	var that=$(this);
 	if(confirm('确认删除吗?')){
 		$.ajax({
 				url:'index.php?route=catalog/category_to_attribute_group/deleteone&token=<?php echo $token;?>',
-				dataType:'html',
-				type:'get',
+				dataType:'text',
+				type:'post',
 				data:{id:id,attribute_group_id:attribute_group_id,category_id:category_id},
 				success:function(str){
+				    console.log(str);
 					if(str=='yes'){
 						//that.parent().parent().remove();
 						location.href="index.php?route=catalog/category_to_attribute_group&token=<?php echo $token;?>";
@@ -301,18 +321,34 @@ $(function() {
 				    attribute_group_text1=$.trim($('.fourd').find("option:selected").text().replace(/\d+[\：\:]/i,''));
 					category_id=attribute_cid3;
 				}
-	
-				
-				$.post("index.php?route=catalog/category_to_attribute_group/insert&token=<?php echo $token;?>",{attribute_group_id:attribute_group_id,category_id:category_id,attribute_cid0:attribute_cid0,attribute_cid1:attribute_cid1,attribute_cid2:attribute_cid2,attribute_cid3:attribute_cid3},function(str){
-				  
-					if (str=='ok'){
-					    window.location.href="index.php?route=catalog/category_to_attribute_group&token=<?php echo $token;?>";
-				    }else{
-					    alert("插入失败(可能已经存在分配的项)！");
-					}
-
+	            
+				$.ajax({
+				     url:"index.php?route=catalog/category_to_attribute_group/insert&token=<?php echo $token;?>",
+					 type:'post',
+					 data:{attribute_group_id:attribute_group_id,category_id:category_id,attribute_cid0:attribute_cid0,attribute_cid1:attribute_cid1,attribute_cid2:attribute_cid2,attribute_cid3:attribute_cid3},
+					 async:true,
+					 beforeSend:function(){
+					    $("#dialog-form-i").append('<div style="margin-top:20px;margin-left:40px;">正在处理,请稍后...</div>');
+					 },
+					 success:function(str){
+					    if (str=='ok'){
+						    window.location.href="index.php?route=catalog/category_to_attribute_group&token=<?php echo $token;?>";
+						}else{
+						    alert("插入失败(可能已经存在分配的项)！");
+						}
+						$( this ).dialog( "close" );
+					 }
 				});
-				$( this ).dialog( "close" );
+					 
+				
+				//$.post("index.php?route=catalog/category_to_attribute_group/insert&token=<?php echo $token;?>",{attribute_group_id:attribute_group_id,category_id:category_id,attribute_cid0:attribute_cid0,attribute_cid1:attribute_cid1,attribute_cid2:attribute_cid2,attribute_cid3:attribute_cid3},function(str){ 
+					//if (str=='ok'){
+					//    window.location.href="index.php?route=catalog/category_to_attribute_group&token=<?php echo $token;?>";
+				    //}else{
+					//    alert("插入失败(可能已经存在分配的项)！");
+					//}
+				//});
+				//$( this ).dialog( "close" );
 			 },	
 			 "取消": function(){
 			    

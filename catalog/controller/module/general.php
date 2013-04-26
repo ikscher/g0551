@@ -78,6 +78,32 @@ class ControllerModuleGeneral extends Controller {
 		); 
 	    $this->response->setOutput($this->render());
 	}
+	
+	
+	/**
+	*  footer 文章  ****************图片上传
+	*/
+
+		public function imageUpload(){
+
+	    $this->document->setTitle($this->config->get('config_title'));
+		$this->document->setDescription($this->config->get('config_meta_description'));
+
+		$this->data['heading_title'] = $this->config->get('config_title');
+		
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/imageUpload.html')) {
+		$this->template = $this->config->get('config_template') . '/template/common/imageUpload.html';
+		} else {
+			$this->template = 'default/template/module/general/imageUpload.html';
+		}
+
+		 $this->children = array(
+			'common/footer',
+			'common/header',
+			'module/left'
+		); 
+	    $this->response->setOutput($this->render());
+	}
 
     /**
 	*  footer 文章  ****************限时到达
@@ -292,7 +318,7 @@ class ControllerModuleGeneral extends Controller {
 		$this->data['heading_title'] = $this->config->get('config_title');
 		
 		$this->data['address']=$this->language->get('address');
-		$this->data['telephone']=$this->language->get('telephone');
+		$this->data['telphone']=$this->language->get('telphone');
 		
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/contact.html')) {
 		$this->template = $this->config->get('config_template') . '/template/common/contact.html';

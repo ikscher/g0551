@@ -55,7 +55,7 @@ class ModelSettingStore extends Model {
 	}	
 	
 	public function getStore($store_id) {
-	    $sql="SELECT s.*,c.hasShop FROM ".DB_PREFIX. "store  s inner join ".DB_PREFIX."customer  c  on s.store_id=c.store_id  where s.store_id = '" . (int)$store_id . "'";
+	    $sql="SELECT s.*,c.hasShop,c.email FROM ".DB_PREFIX. "store  s inner join ".DB_PREFIX."customer  c  on s.store_id=c.store_id  where s.store_id = '" . (int)$store_id . "'";
 		$query = $this->db->query($sql);
 		
 		return $query->row;
@@ -66,6 +66,10 @@ class ModelSettingStore extends Model {
 	    $store_data=array();
 		
 		$sql="SELECT s.*,c.hasShop FROM ".DB_PREFIX. "store  s inner join ".DB_PREFIX."customer  c  on s.store_id=c.store_id";
+		
+		if(isset($data['status'])){
+		    $sql.=" where  s.status='".$data['status']."'";
+		}
 		
 		if (isset($data['start']) || isset($data['limit'])) {
 			if ($data['start'] < 0) {

@@ -5,9 +5,9 @@
   <select name="address_id" style="width: 100%; margin-bottom: 15px;" size="5">
     {loop $addresses   $address}
     {if $address['address_id'] == $address_id}
-    <option value="{$address['address_id']}" selected="selected">{$address['username']} , {$address['address']},{$address['telephone']},{$address['mobile']},{$address['postcode']}</option>
+    <option value="{$address['address_id']}" selected="selected">{$address['username']} , {$address['address']},{$address['telphone']},{$address['mobile']},{$address['postcode']}</option>
      {else}
-    <option value="{$address['address_id']}">{$address['username']} , {$address['address']},{$address['telephone']},{$address['mobile']},{$address['postcode']}</option>
+    <option value="{$address['address_id']}">{$address['username']} , {$address['address']},{$address['telphone']},{$address['mobile']},{$address['postcode']}</option>
     {/if}
     {/loop}
   </select>
@@ -29,8 +29,8 @@
     </tr>
 	
 	<tr>
-      <td><span class="required">*</span> {$entry_telephone}</td>
-      <td><input type="text" name="telephone" value="" class="large-field" /></td>
+      <td><span class="required">*</span> {$entry_telphone}</td>
+      <td><input type="text" name="telphone" value="" class="large-field" /></td>
     </tr>
     <tr>
     <tr>

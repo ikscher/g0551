@@ -30,7 +30,7 @@
 	
 	//订单状态：
 	DEFINE('ORDER_CREATED',1);
-	define('ORDER_WAITING',2);
+	define('ORDER_PAID',2);
 	define('ORDER_DETACHING',3);
 	DEFINE('ORDER_OVER',4);
 	DEFINE('ORDER_SUCCESS',5);

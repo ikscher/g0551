@@ -6,8 +6,8 @@
 		<div class="great_l">
 			<!---------->
 			<div class="share-user">
-				<p class="share-avatar"><a><img src="catalog/view/theme/default/image/s_detail/50-1.jpg" /></a></p>
-				<p><a class="f16b">{$msg['present']}</a></p>
+				<p class="share-avatar"><a><img src="{$msg['poster']['avatar']}" width="50" height="50" /></a></p>
+				<p><a class="f16b">{$msg['poster']['nickname']}</a></p>
 				<p><span class="when">{$msg['createtime']}</span><span>来自穿悦网</span></p>
 			</div>
 			<div class="share-cont">
@@ -38,7 +38,7 @@
 								<div class="comment-hf">
 									<div class="comment-hf-l">
 										<ul>
-											<li><img src="catalog/view/theme/default/image/s_detail/30-1.jpg "></li>
+											<li><img src="{$comment['avatar']}"></li>
 											<li><span class="c588">{if !empty($comment['userid'])}{$comment['username']}{else}游客{/if}：</span>{$comment['comment']}<br>{php echo date('Y-m-d H:i:s',$comment['createtime'])}</li>
 										</ul>
 									</div>
@@ -158,9 +158,13 @@
 		    if(str==1){
 				alert('评论成功！');
 				$("#remark").val('');
-				
-				var remark=$("<li><div class='comment-hf'><div class='comment-hf-l'><ul><li><img src='catalog/view/theme/default/image/s_detail/30-1.jpg '></li><li><span class='c588'>"+username+"</span>"+comment+"<br>"+CurrentTime()+"</li></ul></div></div></li>");
-			    $(".comment-post ul li:eq(0)").prepend(remark);
+				if($('.comment-hf').length<=0){
+				    var remark=$('<ul><li><div class="comment-hf"><div class="comment-hf-l"><ul><li><img src="{$customer[avatar]}" width="50" height="50"></li><li><span class="c588">'+username+'</span>'+comment+'<br>'+CurrentTime()+'</li></ul></div></div></li></ul>');
+					$('.comment-post').prepend(remark);
+				}else{
+					var remark=$('<li><div class="comment-hf"><div class="comment-hf-l"><ul><li><img src="{$customer[avatar]}" width="50" height="50"></li><li><span class="c588">'+username+'</span>'+comment+'<br>'+CurrentTime()+'</li></ul></div></div></li>');
+					$(".comment-post ul li:eq(0)").prepend(remark);
+				}
 			}else{
 			    alert('评论失败！');
 			}

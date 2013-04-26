@@ -102,6 +102,7 @@ class ControllerCommonHeader extends Controller {
 		$this->data['text_system'] = $this->language->get('text_system');
 		$this->data['text_enviorment'] = $this->language->get('text_enviorment');
 		$this->data['text_category_to_attribute_group'] = $this->language->get('text_category_to_attribute_group');
+		$this->data['text_store_payment']=$this->language->get('text_store_payment');
 		
 		//$this->data['text_tax'] = $this->language->get('text_tax');
 		//$this->data['text_tax_class'] = $this->language->get('text_tax_class');
@@ -182,6 +183,7 @@ class ControllerCommonHeader extends Controller {
 			
 			$this->data['store'] = HTTP_CATALOG;
 			$this->data['setting'] = $this->url->link('setting/store', 'token=' . $this->session->data['token'], 'SSL');
+			$this->data['storePayment']=$this->url->link('setting/payment', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['return_action'] = $this->url->link('localisation/return_action', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['return_reason'] = $this->url->link('localisation/return_reason', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['stock_status'] = $this->url->link('localisation/stock_status', 'token=' . $this->session->data['token'], 'SSL');

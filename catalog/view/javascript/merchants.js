@@ -33,11 +33,30 @@ function changCity(strId){
 	}
 }
 
-
+//分割JS数组
+/*
+Array.prototype.parseValuesFromArray= function (array) {
+        if (array && array.length && array.length > 0) {
+            for (var x = 0, xlen = array.length; x < xlen; x++) {
+                var value = array[x].split(':');
+                if (value.length > 1) {
+                    if (value.length > 2) {
+                        for (var j = 2, jlen = value.length; j < jlen; j++) {
+                            value[1] = value[1] + ":" + value[j];
+                        }
+                    }
+                    this[decodeURI(value[0])] = decodeURI(value[1]);
+                }
+            }
+            return true;
+        } else { return false; }
+    }
+*/
 
 String.prototype.Trim=function(){
 	return this.replace(/(^\s*)|(\s*$)/g,"");	
 }
+
 var marker;
 
 
@@ -96,7 +115,7 @@ var editor;
 
 function setEditor(){
 	KindEditor.ready(function(K) {
-	editor = K.create('#introduce',{items:['source','fontsize','|','forecolor','hilitecolor','bold','italic','underline','removeformat','|','justifyleft','justifycenter','justifyright','|','emoticons','image','multiimage','table','link','unlink','|','preview','fullscreen'],resizeType:1,uploadJson:"index.php?route=merchants/upload/index"});
+	editor = K.create('#introduce',{items:['source','fontsize','fontname','|','forecolor','hilitecolor','bold','italic','underline','removeformat','|','justifyleft','justifycenter','justifyright','|','emoticons','image','multiimage','table','link','unlink','|','preview','fullscreen'],resizeType:1,uploadJson:"index.php?route=merchants/upload/index"});
 	K('#upload_logo').click(function() {
 		editor.loadPlugin('image', function() {
 			editor.plugin.imageDialog({
@@ -149,7 +168,7 @@ function checkClass(){
 var productImage=Array();
 function productEditor(){
 	KindEditor.ready(function(K) {
-		editor = K.create('#description',{items:['source','fontsize','|','forecolor','hilitecolor','bold','italic','underline','removeformat','|','justifyleft','justifycenter','justifyright','|','emoticons','image','multiimage','table','link','unlink','|','preview','fullscreen'],resizeType:1});
+		editor = K.create('#description',{items:['source','fontsize','fontname','|','forecolor','hilitecolor','bold','italic','underline','removeformat','|','justifyleft','justifycenter','justifyright','|','emoticons','image','multiimage','table','link','unlink','|','preview','fullscreen'],resizeType:1});
 		K('#J_selectImage').click(function() {
 			if(productImage.length>=20){
 				alert("对不起，最多只能上传20张宝贝图片！");

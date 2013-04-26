@@ -42,10 +42,36 @@
 			if(!empty($this->request->get['store_id'])){
 				$store_id = $this->request->get['store_id'];
                 
+				$store_info=$this->model_store_store->getStore($store_id);
 				
-			    $this->data['store_info']=$this->model_store_store->getStore($store_id);
-				$this->data['store_info']['introduce']=strip_tags(htmlspecialchars_decode($this->data['store_info']['introduce']));
-
+				if (!empty($store_info['logo'])) {
+					$store_info['logo']= $this->model_tool_image->resize($store_info['logo'], 130, 64);
+				} else {
+					$store_info['logo'] = 'catalog/view/theme/default/image/store/store_banner_logo.jpg';
+				}	
+				
+				$store_info['createtime']=date('Y-m-d',$store_info['createtime']);
+				
+				switch ($store_info['grade']){
+				    case 1:
+						$store_info['grade']='catalog/view/theme/default/image/store/m.png';
+						break;
+				    
+				    case 2:
+						$store_info['grade']='catalog/view/theme/default/image/store/v.png';
+						break;
+				    case 3:
+						$store_info['grade']='catalog/view/theme/default/image/store/v+.png';
+						break;
+				    default:
+						$store_info['grade']='catalog/view/theme/default/image/store/m.png';
+						break;
+				}
+				
+				if(!empty($store_info['introduce'])) $store_info['introduce']=strip_tags(htmlspecialchars_decode($store_info['introduce']));
+            
+			    $this->data['store_info']=$store_info;
+				
 				$data = array(
 				'store_id' => $store_id,
 				'start'    => ($page - 1) * $limit,
@@ -73,7 +99,7 @@
 						$name = trim($result['name']);
 						$price = $result['price'];
 						$store_id = $result['store_id'];
-						$hots=!empty($result['hots'])?$result['hots']:rand(10,1000);
+						$hots=!empty($result['hots'])?$result['hots']:0;
 						$this->data['store_products'][] = array(
 							'product_id' => $product_id,
 							'shortname'=>utf8_substr(strip_tags(html_entity_decode($name, ENT_QUOTES, 'UTF-8')), 0,17) . '...',

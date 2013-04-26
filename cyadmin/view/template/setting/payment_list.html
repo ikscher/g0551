@@ -1,0 +1,102 @@
+
+<link rel="stylesheet" type="text/css" href="view/stylesheet/main.css">
+<script type="text/javascript" src="view/javascript/jquery/jquery-1.8.0.min.js"></script>
+<link rel="stylesheet" type="text/css" href="view/stylesheet/general.css">
+
+
+<!-- {if $error_warning}
+<div class="warning">{$error_warning}</div>
+{/if}
+{if $success}
+<div class="success">{$success}</div>
+{/if} -->
+
+<h1>
+  {$heading_title}
+  <span class="action-span"><a href="{$insert}" >{$button_insert}</a><a href="javascript:;" onclick="$('#form').submit();"   >{$button_delete}</a><a href="{$refresh}">{$button_refresh}</a></span>
+</h1>
+
+
+
+<div class="list-div" id="listDiv">
+  <form action="{$delete}" method="post" enctype="multipart/form-data" id="form" onSubmit="return checkForm();">
+	<table class="list">
+	  <thead>
+		<tr>
+		  <td width="3%"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
+		  <td width="15%"class="center">{$entry_store}</td>
+		  <td width="5%"class="center">{$entry_code}</td>
+		  <td class="center">{$entry_trade_type}</td>
+		  <td class="center">{$entry_partner}</td>
+		  <td width="10%" class="center">{$entry_security_code}</td>
+		  <td width="10%" class="center">{$entry_seller_email}</td>
+		  <td width="2%" class="center">{$entry_status}</td>
+		  <td class="center">{$entry_description}</td>
+		  <td  width="3%" class="center">{$entry_action}</td>
+		</tr>
+	  </thead>
+	  <tbody>
+		{if $storePayments}
+		{loop $storePayments $payment}
+		<tr>
+		  <td>{if $payment['selected']}
+			<input type="checkbox" name="selected[]" value="{$payment['id']}" checked="checked" />
+			{else}
+			<input type="checkbox" name="selected[]" value="{$payment['id']}" />
+			{/if}
+		 </td>
+		  <td>{$payment['storename']}</td>
+		  <td>{$payment['payment_code']}</td>
+		  <td>{$payment['trade_type']}</td>
+		  <td>{$payment['partner']}</td>
+		  <td>{$payment['security_code']}</td>
+		  <td>{$payment['seller_email']}</td>
+		  <td>{php if($payment['status'])  echo '在用';  else  echo '禁用'}</td>
+		  <td>{$payment['description']}</td>
+		  <td>{loop $payment['action']  $action}
+			 <a href="{$action['href']}">{$action['text']}</a> 
+			{/loop}</td>
+		</tr>
+		{/loop}
+		 
+		{else}
+		<tr>
+		  <td style="text-align:center" colspan="10">{$text_no_results}</td>
+		</tr>
+	   {/if}
+	  </tbody>
+	</table>
+  </form>
+  {$pagination}
+</div>
+	
+  
+</div>
+<script type="text/javascript">
+$(function(){
+	$(".list tr").mouseover(function(){
+		$(this).addClass("over");
+	}).mouseout(function(){
+		$(this).removeClass("over");	
+	})
+
+});
+
+function checkForm(){
+    var sum=0;
+    $("input[name^='select']").each(function(i,n){
+		if($(this).prop("checked")==true){
+		   sum++;
+		}
+  
+    });
+  
+    if(sum<1) {
+       alert("请选择要删除的项！");
+	   return false;
+    }
+
+};
+
+
+</script>

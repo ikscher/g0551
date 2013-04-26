@@ -3,20 +3,20 @@ class ModelCatalogAttributeGroup extends Model {
     /*属性组*/
 	public function addAttributeGroup($data) {
 	    $this->load->model('catalog/category');
-	    $cid0=isset($data['attribute_cid0'])?$data['attribute_cid0']:0;
+	    //$cid0=isset($data['attribute_cid0'])?$data['attribute_cid0']:0;
 		$type=isset($data['group_type'])?$data['group_type']:1;
 		$sort_order=isset($data['sort_order'])?$data['sort_order']:0;
-		$cid1=isset($data['attribute_cid1'])?(int)$data['attribute_cid1']:0;
-		$cid2=isset($data['attribute_cid2'])?(int)$data['attribute_cid2']:0;
-		$cid3=isset($data['attribute_cid3'])?(int)$data['attribute_cid3']:0;
+		//$cid1=isset($data['attribute_cid1'])?(int)$data['attribute_cid1']:0;
+		//$cid2=isset($data['attribute_cid2'])?(int)$data['attribute_cid2']:0;
+		//$cid3=isset($data['attribute_cid3'])?(int)$data['attribute_cid3']:0;
 		$option_id=isset($data['option_id'])?(int)$data['option_id']:0;
 		
-		$this->db->query("INSERT INTO " . DB_PREFIX . "attribute_group SET `type`='{$type}',`option_id`='{$option_id}',sort_order = '{$sort_order}',cid0='{$cid0}',cid1='{$cid1}',cid2='{$cid2}',cid3='{$cid3}'");
+		$this->db->query("INSERT INTO " . DB_PREFIX . "attribute_group SET `type`='{$type}',`option_id`='{$option_id}',sort_order = '{$sort_order}'");
 		
 		$attribute_group_id = $this->db->getLastId();
 		
 		
-	    $this->db->query("INSERT INTO " . DB_PREFIX . "attribute_group_description SET attribute_group_id = '" . (int)$attribute_group_id . "', name = '" . $this->db->escape($data['attribute_group_name'] ) . "' ,`description`='".$this->db->escape($data['attribute_group_description'])."',`text0`='".$this->db->escape($data['attribute_group_text0'])."',`text1`='".$this->db->escape($data['attribute_group_text1'])."'");
+	    $this->db->query("INSERT INTO " . DB_PREFIX . "attribute_group_description SET attribute_group_id = '" . (int)$attribute_group_id . "', name = '" . $this->db->escape($data['attribute_group_name'] ) . "'");
 		
 	}
 

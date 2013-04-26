@@ -25,8 +25,9 @@ class ControllerModuleLeft extends Controller {
 		$this->data['text_contact'] = $this->language->get('text_contact');
 		$this->data['text_aboutus'] = $this->language->get('text_aboutus');
 		$this->data['text_company'] = $this->language->get('text_company');
+		$this->data['text_imageUpload'] = $this->language->get('text_imageUpload');
 		
-		$this->data['telephone']=$this->language->get('telephone');
+		$this->data['telphone']=$this->language->get('telphone');
 		$this->data['address']=$this->language->get('address');
 		$this->data['icp']=$this->language->get('icp');
 		$this->data['bottom']=$this->language->get('bottom');
@@ -47,6 +48,7 @@ class ControllerModuleLeft extends Controller {
 		$this->data['feedback'] = $this->url->link('module/general/feedback', '', 'SSL');
 		$this->data['contact'] = $this->url->link('module/general/contact', '', 'SSL');
 		$this->data['company'] = $this->url->link('module/general/company', '', 'SSL');
+		$this->data['imageUpload'] = $this->url->link('module/general/imageUpload', '', 'SSL');
 
 
 		//$this->data['powered'] = sprintf($this->language->get('text_powered'), $this->config->get('config_name'), date('Y', time()));

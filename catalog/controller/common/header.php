@@ -278,6 +278,11 @@ class ControllerCommonHeader extends Controller {
 			'module/cart'
 		);
 		
+		//是否有店铺
+		$store_id=isset($this->request->cookie['storeid'])?$this->cookie->OCAuthCode($this->request->cookie['storeid'],'DECODE'):'';
+		$this->data['store_id']=isset($store_id)?$store_id:'';
+		
+		
 		//登录的用户名
 		if ($this->customer->isLogged()){
 		    // $customer=isset($this->session->data['customer'])?$this->session->data['customer']:'';
@@ -285,20 +290,21 @@ class ControllerCommonHeader extends Controller {
 				$customer=$this->cookie->OCAuthCode($this->request->cookie['customer'],'DECODE');
 				$customer=unserialize($customer);
 				
-				$this->data['username']=$customer['email'];
+				if(!empty($store_id)){
+				    $this->data['username']=$customer['shortname'];
+				}else{
+				    $this->data['username']=$customer['email'];
+				}
 			}
 		}else{
 		    $this->data['username']='';
 			//$this->redirect($this->url->link('account/login'));
 		}
 		
-		//是否有店铺
-		$store_id=isset($this->request->cookie['storeid'])?$this->cookie->OCAuthCode($this->request->cookie['storeid'],'DECODE'):'';
-		$this->data['store_id']=isset($store_id)?$store_id:'';
 		
 		
 		//
-		$this->data['telephone']=$this->language->get('telephone');
+		$this->data['telphone']=$this->language->get('telphone');
 
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/header.html')) {
 			$this->template = $this->config->get('config_template') . '/template/common/header.html';

@@ -12,7 +12,7 @@ class ControllerCheckoutGuest extends Controller {
 		$this->data['entry_firstname'] = $this->language->get('entry_firstname');
 		$this->data['entry_lastname'] = $this->language->get('entry_lastname');
 		$this->data['entry_email'] = $this->language->get('entry_email');
-		$this->data['entry_telephone'] = $this->language->get('entry_telephone');
+		$this->data['entry_telphone'] = $this->language->get('entry_telphone');
 		$this->data['entry_fax'] = $this->language->get('entry_fax');
 		$this->data['entry_company'] = $this->language->get('entry_company');
 		$this->data['entry_customer_group'] = $this->language->get('entry_customer_group');
@@ -46,10 +46,10 @@ class ControllerCheckoutGuest extends Controller {
 			$this->data['email'] = '';
 		}
 		
-		if (isset($this->session->data['guest']['telephone'])) {
-			$this->data['telephone'] = $this->session->data['guest']['telephone'];		
+		if (isset($this->session->data['guest']['telphone'])) {
+			$this->data['telphone'] = $this->session->data['guest']['telphone'];		
 		} else {
-			$this->data['telephone'] = '';
+			$this->data['telphone'] = '';
 		}
 
 		if (isset($this->session->data['guest']['fax'])) {
@@ -194,8 +194,8 @@ class ControllerCheckoutGuest extends Controller {
 				$json['error']['email'] = $this->language->get('error_email');
 			}
 			
-			if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
-				$json['error']['telephone'] = $this->language->get('error_telephone');
+			if ((utf8_strlen($this->request->post['telphone']) < 3) || (utf8_strlen($this->request->post['telphone']) > 32)) {
+				$json['error']['telphone'] = $this->language->get('error_telphone');
 			}
 
 			// Customer Group
@@ -260,7 +260,7 @@ class ControllerCheckoutGuest extends Controller {
 			$this->session->data['guest']['firstname'] = $this->request->post['firstname'];
 			$this->session->data['guest']['lastname'] = $this->request->post['lastname'];
 			$this->session->data['guest']['email'] = $this->request->post['email'];
-			$this->session->data['guest']['telephone'] = $this->request->post['telephone'];
+			$this->session->data['guest']['telphone'] = $this->request->post['telphone'];
 			$this->session->data['guest']['fax'] = $this->request->post['fax'];
 			
 			$this->session->data['guest']['payment']['firstname'] = $this->request->post['firstname'];

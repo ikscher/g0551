@@ -32,16 +32,17 @@
 			<dt class="f1 f_q">{$product['name']} </dt>
 			
 			  
-			<dd>{if isset($product['special']['price'])}原价：<span class="f0 price_old">{$product['price']}</span>元  <span class="space"></span>  商城价：<span class="f0 f_h">{$product['special']['price']}</span>元<span class="interval">{if isset($interval)}限时{$interval}天{/if}</span> {else}<span class="f0 f_h">{$product['price']}</span>元{/if}</dd>
+			<dd>{if isset($product['special']['price'])}原价：<span class="f0 price_old">{$product['price']}</span>元  <span class="space"></span>  商城价：<span class="f0 f_h" id="price_">{$product['special']['price']}</span>元<span class="interval">{if isset($interval)}限时{$interval}天{/if}</span> {else}<span class="f0 f_h" id="price_">{$product['price']}</span>元{/if}</dd>
 			
         
             <dd class="product_info_o">
-				<ul>
+				<ul class="h_fix">
           
-                    <li class="product_info_num h">
+                    <li class="product_info_num h cl">
 						<font class="z">购买数量：</font>
                         
 						<input type="hidden" name="product_id" value="{$product['product_id']}"  />
+						<input type="hidden" name="price" value="" />
                         <input class="z" type="text" id="goodsnum" name="quantity" value="1" maxlength="4" />
                        
 						<div class="jiajianbtn z h">
@@ -52,9 +53,9 @@
 					</li>
 					<li class="l2 cl h"></li>
 					<li class="cl">
-					 {if $attributes}
+					 {if $attributes_price}
 					    <div class="attributes">
-					        {loop $attributes  $attribute}
+					        {loop $attributes_price  $attribute}
 								{if $attribute['type'] == 'select'}
 								<div id="attribute-{$attribute['attribute_group_id']}" class="attribute">
 								  <span class="required">*</span>
@@ -79,7 +80,7 @@
 								</div>
 								{/if}
 								
-								{if $attribute['type'] == 'checkbox'}
+								<!-- {if $attribute['type'] == 'checkbox'}
 								<div id="attribute-{$attribute['attribute_group_id']}" class="attribute">
 								  <span class="required">*</span>
 								  <b>{$attribute['attribute_group_name']}:</b>
@@ -87,16 +88,26 @@
 								  <input type="checkbox" name="attribute[{$attribute['attribute_group_id']}][]" value="{$option_value['attribute_id']}" id="option-value-{$option_value['attribute_id']}" />
 								  <label for="option-value-{$option_value['attribute_id']}">{$option_value['name']}</label>
 								  {/loop}
-								</div>
+								</div> 
 								
-								{/if}
+								{/if}-->
+								
+								<div id="attribute-{$attribute['attribute_group_id']}" class="attribute" >
+								    <dl>
+								    <dt>{$attribute['attribute_group_name']}：</dt>
+									   <dd style="width:360px"> <ul>
+									    {loop $attribute['product_option_value']  $option_value}
+											<li><a  data-value="{$option_value['attribute_id']}" class="cy_attr" href="javascript:void(0);">{$option_value['name']}</a><i></i></li>
+										{/loop}
+										</ul></dd>
+								</div>
 							{/loop}
 					    </div>
 					 {/if}
+					 </li>
 					 
 					 
-					 
-					 {if $options}
+					 <!-- {if $options}
 						  <div class="options">
 							
 							{loop $options  $option}
@@ -236,13 +247,15 @@
 								{/if}
 							{/loop}
 						  </div>
-						   {/if}
+						   {/if} -->
 					
 					
 					
-					<li class="product_info_buy y">
+					<li>
+					    <div class="product_info_buy">
                         <a class="goodsbuy" ></a>
-                        <a class="goodscar" ></a>	
+                        <a class="goodscar" ></a>
+						</div>
                     </li>
 				</ul>
 				
@@ -289,8 +302,23 @@
 				<li>商品评价</li>
 				<li>售后服务</li>
 			</ul></dt>
-			<dd class="">
-				{$product['description'] }
+			<dd>
+			    {if $attributes_general}
+				    <div class="attributes-list" id="J_AttrList">
+				    <p class="attr-list-hd clearfix"><em>产品参数：</em></p>
+					    <ul id="J_AttrUL">
+					        {loop $attributes_general  $attribute}
+							<li>
+								  {$attribute['attribute_group_name']}：
+									{loop $attribute['product_option_value']  $option_value}
+									   {$option_value['name']}
+									{/loop}
+							</li>
+							{/loop}
+					    </ul>
+					</div>
+				{/if}
+				{$product['description']}
 			</dd>
 			<dd class="dn">
 				<div class="wps cl">
@@ -435,7 +463,6 @@ $(".goodsbuy").click(function(){
 	    var referer='{$referer}';
 	    location.href="index.php?route=account/login&referer="+encodeURIComponent(referer);
 	{else}
-	    
         dBuy('{$product['product_id']}');
 	{/if}
 });
@@ -513,6 +540,88 @@ var imgUD={
 $('.product_focus_down').bind('mouseenter',imgUD.imgDown);
 $('.product_focus_up').bind('mouseenter',imgUD.imgUp);
 //-->
+
+
+
+/*
+$(".dt_foods ul li").click(function(){
+    var dt2ta;
+	dt2ta=$(this).parent().children("li");
+	var index=$.inArray(this,dt2ta);	
+	dt2ta.removeClass("fist_tab").eq(index).addClass("fist_tab");
+});	
+
+$(".dt_house ul li").click(function(){
+    var dt3ta;
+	dt3ta=$(this).parent().children("li");
+	var index=$.inArray(this,dt3ta);	
+	dt3ta.removeClass("fist_tab").eq(index).addClass("fist_tab");
+});	
+
+$(".dt_travel ul li").click(function(){
+    var dt4ta;
+	dt4ta=$(this).parent().children("li");
+	var index=$.inArray(this,dt4ta);	
+	dt4ta.removeClass("fist_tab").eq(index).addClass("fist_tab");
+});	
+*/
+$(".dt5 ul li").click(function(){
+    var dt5ta;
+	dt5ta=$(this).parent().children("li");
+	dt5co=$(".pro_info_tab").children("dd");
+	var index=$.inArray(this,dt5ta);	
+	dt5ta.removeClass("fist_tab").eq(index).addClass("fist_tab");
+	dt5co.addClass("dn").eq(index).removeClass("dn");
+});	
+
+</script>
+
+<script type='text/javascript'>
+    var obj={
+	        price:$("#price_").html()
+		};
+	
+	$('input[name=price]').val(obj.price);
+	$(".cy_attr").click(function(){
+	    $(this).parent().siblings().removeClass('cy-selected');
+		
+		$('.attribute').next('.error').remove();
+		$(this).parents('.attribute').children('input[type=hidden]').remove();
+	    var ajc=$(this).attr('data-value');
+	    if($(this).parent().attr('class')=='cy-selected'){
+	        $(this).parent().removeClass('cy-selected');
+		}else{
+		    var attribute_group_id=$(this).parents('.attribute').attr('id').replace(/[a-z]*\-/,'');
+		    $(this).parent().addClass('cy-selected');
+			$(this).parents('.attribute').append('<input type="hidden" name="attribute['+attribute_group_id+'][]" value="'+ajc+'" />');
+		}
+	   
+	    var attribute=[];
+	    $('.attribute dl ul li').each(function(i,w){
+			if($(w).attr('class')=='cy-selected'){
+				attribute.push($(w).children('a').attr('data-value'));
+			}
+		});
+		var len=$('.attributes').children().length;
+		
+	    if(attribute.length==len){
+		    var attribute1='|'+attribute.join('|')+'|';
+			var attribute2='|'+attribute.reverse().join('|')+'|';
+           
+			$.post('index.php?route=product/product/getProductPriceByAttribute',{product_id:{$product['product_id']},attribute1:attribute1,attribute2:attribute2},function(str){
+				if(str){
+					$('#price_').html(str);
+				}else{
+				    $('#price_').html(obj.price);
+				}
+				
+				$('input[name=price]').val($("#price_").html());
+			});
+		}
+		
+		if(attribute.length==0) $('#price_').html(obj.price);//一个价格属性都没选择，设置为页面加载时的默认价格
+	});
+	
 </script>
 
 <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1354786494444563" charset="utf-8"></script>

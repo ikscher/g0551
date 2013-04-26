@@ -51,7 +51,7 @@ class ControllerSettingSetting extends Controller {
 		$this->data['entry_owner'] = $this->language->get('entry_owner');
 		$this->data['entry_address'] = $this->language->get('entry_address');
 		$this->data['entry_email'] = $this->language->get('entry_email');
-		$this->data['entry_telephone'] = $this->language->get('entry_telephone');
+		$this->data['entry_telphone'] = $this->language->get('entry_telphone');
 		$this->data['entry_fax'] = $this->language->get('entry_fax');		
 		$this->data['entry_title'] = $this->language->get('entry_title');
 		$this->data['entry_meta_description'] = $this->language->get('entry_meta_description');
@@ -174,10 +174,10 @@ class ControllerSettingSetting extends Controller {
 			$this->data['error_email'] = '';
 		}
 
-		if (isset($this->error['telephone'])) {
-			$this->data['error_telephone'] = $this->error['telephone'];
+		if (isset($this->error['telphone'])) {
+			$this->data['error_telphone'] = $this->error['telphone'];
 		} else {
-			$this->data['error_telephone'] = '';
+			$this->data['error_telphone'] = '';
 		}
  
   		if (isset($this->error['title'])) {
@@ -328,10 +328,10 @@ class ControllerSettingSetting extends Controller {
 			$this->data['config_email'] = $this->config->get('config_email');
 		}
 		
-		if (isset($this->request->post['config_telephone'])) {
-			$this->data['config_telephone'] = $this->request->post['config_telephone'];
+		if (isset($this->request->post['config_telphone'])) {
+			$this->data['config_telphone'] = $this->request->post['config_telphone'];
 		} else {
-			$this->data['config_telephone'] = $this->config->get('config_telephone');
+			$this->data['config_telphone'] = $this->config->get('config_telphone');
 		}
 
 		if (isset($this->request->post['config_fax'])) {
@@ -966,8 +966,8 @@ class ControllerSettingSetting extends Controller {
       		$this->error['email'] = $this->language->get('error_email');
     	}
 
-    	if ((utf8_strlen($this->request->post['config_telephone']) < 3) || (utf8_strlen($this->request->post['config_telephone']) > 32)) {
-      		$this->error['telephone'] = $this->language->get('error_telephone');
+    	if ((utf8_strlen($this->request->post['config_telphone']) < 3) || (utf8_strlen($this->request->post['config_telphone']) > 32)) {
+      		$this->error['telphone'] = $this->language->get('error_telphone');
     	}
 
 		if (!$this->request->post['config_title']) {

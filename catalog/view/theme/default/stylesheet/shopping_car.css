@@ -45,8 +45,28 @@ span.subadd{padding:1px;height:3px;width:3px;border:1px solid #fcd;margin-left:5
 
 .bottonLine{border-bottom:1px dashed #CCCCCC;padding-bottom:10px;}
 .paybutton{text-align:right;width:980px;margin:auto;}
-.paybutton ul{margin-left:800px;padding-top:10px;}
-.paybutton ul li{text-align:left;line-height:180%;font-weight:bold;}
+.paybutton ul{float:right;padding-top:5px;}
+.paybutton ul li{text-align:left;line-height:20px;}
+.floatbar {
+    position:relative;
+	border: 1px solid #ccc;
+	background-color: #f3f3f3;
+	height: 33px;
+	line-height: 33px;
+	text-align: right;
+	_height: 32px;
+	z-index: 9997;
+}
+.floatbar li span.rmb{font-size:24px;margin-right:3px;}
+
+.floatbar .show_total_ {
+	color: #F60;
+	font: 24px tahoma;
+	margin-right: 3px;
+	text-shadow: 0 1px 1px #CCC;
+	vertical-align: top;
+	_vertical-align: middle;
+}
 
 .sendAddress {width:98%;margin:10px auto 10px auto;}
 .sendAddress span.mobile{color:#808080;padding-left:10px;padding-right:10px;}
@@ -63,14 +83,15 @@ span.subadd{padding:1px;height:3px;width:3px;border:1px solid #fcd;margin-left:5
 .sendInfo dd{float:left;}
 .sendInfo .opaddr{margin-top:10px;}
 
-.paymentContent dl{width:746px;margin:15px auto 20px auto;}
-.paymentContent dt{height:28px;line-height:28px;}
-.paymentContent dt span{font-weight:bold;color:#8E0C3A;}
-.paymentContent dd{padding:5px 0 5px 10px;border:1px solid #FFFFFF;}
-.paymentContent dd input{margin-right:5px;}
-.paymentContent dd div.container{width:95%;margin:auto;padding-top:10px;color:#333333;}
-.paymentContent dd.shipping{border:1px solid #E2E2E2;background:#F0F0F0;}
-.paybutton div.moneyinfo{margin-left:785px;padding-top:10px;padding-bottom:10px;line-height:180%;height:90px;}
+.paymentContent dl,.shippingContent dl{width:746px;margin:15px auto 20px auto;}
+.paymentContent dt,.shippingContent dt{height:28px;line-height:28px;}
+.paymentContent dt span,.shippingContent dt span{font-weight:bold;color:#8E0C3A;}
+.paymentContent dd,.shippingContent dd{padding:5px 0 5px 10px;border:1px solid #FFFFFF;}
+.paymentContent dd input,.shippingContent dd input{margin-right:5px;}
+.paymentContent dd div.container,.shippingContent dd div.container{width:95%;margin:auto;padding-top:10px;color:#333333;}
+.paymentContent dd.payment,.shippingContent dd.shipping{border:1px solid #E2E2E2;background:#F0F0F0;}
+
+.paybutton div.moneyinfo{float:right;padding-top:10px;padding-bottom:10px;line-height:180%;}
 .paybutton div.moneyinfo dt{float:left;width:100px;text-align:right;}
 .paybutton div.moneyinfo dd{float:left;width:60px;font-weight:bold;color:#D81257;}
 .paybutton div.remainder{border-top:1px dashed #CCCCCC;color:#333333;padding-bottom:10px;padding-top:10px;}
@@ -99,7 +120,7 @@ span.subadd{padding:1px;height:3px;width:3px;border:1px solid #fcd;margin-left:5
 }
 .cart-module > div { display:none;}
 
-.shoppingAndcheckout{margin-top:20px;}
+.shoppingAndcheckout{clear:both;padding-top:10px;}
 
 /* button */
 a.button, input.button {

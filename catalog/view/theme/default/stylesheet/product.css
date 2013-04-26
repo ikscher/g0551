@@ -309,14 +309,15 @@ ul#thumblist li a.zoomThumbActive{
 			.product_show{width:420px; height:420px; margin-left:10px; border:1px solid #dbdbdb;position:relative;}
 				
 			.product_info{width:422px; height:422px; margin-left:14px;}
-			.product_info dl dd{margin:10px 0 10px 0;}
+			.product_info dl dt.f1{margin-bottom:10px;}
+			.product_info_o{margin-top:10px;}
 			.product_info .error {color: #FF0000;}/*换行显示display: block;**/
             .product_info .error_a {color: #FF0000;}
 			.product_info_o{background:#eeeeee; height:500px;}
-				.product_info_o ul{padding:5px 0 10px 0;}
-				.product_info_o ul li{ margin:5px 10px 5px 10px!important;  margin:5px 10px 5px 10px; padding:5px 0 5px 0;}
+				.product_info_o ul.h_fix{padding:5px 0 10px 0;}
+				.product_info_o ul li.cl{ margin:5px 10px 5px 10px!important;  margin:5px 10px 5px 10px; padding:5px 0 5px 0;}
 				.product_info_o .options .option{margin-top:10px;margin-bottom:10px;}
-				.product_info_o .attributes .attribute{margin-top:10px;margin-bottom:10px;}
+				/* .product_info_o .attributes .attribute{margin-top:10px;margin-bottom:10px;} */
 				.product_info_o .options .option select{border:1px solid;}
 				.clothes_nature_color img{border:1px solid #999999;float:left; margin-left:5px; cursor:pointer;}
 				.clothes_nature_color .select_img{border:1px solid #cc0000; }
@@ -497,3 +498,122 @@ ul#thumblist li a.zoomThumbActive{
     margin-left:10px;
 	margin-right:10px;
 }
+
+.pro_info_tab .attr-list-hd {
+	padding: 10px 20px 5px;
+}
+
+.pro_info_tab div.attributes-list {
+	clear: both;
+	margin: 10px 0;
+	border: 1px solid #e6e6e6;
+	background-color: #F6F6F6;
+}
+
+.pro_info_tab .attributes-list .attr-list-hd em {
+	font-weight: bold;
+	display: inline;
+	float: left;
+}
+
+
+.clearfix{zoom:1;}
+
+.pro_info_tab .attributes-list ul {
+	padding: 0 20px 18px 20px;
+	text-indent: 0;
+	border-top: 1px solid #fff;
+	
+}
+
+.pro_info_tab ul:after {
+	display: block;
+	visibility: hidden;
+	clear: both;
+	height: 0;
+	content: " 0020";
+}
+
+.pro_info_tab  .attributes-list li {
+	display: inline;
+	float: left;
+	width: 220px;
+	height: 14px;
+	overflow: hidden;
+	margin: 16px 15px 0 0;
+	line-height: 14px;
+	vertical-align: top;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	color: #666;
+}
+
+
+
+div.attribute{
+	float:left;
+}
+
+
+div.attribute ul li{
+    position: relative;
+	display: inline;
+	float: left;
+	margin: 0 4px 4px 0;
+	padding: 1px;
+	line-height: 20px;
+	vertical-align: middle;
+}
+
+div.attribute ul li a {
+	display: inline-block;
+	min-width: 10px;
+	padding: 0 6px;
+	text-align: center;
+	white-space: nowrap;
+	text-decoration: none;
+	color: #000;
+	background: #EEEEEE;
+	border: 1px solid #C8C9CD;
+	_width: 10px;
+}
+
+div.attribute ul li a:hover,div.attribute ul li.cy-selected a,div.attribute ul li.cy-selected a:hover {
+	margin: -1px;
+	border: 2px solid #FF6701;
+}
+
+div.attribute .cy-selected i {
+   background: url(../image/index.png) no-repeat;
+}
+
+div.attribute .cy-selected i {
+	display: block;
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	width: 12px;
+	height: 12px;
+	overflow: hidden;
+	text-indent: -9999em;
+	background-position: -320px -222px;
+}
+
+div.attribute  dl dt,div.attribute dl dd{
+	display: inline;
+	float: left;
+}
+
+div.attribute dl dd ul li i{
+   display:none;
+}
+
+div.attribute{
+   margin:5px 0 5px 0;
+}
+
+.product_info_buy a{
+   margin-top:20px;
+}
+
+

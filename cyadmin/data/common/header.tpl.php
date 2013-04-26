@@ -141,6 +141,7 @@ $(document).ready(function(){
 			
 			<div title="<?php echo $text_system;?>" style="padding:10px">
 			          <p><a data-role="<?php echo $setting;?>"><?php echo $text_setting;?></a></p>
+					  <p><a data-role="<?php echo $storePayment;?>"><?php echo $text_store_payment;?></a></p>
 					  <!-- <p><a class="parent"><?php echo $text_design;?></a>
 						<ul> -->
 						<!--   <p><a data-role="<?php echo $layout;?>"><?php echo $text_layout;?></a></p>

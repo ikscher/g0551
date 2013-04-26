@@ -44,3 +44,9 @@ define('DB_PASSWORD', 'root');
 define('DB_DATABASE', 'opencart'); */
 
 define('DB_PREFIX', ''); //表前缀
+
+
+
+						 
+						 
+?>

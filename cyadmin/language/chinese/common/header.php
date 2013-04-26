@@ -43,6 +43,8 @@ $_['text_order']                       = '订单管理';
 $_['text_order_status']                = '订单状态';
 $_['text_opencart']                    = '官方网站';
 $_['text_payment']                     = '支付管理';
+
+$_['text_store_payment']               = '商铺支付平台列表';
 $_['text_product']                     = '商品管理';
 $_['text_reports']                     = '统计报表';
 $_['text_report_sale_order']           = '销售订单统计';
@@ -65,7 +67,7 @@ $_['text_return_reason']               = '退换原因';
 $_['text_return_status']               = '退换状态';
 $_['text_sale']                        = '营销推广';
 $_['text_shipping']                    = '配送管理';
-$_['text_setting']                     = '商城设置';
+$_['text_setting']                     = '商铺设置';
 $_['text_stock_status']                = '库存状态';
 $_['text_support']                     = '支援论坛';
 $_['text_system']                      = '系统设置';

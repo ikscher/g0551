@@ -9,18 +9,29 @@ class ModelMerchantsReturn extends Model {
 	*  intCount   ：多少条记录
 	*  data       ：搜索条件
 	*/
-	public function getReturnList($intStart,$intCount,$data){
-		$where=isset($data['where'])?$data['where']:"";
+	public function getReturns($data){
+		if ($data['start'] < 0) {
+			$data['start'] = 0;
+		}
+		
+		if ($data['limit'] < 1) {
+			$data['limit'] = 1;
+		}	
+		
 		$store_id=$this->cookie->OCAuthCode($this->request->cookie['storeid'],'DECODE');
 		if(empty($store_id)){
 			$this->showMessage("您还没有开店，或登录已超时，请重新登录！");
 		}
 		
-		$strSql="";
-		if($where!="") $strSql.=$where;
+	
 
 		$res=array();
-		$query=$this->db->query("select return_id,product,model,quantity,date_added,orderid,username,telephone,email from `view_return` where store_id={$store_id} ".$strSql." order by return_id desc limit {$intStart},{$intCount}");
+		
+		$sql="select return_id,product,model,quantity,date_added,order_id,username,telphone,email from `view_return` where store_id='{$store_id}' ";
+		
+	
+		$sql.=" order by return_id desc limit {$data['start']},{$data['limit']}";
+		$query=$this->db->query($sql);
 		if($query->num_rows>0){
 	   		return $query->rows;
 		}

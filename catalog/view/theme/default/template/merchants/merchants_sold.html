@@ -13,7 +13,7 @@
 				<tbody>
                 <tr>
                     <td class="single-col">
-                    <label>订单编号：<input name="i" type="text" id="i" size="11" maxlength="30" value="{$info['orderid']}"/>
+                    <label>订单编号：<input name="i" type="text" id="i" size="11" maxlength="30" value="{$info['order_id']}"/>
                     </label></td>
                     <td class="single-col">
                     <label>买家邮箱：<input type="text" size="15" id="J_BuyNick" name="e" value="{$info['email']}" />
@@ -31,7 +31,7 @@
                   </label>
                   </td>
                   <td class="single-col">
-                  <label>收件电话：<input type="ct" size="15" id="ct" name="ct" value="{$info['ctelephone']}"/>
+                  <label>收件电话：<input type="ct" size="15" id="ct" name="ct" value="{$info['ctelphone']}"/>
                   </label>
                   </td>
                 </tr>
@@ -109,7 +109,7 @@
 		<table width="790" height="100" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#e6e6e6" >
 		  <tr>
 			<td height="28" colspan="5" bgcolor="#f3f3f3">
-				<span class="order_num">订单编号：{$order['orderid']}</span>
+				<span class="order_num">订单编号：{$order['order_id']}</span>
 				<span class="order_num">成交时间：{$order['date_added']}</span>
                 <span class="deal_time">买家：{$order['email']}</span>
 			</td>

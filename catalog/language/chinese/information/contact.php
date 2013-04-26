@@ -7,7 +7,7 @@ $_['text_location']  = '我们的地址';
 $_['text_contact']   = '联系我们';
 $_['text_address']   = '地址：';
 $_['text_email']     = '邮箱：';
-$_['text_telephone'] = '电话：';
+$_['text_telphone'] = '电话：';
 $_['text_fax']       = '传真：';
 $_['text_message']   = '<p>您的查询已发送！</p>';
 

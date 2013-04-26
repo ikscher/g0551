@@ -31,20 +31,36 @@
 	</div>
 </div>
 <!--穿悦LOGO和搜索end -->
-<div class="store_baaner">
+<div class="store_banner">
+    <ul>
+		<li><img src="{if isset($store_info['logo'])}{$store_info['logo']}{/if}"/></li>
+		<li class="breakword">{if isset($store_info['introduce'])}{$store_info['introduce']}{/if}</li>
+		<li class="fav"><a href="#"><img src="catalog/view/theme/default/image/store/favoriate.gif" width="90px" height="60px"/></a></li>
+	</ul>
 </div>
 <!--菜单menu begin -->
 <div class="store_menured">
 	<ul>
 		<li class="menuon"><a href="{$action}"  hidefocus="true">店铺首页</a></li>
-		<li><a href="#" onclick=""  hidefocus="true">店铺介绍</a></li>
+		<li><a href="#" onclick=""  hidefocus="true">店铺地图</a></li>
 	</ul>
 </div>
 <!--菜单menu end -->
 <!--主体body begin --><div class="store_body">
 <!--左边 begin -->
 <div class="redleft">
-	<div class="rednavbg">搜索店内的宝贝</div>
+    <div class="rednavbg">店铺信息</div>
+	<div class="storeinfo">
+	    <ul>
+		    <li>店铺名称：{$store_info['name']}</li>
+			<li>电 话：{$store_info['tel']}</li>
+			<li>地 址：{$store_info['address']}</li>
+			<li>简 介：{$store_info['introduce']}</li>
+			<li>创店时间：{$store_info['createtime']}</li>
+			<li><img src="{$store_info['grade']}" /></li>
+		</ul>
+	</div>
+	<div class="rednavbg_">搜索店内的宝贝</div>
 	<div class="lsearch">
 	    <form id="formStore"   action="{$action}" method="post" >
 		<ul>
@@ -54,7 +70,7 @@
 		</ul>
 		</form>
 	</div>
-	<div class="rednavbg1">产品分类</div>
+	<div class="rednavbg_">产品分类</div>
 	{if !empty($storeCategories)}<div class="sidetreecontrol"><a href="?#">收缩</a> | <a href="?#">展开</a></div>{/if}
 	<div class="lclass">
 		<ul class="treeview" id="tree">
@@ -93,7 +109,7 @@
 			
 		</ul>
 	</div>
-	<div class="rednavbg1">销量排行榜</div>
+	<div class="rednavbg_">销量排行榜</div>
 	<div class="lranking">
 		<ul>
 		    {if !empty($productSaleTop)}
@@ -132,13 +148,12 @@
 		</ul>
 	</div>
 	
-	<div class="store_introduce" style="display:none">
-	    <p><span>店铺名称：</span>{$store_info['name']}</p>
-		<!-- <p>店主    ：{$store_info['owner']}</p> -->
+	<div class="store_introduce" id="container" style="height:0px;width:770px;position:relative;">
+	    <!-- <p><span>店铺名称：</span>{$store_info['name']}</p>
 		<p><span>电 话：</span>{$store_info['tel']}</p>
-		<!-- <p>手机    ：{$store_info['mobile']}</p> -->
 		<p><span>地 址：</span>{$store_info['address']}</p>
-		<p><span>简 介：</span>{$store_info['introduce']}</p>
+		<p><span>简 介：</span>{$store_info['introduce']}</p> -->
+		<!-- <div class="map" id="container"></div> -->
 	</div>
 </div>
 <!--右边 end -->
@@ -157,22 +172,18 @@
 	//店铺首页
 	$(".store_menured ul li:eq(0)").click(function(){
 	    $(".redright .rednavbg").html('店铺所有产品');
-		$(".store_introduce").css({'display':'none'});
+		$(".store_introduce").css({'height':'0'});
 		$(".rproducts").css({'display':'block'});
 		$(".pagination").css({'display':'block'});
 	});
 	
 	//店铺介绍
 	$(".store_menured ul li:eq(1)").click(function(){
-	    $(".redright .rednavbg").html('店铺介绍');
-		$(".store_introduce").css({'display':'block'});
+	    $(".redright .rednavbg").html('店铺地图');
+		$(".store_introduce").css({'height':'600px'});
 		$(".rproducts").css({'display':'none'});
 		$(".pagination").css({'display':'none'});
 	});
-	
-	//$("input[name^=price]").keyup(function(){
-	//    $(this).val($(this).val().replace(/\D/gi,""));
-	//});
 	
 	$("input[name^=price]").keydown(function(e){
 	    var s="48,49,50,51,52,53,54,55,56,57,96,97,98,99,100,101,102,103,104,105,110,190";
@@ -186,23 +197,48 @@
 	    $('#formStore input[type=text]').val('');
 	});
     
-	
-	//$(".cid").click(function(){
-	//    var cid=$(this).attr('data-value');
-	//	var query='index.php'+location.search;
-	//	query=query.replace(/page=\d*/g,'');
-	//	if(query.search(/category_id=\d*/g)==-1){
-	//	    window.location.href=query+"&category_id="+cid;
-	//	}else{
-	//	    query=query.replace(/(category_id=)\d*/g,'$1'+cid);
-	//		window.location.href=query;
-	//	}
-	//});
+
 	
 	$('.bor236').hover(function(){
 	    $(this).css({'border':'1px solid #000'});
 	},function(){
 	    $(this).css({'border':'1px solid #CCC'});
 	});
+	
+	
+</script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4" charset="utf-8"></script>
+<script type="text/javascript">
+var baidumap={
+			map : new BMap.Map("container"),
+			point : new BMap.Point({$store_info['map_x']},{$store_info['map_y']}),
+			addMarker:function(point, index){   // 创建图标对象  
+			    
+				var myIcon = new BMap.Icon("catalog/view/theme/default/image/marker.png", new BMap.Size(20, 32), {  
+				// 指定定位位置。 
+				// 当标注显示在地图上时其所指向的地理位置距离图标左上      
+				// 角各偏移10像素和25像素。您可以看到在本例中该位置即是      
+				// 图标中央下端的尖角位置。     
+					offset: new BMap.Size(10, 32)  
+				// 设置图片偏移。     
+				// 当您需要从一幅较大的图片中截取某部分作为标注图标时您     
+				// 需要指定大图的偏移位置此做法与css sprites技术类似。      
+					//imageOffset: new BMap.Size(0, 0 - index * 25) 
+				// 设置图片偏移  
+				});      
+				// 创建标注对象并添加到地图    
+				var marker = new BMap.Marker(point, {icon: myIcon});  
+				this.map.addOverlay(marker); 
+				
+			}
+    };
+    
+	baidumap.addMarker(baidumap.point, 1); 
+	baidumap.map.centerAndZoom(baidumap.point, 15);
+	
+    baidumap.map.addControl(new BMap.NavigationControl());
+	baidumap.map.addControl(new BMap.ScaleControl());
+	baidumap.map.addControl(new BMap.OverviewMapControl());
+	baidumap.map.enableScrollWheelZoom();     //启用滚轮放大缩小，默认禁用。
 </script>
 {$footer}

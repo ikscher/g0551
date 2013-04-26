@@ -48,6 +48,8 @@ class ControllerProductJoy extends Controller {
 
 	public function joyDetail(){
 		$this->load->model('catalog/joy');
+		$this->load->model('account/customer');
+		$this->load->model('tool/image');
         
 		if(!empty($this->request->get['id'])){
 			$id = $this->request->get['id'];
@@ -59,7 +61,11 @@ class ControllerProductJoy extends Controller {
 	
 			if(empty($content)) return ;
 			
-		
+			$poster=$this->model_account_customer->getCustomer($content['customer_id']);
+			$customer=$this->model_account_customer->getCustomer($this->customer->getId());
+		    
+			$this->data['customer']=$customer;
+			//var_dump($customer);
 			//$content['content']=preg_replace("/\/cy\//",'',$content['content']);
 		    //$content['content']=preg_replace("/(img\s*src=)['\\\"]([^'\\\"]+\.[jpg|png|jpeg|bmp])['\\\"]?/",'\\1'.HTTP_SERVER.'\\2',$content['content']);
 
@@ -69,7 +75,7 @@ class ControllerProductJoy extends Controller {
 			   echo 'no';
 			} */
 			
-	
+			
 			$this->data['msg'] =array();
 			$this->data['msg'] = array(
 				'content_id' => $content['content_id'],
@@ -79,7 +85,8 @@ class ControllerProductJoy extends Controller {
 				'content'=>html_entity_decode($content['content'], ENT_QUOTES, 'UTF-8'),
 				'title'=>$content['title'],
 				'present'=>$content['present'],
-				'createtime'=>date('Y-m-d',$content['createtime'])
+				'createtime'=>date('Y-m-d',$content['createtime']),
+				'poster' => $poster
 				//'href' => $this->url->link('product/product','&product_id=' . $message['product_id'])
 
 			);
@@ -89,6 +96,8 @@ class ControllerProductJoy extends Controller {
 		
 			foreach($cc as $k=>$v){
 			    $v['comment']=strip_tags(htmlspecialchars_decode($v['comment']));
+				$y=$this->model_account_customer->getCustomer($v['userid']);
+				$v['avatar']=$this->model_tool_image->resize($y['avatar'],'50','50');
 				$comments[]=$v;
 			}
 			

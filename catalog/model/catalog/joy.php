@@ -44,7 +44,7 @@ class ModelCatalogJoy extends Model {
 
 	public function getContent($id){
 	
-		 $query = $this->db->query("select content_id,imageUrl,`favoriate`,`share`,`title`,`content`,`present`,`createtime` from `". DB_PREFIX ."contents` where content_id = '$id' ");
+		 $query = $this->db->query("select content_id,imageUrl,`favoriate`,`share`,`title`,`content`,`present`,`createtime`,`customer_id` from `". DB_PREFIX ."contents` where content_id = '$id' ");
 		
 		 return $query->row;
 	}

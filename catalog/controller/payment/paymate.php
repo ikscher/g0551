@@ -22,7 +22,7 @@ class ControllerPaymentPaymate extends Controller {
 		$this->data['pmt_sender_email'] = $order_info['email'];
 		$this->data['pmt_contact_firstname'] = html_entity_decode($order_info['payment_firstname'], ENT_QUOTES, 'UTF-8');
 		$this->data['pmt_contact_surname'] = html_entity_decode($order_info['payment_lastname'], ENT_QUOTES, 'UTF-8');
-		$this->data['pmt_contact_phone'] = $order_info['telephone'];
+		$this->data['pmt_contact_phone'] = $order_info['telphone'];
 		$this->data['pmt_country'] = $order_info['payment_iso_code_2'];
 		
 		$this->data['regindi_address1'] = html_entity_decode($order_info['payment_address_1'], ENT_QUOTES, 'UTF-8');

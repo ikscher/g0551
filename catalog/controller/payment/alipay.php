@@ -1,86 +1,239 @@
 <?php
+/*
+ 支付宝双接口，担保接口
+*/
+
+require_once("alipay_function.php");
+require_once("alipay_notify.php");
+require_once("alipay_service.php");
 class ControllerPaymentAlipay extends Controller {
-	/* *
-	 * 功能：即时到账交易接口接入页
-	 * 版本：3.3
-	 * 修改日期：2012-07-23
-	 * 说明：
-	 * 以下代码只是为了方便商户测试而提供的样例代码，商户可以根据自己网站的需要，按照技术文档编写,并非一定要使用该代码。
-	 * 该代码仅供学习和研究支付宝接口使用，只是提供一个参考。
+	public function index() {
 
-	 *************************注意*************************
-	 * 如果您在接口集成过程中遇到问题，可以按照下面的途径来解决
-	 * 1、商户服务中心（https://b.alipay.com/support/helperApply.htm?action=consultationApply），提交申请集成协助，我们会有专业的技术工程师主动联系您协助解决
-	 * 2、商户帮助中心（http://help.alipay.com/support/232511-16307/0-16307.htm?sh=Y&info_type=9）
-	 * 3、支付宝论坛（http://club.alipay.com/read-htm-tid-8681712.html）
-	 * 如果不想使用扩展功能请把扩展功能参数赋空值。
-	 */
-    public function index(){
-		//require_once("alipay.config.php");
-		//require_once("lib/alipay_submit.class.php");
-		$this->load->config('alipay.config');
-		$this->load->library('alipay/alipay_submit.class');
-
-		/**************************请求参数**************************/
-
-			//支付类型
-			$payment_type = "1";
-			//必填，不能修改
-			//服务器异步通知页面路径
-			$notify_url = "http://www.xxx.com/create_direct_pay_by_user-PHP-UTF-8/notify_url.php";
-			//需http://格式的完整路径，不能加?id=123这类自定义参数
-			//页面跳转同步通知页面路径
-			$return_url = "http://www.xxx.com/create_direct_pay_by_user-PHP-UTF-8/return_url.php";
-			//需http://格式的完整路径，不能加?id=123这类自定义参数，不能写成http://localhost/
-			//卖家支付宝帐户
-			$seller_email = $_POST['WIDseller_email'];
-			//必填
-			//商户订单号
-			$out_trade_no = $_POST['WIDout_trade_no'];
-			//商户网站订单系统中唯一订单号，必填
-			//订单名称
-			$subject = $_POST['WIDsubject'];
-			//必填
-			//付款金额
-			$total_fee = $_POST['WIDtotal_fee'];
-			//必填
-			//订单描述
-			$body = $_POST['WIDbody'];
-			//商品展示地址
-			$show_url = $_POST['WIDshow_url'];
-			//需以http://开头的完整路径，例如：http://www.xxx.com/myorder.html
-			//防钓鱼时间戳
-			$anti_phishing_key = "";
-			//若要使用请调用类文件submit中的query_timestamp函数
-			//客户端的IP地址
-			$exter_invoke_ip = $_POST['WIDexter_invoke_ip'];
-			//非局域网的外网IP地址，如：221.0.0.1
+		$this->load->model('checkout/order');
+       
+		$order_id = isset($this->session->data['order_id'])?$this->session->data['order_id']:'';
+   
+		if(!empty($order_id)){
+			$store_payment_info = $this->model_checkout_order->getStoreInfoByOrderid($order_id);
+		
+			$seller_email   = $store_payment_info['seller_email'];
+			$security_code  = $store_payment_info['security_code'];
+			$trade_type     = $store_payment_info['trade_type'];
+			$partner        = $store_payment_info['partner'];
+			$owner          = $store_payment_info['owner'];
+			$order_status_id= $store_payment_info['order_status_id'];
+			$total = number_format($store_payment_info['total'],2,'.','');
 			
+            $this->session->data['trade_type']=$trade_type;
+			$this->session->data['security_code']=$security_code;
+			$this->session->data['partner']=$partner;
+			$this->session->data['seller_email']=$seller_email;
+			$this->session->data['order_status_id']=$order_status_id;
 
-		/************************************************************/
+			$_input_charset = "utf-8";
+			$sign_type      = "MD5";
+			$transport      = "http";
+			$notify_url     = HTTP_SERVER . 'index.php?route=payment/alipay/callback';
+			$return_url		=HTTP_SERVER . 'index.php?route=checkout/success';
+			$show_url       = "";
+            
+			$this->load->model('account/customer');
+			$customer_id=$this->customer->getId();
+			$customer_info=$this->model_account_customer->getCustomer($customer_id);
+			$receive_name=$customer_info['username'];
+			$receive_address=$customer_info['address'];
+			$receive_zip=$customer_info['postcode'];
+			$receive_mobile=$customer_info['mobile'];
+			$receive_phone=$customer_info['telphone'];
+		
+			$parameter = array(
+				"service"        => $trade_type,
+				"partner"        => $partner,
+				"return_url"     => $return_url,
+				"notify_url"     => $notify_url,
+				"_input_charset" => $_input_charset,
+				"subject"        => $partner.' Order：' . $order_id ,
+				"body"           => 'Owner： ' . $owner,
+				"out_trade_no"   => $order_id,
+				"price"          => $total,
+				"payment_type"   => "1",
+				"quantity"       => "1",
+				"logistics_fee"      =>'0.00',
+				"logistics_payment"  =>'BUYER_PAY',
+				"logistics_type"     =>'EXPRESS',
+				"receive_name"       =>$receive_name,
+				"receive_address"    =>$receive_address,
+				"receive_zip"        =>$receive_zip,
+				"receive_phone"      =>$receive_phone,
+				"receive_mobile" =>$receive_mobile,
+				"show_url"       => $show_url,
+				"seller_email"   => $seller_email
+			);
 
-		//构造要请求的参数数组，无需改动
-		$parameter = array(
-				"service" => "create_direct_pay_by_user",
-				"partner" => trim($alipay_config['partner']),
-				"payment_type"	=> $payment_type,
-				"notify_url"	=> $notify_url,
-				"return_url"	=> $return_url,
-				"seller_email"	=> $seller_email,
-				"out_trade_no"	=> $out_trade_no,
-				"subject"	=> $subject,
-				"total_fee"	=> $total_fee,
-				"body"	=> $body,
-				"show_url"	=> $show_url,
-				"anti_phishing_key"	=> $anti_phishing_key,
-				"exter_invoke_ip"	=> $exter_invoke_ip,
-				"_input_charset"	=> trim(strtolower($alipay_config['input_charset']))
-		);
+			$alipay = new alipay_service($parameter,$security_code,$sign_type);
+			$action=$alipay->build_url();
 
-		//建立请求
-		$alipaySubmit = new AlipaySubmit($alipay_config);
-		$html_text = $alipaySubmit->buildRequestForm($parameter,"get", "确认");
-		echo $html_text;
+			//$this->data['payment_action'] = $action;
+			//$this->id = 'payment';
+        }
+		//$action='https://mapi.alipay.com/gateway.do?_input_charset=utf-8&body=%E8%A1%A3%E6%9C%8D&logistics_fee=0.00&logistics_payment=BUYER_PAY&logistics_type=EXPRESS¬ify_url=http%3A%2F%2Fwww.xxx.com%2Fcreate_direct_pay_by_user-PHP-UTF-8%2Fnotify_url.php&out_trade_no=1304231437232596&partner=2088801239967847&payment_type=1&price=0.01&quantity=1&receive_address=%E5%AE%89%E5%BE%BD%E7%9C%81+%E5%90%88%E8%82%A5%E5%B8%82+%E7%91%B6%E6%B5%B7%E5%8C%BA+%E7%91%B6%E6%B5%B7%E5%8C%BA%E6%96%B0%E6%B5%B7%E5%A4%A7%E9%81%93%E4%B8%8E%E5%BD%93%E6%B6%82%E5%8C%97%E8%B7%AF%E4%BA%A4%E5%8F%89%E5%8F%A3&receive_mobile=18905655866&receive_name=%E5%94%90%E5%86%9B&receive_phone=0551-64374866&receive_zip=230011&return_url=http%3A%2F%2Fwww.xxx.com%2Fcreate_direct_pay_by_user-PHP-UTF-8%2Freturn_url.php&seller_email=newcross2012%40126.com&service=trade_create_by_buyer&subject=%E6%B5%8B%E8%AF%95%E8%AE%A2%E5%8D%95&sign=49e9455011180ed4958f2304b3937189&sign_type=MD5&';
+		$this->response->setOutput(json_encode(array('action'=>$action)));
+		/* if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/alipay.html')) {
+			$this->template = $this->config->get('config_template') . '/template/payment/alipay.html';
+		} else {
+			$this->template = 'default/template/payment/alipay.html';
+		}
+
+		$this->render(); */
+	}
+
+	public function callback() {
+		//trade_create_by_buyer 双接口 ,create_direct_pay_by_user 直接到帐，create_partner_trade_by_buyer 担保接口
+		$trade_type = $this->session->data['trade_type'];
+
+		log_result("Alipay :: exciting callback function.");
+		$oder_success = FALSE;
+		$this->load->library('encryption');
+
+		$seller_email = $this->session->data['seller_email']; // 商家邮箱
+		$partner = $this->session->data['partner']; //合作伙伴ID
+		$security_code = $this->session->data['security_code']; //安全检验码
+
+		$_input_charset = "utf-8";
+		//$_input_charset = "GBK";
+		$sign_type = "MD5";
+		$transport = 'http';
+
+		$alipay = new alipay_notify($partner,$security_code,$sign_type,$_input_charset,$transport);
+		$verify_result = $alipay->notify_verify();
+
+		// Order status for Opencart
+		/* DEFINE('ORDER_CREATED',1);
+		define('ORDER_WAITING',2);
+		define('ORDER_DETACHING',3);
+		DEFINE('ORDER_OVER',4);
+		DEFINE('ORDER_SUCCESS',5);
+		DEFINE('ORDER_CLOSE',6);
+		DEFINE('ORDER_REFUND',7);
+		DEFINE('ORDER_ERROR',9); */
+
+		log_result("Alipay :: trade_type ".$trade_type." :: verify_result  = ".$verify_result);
+		if($verify_result) {
+			$order_id   = $this->request->post['out_trade_no'];   //$_POST['out_trade_no'];
+			$trade_status=$this->request->post['trade_status'];
+			$this->load->model('checkout/order');
+			$order_info = $this->model_checkout_order->getOrder($order_id);
+			log_result("Alipay order_id :: ".$order_id);
+
+			if ($order_info) {
+				$order_status_id = $order_info["order_status_id"];
+				log_result("Alipay order_id :: ".$order_id." order_status_id = ".$order_status_id." , trade_status :: ".$trade_status);
+				log_result("Alipay order_id :: Complete status = ".ORDER_OVER);
+				// 确定订单没有重复支付
+				if ($order_status_id != ORDER_OVER) {
+					$amount = $order_info['total'];
+					
+					$total  =  $this->request->post['total_fee'];    //$_POST['total_fee'];
+					// 确定支付和订单额度一致
+					log_result("Alipay total :: ".$this->request->post['total_fee'].",amount :: ".$amount);
+					if($total < $amount){
+						log_result("Alipay order_id :: ".$order_id." total < amount, order_status_id = ".$order_status_id);
+						$this->model_checkout_order->confirm($order_id, ORDER_CLOSE);
+						echo "success";
+					}else{
+						// 根据接口类型动态使用支付方法
+						if($trade_type=='trade_create_by_buyer'){
+							$this->func_trade_create_by_buyer($order_id,$order_status_id,$order_status,$trade_status);
+							echo "success";
+						}else if($trade_type=='create_direct_pay_by_user'){
+							$this->func_create_direct_pay_by_user($order_id,$order_status_id,$order_status,$trade_status);
+							echo "success";
+						}else if($trade_type=='create_partner_trade_by_buyer'){
+							$this->func_create_partner_trade_by_buyer($order_id,$order_status_id,$order_status,$trade_status);
+							echo "success";
+						}
+					 }
+					}else {
+						echo "fail";
+					}
+			}else{
+				log_result("Alipay No Order Found.");
+				echo "fail";
+			}
+		}
+	}
+		// 双接口
+	private function func_trade_create_by_buyer($order_id,$order_status_id,$order_status,$trade_status){
+			if($trade_status == 'WAIT_BUYER_PAY') {
+				log_result("Alipay order_id :: ".$order_id." WAIT_BUYER_PAY, order_status_id = ".$order_status_id);
+				if (ORDER_CREATED> $order_status_id){
+					$this->model_checkout_order->confirm($order_id, ORDER_CREATED);
+					log_result("Alipay order_id :: ".$order_id." Update Successfully.");
+				}
+			}
+			else if($trade_status == 'WAIT_SELLER_SEND_GOODS') {
+				log_result("Alipay order_id :: ".$order_id." trade_status == WAIT_SELLER_SEND_GOODS, update order_status_id from ".$order_status_id." to ".$this->session->data['order_status_id']);
+				if($this->session->data['order_status_id']> $order_status_id){
+					$this->model_checkout_order->confirm($order_id, $this->session->data['order_status_id']);
+					log_result("Alipay order_id :: ".$order_id." Update Successfully.");
+				}
+			}
+			else if($trade_status == 'WAIT_BUYER_CONFIRM_GOODS') {
+				log_result("Alipay order_id :: ".$order_id." trade_status == WAIT_BUYER_CONFIRM_GOODS,update order_status_id from ".$order_status_id." to ".ORDER_SUCCESS);
+				if ( ORDER_SUCCESS> $order_status_id){
+					$this->model_checkout_order->confirm($order_id, ORDER_SUCCESS);
+					log_result("Alipay order_id :: ".$order_id." Update Successfully.");
+				}
+			}
+			else if($trade_status == 'TRADE_FINISHED' ||$trade_status == 'TRADE_SUCCESS') {
+				log_result("Alipay order_id :: ".$order_id." trade_status == TRADE_FINISHED / TRADE_SUCCESS, update order_status_id from ".$order_status_id." to ".ORDER_SUCCESS);
+				if (ORDER_SUCCESS > $order_status_id){
+					$this->model_checkout_order->confirm($order_id,ORDER_SUCCESS);
+					log_result("Alipay order_id :: ".$order_id." Update Successfully.");
+				}
+			}
+	}
+	// 直接到帐
+	private function func_create_direct_pay_by_user($order_id,$order_status_id,$order_status,$trade_status){
+			if($trade_status == 'TRADE_FINISHED' ||$trade_status == 'TRADE_SUCCESS') {
+				log_result("Alipay order_id :: ".$order_id." trade_status ==TRADE_FINISHED / TRADE_SUCCESS,  update order_status_id from ".$order_status_id." to ".$this->session->data['order_status_id']);
+				if($this->session->data['order_status_id']> $order_status_id){
+					$this->model_checkout_order->confirm($order_id, $this->session->data['order_status_id']);
+					log_result("Alipay order_id :: ".$order_id." update order_status_id to ".$this->session->data['order_status_id']);
+				}
+			}
+	}
+	// 双接口
+	private function func_create_partner_trade_by_buyer($order_id,$order_status_id,$order_status,$trade_status){
+			if($trade_status == 'WAIT_BUYER_PAY') {
+				log_result("Alipay order_id :: ".$order_id."  trade_status ==  WAIT_BUYER_PAY,  update order_status_id from ".$order_status_id." to ".ORDER_CREATED);
+				if (ORDER_CREATED> $order_status_id){
+					$this->model_checkout_order->confirm($order_id, ORDER_CREATED);
+					log_result("Alipay order_id :: ".$order_id." Update Successfully.");
+				}
+			}
+			else if($trade_status == 'WAIT_SELLER_SEND_GOODS') {
+				log_result("Alipay order_id :: ".$order_id." trade_status == WAIT_SELLER_SEND_GOODS, update order_status_id from ".$order_status_id." to ".$this->session->data['order_status_id']);
+				if($this->session->data['order_status_id']){
+					$this->model_checkout_order->confirm($order_id, $this->session->data['order_status_id']);
+					log_result("Alipay order_id :: ".$order_id." Update Successfully.");
+				}
+			}
+			else if($trade_status == 'WAIT_BUYER_CONFIRM_GOODS') {
+				log_result("Alipay order_id :: ".$order_id." trade_status == WAIT_BUYER_CONFIRM_GOODS, update order_status_id from ".$order_status_id." to ".ORDER_SUCCESS);
+				if ( ORDER_SUCCESS> $order_status_id){
+					$this->model_checkout_order->confirm($order_id, ORDER_SUCCESS);
+					log_result("Alipay order_id :: ".$order_id." Update Successfully.");
+				}
+			}
+			else if($trade_status == 'TRADE_FINISHED' ) {
+				log_result("Alipay order_id :: ".$order_id." trade_status == TRADE_FINISHED ,update order_status_id from ".$order_status_id." to ".ORDER_SUCCESS);
+				if (ORDER_SUCCESS> $order_status_id){
+					$this->model_checkout_order->confirm($order_id,ORDER_SUCCESS);
+					log_result("Alipay order_id :: ".$order_id." Update Successfully.");
+				}
+			}
 	}
 }
+
 ?>

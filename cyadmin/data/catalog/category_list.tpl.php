@@ -1,11 +1,8 @@
-<link rel="stylesheet" type="text/css" href="view/stylesheet/general.css">
+
 <link rel="stylesheet" type="text/css" href="view/stylesheet/main.css">
 <script type="text/javascript" src="view/javascript/jquery/jquery-1.8.0.min.js"></script>
-<style type="text/css">
-tr.over td {
-	background:#cfeefe;
-} 
-</style>
+<link rel="stylesheet" type="text/css" href="view/stylesheet/general.css">
+
 
 <?php if($error_warning) { ?>
 <div class="warning"><?php echo $error_warning;?></div>

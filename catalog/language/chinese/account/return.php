@@ -41,7 +41,7 @@ $_['entry_date_ordered'] = '&nbsp;&nbsp;订单日期：';
 $_['entry_username']    = '您的名字：';
 
 $_['entry_email']        = '电子邮箱：';
-$_['entry_telephone']    = '电&nbsp;&nbsp;&nbsp;&nbsp;话：';
+$_['entry_telphone']    = '电&nbsp;&nbsp;&nbsp;&nbsp;话：';
 $_['entry_product']      = '商&nbsp;品&nbsp;名：';
 $_['entry_model']        = '商品型号：';
 $_['entry_quantity']     = '&nbsp;数&nbsp;&nbsp;&nbsp;&nbsp;量：';
@@ -56,7 +56,7 @@ $_['error_username']    = '用户名必须在1到32字符之间。';
 
 $_['error_warning']      = '错误：';
 $_['error_email']        = '无效的邮箱地址。';
-$_['error_telephone']    = '电话号码必须为3到32字符。';
+$_['error_telphone']    = '电话号码必须为3到32字符。';
 $_['error_product']      = '请至少选择一个商品。';
 $_['error_model']        = '商品名称必须在3-64字符之间。';
 $_['error_reason']       = '请选择一个退换原因。';

@@ -30,7 +30,7 @@ $_['column_action']         = '管理';
 // Entry
 $_['entry_username']       = '用户名：';
 $_['entry_email']           = 'E-Mail：';
-$_['entry_telephone']       = '电话：';
+$_['entry_telphone']       = '电话：';
 $_['entry_fax']             = '&nbsp;&nbsp;传真：';
 $_['entry_mobile']             = '&nbsp;&nbsp;手机：';
 $_['entry_newsletter']      = '&nbsp;&nbsp;咨询：';
@@ -57,7 +57,7 @@ $_['error_exists']          = '警告： E-Mail地址已存在！';
 $_['error_username']       = '用户名必须在1至32个字符之间！';
 
 $_['error_email']           = '邮箱地址无效！';
-$_['error_telephone']       = '电话号码必须在3至32个字符之间！';
+$_['error_telphone']       = '电话号码必须在3至32个字符之间！';
 $_['error_password']        = '密码长度必须在4到20个字符之间！';
 $_['error_confirm']         = '密码和确认密码不一致！';
 $_['error_address_1']       = '地址必须在3至128个字符之间！';

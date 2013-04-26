@@ -50,6 +50,20 @@ final class Loader {
 			exit();					
 		}
 	}
+	
+	
+	public function controller($controller) {
+		$file  = DIR_APPLICATION . 'controller/' . $controller . '.php';
+		$class = 'Controller' . preg_replace('/[^a-zA-Z0-9]/', '', $controller);
+	
+		if (file_exists($file)) {
+			include_once($file);
+			$this->registry->set('controller_' . str_replace('/', '_', $controller), new $class($this->registry));
+		} else {
+			trigger_error('Error: Could not load controller ' . $controller . '!');
+			exit();					
+		}
+	}
 	 
 	public function database($driver, $hostname, $username, $password, $database, $prefix = NULL, $charset = 'UTF8') {
 		$file  = DIR_SYSTEM . 'database/' . $driver . '.php';

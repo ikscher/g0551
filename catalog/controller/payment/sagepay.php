@@ -51,7 +51,7 @@ class ControllerPaymentSagepay extends Controller {
 			$data['BillingState'] = $order_info['payment_zone_code'];
 		}
 		
-		$data['BillingPhone'] = $order_info['telephone'];
+		$data['BillingPhone'] = $order_info['telphone'];
 		
 		if ($this->cart->hasShipping()) {
 			$data['DeliveryFirstnames'] = $order_info['shipping_firstname'];
@@ -70,7 +70,7 @@ class ControllerPaymentSagepay extends Controller {
 				$data['DeliveryState'] = $order_info['shipping_zone_code'];
 			}
 		
-			$data['DeliveryPhone'] = $order_info['telephone'];
+			$data['DeliveryPhone'] = $order_info['telphone'];
 		} else {
 			$data['DeliveryFirstnames'] = $order_info['payment_firstname'];
         	$data['DeliverySurname'] = $order_info['payment_lastname'];
@@ -88,7 +88,7 @@ class ControllerPaymentSagepay extends Controller {
 				$data['DeliveryState'] = $order_info['payment_zone_code'];
 			}
 		
-			$data['DeliveryPhone'] = $order_info['telephone'];			
+			$data['DeliveryPhone'] = $order_info['telphone'];			
 		}
 		
 		$data['AllowGiftAid'] = '0';

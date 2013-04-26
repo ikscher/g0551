@@ -1,7 +1,7 @@
 <?php
 $_['address']               ='合肥市新站区晨阳世纪城';
-$_['telephone']             =' 服务热线：0551-64374866';
-$_['icp']                   =' 皖ICP备11019069号-1';
+$_['telphone']             =' 服务热线：0551-64374866';
+$_['icp']                   =' <a href="http://www.miitbeian.gov.cn/publish/query/indexFirst.action" target="_blank">皖ICP备12015326号-1</a>';
 $_['bottom']                ='Copyright 2010-'.date('Y').' 版权所有G0551.COM ';
 
 
@@ -43,6 +43,7 @@ $_['text_feedback']     = '意见反馈';
 $_['text_contact']      = '联系我们';
 $_['text_aboutus']      = '关于我们';
 $_['text_company']      = '公司简介';
+$_['text_imageUpload']   = '图片上传';
 
 // Locale
 $_['code']                  = 'cn';

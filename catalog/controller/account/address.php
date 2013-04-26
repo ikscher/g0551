@@ -177,7 +177,7 @@ class ControllerAccountAddress extends Controller {
         		'address_id' => $result['address_id'],
 				'customer_id'=> $result['customer_id'],
 				'username'   => $result['username'],
-				'telephone'  => $result['telephone'],
+				'telphone'  => $result['telphone'],
 				'mobile'     => $result['mobile'],
 				'company'    => $result['company'],
 				'address'    => $result['address'],

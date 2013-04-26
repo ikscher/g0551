@@ -24,9 +24,12 @@
 .store_body .redleft{width:198px;border:1px solid #ffbcce;float:left; height:auto; padding-bottom:10px; margin-right:10px;}
 .store_body .redright{width:768px;border:1px solid #ffbcce; height:auto; float:left; padding-bottom:10px;}
 .store_body .rednavbg{height:27px; background:url(../image/store/store_rednavbg.jpg) repeat-x;line-height:27px; color:#f69; font-weight:bold; padding-left:30px;}
-.store_body .rednavbg1{height:27px; background:url(../image/store/store_rednavbg.jpg) repeat-x;border-top:1px solid #ffbcce; line-height:27px; color:#f69; font-weight:bold; padding-left:30px;}
+.store_body .rednavbg_{height:27px; background:url(../image/store/store_rednavbg.jpg) repeat-x;border-top:1px solid #ffbcce; line-height:27px; color:#f69; font-weight:bold; padding-left:30px;}
 .store_body .lsearch{ background:#FFFFFF;padding:5px;}
 .store_body .lsearch li{margin:4px; text-align:center;}
+.store_body .storeinfo{ background:#FFFFFF;padding:5px;color:#666;}
+.store_body .storeinfo li{margin:4px; text-align:left;padding-top:3px;}
+
 .store_body .lsearch .searchbor{border:1px solid #ccc;background:#FFFFFF;height:18px; margin-bottom:6px;}
 .store_body .lsearch .searchbtn{width:60px; height:26px;cursor:pointer;}
 /* .store_body .lclass{ background:#FFFFFF;padding:4px;} */
@@ -45,6 +48,15 @@
 .store_body .rproducts .bor236 img{ max-width:220px; max-height:220px;}
 .store_body .rproducts .price{color:#FF0000; font-weight:bold; font-family:Verdana; font-size:14px;}
 .store_body .rproducts .sales{color:#FFcc00; font-weight:bold; font-family:Verdana;}
+
+
+.store_banner{height:90px; background:url(../image/store/store_banner.jpg) no-repeat;}
+.store_banner ul{width:96%; float:left; line-height:90px; margin-left:10px;}
+.store_banner ul li{float:left; height:90px; font-family:"宋体"; font-size:16px;color:#ffff66;}
+.store_banner ul li.breakword{ margin-left:10px;width:380px;word-wrap:break-word; word-break:break-all;overflow:hidden;}
+.store_banner li img{border:1px solid #ffffff; margin-top:10px; }
+.store_banner .fav{float:right;font-size:30px;filter:alpha(Opacity=80);-moz-opacity:0.5;opacity: 0;z-index:100; background-color:#ffffff; }
+
 
 /**分页**/
 .results{float:right;padding:10px;}
@@ -109,8 +121,7 @@
 .c_topdiv a span{padding:0 0 0 2px;float:left;}
 
 
-.store_introduce{padding:10px;}
-.store_introduce p{margin-bottom:5px;}
+/* .store_introduce p{margin-bottom:5px;} */
 
 
 .plist_group{ padding-top:10px;clear:both;}

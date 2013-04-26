@@ -88,19 +88,7 @@ class ControllerCheckoutCart extends Controller {
 		
 		$this->document->setTitle($this->language->get('heading_title'));
 
-      	/* $this->data['breadcrumbs'] = array();
-
-      	$this->data['breadcrumbs'][] = array(
-        	'href'      => $this->url->link('common/home'),
-        	'text'      => $this->language->get('text_home'),
-        	'separator' => false
-      	); 
-
-      	$this->data['breadcrumbs'][] = array(
-        	'href'      => $this->url->link('checkout/cart'),
-        	'text'      => $this->language->get('heading_title'),
-        	'separator' => $this->language->get('text_separator')
-      	); */
+   
 			
     	if ($this->cart->hasProducts() || !empty($this->session->data['vouchers'])) {
 			$points = $this->customer->getRewardPoints();
@@ -174,12 +162,7 @@ class ControllerCheckoutCart extends Controller {
 			
 			$this->data['action'] = $this->url->link('checkout/cart');   
 						
-			/* if ($this->config->get('config_cart_weight')) {
-				$this->data['weight'] = $this->weight->format($this->cart->getWeight(), $this->config->get('config_weight_class_id'), $this->language->get('decimal_point'), $this->language->get('thousand_point'));
-			} else {
-				$this->data['weight'] = '';
-			} */
-						 
+			 
 			$this->load->model('tool/image');
 			
       		$this->data['products'] = array();
@@ -207,24 +190,10 @@ class ControllerCheckoutCart extends Controller {
 					$image = '';
 				}
 
-				$option_data = array();
+				//$option_data = array();
                 
 				$this->load->model('catalog/product');
-        		foreach ($product['option'] as $option) {
-					if ($option['type'] != 'file') {
-						$value = $option['option_value'];	
-					} else {
-						$filename = $this->encryption->decrypt($option['option_value']);
-						
-						$value = utf8_substr($filename, 0, utf8_strrpos($filename, '.'));
-					}
-					$attribute_group_name=$this->model_catalog_product->getAttributeGroupNameByPO($option['product_option_id']);
-					$option_data[] = array(
-						'name'  => $option['name'],
-						'attribute_group_name' =>isset($attribute_group_name)?$attribute_group_name:'其他' ,
-						'value' => (utf8_strlen($value) > 20 ? utf8_substr($value, 0, 20) . '..' : $value)
-					);
-        		}
+        		
 				
 				// Display prices
 				if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
@@ -245,7 +214,7 @@ class ControllerCheckoutCart extends Controller {
           			'thumb'    => $image,
 					'name'     => $product['name'],
           			'model'    => $product['model'],
-          			'option'   => $option_data,
+          			//'option'   => $option_data,
 					'attribute'=> $product['attribute'],
           			'quantity' => $product['quantity'],
           			'stock'    => $product['stock'] ? true : !(!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning')),
@@ -310,50 +279,13 @@ class ControllerCheckoutCart extends Controller {
 			$this->data['shipping_status'] = $this->config->get('shipping_status') && $this->config->get('shipping_estimator') && $this->cart->hasShipping();	
 		    
             
-            /*			
-			if (isset($this->request->post['country_id'])) {
-				$this->data['country_id'] = $this->request->post['country_id'];				
-			} elseif (isset($this->session->data['shipping_country_id'])) {
-				$this->data['country_id'] = $this->session->data['shipping_country_id'];			  	
-			} else {
-				$this->data['country_id'] = $this->config->get('config_country_id');
-			}
-				
-			
-			$this->load->model('localisation/country');
-			
-			$this->data['countries'] = $this->model_localisation_country->getCountries();
-						
-			if (isset($this->request->post['zone_id'])) {
-				$this->data['zone_id'] = $this->request->post['zone_id'];				
-			} elseif (isset($this->session->data['shipping_zone_id'])) {
-				$this->data['zone_id'] = $this->session->data['shipping_zone_id'];			
-			} else {
-				$this->data['zone_id'] = '';
-			}
-			
-			if (isset($this->request->post['postcode'])) {
-				$this->data['postcode'] = $this->request->post['postcode'];				
-			} elseif (isset($this->session->data['shipping_postcode'])) {
-				$this->data['postcode'] = $this->session->data['shipping_postcode'];					
-			} else {
-				$this->data['postcode'] = '';
-			}
-			
-			if (isset($this->request->post['shipping_method'])) {
-				$this->data['shipping_method'] = $this->request->post['shipping_method'];				
-			} elseif (isset($this->session->data['shipping_method'])) {
-				$this->data['shipping_method'] = $this->session->data['shipping_method']['code']; 
-			} else {
-				$this->data['shipping_method'] = '';
-			}
-			*/
+           
 						
 			// Totals
 			$this->load->model('setting/extension');
 			
 			$total_data = array();					
-			$total = 0;
+			$total =0;
 			//$taxes = $this->cart->getTaxes();
 			
 			 //Display prices
@@ -372,7 +304,7 @@ class ControllerCheckoutCart extends Controller {
 					if ($this->config->get($result['code'] . '_status')) {//可用的状态sub_total_status,coupon_status ...
 						$this->load->model('total/' . $result['code']);
 			            
-						$this->{'model_total_' . $result['code']}->getTotal($total_data, $total);
+						$this->{'model_total_' . $result['code']}->getTotal($total_data, $total,$this->session->data['dbuy_flag']);
 					}
 					
 					$sort_order = array(); 
@@ -518,7 +450,9 @@ class ControllerCheckoutCart extends Controller {
     *  添加到购物车
     */	
 	public function add() {
-
+        //设置标志位
+		$this->session->data['dbuy_flag']=false;
+		
 		$this->language->load('checkout/cart');
 
 		
@@ -547,27 +481,28 @@ class ControllerCheckoutCart extends Controller {
 			}
 				
             //属性和选项属性判断不能为空				
-			$option=isset($this->request->post['option'])?array_filter($this->request->post['option']):array();
+			//$option=isset($this->request->post['option'])?array_filter($this->request->post['option']):array();
+			$price=isset($this->request->post['price'])?$this->request->post['price']:0;
 			$attribute=isset($this->request->post['attribute'])?$this->request->post['attribute']:array();
             
-			$product_attributes=$this->model_catalog_product->getProductAttributes($product_id,true);
+			$product_attributes=$this->model_catalog_product->getProductAttributes($product_id,'option');
 			foreach ($product_attributes as $product_attribute) {
 				if (empty($attribute[$product_attribute['attribute_group_id']])) {
 					$json['error']['attribute'][$product_attribute['attribute_group_id']] = sprintf($this->language->get('error_required'), $product_attribute['attribute_group_name']);
 				}
 			}
 	
-			$product_options = $this->model_catalog_product->getProductOptions($product_id);
+			/* $product_options = $this->model_catalog_product->getProductOptions($product_id);
 		
 			foreach ($product_options as $product_option) {
 				if ($product_option['required'] && empty($option[$product_option['product_option_id']])) {
 					$json['error']['option'][$product_option['product_option_id']] = sprintf($this->language->get('error_required'), $product_option['attribute_group_name']);
 				}
-			}
+			} */
 		
 			if (!$json) {
 			   
-				$this->cart->add($product_id, $quantity, $option,$attribute);
+				$this->cart->add($product_id, $quantity, $attribute,$price);
                 
 				$json['success'] = sprintf($this->language->get('text_success'), $this->url->link('product/product', 'product_id=' . $this->request->post['product_id']), $product_info['name'], $this->url->link('checkout/cart'));
 				
@@ -581,7 +516,6 @@ class ControllerCheckoutCart extends Controller {
 				
 				$total_data = array();					
 				$total = 0;
-				//$taxes = $this->cart->getTaxes();
 				
 				// Display prices
 				if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
@@ -599,7 +533,7 @@ class ControllerCheckoutCart extends Controller {
 						if ($this->config->get($result['code'] . '_status')) {
 							$this->load->model('total/' . $result['code']);
 				
-							$this->{'model_total_' . $result['code']}->getTotal($total_data, $total);//, $taxes
+							$this->{'model_total_' . $result['code']}->getTotal($total_data, $total,$this->session->data['dbuy_flag']);//, $taxes
 						}
 						
 						$sort_order = array(); 

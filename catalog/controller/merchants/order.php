@@ -26,14 +26,14 @@ class ControllerMerchantsOrder extends Controller {
         $this->load->model('tool/image');
 		$this->load->model('account/order');
 		
-		$statusid=ORDER_WAITING;//
+		$statusid=ORDER_PAID;//
 		
 		
 		$this->load->language('merchants/left');
-		$this->data['waitingorder']=$this->language->get('waitingorder');
-		$this->data['dealingorder']=$this->language->get('dealingorder');
-		$this->data['createorder']=$this->language->get('createorder');
-		$this->data['dealedorder']=$this->language->get('dealedorder');
+		$this->data['waitingorder']=$this->language->get('text_waitingorder');
+		$this->data['dealingorder']=$this->language->get('text_dealingorder');
+		$this->data['createorder']=$this->language->get('text_createorder');
+		$this->data['dealedorder']=$this->language->get('text_dealedorder');
 		
 		//当前页
 		$page=isset($this->request->get['page'])?intval($this->request->get['page']):1;
@@ -154,7 +154,7 @@ class ControllerMerchantsOrder extends Controller {
 		if($order_id==0 || !is_numeric($order_id)) $this->showMessage("对不起，订单不存在！");
 
 		$this->load->model('merchants/order');
-		$result=$this->model_merchants_order->setOrderState($order_id,ORDER_DETACHING,ORDER_WAITING);
+		$result=$this->model_merchants_order->setOrderState($order_id,ORDER_DETACHING,ORDER_PAID);
 		if($result){
 			exit('ok');
 		}else{

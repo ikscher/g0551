@@ -38,7 +38,7 @@
 		<table height="60" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#e6e6e6" >
 		  <tr>
 			<td height="28" colspan="7" bgcolor="#f3f3f3">
-				<span class="order_num">订单编号：{$return['orderid']}</span>
+				<span class="order_num">订单编号：{$return['order_id']}</span>
 				<span class="order_num">退换时间：{$return['date_added']}</span>
                 <span class="deal_time">退货编号：{$return['return_id']}</span>			</td>
 		  </tr>
@@ -48,7 +48,7 @@
 	        <td width="100" align="center" bgcolor="#FFFFFF">{$return['model']}</td>
 	        <td width="80" align="center" bgcolor="#FFFFFF">{$return['quantity']}</td>
 	        <td bgcolor="#FFFFFF" width="60" align="center">{$return['username']}</td>
-			<td bgcolor="#FFFFFF" width="100" align="center">{$return['telephone']}</td>
+			<td bgcolor="#FFFFFF" width="100" align="center">{$return['telphone']}</td>
 	        <td bgcolor="#FFFFFF" width="60" align="center"><a href="index.php?route=merchants/return/detail&id={$return['return_id']}">详情</a></td>
 		  </tr>
 		</table>

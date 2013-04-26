@@ -14,7 +14,7 @@ $_['text_order_id']       = '订单 ID：';
 $_['text_date_ordered']   = '订单日期：';
 $_['text_member']       = '客户：';
 $_['text_email']          = 'E-Mail：';
-$_['text_telephone']      = '电话：';
+$_['text_telphone']      = '电话：';
 $_['text_return_status']  = '退换状态：';
 $_['text_date_added']     = '添加日期：';
 $_['text_date_modified']  = '修改日期：';
@@ -48,7 +48,7 @@ $_['entry_date_ordered']  = '订单日期：';
 $_['entry_username']     = '用户名：';
 
 $_['entry_email']         = 'E-Mail：';
-$_['entry_telephone']     = '联系电话：';
+$_['entry_telphone']     = '联系电话：';
 $_['entry_product']       = '商品名称：';
 $_['entry_model']         = '商品型号：';
 $_['entry_quantity']      = '数量：';
@@ -66,7 +66,7 @@ $_['error_order_id']      = '订单 ID 必须！';
 $_['error_username']     = '用户名必须在1至32个字符之间！';
 
 $_['error_email']         = '邮箱地址无效！';
-$_['error_telephone']     = '电话号码必须在3至32个字符之间！';
+$_['error_telphone']     = '电话号码必须在3至32个字符之间！';
 $_['error_product']       = '商品名称必须在3至255个字符之间！';
 $_['error_model']         = '商品型号必须在3至64个字符之间！';
 $_['error_password']      = '密码长度必须在3到20个字符之间！';

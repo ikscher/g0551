@@ -28,10 +28,10 @@ class ControllerMerchantsOrdercreate extends Controller {
 		$this->load->model('account/order');
 		
 		$this->load->language('merchants/left');
-		$this->data['waitingorder']=$this->language->get('waitingorder');
-		$this->data['dealingorder']=$this->language->get('dealingorder');
-		$this->data['createorder']=$this->language->get('createorder');
-		$this->data['dealedorder']=$this->language->get('dealedorder');
+		$this->data['waitingorder']=$this->language->get('text_waitingorder');
+		$this->data['dealingorder']=$this->language->get('text_dealingorder');
+		$this->data['createorder']=$this->language->get('text_createorder');
+		$this->data['dealedorder']=$this->language->get('text_dealedorder');
 		
 		$statusid=ORDER_CREATED;
 		

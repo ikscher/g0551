@@ -12,7 +12,7 @@ $_['text_store_url']          = '网店地址：';
 $_['text_member']           = '客户名称：';
 $_['text_member_group']     = '客户组：';
 $_['text_email']              = 'E-Mail：';
-$_['text_telephone']          = '联系电话：';
+$_['text_telphone']          = '联系电话：';
 $_['text_fax']                = '传真号码：';
 $_['text_shipping_method']    = '货运方式：';
 $_['text_payment_method']     = '支付方式：';
@@ -137,7 +137,7 @@ $_['entry_member_group']    = '客户组：';
 $_['entry_username']         = '姓名：';
 
 $_['entry_email']             = 'E-Mail：';
-$_['entry_telephone']         = '电话：';
+$_['entry_telphone']         = '电话：';
 $_['entry_fax']               = '传真：';
 $_['entry_mobile']               = '手机：';
 $_['entry_address']           = '选择地址：';
@@ -177,7 +177,7 @@ $_['error_permission']        = '警告： 您没有权限更改订单！';
 $_['error_username']         = '用户名必须在1至32个字符之间！';
 
 $_['error_email']             = '邮箱地址无效！';
-$_['error_telephone']         = '电话号码必须在3至32个字符之间！';
+$_['error_telphone']         = '电话号码必须在3至32个字符之间！';
 $_['error_password']          = '密码长度必须在3到20个字符之间！';
 $_['error_confirm']           = '密码和确认密码不一致！';
 $_['error_address_1']         = '地址必须在3至128个字符之间！';

@@ -20,7 +20,7 @@ $_['text_agree']                = '我已经阅读并同意 <a class="fancybox" 
 $_['entry_username']           = '您的名字：';
 
 $_['entry_email']               = '电子邮箱：';
-$_['entry_telephone']           = '联系电话：';
+$_['entry_telphone']           = '联系电话：';
 $_['entry_fax']                 = '&nbsp;&nbsp;传真号码：';
 $_['entry_company']             = '&nbsp;&nbsp;公司名称：';
 $_['entry_website']             = '公司网站：';
@@ -46,7 +46,7 @@ $_['entry_confirm']             = '确认密码：';
 $_['error_exists']              = '警告： 该邮箱地址已被注册、请换一个电子邮箱！';
 $_['error_username']           = '用户名必须在1到32字符之间！';
 $_['error_email']               = '无效的邮箱地址！';
-$_['error_telephone']           = '电话号码必须为3到32字节！';
+$_['error_telphone']           = '电话号码必须为3到32字节！';
 $_['error_password']            = '密码必须在4到20字符之间！';
 $_['error_confirm']             = '确认密码与输入密码不一致！';
 $_['error_address_1']           = '地址 1长度必须在3到128字符之间！';

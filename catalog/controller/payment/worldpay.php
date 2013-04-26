@@ -28,7 +28,7 @@ class ControllerPaymentWorldPay extends Controller {
 		
 		$this->data['postcode'] = $order_info['payment_postcode'];
 		$this->data['country'] = $order_info['payment_iso_code_2'];
-		$this->data['telephone'] = $order_info['telephone'];
+		$this->data['telphone'] = $order_info['telphone'];
 		$this->data['email'] = $order_info['email'];
 		$this->data['test'] = $this->config->get('worldpay_test');
 		

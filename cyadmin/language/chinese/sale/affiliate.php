@@ -27,7 +27,7 @@ $_['column_action']             = '管理';
 $_['entry_username']           = '您的名字：';
 
 $_['entry_email']               = 'E-Mail：';
-$_['entry_telephone']           = '电话：';
+$_['entry_telphone']           = '电话：';
 $_['entry_fax']                 = '&nbsp;&nbsp;&nbsp;传真：';
 $_['entry_status']              = '&nbsp;&nbsp;&nbsp;状态：';
 $_['entry_password']            = '&nbsp;&nbsp;&nbsp;密码：';
@@ -59,7 +59,7 @@ $_['error_exists']              = '警告： 此E-Mail地址已注册！';
 $_['error_username']           = '用户名必须在1至32个字符之间！';
 
 $_['error_email']               = '邮箱地址无效！';
-$_['error_telephone']           = '电话号码必须在3至32个字符之间！';
+$_['error_telphone']           = '电话号码必须在3至32个字符之间！';
 $_['error_password']            = '密码长度必须在4到20个字符之间！';
 $_['error_confirm']             = '密码和确认密码不一致！';
 $_['error_address_1']           = '地址必须在3至128个字符之间！';

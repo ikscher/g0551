@@ -91,7 +91,7 @@
 									</tr>
 									<tr>
 									  <td align="right">固定电话：</td>
-									  <td><input type="text" name="telephone" class="small" />&nbsp;&nbsp;<span class="pinkfont">*</span></td>
+									  <td><input type="text" name="telphone" class="small" />&nbsp;&nbsp;<span class="pinkfont">*</span>格式：(0551-12345678或12345678)</td>
 									</tr>
 									<tr>
 									  <td align="right">&nbsp;</td>
@@ -149,7 +149,7 @@
 									</tr>
 									<tr>
 									  <td align="right">固定电话：</td>
-									  <td><input type="text" name="telephone" class="small" value="" />&nbsp;&nbsp;<span class="pinkfont">*</span></td>
+									  <td><input type="text" name="telphone" class="small" value="" />&nbsp;&nbsp;<span class="pinkfont">*</span>格式：(0551-12345678或12345678)</td>
 									</tr>
 									<tr>
 									  <td align="right">&nbsp;</td>
@@ -205,7 +205,7 @@
 		    if(data){
 				$("#editAddress input[name=username]").val(data.username);
 				$("#editAddress input[name=company]").val(data.company);
-				$("#editAddress input[name=telephone]").val(data.telephone);
+				$("#editAddress input[name=telphone]").val(data.telphone);
 				$("#editAddress input[name=mobile]").val(data.mobile);
 				$("#editAddress input[name=address]").val(data.address);
 				$("#editAddress input[name=postcode]").val(data.postcode);
@@ -225,31 +225,31 @@
 	    var username=$.trim($("#editAddress input[name=username]").val());
 	    var mobile=$.trim($("#editAddress input[name=mobile]").val());
 	    var company=$.trim($("#editAddress input[name=company]").val());
-	    var telephone=$.trim($("#editAddress input[name=telephone]").val());
+	    var telphone=$.trim($("#editAddress input[name=telphone]").val());
 	    var address=$.trim($("#editAddress input[name=address]").val());
 	    var postcode=$.trim($("#editAddress input[name=postcode]").val());
 	    var address_id=$.trim($("#editAddress input[name=address_id]").val());
 		
 		
 		var arr=[];
-	    if(!(/^[\w\d\u4E00-\u9FA5]{2,5}$/.test(username))) {
-	       arr.push("输入的用户名2至5个字符!");
+	    if(!(/^[\w\u4E00-\u9FA5]{2,5}$/.test(username))) {
+	       arr.push("输入的用户名2至5个字符,不能含有特殊字符!");
 	    }
 	    if(!(/^1[3|4|5|8][0-9]\d{4,8}$/.test(mobile))){
 		   arr.push("输入的手机号格式不正确！");
 	    }
-	    if(!(/[a-z0-9\u4E00-\u9FA5]{5,}$/.test(company))) {
-	       arr.push("输入的公司名称格式不正确,不少于5个字符!");
+	    if(!(/^[\w\u4E00-\u9FA5]{5,}$/.test(company))) {
+	       arr.push("输入的公司名称格式不正确，不少于5个字符!");
 	    }
 		
-		if(telephone){
-			if(!(/(^0\d{2,3}-?)?\d{7,8}$/.test(telephone))) {
-			   arr.push("输入的电话不正确!");
+		if(telphone){
+			if(!(/^(0\d{2,3}-)?\d{7,8}$/.test(telphone))) {
+			   arr.push("输入的电话格式不正确!");
 		 	}
 	    }
 		
-	    if(!(/[a-z0-9\u4E00-\u9FA5]{5,}$/.test(address))) {
-	       arr.push("输入的地址不正确!");
+	    if(!(/^[\w\u4E00-\u9FA5#]{5,}$/.test(address))) {
+	       arr.push("输入的地址不正确，不少于5个字符!");
 	    }
 	   
 	    if(!(/^[1-9][0-9]{5,5}$/.test(postcode))) {
@@ -264,7 +264,7 @@
 	   
 	    }
 	   
-	    $.post('index.php?route=account/address/update',{username:username,mobile:mobile,telephone:telephone,company:company,address:address,postcode:postcode,address_id:address_id},function(data){
+	    $.post('index.php?route=account/address/update',{username:username,mobile:mobile,telphone:telphone,company:company,address:address,postcode:postcode,address_id:address_id},function(data){
 		    if (data==1){
 			    $(".info tr").each(function(){
 				    if($(this).attr('data-flag')=='1'){
@@ -310,8 +310,8 @@
 	    var arr=[];
 	    var username=$.trim($("#insertAddress input[name=username]").val());
 
-	    if(!(/^[\u4E00-\u9FA5]{2,5}$/.test(username))) {
-	       arr.push("输入的用户名不少于2个汉字!");
+	    if(!(/^[\u4E00-\u9FA5\w]{2,5}$/.test(username))) {
+	       arr.push("输入的用户名格式不正确，不少于2个字符!");
 	    }
 	   
 	    var mobile=$.trim($("#insertAddress input[name=mobile]").val());
@@ -321,20 +321,20 @@
 	    }
 	   
 	    var company=$.trim($("#insertAddress input[name=company]").val());
-	    if(!(/^[\u4E00-\u9FA5]{5,}$/.test(company))) {
-	       arr.push("输入的公司名称不正确!");
+	    if(!(/^[\u4E00-\u9FA5\w]{5,}$/.test(company))) {
+	       arr.push("输入的公司名称格式不正确，不少于5个字符!");
 	    }
 	   
-	    var telephone=$.trim($("#insertAddress input[name=telephone]").val());
-		if(telephone){
-			if(!(/(^0\d{2,3}-?)?\d{7,8}$/.test(telephone))) {
-			   arr.push("输入的电话不正确!");
+	    var telphone=$.trim($("#insertAddress input[name=telphone]").val());
+		if(telphone){
+			if(!(/^(0\d{2,3}-)?\d{7,8}$/.test(telphone))) {
+			   arr.push("输入的电话格式不正确!");
 			}
 	    }
 		
 	    var address=$.trim($("#insertAddress input[name=address]").val());
-	    if(!(/^[\w\u4E00-\u9FA5]{5,}$/.test(address))) {
-	       arr.push("输入的地址不正确!");
+	    if(!(/^[\w\u4E00-\u9FA5#]{5,}$/.test(address))) {
+	       arr.push("输入的地址格式不正确，不少于5个字符!");
 	    }
 	   
 	    var postcode=$("#insertAddress input[name=postcode]").val();
@@ -350,7 +350,7 @@
 	   
 	    }
 	    
-	    $.post('index.php?route=account/address/insert',{username:username,mobile:mobile,telephone:telephone,company:company,address:address,postcode:postcode},function(data){
+	    $.post('index.php?route=account/address/insert',{username:username,mobile:mobile,telphone:telphone,company:company,address:address,postcode:postcode},function(data){
 		    if (data){
 				 //var address_id=json.address_id;
 				 //var customer_id=json.customer_id;

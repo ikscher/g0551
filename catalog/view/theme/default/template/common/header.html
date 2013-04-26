@@ -29,7 +29,7 @@
 	<div class="wp cl h">
 		<ul class="z">
 			<li class="z collect"><a href="javascript:void(0);" onclick="AddFavorite('{$title}','{$home}')">收藏本站</a></li>
-			<li class="z">您好，{if !empty($username)}{$username}欢迎来到穿悦商城！<a href="{$text_logout}" class="f_h">退出</a>{else}欢迎来到穿悦商城！<a href="{$text_login}" class="f_h">登录</a>，<a href="{$text_register}" class="f_h">快速注册</a>{/if}</li>
+			<li class="z">您好，{if !empty($username)}{$username} ！欢迎来到穿悦商城<a href="{$text_logout}" class="f_h">退出</a>{else}欢迎来到穿悦商城！<a href="{$text_login}" class="f_h">登录</a>，<a href="{$text_register}" class="f_h">快速注册</a>{/if}</li>
 		</ul>
 		<ul class="y" id="menu">
 		    {if !empty($username)}
@@ -69,15 +69,18 @@
 			</li>
 			
 			{/if}
-			<li class="z hotline f2 f_c">{$telephone}</li>
+			<li class="z hotline f2 f_c">{$telphone}</li>
 		</ul>
 	</div>
 </div>
 
-<div id="head_index" class="wp cl h">
-	<a href="{$home}" ><div class="logo z"></div></a>
-	<div class="index z">
-		<ul class="nav">
+<div id="head_index" class="wp cl h ">
+	<div class="logo z">
+		<a href="{$home}"><img src="catalog/view/theme/default/image/logo.jpg" width="210" height="111" border="0" usemap="#Map" />
+<map name="Map" id="Map"><area shape="rect" coords="0,1,210,115" /></map></a>
+	</div>
+	<div class="index z ">
+		<ul class="nav ">
 			<li><a href="{$clothes}"></a></li>
 			<li><a href="{$foods}"></a></li>
 			<li><a href="{$house}"></a></li>
@@ -155,6 +158,7 @@
 		if (filter_name) {
 			obj.url += '&filter_name=' + encodeURIComponent(filter_name);
 		}
+		
 		window.location.href = obj.url;
 	});
 

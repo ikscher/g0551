@@ -3,7 +3,7 @@
 class ControllerMerchantsFooter extends Controller {
 
 	protected function index() {
-		$this->data['telephone']=$this->language->get('telephone');
+		$this->data['telphone']=$this->language->get('telphone');
 		$this->data['address']=$this->language->get('address');
 		$this->data['icp']=$this->language->get('icp');
 		$this->data['bottom']=$this->language->get('bottom');

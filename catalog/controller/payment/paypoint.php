@@ -24,7 +24,7 @@ class ControllerPaymentPaypoint extends Controller {
 		$this->data['bill_state'] = $order_info['payment_zone'];
 		$this->data['bill_post_code'] = $order_info['payment_postcode'];
 		$this->data['bill_country'] = $order_info['payment_country'];
-		$this->data['bill_tel'] = $order_info['telephone'];
+		$this->data['bill_tel'] = $order_info['telphone'];
 		$this->data['bill_email'] = $order_info['email'];
 
 		if ($this->cart->hasShipping()) {

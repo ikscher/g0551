@@ -258,7 +258,7 @@ tr.order-hd td{border:1px solid #B4D5FF;border-bottom-color:#eee;padding:8px 0;}
 .attribute table{ border:#ececec solid 1px;}
 .attribute td{ line-height:32px;}
 .attribute table .nostyle{border-spacing:0px;background:none;margin-top:0px; border:0;}
-.input_txt{font-size:12px;border:1px solid #a7a6aa;height:16px; margin:0 0 0 5px;padding:3px 2px 0 3px;background:white url(../image/member/input-bg.png) 0 0 no-repeat;}
+.input_txt{font-size:12px;border:1px solid #a7a6aa;height:16px; margin:0 0 0 0;padding:3px 2px 0 3px;background:white url(../image/member/input-bg.png) 0 0 no-repeat;}
 .fcc{color:#999;}
 .select{ margin:5px;} 
 .color_lump{background:url(../image/member/color-bg.gif) no-repeat -999em -999em transparent;overflow:hidden;width:14px;height:14px;display:inline-block;*display:inline;*zoom:1;border:1px solid #E4E4E4;vertical-align:middle;margin-bottom:5px;}
@@ -271,15 +271,29 @@ table.list{
 	width: 100%;
 }
 
-table.list  thead {
-	background-color: #efefef;
-	white-space: nowrap;
+table.list  thead th {
+	background-color: #ededed;
+	border: 1px solid #d7d7d7;
+	font-weight: normal;
+	height: 25px;
+	text-align: center;
+	vertical-align: middle;
+}
+
+table.list td {
+	border: 1px solid #d7d7d7;
+	padding: 3px 5px;
+	text-align: center;
+	vertical-align: middle;
+	height: 25px;
+	max-width: 200px;
+	min-width: 60px;
 }
 
 td .ok,td .cancel{margin:5px;}
 
 .pic-manager2 .upload a,.imgSpaceBar a{background:url(../image/member/file.png) no-repeat}
-#itemPic{margin:0 10px 0 5px;_width:637px;overflow:hidden}
+#itemPic{margin:0 0 0 5px;_width:637px;overflow:hidden}
 #itemPic .msg{margin:6px 0 0}
 #itemPic .tips{margin:0}
 #itemPic .current,.pm-main .first .pm-box{border-color:#ffc097}
@@ -637,6 +651,10 @@ a.disabled .btn-txt,button.disabled .btn-txt{background-color:#eee;background-im
 	list-style: inside decimal;
 }
 
+.payment_form .required{color:red;}
+.payment_form  table{width:100%;border-collapse:collapse;}
+.payment_form td{padding-top:3px;padding-bottom:3px;}
+/* .payment_form  table tr td.right{text-align:right;} */
 
 .shop-pic{width:80px;height:80px;margin-bottom:10px;display:block;}
 .info-tip{display:block;float:left;border:1px solid #f39a00;margin-left:10px;padding:2px 10px 2px 6px;background:#ffffe5;margin-top:2px}

@@ -122,7 +122,7 @@ class ControllerCheckoutConfirm extends Controller {
 				$data['customer_group_id'] = $this->customer->getCustomerGroupId();
 				$data['username'] = $this->customer->getUserName();
 				$data['email'] = $this->customer->getEmail();
-				$data['telephone'] = $this->customer->getTelephone();
+				$data['telphone'] = $this->customer->gettelphone();
 				$data['mobile'] = $this->customer->getMobile();
 			
 				$this->load->model('account/address');
@@ -133,7 +133,7 @@ class ControllerCheckoutConfirm extends Controller {
 				$data['customer_group_id'] = $this->session->data['guest']['customer_group_id'];
 				$data['username'] = $this->session->data['guest']['username'];
 				$data['email'] = $this->session->data['guest']['email'];
-				$data['telephone'] = $this->session->data['guest']['telephone'];
+				$data['telphone'] = $this->session->data['guest']['telphone'];
 				$data['mobile'] = $this->session->data['guest']['mobile'];
 				
 				$payment_address = $this->session->data['guest']['payment'];
@@ -149,7 +149,7 @@ class ControllerCheckoutConfirm extends Controller {
 			$data['payment_address'] = $payment_address['address'];
 			$data['payment_postcode'] = $payment_address['postcode'];
 			$data['payment_mobile'] = $payment_address['mobile'];
-			$data['payment_telepho0ne'] = $payment_address['telephone'];
+			$data['payment_telepho0ne'] = $payment_address['telphone'];
 			
 		
 			if (isset($this->session->data['payment_method']['title'])) {
@@ -179,7 +179,7 @@ class ControllerCheckoutConfirm extends Controller {
 				$data['shipping_address'] = $shipping_address['address'];
 				$data['shipping_postcode'] = $shipping_address['postcode'];
 				$data['shipping_mobile'] = $shipping_address['mobile'];
-				$data['shipping_telephone'] = $shipping_address['telephone'];
+				$data['shipping_telphone'] = $shipping_address['telphone'];
 				
 				if (isset($this->session->data['shipping_method']['title'])) {
 					$data['shipping_method'] = $this->session->data['shipping_method']['title'];
@@ -199,7 +199,7 @@ class ControllerCheckoutConfirm extends Controller {
 				$data['shipping_address'] = '';
 				$data['shipping_postcode'] = '';
 				$data['shipping_mobile'] = '';
-				$data['shipping_telephone'] = '';
+				$data['shipping_telphone'] = '';
 			}
 			
 			$product_data = array();

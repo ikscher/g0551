@@ -62,7 +62,7 @@ class ControllerPaymentWebPaymentSoftware extends Controller {
 		$request .= '&CC_STATE=' . urlencode($order_info['payment_iso_code_2'] != 'US' ? $order_info['payment_zone'] : $order_info['payment_zone_code']);
 		$request .= '&CC_ZIP=' . urlencode($order_info['payment_postcode']);
 		$request .= '&CC_COUNTRY=' . urlencode($order_info['payment_country']);
-		$request .= '&CC_PHONE=' . urlencode($order_info['telephone']);
+		$request .= '&CC_PHONE=' . urlencode($order_info['telphone']);
 		$request .= '&CC_EMAIL=' . urlencode($order_info['email']);
 		$request .= '&INVOICE_NUM=' . urlencode($this->session->data['order_id']);
 	

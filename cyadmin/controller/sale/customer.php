@@ -272,6 +272,8 @@ class ControllerSaleCustomer extends Controller {
 			$this->data['customers'][] = array(
 				'customer_id'    => $result['customer_id'],
 				'username'           => $result['username'],
+				'storename'       => isset($result['name'])?$result['name']:'无',
+				'store_id'       => isset($result['store_id'])?$result['store_id']:'无',
 				'email'          => $result['email'],
 				'customer_group' => $result['customer_group'],
 				'status'         => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
@@ -282,7 +284,7 @@ class ControllerSaleCustomer extends Controller {
 				'action'         => $action
 			);
 		}	
-					
+			
 		$this->data['heading_title'] = $this->language->get('heading_title');
 
 		$this->data['text_enabled'] = $this->language->get('text_enabled');
@@ -462,7 +464,7 @@ class ControllerSaleCustomer extends Controller {
 		
     	$this->data['entry_username'] = $this->language->get('entry_username');
     	$this->data['entry_email'] = $this->language->get('entry_email');
-    	$this->data['entry_telephone'] = $this->language->get('entry_telephone');
+    	$this->data['entry_telphone'] = $this->language->get('entry_telphone');
     	$this->data['entry_mobile'] = $this->language->get('entry_mobile');
 		$this->data['entry_default'] = $this->language->get('entry_default');
     	$this->data['entry_password'] = $this->language->get('entry_password');
@@ -516,10 +518,10 @@ class ControllerSaleCustomer extends Controller {
 			$this->data['error_email'] = '';
 		}
 		
- 		if (isset($this->error['telephone'])) {
-			$this->data['error_telephone'] = $this->error['telephone'];
+ 		if (isset($this->error['telphone'])) {
+			$this->data['error_telphone'] = $this->error['telphone'];
 		} else {
-			$this->data['error_telephone'] = '';
+			$this->data['error_telphone'] = '';
 		}
 		
  		if (isset($this->error['password'])) {
@@ -620,12 +622,12 @@ class ControllerSaleCustomer extends Controller {
       		$this->data['email'] = '';
     	}
 
-    	if (isset($this->request->post['telephone'])) {
-      		$this->data['telephone'] = $this->request->post['telephone'];
+    	if (isset($this->request->post['telphone'])) {
+      		$this->data['telphone'] = $this->request->post['telphone'];
     	} elseif (!empty($customer_info)) { 
-			$this->data['telephone'] = $customer_info['telephone'];
+			$this->data['telphone'] = $customer_info['telphone'];
 		} else {
-      		$this->data['telephone'] = '';
+      		$this->data['telphone'] = '';
     	}
 
     	if (isset($this->request->post['mobile'])) {
@@ -742,8 +744,8 @@ class ControllerSaleCustomer extends Controller {
 			}
 		}
 		
-    	if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
-      		$this->error['telephone'] = $this->language->get('error_telephone');
+    	if ((utf8_strlen($this->request->post['telphone']) < 3) || (utf8_strlen($this->request->post['telphone']) > 32)) {
+      		$this->error['telphone'] = $this->language->get('error_telphone');
     	}
 
     	if ($this->request->post['password'] || (!isset($this->request->get['customer_id']))) {
@@ -1073,7 +1075,7 @@ class ControllerSaleCustomer extends Controller {
 					'firstname'         => $result['firstname'],
 					'lastname'          => $result['lastname'],
 					'email'             => $result['email'],
-					'telephone'         => $result['telephone'],
+					'telphone'         => $result['telphone'],
 					'fax'               => $result['fax'],
 					'address'           => $this->model_sale_customer->getAddresses($result['customer_id'])
 				);					

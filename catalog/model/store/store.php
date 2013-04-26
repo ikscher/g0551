@@ -1,6 +1,6 @@
 <?php
     /**
-	 *店铺页面*
+	 *店铺相关信息*
 	 */
 Class ModelStoreStore extends Model {
 	 
@@ -143,7 +143,8 @@ Class ModelStoreStore extends Model {
 		
 		return $query->rows;
 	}
-
+    
+    
 
 
 }

@@ -564,7 +564,7 @@ class ControllerSaleReturn extends Controller {
 		$this->data['entry_username'] = $this->language->get('entry_username');
 
 		$this->data['entry_email'] = $this->language->get('entry_email');
-		$this->data['entry_telephone'] = $this->language->get('entry_telephone');
+		$this->data['entry_telphone'] = $this->language->get('entry_telphone');
 		$this->data['entry_return_status'] = $this->language->get('entry_return_status');
 		$this->data['entry_comment'] = $this->language->get('entry_comment');	
 		$this->data['entry_product'] = $this->language->get('entry_product');
@@ -607,10 +607,10 @@ class ControllerSaleReturn extends Controller {
 			$this->data['error_email'] = '';
 		}
 		
- 		if (isset($this->error['telephone'])) {
-			$this->data['error_telephone'] = $this->error['telephone'];
+ 		if (isset($this->error['telphone'])) {
+			$this->data['error_telphone'] = $this->error['telphone'];
 		} else {
-			$this->data['error_telephone'] = '';
+			$this->data['error_telphone'] = '';
 		}
 		
 		if (isset($this->error['product'])) {
@@ -747,12 +747,12 @@ class ControllerSaleReturn extends Controller {
       		$this->data['email'] = '';
     	}
 		
-    	if (isset($this->request->post['telephone'])) {
-      		$this->data['telephone'] = $this->request->post['telephone'];
+    	if (isset($this->request->post['telphone'])) {
+      		$this->data['telphone'] = $this->request->post['telphone'];
 		} elseif (!empty($return_info)) { 
-			$this->data['telephone'] = $return_info['telephone'];
+			$this->data['telphone'] = $return_info['telphone'];
 		} else {
-      		$this->data['telephone'] = '';
+      		$this->data['telphone'] = '';
     	}
 		
 		if (isset($this->request->post['product'])) {
@@ -872,7 +872,7 @@ class ControllerSaleReturn extends Controller {
 			$this->data['text_date_ordered'] = $this->language->get('text_date_ordered');
 			$this->data['text_customer'] = $this->language->get('text_member');
 			$this->data['text_email'] = $this->language->get('text_email');
-			$this->data['text_telephone'] = $this->language->get('text_telephone');
+			$this->data['text_telphone'] = $this->language->get('text_telphone');
 			$this->data['text_return_status'] = $this->language->get('text_return_status');
 			$this->data['text_date_added'] = $this->language->get('text_date_added');	
 			$this->data['text_date_modified'] = $this->language->get('text_date_modified');				
@@ -985,7 +985,7 @@ class ControllerSaleReturn extends Controller {
 			}
 			
 			$this->data['email'] = $return_info['email'];
-			$this->data['telephone'] = $return_info['telephone'];
+			$this->data['telphone'] = $return_info['telphone'];
 			
 			$this->load->model('localisation/return_status');
 
@@ -1079,8 +1079,8 @@ class ControllerSaleReturn extends Controller {
       		$this->error['email'] = $this->language->get('error_email');
     	}
 		
-    	if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
-      		$this->error['telephone'] = $this->language->get('error_telephone');
+    	if ((utf8_strlen($this->request->post['telphone']) < 3) || (utf8_strlen($this->request->post['telphone']) > 32)) {
+      		$this->error['telphone'] = $this->language->get('error_telphone');
     	}
 		
 		if ((utf8_strlen($this->request->post['product']) < 1) || (utf8_strlen($this->request->post['product']) > 255)) {

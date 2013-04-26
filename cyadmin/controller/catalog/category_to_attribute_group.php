@@ -26,42 +26,41 @@ class ControllerCatalogCategoryToAttributeGroup extends Controller {
 		$category_id=isset($this->request->post['category_id'])?$this->request->post['category_id']:'';
 		$attribute_group_id=isset($this->request->post['attribute_group_id'])?$this->request->post['attribute_group_id']:0;
 	    
-		//已存在
-		if($category_id && $attribute_group_id){
-			$result=$this->model_catalog_category_to_attribute_group->getAttributeGroup($attribute_group_id,$category_id);
-		    if(!empty($result)){
-			    exit('no');
-			}
-		}
+		
 		
 		//更新类category表 的attribute_group字段 
 		if(!empty($category_id)){
-		    $res2=$this->model_catalog_category->getCategory($category_id);
-			$attribute_group=isset($res2['attribute_group'])?$res2['attribute_group']:'';
+		    $categoryList=$this->model_catalog_category->getLowestLevelID($category_id);
 			
-			$data=array(
-				         'category_id'=>$category_id,
+			foreach($categoryList as $v){
+		        $res2=$this->model_catalog_category->getCategory($v);
+			    $attribute_group=isset($res2['attribute_group'])?$res2['attribute_group']:'';
+			
+			    $data=array(
+				         'category_id'=>$v,
 						 'attribute_group_id'=>$attribute_group_id
 				     );
 					 
-			if(empty($attribute_group)){
+			    if(empty($attribute_group)){
+					$this->model_catalog_category->updateCategory($data);
+			    }else{
+			        $x=explode(',',$attribute_group);
+					if(!in_array($attribute_group_id,$x)){
+						$this->model_catalog_category->updateCategoryAttributeGroup($data);
+					}
+				}
 				
-				$this->model_catalog_category->updateCategory($data);
-			}else{
-			    $x=explode(',',$attribute_group);
-				if(!in_array($attribute_group_id,$x)){
-					$this->model_catalog_category->updateCategoryAttributeGroup($data);
+				//增加到分类属性组对照表中
+				$result_=$this->model_catalog_category_to_attribute_group->getAttributeGroup($attribute_group_id,$v);
+				if(empty($result_['category_id']) && empty($result_['attribute_group_id'])){
+					$this->model_catalog_category_to_attribute_group->addAttributeGroup($data);
 				}
 				
 			}
-		
-			
+
 		}
 		
-		//增加
-		if($this->model_catalog_category_to_attribute_group->addAttributeGroup($this->request->post)){
-		    exit('ok');
-		}
+		exit('ok');
 			
   	}
     
@@ -152,9 +151,9 @@ class ControllerCatalogCategoryToAttributeGroup extends Controller {
   	}
 	
 	public function deleteone(){
-	    $id=$this->request->get['id'];
-		$category_id=$this->request->get['category_id'];
-		$attribute_group_id=$this->request->get['attribute_group_id'];
+	    $id=$this->request->post['id'];
+		$category_id=$this->request->post['category_id'];
+		$attribute_group_id=$this->request->post['attribute_group_id'];
 		
 		if (empty($id)) return ;
 		
@@ -250,6 +249,7 @@ class ControllerCatalogCategoryToAttributeGroup extends Controller {
 			$this->data['error_warning'] = '';
 		}
 							
+	    $this->data['token'] = $this->session->data['token'];
 		$this->data['insert'] = $this->url->link('catalog/category_to_attribute_group/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		$this->data['delete'] = $this->url->link('catalog/category_to_attribute_group/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
         $this->data['refresh'] = $this->url->link('catalog/category_to_attribute_group', 'token=' . $this->session->data['token'] , 'SSL');			
@@ -266,7 +266,6 @@ class ControllerCatalogCategoryToAttributeGroup extends Controller {
 		);
 		
 
-		
 		$attribute_group_total = $this->model_catalog_category_to_attribute_group->getTotalAttributeGroups($data);
 	
 		$results = $this->model_catalog_category_to_attribute_group->getAttributeGroups($data);
@@ -284,6 +283,8 @@ class ControllerCatalogCategoryToAttributeGroup extends Controller {
 				'category_id'        => $result['category_id'],
 				'id'                 => $result['id'],
 				'name'               => $result['name'],
+				'is_pa'              => $result['is_pa'],
+				'type'               => $result['type'],
 				'ctype'              => $this->model_catalog_category->getCurrentCategory($result['category_id'],'name'),
 				'selected'           => isset($this->request->post['selected']) && in_array($result['id'], $this->request->post['selected']),
 				'action'             => $action
@@ -530,6 +531,19 @@ class ControllerCatalogCategoryToAttributeGroup extends Controller {
 		 $gfunc=null;
 		 
 	     $this->response->setOutput(json_encode($data));
+	}
+	
+	/**设置价格属性是否有效**/
+	public function setPriceAttributeValid(){
+	    $id=$this->request->post['id'];
+		$is_pa=$this->request->post['is_pa'];
+		if(empty($id)) exit('no');
+		$this->load->model('catalog/category_to_attribute_group');
+		if($this->model_catalog_category_to_attribute_group->setPriceAttributeValid($id,$is_pa)){
+		    exit('yes');
+		}else{
+		    exit('no');
+		}
 	}
     
 }

@@ -45,7 +45,7 @@ class ControllerCommonFooter extends Controller {
 		$this->data['countProducts']=$this->cart->countProducts() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0);
         $this->data['userid']=$this->customer->getId();
 		
-		$this->data['telephone']=$this->language->get('telephone');
+		$this->data['telphone']=$this->language->get('telphone');
 		$this->data['address']=$this->language->get('address');
 		$this->data['icp']=$this->language->get('icp');
 		$this->data['bottom']=$this->language->get('bottom');

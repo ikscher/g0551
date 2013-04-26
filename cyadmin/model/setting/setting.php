@@ -1,4 +1,5 @@
 <?php 
+/**单店铺后台设置的表**/
 class ModelSettingSetting extends Model {
 	public function getSetting($group, $store_id = 0) {
 		$data = array(); 

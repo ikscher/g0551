@@ -9,7 +9,9 @@
 			} else {
 				$page = 1;
 			}
-					
+			
+			$filter_name=isset($this->request->get['filter_name'])?$this->request->get['filter_name']:'';
+			
 			if (isset($this->request->get['limit'])) {
 				$limit = $this->request->get['limit'];
 			} else {
@@ -43,6 +45,7 @@
 			$data=array(
 			       'start'=>($page-1)*$limit,
 				   'limit'=>$limit,
+				   'filter_name'=>html_entity_decode($filter_name, ENT_QUOTES, 'UTF-8'),
 				   'search'=>$search,
 				   'sort'  =>isset($this->request->get['sort'])?$this->request->get['sort']:'',
 				   'order' =>isset($this->request->get['order'])?$this->request->get['order']:''

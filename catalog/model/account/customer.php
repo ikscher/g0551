@@ -126,11 +126,11 @@ class ModelAccountCustomer extends Model {
 	    $nickname=$this->db->escape($data['nickname']);
 		//$postcode=$this->db->escape($data['postcode']);
 		$mobile=$this->db->escape($data['mobile']);
-		$telephone=$this->db->escape($data['telephone']);
+		$telphone=$this->db->escape($data['telphone']);
 		$email=$this->db->escape($data['email']);
 		//$address=$this->db->escape($data['address']);
 		
-		$this->db->query("UPDATE " . DB_PREFIX . "customer SET username='{$username}', nickname ='{$nickname}', mobile = '{$mobile}', email = '{$email}', telephone = '{$telephone}' WHERE customer_id = '{$uid}'");
+		$this->db->query("UPDATE " . DB_PREFIX . "customer SET username='{$username}', nickname ='{$nickname}', mobile = '{$mobile}', email = '{$email}', telphone = '{$telphone}' WHERE customer_id = '{$uid}'");
 	}
 
 	public function editPassword($password) {
@@ -150,7 +150,7 @@ class ModelAccountCustomer extends Model {
 	    if(!empty($store_id)){
 			$sql="SELECT * FROM " . DB_PREFIX . "customer WHERE customer_id = '" . (int)$customer_id . "' and store_id='{$store_id}'";
 		}else{
-		    $sql="SELECT * FROM " . DB_PREFIX . "customer WHERE customer_id = '" . (int)$customer_id . "'";
+		    $sql="SELECT a.* FROM `" . DB_PREFIX . "customer` c left join `".DB_PREFIX."address` a on c.customer_id=a.customer_id WHERE a.status=1 and c.customer_id = '" . (int)$customer_id . "'";
 		}
 		
 		$query = $this->db->query($sql);

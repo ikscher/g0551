@@ -53,7 +53,7 @@ class ModelAccountOrder extends Model {
 				'customer_id'             => $order_query->row['customer_id'],
 				'username'               => $order_query->row['username'],
 			    
-				'telephone'               => $order_query->row['telephone'],
+				'telphone'               => $order_query->row['telphone'],
 				'mobile'                     => $order_query->row['mobile'],
 				'email'                   => $order_query->row['email'],
 				'payment_username'       => $order_query->row['payment_username'],
@@ -94,7 +94,7 @@ class ModelAccountOrder extends Model {
 			$data['limit'] = 1;
 		}	
 		
-		$sql="SELECT o.order_id,o.payment_method, o.username,os.order_status_id ,os.name as status, o.date_added, o.total,o.orderid,o.store_id,s.name as store_name FROM `" . DB_PREFIX . "order` o LEFT JOIN " . DB_PREFIX . "order_status os ON (o.order_status_id = os.order_status_id) left join `".DB_PREFIX."store` s on o.store_id=s.store_id  WHERE o.customer_id = '" . (int)$this->customer->getId() . "'";
+		$sql="SELECT o.order_id,o.payment_method, o.username,os.order_status_id ,os.name as status, o.date_added, o.total,o.store_id,s.name as store_name FROM `" . DB_PREFIX . "order` o LEFT JOIN " . DB_PREFIX . "order_status os ON (o.order_status_id = os.order_status_id) left join `".DB_PREFIX."store` s on o.store_id=s.store_id  WHERE o.customer_id = '" . (int)$this->customer->getId() . "'";
 		if (!empty($data['statusid'])) $sql.="  AND o.order_status_id = '".(int)$data['statusid']."'";
 		
 		

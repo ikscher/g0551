@@ -2,6 +2,7 @@
 class ModelCatalogCategory extends Model {
     private $category_name='';
 	private $current_category_name='';
+	private $categoryList=array();
 	private $current_category_id='';
 	static $CATEGORY_ROOT = 0;
 
@@ -223,6 +224,28 @@ class ModelCatalogCategory extends Model {
 			}
 			return $this->category_name;
 		}
+	}
+	
+	/** 
+	*  根据当前类ID取属于当前类下 所有最底级的ID
+	*/
+	public function getLowestLevelID($category_id){
+	    $data=array();
+	    $sql="SELECT category_id, parent_id FROM " . DB_PREFIX . "category  WHERE parent_id = '" . (int)$category_id .  "'";
+		
+		$query = $this->db->query($sql);
+        
+		if (!$query->num_rows) {
+		    array_push($this->categoryList,$category_id);
+		}
+		
+		$data=$query->rows;
+		
+		foreach($data as $v){
+			$this->getLowestLevelID($v['category_id']);
+	    }
+		
+		return $this->categoryList;
 	}
 	
 	/**

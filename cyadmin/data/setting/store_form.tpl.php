@@ -55,6 +55,11 @@
 					 <?php } ?></td>
 				</tr>
 				
+				<tr>
+				  <td><span class="required">*</span> email</td>
+				  <td><input type="text" name="email" value="<?php if(isset($store['email'])) { ?><?php echo $store['email'];?><?php } ?>" size="40" disabled /></td>
+				</tr>
+				
 				<tr><td>传真</td>
 				  <td><input type="text" name="fax" value="<?php if(isset($store['fax'])) { ?><?php echo $store['fax'];?><?php } ?>" /></td>
 				</tr>

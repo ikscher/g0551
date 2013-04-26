@@ -1,15 +1,10 @@
-<link rel="stylesheet" type="text/css" href="view/stylesheet/general.css">
+
 <link rel="stylesheet" type="text/css" href="view/stylesheet/main.css">
+<link rel="stylesheet" type="text/css" href="view/stylesheet/general.css">
 <script type="text/javascript" src="view/javascript/jquery/jquery-1.7.1.min.js"></script>
 <script type="text/javascript" src="view/javascript/jquery/ui/jquery-ui-1.8.16.custom.min.js"></script>
 <link type="text/css" href="view/javascript/jquery/ui/themes/ui-lightness/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
 
-
-<style type="text/css">
-tr.over td {
-	background:#cfeefe;
-} 
-</style>
 
 {if $error_warning}
 <div class="warning">{$error_warning}</div>
@@ -274,7 +269,7 @@ $(function() {
     
 //新增
 $('.action-span a:eq(0)').click(function(){
-    $.get('index.php?route=catalog/attribute_group/getForm&token={$token}',function(str){
+    $.get('index.php?route=catalog/attribute_group/getForm&flag=insert&token={$token}',function(str){
         $("#dialog-form-i").html(str);
     },'html');
 	$("#dialog-form-e").html('');

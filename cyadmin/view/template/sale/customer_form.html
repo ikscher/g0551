@@ -40,10 +40,10 @@
                   {/if}</td>
               </tr>
               <tr>
-                <td><span class="required">*</span> {$entry_telephone}</td>
-                <td><input type="text" name="telephone" value="{$telephone}" />
-                  {if $error_telephone}
-                  <span class="error">{$error_telephone}</span>
+                <td><span class="required">*</span> {$entry_telphone}</td>
+                <td><input type="text" name="telphone" value="{$telphone}" />
+                  {if $error_telphone}
+                  <span class="error">{$error_telphone}</span>
                   {/if}</td>
               </tr>
               <tr>
@@ -128,10 +128,10 @@
               </tr>
 			  
 			   <tr>
-                <td><span class="required">*</span> {$entry_telephone}</td>
-                <td><input type="text" name="address[{$address_row}][telephone]" value="{$address['telephone']}" />
-                  {if isset($error_address_telephone[$address_row])}
-                  <span class="error">{php echo $error_address_telephone[$address_row]}</span>
+                <td><span class="required">*</span> {$entry_telphone}</td>
+                <td><input type="text" name="address[{$address_row}][telphone]" value="{$address['telphone']}" />
+                  {if isset($error_address_telphone[$address_row])}
+                  <span class="error">{php echo $error_address_telphone[$address_row]}</span>
                   {/if}</td>
               </tr>
 			  
@@ -185,8 +185,8 @@ function addAddress() {
     html += '    </tr>';
 
     html += '    <tr>';
-    html += '      <td>{$entry_telephone}</td>';
-    html += '      <td><input type="text" name="address[' + address_row + '][telephone]" value="" /></td>';
+    html += '      <td>{$entry_telphone}</td>';
+    html += '      <td><input type="text" name="address[' + address_row + '][telphone]" value="" /></td>';
     html += '    </tr>';	
 
 			

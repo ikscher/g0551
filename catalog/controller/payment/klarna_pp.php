@@ -89,7 +89,7 @@ class ControllerPaymentKlarnaPP extends Controller {
 			// Billing Address
             $billing = array(
 				'email'           => $order_info['email'],
-				'telno'           => $order_info['telephone'],
+				'telno'           => $order_info['telphone'],
 				'cellno'          => '',
 				'careof'          => '',
 				'company'         => $order_info['payment_company'],
@@ -134,7 +134,7 @@ class ControllerPaymentKlarnaPP extends Controller {
 			// Shipping Address
 			$shipping = array(
 				'email'           => $order_info['email'],
-				'telno'           => $order_info['telephone'],
+				'telno'           => $order_info['telphone'],
 				'cellno'          => '',
 				'careof'          => '',
 				'company'         => $order_info['shipping_company'],

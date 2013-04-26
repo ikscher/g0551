@@ -7,7 +7,7 @@ $_['text_location']  = 'Our Location';
 $_['text_contact']   = 'Contact Form';
 $_['text_address']   = 'Address:';
 $_['text_email']     = 'E-Mail:';
-$_['text_telephone'] = 'Telephone:';
+$_['text_telphone'] = 'telphone:';
 $_['text_fax']       = 'Fax:';
 $_['text_message']   = '<p>Your enquiry has been successfully sent to the store owner!</p>';
 

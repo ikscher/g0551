@@ -17,6 +17,12 @@ Class ModelStoreList extends Model {
 		if(!empty($data['search'])){
 		    $sql.=" and (name like '%{$data['search']}%' or owner like '%{$data['search']}%')";
 		}
+		
+		if(!empty($data['filter_name'])){
+		    $sql.=" and name like '%{$data['filter_name']}%'";
+		}
+		
+	
 
 		$sql.=$sort;
 		
@@ -48,6 +54,10 @@ Class ModelStoreList extends Model {
 		
 		if(!empty($data['search'])){
 		    $sql.=" and (name like '%{$data['search']}%' or owner like '%{$data['search']}%')";
+		}
+		
+		if(!empty($data['filter_name'])){
+		    $sql.=" and name like '%{$data['filter_name']}%'";
 		}
 		
 		$query = $this->db->query($sql);

@@ -45,7 +45,7 @@ class ControllerInformationContact extends Controller {
     	$this->data['text_location'] = $this->language->get('text_location');
 		$this->data['text_contact'] = $this->language->get('text_contact');
 		$this->data['text_address'] = $this->language->get('text_address');
-    	$this->data['text_telephone'] = $this->language->get('text_telephone');
+    	$this->data['text_telphone'] = $this->language->get('text_telphone');
     	$this->data['text_fax'] = $this->language->get('text_fax');
 
     	$this->data['entry_name'] = $this->language->get('entry_name');
@@ -82,7 +82,7 @@ class ControllerInformationContact extends Controller {
 		$this->data['action'] = $this->url->link('information/contact');
 		$this->data['store'] = $this->config->get('config_name');
     	$this->data['address'] = nl2br($this->config->get('config_address'));
-    	$this->data['telephone'] = $this->config->get('config_telephone');
+    	$this->data['telphone'] = $this->config->get('config_telphone');
     	$this->data['fax'] = $this->config->get('config_fax');
     	
 		if (isset($this->request->post['name'])) {

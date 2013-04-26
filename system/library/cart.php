@@ -35,18 +35,16 @@ class Cart {
 			if($flag===true){
 			    if(isset($this->request->cookie['dbuyproduct'])){
 				    $dbuyproduct=$this->request->cookie['dbuyproduct'];
-				}
-
-				$profilo = unserialize(base64_decode($dbuyproduct));
+					$profilo = unserialize(base64_decode($dbuyproduct));
 				
-			    array_walk_recursive($profilo,'formatSerializeRev');
+					array_walk_recursive($profilo,'formatSerializeRev');
+				}
                 
 			}else{
-		        $profilo=$this->session->data['cart'];
+		        $profilo=isset($this->session->data['cart'])?$this->session->data['cart']:'';
 				
             } 
-		    
-	        
+		
 			if(empty($profilo)) return array();
 			
 			foreach ($profilo as $key => $quantity) {
@@ -55,18 +53,22 @@ class Cart {
 				$stock = true;
 	
 				// Options
-				if (isset($product[1])) {
+				/* if (isset($product[1])) {
 					$options = unserialize(base64_decode($product[1]));
 				} else {
 					$options = array();
-				} 
+				}  */
 				
 				//attributes
-				if(isset($product[2])){
-				    $attributes = unserialize(base64_decode($product[2]));
+				if(isset($product[1])){
+				    $attributes = unserialize(base64_decode($product[1]));
 				}else{
 				    $attributes = array();
 				}
+				
+				
+				$price=isset($product[2])?round(floatval($product[2]),2):0;
+				
 				
 				//date_available 有效期应该是大于当前的时间
 				$product_query = $this->db->query("SELECT p.*,pd.name,pd.description,p2s.store_id FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) left join ".DB_PREFIX."product_to_store p2s on p.product_id=p2s.product_id  WHERE p.product_id = '" . (int)$product_id  . "' AND p.date_available >= {$time} AND p.status = '1'");
@@ -77,7 +79,19 @@ class Cart {
 					$option_weight = 0;
 	
 					$option_data = array();
-	
+	                
+					$item='|';
+					foreach($attributes as $k=>$v){
+						$item .= $v[0];
+						$item .='|';
+					}
+					
+					$sql="select * from ".DB_PREFIX."product_option_ulity where product_id='{$product_id}' and composite_id='{$item}'";
+					
+					$option_query=$this->db->query($sql);
+					
+					$option_data=$option_query->row;
+					/*
 					foreach ($options as $product_option_id => $option_value) {
 						$option_query = $this->db->query("SELECT po.product_option_id, po.option_id, od.name, o.type,agd.name as attribute_group_name FROM " . DB_PREFIX . "product_option po LEFT JOIN `" . DB_PREFIX . "option` o ON (po.option_id = o.option_id) LEFT JOIN " . DB_PREFIX . "option_description od ON (o.option_id = od.option_id) left join ".DB_PREFIX."attribute_group_description agd on po.attribute_group_id=agd.attribute_group_id WHERE po.product_option_id = '" . (int)$product_option_id . "' AND po.product_id = '" . (int)$product_id  . "'");
 						
@@ -198,7 +212,7 @@ class Cart {
 								);						
 							}
 						}
-					} 
+					} */
 				
 					if ($this->customer->isLogged()) {
 						$customer_group_id = $this->customer->getCustomerGroupId();
@@ -206,7 +220,7 @@ class Cart {
 						$customer_group_id = $this->config->get('config_customer_group_id');
 					}
 					
-					$price = $product_query->row['price'];
+					//$price = $product_query->row['price'];
 					
 					// Product Discounts 按照打折价格算，要求 实际购买的数量 大于 打折最低购买的数量
 					$discount_quantity = 0;
@@ -227,11 +241,11 @@ class Cart {
 					} */
 					
 					// Product Specials
-					$product_special_query = $this->db->query("SELECT price FROM " . DB_PREFIX . "product_special WHERE product_id = '" . (int)$product_id . "' AND customer_group_id = '" . (int)$customer_group_id . "' AND date_start <= {$time} AND date_end >={$time} ORDER BY priority ASC, price ASC LIMIT 1");
+					/* $product_special_query = $this->db->query("SELECT price FROM " . DB_PREFIX . "product_special WHERE product_id = '" . (int)$product_id . "' AND customer_group_id = '" . (int)$customer_group_id . "' AND date_start <= {$time} AND date_end >={$time} ORDER BY priority ASC, price ASC LIMIT 1");
 				
 					if ($product_special_query->num_rows) {
 						$price = $product_special_query->row['price'];
-					}						
+					} */						
 			
 					// Reward Points
 					$product_reward_query = $this->db->query("SELECT points FROM " . DB_PREFIX . "product_reward WHERE product_id = '" . (int)$product_id . "' AND customer_group_id = '" . (int)$customer_group_id . "'");
@@ -272,7 +286,7 @@ class Cart {
 							$attribute_ids .=$b;
 							$comma=',';
 						} 
-					} 
+					}  
 					
 					if(!empty($attribute_ids)){
 					    $sql="select attribute_id,name from ".DB_PREFIX."attribute_description where attribute_id in ({$attribute_ids})";
@@ -290,17 +304,17 @@ class Cart {
 						'image'           => $product_query->row['image'],
 						'option'          => $option_data,
 						'attribute'       => $attribute_data,
-						'download'        => $download_data,
+						//'download'        => $download_data,
 						'quantity'        => $quantity,
 						'minimum'         => $product_query->row['minimum'],
 						'subtract'        => $product_query->row['subtract'],
 						'stock'           => $stock,
-						'price'           => ($price + $option_price),
-						'total'           => ($price + $option_price) * $quantity,
+						'price'           => $price ,
+						'total'           => $price  * $quantity,
 						'reward'          => $reward * $quantity,
-						'points'          => ($product_query->row['points'] ? ($product_query->row['points'] + $option_points) * $quantity : 0),
+						'points'          => ($product_query->row['points'] ? $product_query->row['points'] * $quantity : 0),
 						'tax_class_id'    => $product_query->row['tax_class_id'],
-						'weight'          => ($product_query->row['weight'] + $option_weight) * $quantity,
+						'weight'          => $product_query->row['weight'] * $quantity,
 						'weight_class_id' => $product_query->row['weight_class_id'],
 						'length'          => $product_query->row['length'],
 						'width'           => $product_query->row['width'],
@@ -318,12 +332,10 @@ class Cart {
   	}
 	
     /*session保存购物车产品*/	
-  	public function add($product_id, $qty = 1, $option = array(),$attribute=array()) {
-    	if (!$option && !$attribute) {
-      		$key = (int)$product_id;
-    	} else {
-      		$key = (int)$product_id . '|' . base64_encode(serialize($option)) .'|'. base64_encode(serialize($attribute));
-    	}
+  	public function add($product_id, $qty = 1, $attribute = array(),$price=0) {
+    	
+      	$key = (int)$product_id . '|' . base64_encode(serialize($attribute)).'|'.$price;
+    	
     	
 		if ((int)$qty && ((int)$qty > 0)) {
     		if (!isset($this->session->data['cart'][$key])) {

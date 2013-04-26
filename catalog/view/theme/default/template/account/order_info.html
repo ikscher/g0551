@@ -39,7 +39,7 @@
 											<td class="h">移动电话</td>
 											<td class="t">{$shipping_mobile}</td>
 											<td class="h">联系电话</td>
-											<td class="t">{$shipping_telephone}</td>
+											<td class="t">{$shipping_telphone}</td>
 										</tr>
 										<tr>
 											<!-- <td class="h">公司</td>
@@ -54,7 +54,7 @@
 									<table width="96%" class="table">
 										<tr>
 											<td class="h" >订单号</td>
-											<td class="t" >{$orderid}</td>
+											<td class="t" >{$order_id}</td>
 											<td class="h" >下单日期</td>
 											<td class="t">{$date_added}</td>
 										</tr>
@@ -132,10 +132,12 @@
 										{if $order_status['order_status_id']==1}<td width="10%">操作</td>{/if}
 									</thead>
 									<tbody>
-									{loop $products   $product}
+									{loop $order_products   $product}
 										<tr>
 											<td><a href="{$product['href']}">{$product['product_id']}</a></td>
-											<td style="text-align: left; padding-left: 10px;height:60px;"><a href="{$product['href']}">{$product['name']} </a></td>
+											<td style="text-align: left; padding-left: 10px;height:60px;"><a href="{$product['href']}">{$product['name']} </a>
+											<div class="spec">{$product['attribute']}</div>
+											</td>
 											<td>{$product['price']}</td>
 											<td>{$product['quantity']}</td>
 											<td>{$product['total']}</td>
@@ -157,148 +159,4 @@
  	<!--右侧end-->
 </div>
  <!--个人中心body_end-->
-	
-	
-	
-<!--	
-<div id="content">
-  <div class="breadcrumb">
-    {loop $breadcrumbs   $breadcrumb}
-    {$breadcrumb['separator']}<a href="{$breadcrumb['href']}">{$breadcrumb['text']}</a>
-    {/loop}
-  </div>
-  <h1>{$heading_title}</h1>
-  <table class="list">
-    <thead>
-      <tr>
-        <td class="left" colspan="2">{$text_order_detail}</td>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td class="left" style="width: 50%;">{if $invoice_no}
-          <b>{$text_invoice_no}</b> {$invoice_no}<br />
-          {/if}
-          <b>{$text_order_id}</b> #{$order_id}<br />
-          <b>{$text_date_added}</b> {$date_added}</td>
-        <td class="left" style="width: 50%;">{if $payment_method}
-          <b>{$text_payment_method}</b> {$payment_method}<br />
-          {/if}
-          {if $shipping_method}
-          <b>{$text_shipping_method}</b> {$shipping_method}
-          {/if}</td>
-      </tr>
-    </tbody>
-  </table>
-  <table class="list">
-    <thead>
-      <tr>
-        <td class="left">{$text_payment_address}</td>
-        {if $shipping_address}
-        <td class="left">{$text_shipping_address}</td>
-        {/if}
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td class="left">{$payment_address}</td>
-        {if $shipping_address}
-        <td class="left">{$shipping_address}</td>
-        {/if}
-      </tr>
-    </tbody>
-  </table>
-  <table class="list">
-    <thead>
-      <tr>
-        <td class="left">{$column_name}</td>
-        <td class="left">{$column_model}</td>
-        <td class="right">{$column_quantity}</td>
-        <td class="right">{$column_price}</td>
-        <td class="right">{$column_total}</td>
-        {if $products}
-        <td style="width: 1px;"></td>
-        {/if}
-      </tr>
-    </thead>
-    <tbody>
-      {loop $products   $product}
-      <tr>
-        <td class="left">{$product['name']}
-          {loop $product['option']   $option}
-          <br />
-          &nbsp;<small> - {$option['name']}: {$option['value']}</small>
-          {/loop}</td>
-        <td class="left">{$product['model']}</td>
-        <td class="right">{$product['quantity']}</td>
-        <td class="right">{$product['price']}</td>
-        <td class="right">{$product['total']}</td>
-        <td class="right"><a href="{$product['return']}"><img src="catalog/view/theme/default/image/return.png" alt="{$button_return}" title="{$button_return}" /></a></td>
-      </tr>
-      {/loop}
-      {loop $vouchers   $voucher}
-      <tr>
-        <td class="left">{$voucher['description']}</td>
-        <td class="left"></td>
-        <td class="right">1</td>
-        <td class="right">{$voucher['amount']}</td>
-        <td class="right">{$voucher['amount']}</td>
-        {if $products}
-        <td></td>
-        {/if}
-      </tr>
-     {/loop}
-    </tbody>
-    <tfoot>
-      {loop $totals   $total}
-      <tr>
-        <td colspan="3"></td>
-        <td class="right"><b>{$total['title']}:</b></td>
-        <td class="right">{$total['text']}</td>
-        {if $products}
-        <td></td>
-        {/if}
-      </tr>
-      {/loop}
-    </tfoot>
-  </table>
-  {if $comment}
-  <table class="list">
-    <thead>
-      <tr>
-        <td class="left">{$text_comment}</td>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td class="left">{$comment}</td>
-      </tr>
-    </tbody>
-  </table>
-  {/if}
-  {if $histories}
-  <h2>{$text_history}</h2>
-  <table class="list">
-    <thead>
-      <tr>
-        <td class="left">{$column_date_added}</td>
-        <td class="left">{$column_status}</td>
-        <td class="left">{$column_comment}</td>
-      </tr>
-    </thead>
-    <tbody>
-      {loop $histories   $history}
-      <tr>
-        <td class="left">{$history['date_added']}</td>
-        <td class="left">{$history['status']}</td>
-        <td class="left">{$history['comment']}</td>
-      </tr>
-      {/loop}
-    </tbody>
-  </table>
-  {/if}
-  <div class="buttons">
-    <div class="right"><a href="{$continue}" class="button">{$button_continue}</a></div>
-  </div>
-  </div> -->
 {$footer} 

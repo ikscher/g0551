@@ -16,7 +16,7 @@ class ControllerCheckoutPaymentAddress extends Controller {
 		$this->data['entry_address'] = $this->language->get('entry_address');
 	
 		$this->data['entry_postcode'] = $this->language->get('entry_postcode');
-		$this->data['entry_telephone'] = $this->language->get('entry_telephone');
+		$this->data['entry_telphone'] = $this->language->get('entry_telphone');
 		$this->data['entry_mobile'] = $this->language->get('entry_mobile');
 		// $this->data['entry_city'] = $this->language->get('entry_city');
 		// $this->data['entry_country'] = $this->language->get('entry_country');

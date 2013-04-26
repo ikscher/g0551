@@ -84,8 +84,8 @@ class ControllerProductProduct extends Controller {
 			    $popup=HTTP_SERVER.$result['image'];//原图
 				// var_dump(getimagesize($popup));
 			    $this->data['images'][] = array(
-				   //'popup' => $this->model_tool_image->resize($result['image'], $this->config->get('config_image_popup_width'), $this->config->get('config_image_popup_height')),
-					'popup' => $popup,
+				   'popup' => $this->model_tool_image->resize($result['image'], $this->config->get('config_image_popup_width'), $this->config->get('config_image_popup_height')),
+					//'popup' => $popup,
 					'image' => $this->model_tool_image->resize($result['image'], $this->config->get('config_image_additional_width'), $this->config->get('config_image_additional_height')),
 					'thumb' => $this->model_tool_image->resize($result['image'], $this->config->get('config_image_thumb_width'), $this->config->get('config_image_thumb_height'))
 				);
@@ -99,6 +99,7 @@ class ControllerProductProduct extends Controller {
 			$this->data['text_option'] = $this->language->get('text_option');
 			$this->data['options'] = array();
             
+			/*
 			$product_options_info=$this->model_catalog_product->getProductOptions($this->request->get['product_id']);
 			
 			foreach ($product_options_info as $option) {
@@ -145,12 +146,26 @@ class ControllerProductProduct extends Controller {
 					);
 				}
 			}
+			*/
 			
-			//一般属性
-			$this->data['attributes']=$this->model_catalog_product->getProductAttributes($product_id,true);
+			//一般属性,价格属性
+			$attributes=$attributes_general=$attributes_price=array();
+			$attributes=$this->model_catalog_product->getProductAttributes($product_id,false);
+			
+			$sort_order=array();
+			foreach ($attributes as $key => $value) {
+				if($value['gtype']==1){
+				    $attributes_general[]=$value;
+				}elseif($value['gtype']==2){
+				    $attributes_price[]=$value;
+				}
+			}
+			
+			$this->data['attributes_general']=$attributes_general;
+			$this->data['attributes_price']=$attributes_price;
 			
 			
-		 
+			
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/product/product.html')) {
 				$this->template = $this->config->get('config_template') . '/template/product/product.html';
 			} else {
@@ -310,6 +325,18 @@ class ControllerProductProduct extends Controller {
 		}	
 		
 		$this->response->setOutput(json_encode($json));		
+	}
+	
+	public function getProductPriceByAttribute(){
+	    $this->load->model('catalog/product');
+		$product_id=$this->request->post['product_id'];
+		$attribute1=$this->request->post['attribute1'];
+		$attribute2=$this->request->post['attribute2'];
+		
+		$price=0;
+		$price=$this->model_catalog_product->getProductPriceByAttribute($product_id,$attribute1,$attribute2);
+		
+		$this->response->setOutput($price);
 	}
 }
 ?>

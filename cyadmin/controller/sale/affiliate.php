@@ -521,7 +521,7 @@ class ControllerSaleAffiliate extends Controller {
     	$this->data['entry_firstname'] = $this->language->get('entry_firstname');
     	$this->data['entry_lastname'] = $this->language->get('entry_lastname');
     	$this->data['entry_email'] = $this->language->get('entry_email');
-    	$this->data['entry_telephone'] = $this->language->get('entry_telephone');
+    	$this->data['entry_telphone'] = $this->language->get('entry_telphone');
     	$this->data['entry_fax'] = $this->language->get('entry_fax');
     	$this->data['entry_company'] = $this->language->get('entry_company');
 		$this->data['entry_address_1'] = $this->language->get('entry_address_1');
@@ -580,10 +580,10 @@ class ControllerSaleAffiliate extends Controller {
 			$this->data['error_email'] = '';
 		}
 		
- 		if (isset($this->error['telephone'])) {
-			$this->data['error_telephone'] = $this->error['telephone'];
+ 		if (isset($this->error['telphone'])) {
+			$this->data['error_telphone'] = $this->error['telphone'];
 		} else {
-			$this->data['error_telephone'] = '';
+			$this->data['error_telphone'] = '';
 		}
 		
  		if (isset($this->error['password'])) {
@@ -726,12 +726,12 @@ class ControllerSaleAffiliate extends Controller {
       		$this->data['email'] = '';
     	}
 
-    	if (isset($this->request->post['telephone'])) {
-      		$this->data['telephone'] = $this->request->post['telephone'];
+    	if (isset($this->request->post['telphone'])) {
+      		$this->data['telphone'] = $this->request->post['telphone'];
     	} elseif (!empty($affiliate_info)) { 
-			$this->data['telephone'] = $affiliate_info['telephone'];
+			$this->data['telphone'] = $affiliate_info['telphone'];
 		} else {
-      		$this->data['telephone'] = '';
+      		$this->data['telphone'] = '';
     	}
 
     	if (isset($this->request->post['fax'])) {
@@ -948,8 +948,8 @@ class ControllerSaleAffiliate extends Controller {
 			}
 		}
 		
-    	if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
-      		$this->error['telephone'] = $this->language->get('error_telephone');
+    	if ((utf8_strlen($this->request->post['telphone']) < 3) || (utf8_strlen($this->request->post['telphone']) > 32)) {
+      		$this->error['telphone'] = $this->language->get('error_telphone');
     	}
 
     	if ($this->request->post['password'] || (!isset($this->request->get['affiliate_id']))) {

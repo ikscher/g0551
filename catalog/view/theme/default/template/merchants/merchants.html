@@ -11,8 +11,8 @@
 				</ul>
 			</div>
 <form action="index.php?route=merchants/merchants/insert" method="post" id="" onsubmit="return checkStore(this)">
-<input name="map_x" type="hidden" value="" />
-<input name="map_y" type="hidden" value="" />
+<input name="map_x" type="hidden" value="{$info['map_x']}" />
+<input name="map_y" type="hidden" value="{$info['map_y']}" />
 <input name="logo_url" id="logo_url" type="hidden" value="{$info['logo']}" />
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
@@ -42,6 +42,12 @@
     <td align="right"><em>*</em>联系手机：</td>
     <td><input name="mobile" type="text" class="text4" id="mobile" maxlength="60" value="{if isset($info['mobile'])}{$info['mobile']}{/if}"/></td>
   </tr>
+  
+  <tr>
+    <td align="right"><em>*</em>Email：</td>
+    <td><input name="email" type="text" class="text4" id="email" maxlength="60" value="{if isset($info['email'])}{$info['email']}{/if}" disabled /></td>
+  </tr>
+  
   <tr>
     <td align="right">店铺传真：</td>
     <td><input name="fax" type="text" class="text4" id="fax" maxlength="60" value="{if isset($info['fax'])}{$info['fax']}{/if}"/></td>
@@ -78,7 +84,7 @@
 <script charset="utf-8" src="catalog/view/javascript/editor/kindeditor.js"></script>
 <script charset="utf-8" src="catalog/view/javascript/editor/lang/zh_CN.js"></script>
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4" charset="utf-8"></script>
-<script id="map" type="text/javascript" src="catalog/view/javascript/baidu_map.js?v=1.0" data-pos="x={$info['map_x']}&y={$info['map_y']}" title="{$info['name']}"></script>
+<script id="map" type="text/javascript" src="catalog/view/javascript/baidu_map.js?v=1.0" data-pos="x={$info['map_x']}&y={$info['map_y']}" title="{$info['shortname']}"></script>
 <script type="text/javascript" src="catalog/view/javascript/merchants.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){

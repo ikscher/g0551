@@ -43,8 +43,10 @@ class User {
   	public function login($username, $password) {
 	    $username=$this->db->escape($username);
 		$password=$this->db->escape(md5($password));
-    	$user_query = $this->db->query("SELECT user_id,username,user_group_id FROM " . DB_PREFIX . "user WHERE username ='{$username}'  AND  password = '{$password}' AND status = '1' limit 1");
-       
+		$sql="SELECT user_id,username,user_group_id FROM " . DB_PREFIX . "user WHERE username ='{$username}'  AND  password = '{$password}' AND status = '1' limit 1";
+    	
+		$user_query = $this->db->query($sql);
+      
     	if ($user_query->num_rows) {
 			$this->session->data['user_id'] = $user_query->row['user_id'];
 			
@@ -57,7 +59,7 @@ class User {
       		$user_group_query = $this->db->query("SELECT permission FROM " . DB_PREFIX . "user_group WHERE user_group_id = '" . (int)$user_query->row['user_group_id'] . "'");
             
 	  		$permissions = unserialize($user_group_query->row['permission']);
-            // print_r($permissions);exit;
+             // print_r($permissions);exit;
 			if (is_array($permissions)) {
 				foreach ($permissions as $key => $value) {
 					$this->permission[$key] = $value;

@@ -1,12 +1,11 @@
 <?php  
 class ControllerCheckoutCheckout extends Controller { 
 	public function index() {
-	    $flag=false;
-		if (isset($this->request->get['dbuy']) && $this->request->get['dbuy']==1){ //直接购买的
+        $flag=$this->session->data['dbuy_flag'];
+	
+		if ($flag==true){ //直接购买的
 		    $products = $this->cart->getProducts(TRUE);
-			$this->data['dbuy']='yes'; //和refreshTotal设置一样的
-			$flag=true;
-			
+		
 		}else{ //购物车的
 			// Validate cart has products and has stock.
 			if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
@@ -16,16 +15,19 @@ class ControllerCheckoutCheckout extends Controller {
 			// Validate minimum quantity requirments.			
 			$products = $this->cart->getProducts();
 		}		
+	     
 		
-	
-		$this->data['shipping_method']=null;
-	    $this->data['shippingMethod']=3;//默认货到付款
+		//支付方式
+		$this->load->controller('checkout/payment_method');
+		$this->data['payment_methods']=$this->controller_checkout_payment_method->index();
 		
-		
-		if(isset($this->session->data['shippingMethod'])){
-		    $this->data['shippingMethod']=$this->session->data['shippingMethod'];
+		//货运方式
+		if(isset($this->session->data['shipping_method'])){
+		    $this->data['shipping_method']=$this->session->data['shipping_method'];
+		}else{
+		    $this->data['shipping_method']=array();
 		}
-	
+	   
 		foreach ($products as $product) {
 			$product_total = 0;
 			
@@ -57,7 +59,7 @@ class ControllerCheckoutCheckout extends Controller {
         		'address_id' => $result['address_id'],
 				'customer_id'=> $result['customer_id'],
 				'username'   => $result['username'],
-				'telephone'  => $result['telephone'],
+				'telphone'  => $result['telphone'],
 				'mobile'     => $result['mobile'],
 				'company'    => $result['company'],
 				'address'    => $result['address'],
@@ -77,43 +79,19 @@ class ControllerCheckoutCheckout extends Controller {
 							
 			$option_data = array();
 			
-			foreach ($product['option'] as $option) {
-				if ($option['type'] != 'file') {
-					$value = $option['option_value'];	
-				} else {
-					$filename = $this->encryption->decrypt($option['option_value']);
-					
-					$value = utf8_substr($filename, 0, utf8_strrpos($filename, '.'));
-				}				
-				
-				$option_data[] = array(								   
-					'name'  => $option['name'],
-					'value' => (utf8_strlen($value) > 20 ? utf8_substr($value, 0, 20) . '..' : $value),
-					'attribute_group_name' => $option['attribute_group_name'],
-					'type'  => $option['type']
-				);
-			}
+			
 			
 			// Display prices
-			if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
-				$price = number_format($product['price'],2,'.',',');
-			} else {
-				$price = false;
-			}
+			$price = number_format($product['price'],2,'.',',');
+			$total = number_format($product['price'] * $product['quantity'],2,'.',',');
 			
-			// Display prices
-			if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
-				$total = number_format($product['price'] * $product['quantity'],2,'.',',');
-			} else {
-				$total = false;
-			}
 													
 			$this->data['products'][] = array(
 				'key'      => $product['key'],
 				'thumb'    => $image,
 				'name'  => $product['name'],
 				'model'    => $product['model'], 
-				'option'   => $option_data,
+				//'option'   => $option_data,
 				'attribute'=> $product['attribute'],
 				'quantity' => $product['quantity'],
 				'stock'    => $product['stock'] ? true : !(!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning')),
@@ -162,7 +140,7 @@ class ControllerCheckoutCheckout extends Controller {
 		}
 		
 		$sort_order = array(); 
-	  
+	    
 		foreach ($total_data as $key => $value) {
 			$sort_order[$key] = $value['sort_order'];
 		}
@@ -173,21 +151,12 @@ class ControllerCheckoutCheckout extends Controller {
 		
 		$this->data['cart']=$this->url->link('checkout/cart','','SSL');
 		
-        		
-	    $this->data['heading_title'] = $this->language->get('heading_title');
-		
-		$this->data['text_checkout_option'] = $this->language->get('text_checkout_option');//'第 1 步： 结帐选项';
-		$this->data['text_checkout_account'] = $this->language->get('text_checkout_account');//'第 2 步： 帐户 &amp; 运单详细';
-		$this->data['text_checkout_payment_address'] = $this->language->get('text_checkout_payment_address');//'第 2 步： 运单地址';
-		$this->data['text_checkout_shipping_address'] = $this->language->get('text_checkout_shipping_address');//'第 3 步： 货运地址';
-		$this->data['text_checkout_shipping_method'] = $this->language->get('text_checkout_shipping_method');//'第 4 步： 货运方式';
-		$this->data['text_checkout_payment_method'] = $this->language->get('text_checkout_payment_method');	//'第 5 步： 支付方式';	
-		$this->data['text_checkout_confirm'] = $this->language->get('text_checkout_confirm');//'第 6 步： 确认订单';
-		$this->data['text_modify'] = $this->language->get('text_modify');
-		
+      
 		$this->data['logged'] = $this->customer->isLogged();
 		$this->data['shipping_required'] = $this->cart->hasShipping($flag);	
 		
+		$this->data['payment_method_code']=isset($this->session->data['payment_method']['code'])?$this->session->data['payment_method']['code']:'';
+		//$this->data['payment'] = $this->getChild('payment/' . $this->session->data['payment_method']['code']);
 		// $this->data['action']=$this->url->link('checkout/confirm_order','','SSL');
 		
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/order.html')) {
@@ -206,9 +175,11 @@ class ControllerCheckoutCheckout extends Controller {
 	
 	/**直接购买 *ajax*/
 	public function dbuy(){
+	    //设置标志位
+		$this->session->data['dbuy_flag']=true;
+	
 	    $this->language->load('checkout/cart');
 	    $product_id=$this->request->post['product_id'];
-	    
 		$json=array();
 		
 		$this->load->model('catalog/product');
@@ -224,39 +195,42 @@ class ControllerCheckoutCheckout extends Controller {
 			}
 			
 			$qty=isset($this->request->post['quantity'])?$this->request->post['quantity']:1;
-		    $option=isset($this->request->post['option'])?$this->request->post['option']:array();
+		    //$option=isset($this->request->post['option'])?$this->request->post['option']:array();
+			$price=isset($this->request->post['price'])?$this->request->post['price']:0;
 			$attribute=isset($this->request->post['attribute'])?$this->request->post['attribute']:array();
 	  
-	        if (empty($option)) {
+	        /* if (empty($option)) {
 				$key = (int)$product_id;
 			} else {
 				$key = (int)$product_id . ':' . base64_encode(serialize($option));
-			}
-			
-			if ((int)$qty && ((int)$qty > 0)) {	
-				//$this->cookie->data['cart'][$key] = (int)$qty;
+			} */
+			$key = (int)$product_id . '|' . base64_encode(serialize($attribute)).'|'.$price;
+		
+			 if ((int)$qty && ((int)$qty > 0)) {	
 				$arrMenu=array($key=>(int)$qty);
-				array_walk_recursive($arrMenu,'formatSerialize');
+				//array_walk_recursive($arrMenu,'formatSerialize');
 				$this->cookie->OCSetCookie('dbuyproduct',base64_encode(serialize($arrMenu)),24*3600);
 				
 			}
             
 			
-			$product_attributes=$this->model_catalog_product->getProductAttributes($product_id,true);
+			$product_attributes=$this->model_catalog_product->getProductAttributes($product_id,'option');
 			foreach ($product_attributes as $product_attribute) {
 				if (empty($attribute[$product_attribute['attribute_group_id']])) {
 					$json['error']['attribute'][$product_attribute['attribute_group_id']] = sprintf($this->language->get('error_required'), $product_attribute['attribute_group_name']);
 				}
 			}
 			
-		
-			$product_options = $this->model_catalog_product->getProductOptions($product_id);
+		    
+			/* $product_options = $this->model_catalog_product->getProductOptions($product_id);
 		
 			foreach ($product_options as $product_option) {
-				if ($product_option['required'] && empty($option[$product_option['product_option_id']])) {
+				if (empty($option[$product_option['product_option_id']])) {
 					$json['error']['option'][$product_option['product_option_id']] = sprintf($this->language->get('error_required'), $product_option['attribute_group_name']);
 				}
-			}
+			} */
+			
+			
 		
 			if (!$json) {
 			   
@@ -288,7 +262,7 @@ class ControllerCheckoutCheckout extends Controller {
 						if ($this->config->get($result['code'] . '_status')) {
 							$this->load->model('total/' . $result['code']);
 				
-							$this->{'model_total_' . $result['code']}->getTotal($total_data, $total);//, $taxes
+							$this->{'model_total_' . $result['code']}->getTotal($total_data, $total,$this->session->data['dbuy_flag']);//, $taxes
 						}
 						
 						$sort_order = array(); 
@@ -320,56 +294,37 @@ class ControllerCheckoutCheckout extends Controller {
 	
 	/**设置货运方法**/
 	public function shippingMethod(){
-	    $sd=$this->request->post['shippingmethod'];
-		$arr=explode(',',$sd);
-	    $this->session->data['shippingMethod']=$arr[0];
-		
+	    $sm=strtolower($this->request->post['shipping_method']);
+		$arr=explode(',',$sm);
+	
 		$this->session->data['shipping_method']=array();
-        if($arr[0]=='1'){
+        if(in_array('express',$arr)){
 		    $this->session->data['shipping_method']['title']='快递公司';
 			$this->session->data['shipping_method']['cost']=5.00;
-		}elseif($arr[0]=='2'){
+			$this->session->data['shipping_method']['code']='express';
+		}elseif(in_array('ems',$arr)){
 		    $this->session->data['shipping_method']['title']='EMS邮政专递';
 			$this->session->data['shipping_method']['cost']=35.00;
-		}elseif($arr[0]=='3'){
-		    $this->session->data['shipping_method']=null;
-		}elseif($arr[0]=='4'){
-		    $this->session->data['shipping_method']=null;
+			$this->session->data['shipping_method']['code']='ems';
+		}elseif(in_array('diy',$arr)){
+		    $this->session->data['shipping_method']['title']='上门自提';
+			$this->session->data['shipping_method']['cost']='0.00';
+			$this->session->data['shipping_method']['code']='diy';
 		}
-		//$this->response->setOutput(json_encode($this->session->data['shipping_method']));
+		$this->response->setOutput(json_encode($this->session->data['shipping_method']));
 	}
 	
-	public function country() {
-		$json = array();
-		
-		$this->load->model('localisation/country');
-
-    	$country_info = $this->model_localisation_country->getCountry($this->request->get['country_id']);
-		
-		if ($country_info) {
-			$this->load->model('localisation/zone');
-
-			$json = array(
-				'country_id'        => $country_info['country_id'],
-				'name'              => $country_info['name'],
-				'iso_code_2'        => $country_info['iso_code_2'],
-				'iso_code_3'        => $country_info['iso_code_3'],
-				'address_format'    => $country_info['address_format'],
-				'postcode_required' => $country_info['postcode_required'],
-				'zone'              => $this->model_localisation_zone->getZonesByCountryId($this->request->get['country_id']),
-				'status'            => $country_info['status']		
-			);
-		}
-		
-		$this->response->setOutput(json_encode($json));
+	/**设置支付方式**/
+	public function paymentMethod(){
+	    $pm=$this->request->post['payment_method'];
+		$this->session->data['payment_method']['code']=$pm;
+		$this->response->setOutput(json_encode(array('code'=>$pm)));
 	}
+	
 	
 	/**刷新总计**/
 	public function refreshTotal(){
-	    $flag=false;
-	    if (isset($this->request->get['dbuy']) && $this->request->get['dbuy']=='yes'){ //直接购买的
-		    $flag=true;
-		}
+	    $flag=$this->session->data['dbuy_flag'];
 	   
 		$total_data = array();
 		$total = 0;

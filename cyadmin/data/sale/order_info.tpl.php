@@ -63,8 +63,8 @@
             <td><?php echo $email;?></td>
           </tr>
           <tr>
-            <td><?php echo $text_telephone;?></td>
-            <td><?php echo $telephone;?></td>
+            <td><?php echo $text_telphone;?></td>
+            <td><?php echo $telphone;?></td>
           </tr>
           
           <tr>

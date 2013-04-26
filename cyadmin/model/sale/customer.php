@@ -4,7 +4,7 @@ class ModelSaleCustomer extends Model {
 	    //$password=$this->db->escape(sha1($salt . sha1($salt . sha1($data['password']))));
 		$password=md5($data['password']);
 		$time=time();
-      	$this->db->query("INSERT INTO " . DB_PREFIX . "customer SET  username = '" . $this->db->escape($data['username']) . "', email = '" . $this->db->escape($data['email']) . "', telephone = '" . $this->db->escape($data['telephone']) . "', fax = '" . $this->db->escape($data['fax']) . "', newsletter = '" . (int)$data['newsletter'] . "', customer_group_id = '" . (int)$data['customer_group_id'] . "', salt = '" . $this->db->escape($salt = substr(md5(uniqid(rand(), true)), 0, 9)) . "', password = '{$password}', status = '" . (int)$data['status'] . "', date_added = {$time}");
+      	$this->db->query("INSERT INTO " . DB_PREFIX . "customer SET  username = '" . $this->db->escape($data['username']) . "', email = '" . $this->db->escape($data['email']) . "', telphone = '" . $this->db->escape($data['telphone']) . "', fax = '" . $this->db->escape($data['fax']) . "', newsletter = '" . (int)$data['newsletter'] . "', customer_group_id = '" . (int)$data['customer_group_id'] . "', salt = '" . $this->db->escape($salt = substr(md5(uniqid(rand(), true)), 0, 9)) . "', password = '{$password}', status = '" . (int)$data['status'] . "', date_added = {$time}");
       	
       	$customer_id = $this->db->getLastId();
       	
@@ -19,12 +19,14 @@ class ModelSaleCustomer extends Model {
 	}
 	
 	public function editCustomer($customer_id, $data) {
-		$this->db->query("UPDATE " . DB_PREFIX . "customer SET  username = '" . $this->db->escape($data['username']) . "', email = '" . $this->db->escape($data['email']) . "', telephone = '" . $this->db->escape($data['telephone']) . "', mobile = '" . $this->db->escape($data['mobile']) . "', newsletter = '" . (int)$data['newsletter'] . "', customer_group_id = '" . (int)$data['customer_group_id'] . "', status = '" . (int)$data['status'] . "' WHERE customer_id = '" . (int)$customer_id . "'");
+	    $newletter=isset($data['newsletter'])?(int)$data['newsletter'] :0;
+		$customer_group_id=isset($data['customer_group_id'])?(int)$data['customer_group_id']:0;
+		$this->db->query("UPDATE " . DB_PREFIX . "customer SET  username = '" . $this->db->escape($data['username']) . "', email = '" . $this->db->escape($data['email']) . "', telphone = '" . $this->db->escape($data['telphone']) . "', mobile = '" . $this->db->escape($data['mobile']) . "', newsletter = '{$newletter}', customer_group_id = '{$customer_group_id}', status = '" . (int)$data['status'] . "' WHERE customer_id = '" . (int)$customer_id . "'");
 	
       	if ($data['password']) {
 		    // $password=$this->db->escape(sha1($salt . sha1($salt . sha1($data['password']))));
 			$password=md5($data['password']);
-        	$this->db->query("UPDATE " . DB_PREFIX . "customer SET salt = '" . $this->db->escape($salt = substr(md5(uniqid(rand(), true)), 0, 9)) . "', password = '{$password}' WHERE customer_id = '" . (int)$customer_id . "'");
+        	$this->db->query("UPDATE " . DB_PREFIX . "customer SET  password = '{$password}' WHERE customer_id = '" . (int)$customer_id . "'");//salt = '" . $this->db->escape($salt = substr(md5(uniqid(rand(), true)), 0, 9)) . "',
       	}
       	
       	$this->db->query("DELETE FROM " . DB_PREFIX . "address WHERE customer_id = '" . (int)$customer_id . "'");
@@ -35,7 +37,7 @@ class ModelSaleCustomer extends Model {
 				$mobile=$this->db->escape($address['mobile']);
 				$postcode=$this->db->escape($address['postcode']);
 				$status=$this->db->escape($address['default']);
-				$this->db->query("INSERT INTO " . DB_PREFIX . "address SET address_id = '" . (int)$address['address_id'] . "', customer_id = '" . (int)$customer_id  . "', username = '{$username}', address = '" . $this->db->escape($address['address']) . "', mobile = '{$mobile}', telephone = '" . $this->db->escape($address['telephone']) . "', postcode = '{$postcode}',`status`={$status}");
+				$this->db->query("INSERT INTO " . DB_PREFIX . "address SET address_id = '" . (int)$address['address_id'] . "', customer_id = '" . (int)$customer_id  . "', username = '{$username}', address = '" . $this->db->escape($address['address']) . "', mobile = '{$mobile}', telphone = '" . $this->db->escape($address['telphone']) . "', postcode = '{$postcode}',`status`={$status}");
 					
 				/* if (isset($address['default'])) {
 					$address_id = $this->db->getLastId();
@@ -59,7 +61,7 @@ class ModelSaleCustomer extends Model {
 	}
 	
 	public function getCustomer($customer_id) {
-		$query = $this->db->query("SELECT a.address_id,c.status,c.username,c.email,c.customer_group_id,c.gender,c.mobile,c.telephone,c.cart,c.wishlist,c.newsletter,ip,c.hasshop,c.approved,c.token,date_added,date_modified FROM " . DB_PREFIX . "customer c left join " . DB_PREFIX . "address a on c.customer_id=a.customer_id and a.status=1 WHERE c.customer_id = '" . (int)$customer_id . "'");
+		$query = $this->db->query("SELECT a.address_id,c.status,c.username,c.email,c.customer_group_id,c.gender,c.mobile,c.telphone,c.cart,c.wishlist,c.newsletter,ip,c.hasshop,c.approved,c.token,date_added,date_modified FROM " . DB_PREFIX . "customer c left join " . DB_PREFIX . "address a on c.customer_id=a.customer_id and a.status=1 WHERE c.customer_id = '" . (int)$customer_id . "'");
 	
 		return $query->row;
 	}
@@ -80,7 +82,7 @@ class ModelSaleCustomer extends Model {
 	}
 			
 	public function getCustomers($data = array()) {
-		$sql = "SELECT *, cgd.name AS customer_group FROM " . DB_PREFIX . "customer c inner JOIN " . DB_PREFIX . "customer_group_description cgd ON (c.customer_group_id = cgd.customer_group_id) ";
+		$sql = "SELECT c.*,s.name,s.store_id, cgd.name AS customer_group FROM " . DB_PREFIX . "customer c left JOIN " . DB_PREFIX . "customer_group_description cgd ON (c.customer_group_id = cgd.customer_group_id) left join ".DB_PREFIX."store s on c.store_id=s.store_id ";
 
 		$implode = array();
 		
@@ -238,7 +240,7 @@ class ModelSaleCustomer extends Model {
 				'customer_id'    => $address_query->row['customer_id'],
 				'username'      => $address_query->row['username'],
 				'mobile'         =>$address_query->row['mobile'],
-				'telephone'         =>$address_query->row['telephone'],
+				'telphone'         =>$address_query->row['telphone'],
 				// 'company'        => $address_query->row['company'],
 				// 'company_id'     => $address_query->row['company_id'],
 				// 'tax_id'         => $address_query->row['tax_id'],

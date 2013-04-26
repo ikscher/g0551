@@ -75,7 +75,7 @@ class ModelShippingFedex extends Model {
 			$xml .= '					<ns1:Contact>';
             $xml .= '						<ns1:PersonName>' . $this->config->get('config_owner') . '</ns1:PersonName>';
             $xml .= '						<ns1:CompanyName>' . $this->config->get('config_name') . '</ns1:CompanyName>';
-            $xml .= '						<ns1:PhoneNumber>' . $this->config->get('config_telephone') . '</ns1:PhoneNumber>';
+            $xml .= '						<ns1:PhoneNumber>' . $this->config->get('config_telphone') . '</ns1:PhoneNumber>';
           	$xml .= '					</ns1:Contact>';
 			$xml .= '					<ns1:Address>';
 			
@@ -94,7 +94,7 @@ class ModelShippingFedex extends Model {
 			$xml .= '					<ns1:Contact>';
 			$xml .= '						<ns1:PersonName>' . $address['firstname'] . ' ' . $address['lastname'] . '</ns1:PersonName>';
 			$xml .= '						<ns1:CompanyName>' . $address['company'] . '</ns1:CompanyName>';
-			$xml .= '						<ns1:PhoneNumber>' . $this->customer->getTelephone() . '</ns1:PhoneNumber>';
+			$xml .= '						<ns1:PhoneNumber>' . $this->customer->gettelphone() . '</ns1:PhoneNumber>';
 			$xml .= '					</ns1:Contact>';
 			$xml .= '					<ns1:Address>';
 			$xml .= '						<ns1:StreetLines>' . $address['address_1'] . '</ns1:StreetLines>';

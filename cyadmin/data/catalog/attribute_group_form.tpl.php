@@ -74,8 +74,13 @@
 		<td><select name='option_id'>
 		    <option value=''>--请选择--</option>
 			<?php foreach((array)$options as $option) {?>
+                
 			    <?php if($option['type']=='select' || $option['type']=='checkbox' || $option['type']=='radio') { ?>
-					<option value="<?php echo $option['option_id'];?>" <?php if($option_id==$option['option_id']) { ?>selected="selected"<?php } ?>><?php echo $option['type'];?></option>
+				    <?php if(isset($flag)) { ?>
+					    <option value="<?php echo $option['option_id'];?>" <?php if($option['type']=='checkbox') { ?>selected="selected"<?php } ?>><?php echo $option['type'];?></option>
+				    <?php } else { ?>
+					    <option value="<?php echo $option['option_id'];?>" <?php if($option_id==$option['option_id']) { ?>selected="selected"<?php } ?>><?php echo $option['type'];?></option>
+					<?php } ?>
 				<?php } ?>
 			<?php } ?>
 			

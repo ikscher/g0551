@@ -8,7 +8,7 @@ button,input,select,textarea{font-size:100%;}
 /* h1,h2,h3,h4,h5,h6 {font-size:100%;font-weight:500;} */
 ol,ul,li{list-style:none;}
 a{text-decoration:none; font-size:12px;color:#666666;outline:none;}
-a:hover{text-decoration:underline;color:#CC0000;}
+a:hover{color:#ffee00;}
 
 .r{float:right;}
 /* fieldset,img{border:0;}
@@ -53,10 +53,15 @@ address,caption,cite,code,dfn,em,th,var {font-style:normal;font-weight:500;}
 .ac_t_r {width:760px; float:right; background-color:#fff;}
 .ac_t_l_s {float:left; padding-left:3px;}
 .line {padding:0 5px 8px; border-bottom:solid 1px #e1e1e1;}
-.line_bot {padding:8px 5px;}
-.account_contianer {width:730px; padding:10px 5px 10px 5px; float:right; display:inline; background-color:#fff;}
+.line_bot {padding:8px 20px;}
+.account_container {width:730px; padding:10px 5px 10px 5px; float:right; display:inline; background-color:#fff;}
 .c_purple{color:#ec4b73; }
 .order_attention {margin:2px 0px; padding:0 5px;}
+
+.account_container .photo{float:left;padding:10px;}
+.account_container .individual{float:left;}
+.account_container .photo .changeAvatar{margin-left:20px;}
+#changeAvatar{margin-top:20px;}
 
 /* .account_contianer h4 input{float:right;font-weight:normal;} */
 .memberAd {margin-bottom:10px;}
@@ -266,7 +271,15 @@ div.return-detail ul.return-op  li{padding-top:10px;height:22px;}
 
 .errorinfo{margin-left:25px;border:1px solid #ffccdd;padding:5px;line-height:28px;}
 
+.J_ListTable_payment{
+   width: 100%;
+   border-collapse: collapse;
+}
 
+.J_ListTable_payment td{
+	border-top: 1px solid #e2e2e2;
+	border-bottom: 1px solid #e2e2e2;
+}
 /* 下拉菜单 */
 /*.searchtype{position:absolute;top:3px;z-index:100;left:180px;}*/
  ul.z{float:right;}

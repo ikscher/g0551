@@ -110,7 +110,7 @@ class ControllerPaymentKlarnaInvoice extends Controller {
 			// Billing Address & Shipping address because Klarna does not handle different ones very well.
             $address = array(
 				'email'           => $order_info['email'],
-				'telno'           => $order_info['telephone'],
+				'telno'           => $order_info['telphone'],
 				'cellno'          => $this->request->post['cellno'],
 				'company'         => $order_info['payment_company'],
 				'careof'          => '',

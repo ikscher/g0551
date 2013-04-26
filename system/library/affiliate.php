@@ -4,7 +4,7 @@ class Affiliate {
 	private $firstname;
 	private $lastname;
 	private $email;
-	private $telephone;
+	private $telphone;
 	private $fax;
 	private $code;
 	
@@ -22,7 +22,7 @@ class Affiliate {
 				$this->firstname = $affiliate_query->row['firstname'];
 				$this->lastname = $affiliate_query->row['lastname'];
 				$this->email = $affiliate_query->row['email'];
-				$this->telephone = $affiliate_query->row['telephone'];
+				$this->telphone = $affiliate_query->row['telphone'];
 				$this->fax = $affiliate_query->row['fax'];
 				$this->code = $affiliate_query->row['code'];
 							
@@ -43,7 +43,7 @@ class Affiliate {
 			$this->firstname = $affiliate_query->row['firstname'];
 			$this->lastname = $affiliate_query->row['lastname'];
 			$this->email = $affiliate_query->row['email'];
-			$this->telephone = $affiliate_query->row['telephone'];
+			$this->telphone = $affiliate_query->row['telphone'];
 			$this->fax = $affiliate_query->row['fax'];
       		$this->code = $affiliate_query->row['code'];
 	  
@@ -60,7 +60,7 @@ class Affiliate {
 		$this->firstname = '';
 		$this->lastname = '';
 		$this->email = '';
-		$this->telephone = '';
+		$this->telphone = '';
 		$this->fax = '';
   	}
   
@@ -84,8 +84,8 @@ class Affiliate {
 		return $this->email;
   	}
   
-  	public function getTelephone() {
-		return $this->telephone;
+  	public function gettelphone() {
+		return $this->telphone;
   	}
   
   	public function getFax() {

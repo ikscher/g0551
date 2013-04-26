@@ -41,7 +41,7 @@ class ModelLocalisationOrderStatus extends Model {
 		
 	public function getOrderStatuses($data = array()) {
       	if ($data) {
-			$sql = "SELECT * FROM " . DB_PREFIX . "order_status ";
+			$sql = "SELECT * FROM " . DB_PREFIX . "order_status where order_status_id<=7";
 			
 			$sql .= " ORDER BY name";	
 			
@@ -70,7 +70,7 @@ class ModelLocalisationOrderStatus extends Model {
 			$order_status_data = $this->cache->get('order_status');
 		
 			if (!$order_status_data) {
-				$query = $this->db->query("SELECT order_status_id, name FROM " . DB_PREFIX . "order_status ORDER BY name");
+				$query = $this->db->query("SELECT order_status_id, name FROM " . DB_PREFIX . "order_status where order_status_id<=7 ORDER BY name");
 	
 				$order_status_data = $query->rows;
 			

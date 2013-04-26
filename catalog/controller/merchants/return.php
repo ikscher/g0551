@@ -21,6 +21,46 @@ class ControllerMerchantsReturn extends Controller {
 	*/
 	public function index() {
 		$this->check_customer();
+
+		$this->load->model('merchants/return');
+		
+		//退换货状态处理
+		$state=isset($this->request->request['s'])?intval($this->request->request['s']):7;
+	
+		
+		$statusid=ORDER_REFUND;//	
+
+		//当前页
+		$page=isset($this->request->get['page'])?intval($this->request->get['page']):1;
+		
+		
+		$data=array();
+		$limit=10;
+		$data=array( 
+					'start'=>($page-1)*$limit,
+					'limit'=>$limit,
+					'statusid'=>$statusid);
+						
+		//总记录数
+		$total = $this->model_merchants_return->getTotalReturn($data);
+	
+		
+		//获取分页列表
+		$this->data["returnList"]=array();
+		$result = $this->model_merchants_return->getReturns($data);
+		foreach ($result as $item) {
+			$item["date_added"]=date("Y-m-d H:i:s",$item["date_added"]);
+			$this->data["returnList"][]=$item;
+		}
+
+		$pagination = new Pagination('results','links');
+		$pagination->total = $total;
+		$pagination->page = $page;
+		$pagination->limit = $limit;
+		$pagination->text = $this->language->get('text_pagination');
+		$pagination->url = $this->url->link('merchants/return', "page={page}&s={$state}", 'SSL');
+		$this->data["page"]=$pagination->render();
+
 		
 		$this->children = array(
 			'merchants/left',
@@ -33,56 +73,6 @@ class ControllerMerchantsReturn extends Controller {
 		} else {
 			$this->template = 'default/template/merchants/merchants_return.html';
 		}
-		
-		$this->load->model('merchants/return');
-		
-		//退换货状态处理
-		$state=isset($this->request->request['s'])?intval($this->request->request['s']):1;
-		if(!is_numeric($state))$state=1;
-		$state=intval($state);
-		switch($state){
-			case 1:
-			case 2:
-			case 3:
-				$where=" And return_status_id={$state}";
-				break;
-			default:
-				$where=" And return_status_id=1";
-		}
-
-		$data=array("where"=>$where);
-		$this->data["info"]=$state;
-		
-		//当前页
-		$page=isset($this->request->get['page'])?intval($this->request->get['page']):1;
-		if(!is_numeric($page))$page=1;
-		//每页显示多少条记录
-		$page_size=10;
-		//总记录数
-		$product_total = $this->model_merchants_return->getTotalReturn($data);
-		//总页数
-		$page_count = ceil($product_total / $page_size);
-		//页码有效值处理
-		if($page>$page_count)$page=$page_count;
-		if($page<1)$page=1;
-		
-		//获取分页列表
-		$this->data["returnList"]=array();
-		$result = $this->model_merchants_return->getReturnList(($page - 1) * $page_size, $page_size, $data);
-		foreach ($result as $item) {
-			$item["date_added"]=date("Y-m-d H:i:s",$item["date_added"]);
-			$this->data["returnList"][]=$item;
-		}
-
-		$pagination = new Pagination('results','links');
-		$pagination->total = $product_total;
-		$pagination->page = $page;
-		$pagination->num_links = 5;
-		$pagination->limit = $page_size;
-		$pagination->text = $this->language->get('text_pagination');
-		$pagination->url = $this->url->link('merchants/return', "page={page}&s={$state}", 'SSL');
-		$this->data["page"]=$pagination->render();
-		//exit($pagination->render());
 		
 		$this->response->setOutput($this->render());
   	}

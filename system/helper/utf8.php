@@ -7,7 +7,15 @@ Add these functions  formatSerialize and formatSerializeRev:
 */
 
 
-
+function file_type($filename){
+	$file = fopen($filename, "rb");
+	$bin = fread($file, 2); //Ö»¶Á2×Ö½Ú
+	fclose($file);
+	$strInfo = @unpack("C2chars", $bin);
+	$typeCode = intval($strInfo['chars1'].$strInfo['chars2']);
+	$type_arr = array(7790=>'exe', 7784=>'midi', 8297=>'rar', 255216=>'jpeg', 7173=>'gif', 6677=>'bmp', 13780=>'png');
+	return $type_arr[$typeCode] ? $type_arr[$typeCode] : 'unknown';
+}
 
 function formatSerialize(&$strItem, $strKey)
 {

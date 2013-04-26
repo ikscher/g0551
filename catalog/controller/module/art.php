@@ -281,7 +281,7 @@ class ControllerModuleArt extends Controller {
 		$this->data['heading_title'] = $this->config->get('config_title');
 		
 		$this->data['address']=$this->language->get('address');
-		$this->data['telephone']=$this->language->get('telephone');
+		$this->data['telphone']=$this->language->get('telphone');
 		
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/contact.html')) {
 		$this->template = $this->config->get('config_template') . '/template/common/contact.html';

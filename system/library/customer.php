@@ -7,7 +7,7 @@ class Customer {
 	private $username;
 	private $nickname;
 	private $email;
-	private $telephone;
+	private $telphone;
 	private $fax;
 	private $newsletter;
 	private $customer_group_id;
@@ -31,21 +31,20 @@ class Customer {
 		    if($this->memcached->get('customer')){
 			    $result=unserialize($this->memcached->get('customer'));
 			}else{
-			    $customer_query = $this->db->query("SELECT store_id,username,nickname,avatar,gender,email,mobile,telephone,fax,password,cart,wishlist,newsletter,customer_group_id,ip,hasshop,status,approved,token,date_modified,date_added FROM " . DB_PREFIX . "customer WHERE customer_id = '" . (int)$this->customer_id . "' AND status = '1'");
+			    $customer_query = $this->db->query("SELECT store_id,username,nickname,avatar,gender,email,mobile,telphone,fax,password,cart,wishlist,newsletter,customer_group_id,ip,hasshop,status,approved,token,date_modified,date_added FROM " . DB_PREFIX . "customer WHERE customer_id = '" . (int)$this->customer_id . "' AND status = '1'");
 			    $result=$customer_query->row;
 				$this->memcached->set('customer',serialize($customer_query->row));
 			}
-			
-			
+
 			if (!empty($result)) {
 				//$this->customer_id = $result['customer_id'];
-				$this->username = $result['username'];
-				$this->email = $result['email'];
-				$this->nickname =$result['nickname'];
-				$this->telephone = $result['telephone'];
-				$this->mobile = $result['mobile'];
-				$this->newsletter = $result['newsletter'];
-				$this->customer_group_id = $result['customer_group_id'];
+				$this->username = isset($result['username'])?$result['username']:'';
+				$this->email = isset($result['email'])?$result['email']:'';
+				$this->nickname = isset($result['nickname'])?$result['nickname']:'';
+				$this->telphone = isset($result['telphone'])?$result['telphone']:'';
+				$this->mobile = isset($result['mobile'])?$result['mobile']:'';
+				//$this->newsletter = $result['newsletter'];
+				$this->customer_group_id = isset($result['customer_group_id'])?$result['customer_group_id']:'';
 				//$this->address_id = $customer_query->row['address_id'];
 				$sql="select * from " . DB_PREFIX . "address where customer_id='".$this->customer_id."' and status=1";
 				$query=$this->db->query($sql);
@@ -71,10 +70,10 @@ class Customer {
 		$password= $this->db->escape(md5($password)) ;
 	    
 		if ($override) { //需要通过审核
-		    $sql="SELECT * FROM " . DB_PREFIX . "customer WHERE (email ='{$username}' or mobile='{$username}') AND  password = '{$password}' AND status = '1' AND approved = '1'";
+		    $sql="SELECT c.*,s.name,s.shortname  FROM " . DB_PREFIX . "customer c left join ".DB_PREFIX."store s on c.store_id=s.store_id WHERE (c.email ='{$username}' or c.mobile='{$username}') AND  c.password = '{$password}' AND c.status = '1' AND c.approved = '1'";
 		    $customer_query = $this->db->query($sql);
 		} else { //不需要通过审核
-		    $sql="SELECT * FROM " . DB_PREFIX . "customer where (email ='{$username}' or mobile='{$username}') AND  password = '{$password}'  AND status = '1'";
+		    $sql="SELECT c.*,s.name,s.shortname FROM " . DB_PREFIX . "customer c  left join ".DB_PREFIX."store s on c.store_id=s.store_id where (c.email ='{$username}' or c.mobile='{$username}') AND  c.password = '{$password}'  AND c.status = '1'";
 			$customer_query = $this->db->query($sql);
 			
 		}
@@ -109,14 +108,14 @@ class Customer {
 					}
 				}			
 			}
-			
+		
 			$this->customer_id = $customer_query->row['customer_id'];
 			$this->username = $customer_query->row['username'];
-			$this->nickname =$result['nickname'];
+			$this->nickname =$customer_query->row['nickname'];
 			$this->store_id = $customer_query->row['store_id'];
 			$this->mobile=$customer_query->row['mobile'];
 			$this->email = $customer_query->row['email'];
-			$this->telephone = $customer_query->row['telephone'];
+			$this->telphone = $customer_query->row['telphone'];
 			$this->fax = $customer_query->row['fax'];
 			$this->newsletter = $customer_query->row['newsletter'];
 			$this->customer_group_id = $customer_query->row['customer_group_id'];
@@ -155,7 +154,7 @@ class Customer {
 		$this->username = '';
 
 		$this->email = '';
-		$this->telephone = '';
+		$this->telphone = '';
 		$this->fax = '';
 		$this->newsletter = '';
 		$this->customer_group_id = '';
@@ -187,8 +186,8 @@ class Customer {
 		return $this->nickname;
   	}
   
-  	public function getTelephone() {
-		return $this->telephone;
+  	public function gettelphone() {
+		return $this->telphone;
   	}
   
   	public function getMobile() {

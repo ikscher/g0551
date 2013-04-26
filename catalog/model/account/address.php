@@ -12,7 +12,7 @@ class ModelAccountAddress extends Model {
 	    //$str=array();
 		$username   =$this->db->escape($data['username']);
 		$mobile     =$this->db->escape($data['mobile']);
-		$telephone  =$this->db->escape($data['username']);
+		$telphone  =$this->db->escape($data['username']);
 		$address    =$this->db->escape($data['address']);
 		if(!empty($data['postcode'])){
 			$postcode   =$this->db->escape($data['postcode']);
@@ -23,7 +23,7 @@ class ModelAccountAddress extends Model {
 		//$company    =$this->db->escape($data['company']);
 		$customer_id=$this->db->escape($this->customer->getId());
 	    
-		$query=$this->db->query("INSERT INTO " . DB_PREFIX . "address SET customer_id = '{$customer_id}', username = '{$username}',telephone = '{$telephone}', mobile = '{$mobile}',  address = '{$address}', postcode = '{$postcode}' ");
+		$query=$this->db->query("INSERT INTO " . DB_PREFIX . "address SET customer_id = '{$customer_id}', username = '{$username}',telphone = '{$telphone}', mobile = '{$mobile}',  address = '{$address}', postcode = '{$postcode}' ");
 		
 		
 		if($query===true){
@@ -44,13 +44,13 @@ class ModelAccountAddress extends Model {
 	    $address_id =$this->db->escape($data['address_id']);
 		$username   =$this->db->escape($data['username']);
 		$mobile     =$this->db->escape($data['mobile']);
-		$telephone  =$this->db->escape($data['telephone']);
+		$telphone  =$this->db->escape($data['telphone']);
 		$address    =$this->db->escape($data['address']);
 		$postcode   =$this->db->escape($data['postcode']);
 		$company    =$this->db->escape($data['company']);
 		
 		
-		$query=$this->db->query("UPDATE " . DB_PREFIX . "address SET username = '{$username}',address='{$address}', company = '{$company}', postcode = '{$postcode}', mobile = '{$mobile}', telephone = '{$telephone}'  WHERE address_id  = '{$address_id}'");
+		$query=$this->db->query("UPDATE " . DB_PREFIX . "address SET username = '{$username}',address='{$address}', company = '{$company}', postcode = '{$postcode}', mobile = '{$mobile}', telphone = '{$telphone}'  WHERE address_id  = '{$address_id}'");
 	    
 		if($query===true){
 		   return 1;

@@ -39,6 +39,9 @@ abstract class Controller {
 		}
 		exit();
 	}
+	
+	
+	
 
 	protected function getChild($child, $args = array()) {
 		$action = new Action($child, $args);

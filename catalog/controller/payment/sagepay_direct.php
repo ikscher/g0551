@@ -150,7 +150,7 @@ class ControllerPaymentSagepayDirect extends Controller {
 			$data['BillingState'] = $order_info['payment_zone_code'];
 		}
 		
-		$data['BillingPhone'] = substr($order_info['telephone'], 0, 20);
+		$data['BillingPhone'] = substr($order_info['telphone'], 0, 20);
 		
 		if ($this->cart->hasShipping()) {
 			$data['DeliverySurname'] = substr($order_info['shipping_lastname'], 0, 20);
@@ -170,7 +170,7 @@ class ControllerPaymentSagepayDirect extends Controller {
 			}
 			
 			$data['CustomerName'] = substr($order_info['firstname'] . ' ' . $order_info['lastname'], 0, 100);
-			$data['DeliveryPhone'] = substr($order_info['telephone'], 0, 20);
+			$data['DeliveryPhone'] = substr($order_info['telphone'], 0, 20);
 		} else {
 			$data['DeliveryFirstnames'] = $order_info['payment_firstname'];
         	$data['DeliverySurname'] = $order_info['payment_lastname'];
@@ -188,7 +188,7 @@ class ControllerPaymentSagepayDirect extends Controller {
 				$data['DeliveryState'] = $order_info['payment_zone_code'];
 			}
 		
-			$data['DeliveryPhone'] = $order_info['telephone'];			
+			$data['DeliveryPhone'] = $order_info['telphone'];			
 		}		
 		
 		$data['CustomerEMail'] = substr($order_info['email'], 0, 255);

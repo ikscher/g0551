@@ -1,0 +1,118 @@
+<link rel="stylesheet" type="text/css" href="view/stylesheet/general.css">
+<link rel="stylesheet" type="text/css" href="view/stylesheet/main.css">
+<script type="text/javascript" src="view/javascript/jquery/jquery-1.7.1.min.js"></script>
+
+
+{if $error_warning}
+<div class="warning">{$error_warning}</div>
+{/if}
+   
+    <h1 >{$heading_title}
+		<span class="action-span">
+		    <a onclick="$('#form').submit();" ><span>{$button_save}</span></a>
+			<a onclick="location='{$cancel}';" class="button"><span>{$button_cancel}</span></a>
+    </h1>
+   <div class="list-div" id="listDiv">
+    <form action="{$action}" method="post" enctype="multipart/form-data" id="form">
+      <table class="form">
+	    <tr>
+			<td><span class="required">*</span> {$entry_store}<br>(请选择店铺)</td>
+		    <td>
+			    <select name="store">
+				    {loop $stores $store}
+						<option value="{$store['store_id']}">{$store['name']}</option>
+					{/loop}
+				</select>
+			</td>
+		</tr>
+		<tr>
+		<td><span class="required">*</span> {$entry_trade_type}<br>(请根据对应的接口填入正确的参数)</td>
+          <td>
+			{if $alipay_trade_type=='trade_create_by_buyer'}
+				<label for="trade_create_by_buyer">双接口</label>：<input type="radio" name="alipay_trade_type" id="trade_create_by_buyer" value="trade_create_by_buyer"  checked="true"/>&nbsp;&nbsp;
+				<label for="create_direct_pay_by_user">直接到帐：<input type="radio" name="alipay_trade_type" id="create_direct_pay_by_user" value="create_direct_pay_by_user"/>&nbsp;&nbsp;
+				<label for="create_partner_trade_by_buyer">担保接口：<input type="radio" name="alipay_trade_type" id="create_partner_trade_by_buyer" value="create_partner_trade_by_buyer"/>&nbsp;&nbsp;
+			{elseif $alipay_trade_type=='create_direct_pay_by_user'}
+				<label for="trade_create_by_buyer">双接口：<input type="radio" name="alipay_trade_type"  id="trade_create_by_buyer" value="trade_create_by_buyer"/>&nbsp;&nbsp;
+				<label for="create_direct_pay_by_user">直接到帐：<input type="radio" name="alipay_trade_type"  id="create_direct_pay_by_user" value="create_direct_pay_by_user"  checked="true"/>&nbsp;&nbsp;
+				<label for="create_partner_trade_by_buyer">担保接口：<input type="radio" name="alipay_trade_type"  id="create_partner_trade_by_buyer" value="create_partner_trade_by_buyer"/>&nbsp;&nbsp;
+			{else}
+				<label for="trade_create_by_buyer">双接口</label>：<input type="radio" name="alipay_trade_type" id="trade_create_by_buyer" value="trade_create_by_buyer"/>&nbsp;&nbsp;
+				<label for="create_direct_pay_by_user">直接到帐：<input type="radio" name="alipay_trade_type" id="create_direct_pay_by_user"  value="create_direct_pay_by_user"/>&nbsp;&nbsp;
+				<label for="create_partner_trade_by_buyer">担保接口：<input type="radio" name="alipay_trade_type"  id="create_partner_trade_by_buyer" value="create_partner_trade_by_buyer"  checked="true"/>&nbsp;&nbsp;
+			{/if}
+		</td>
+        </tr>
+	  	<tr>
+          <td><span class="required">*</span> {$entry_partner}</td>
+          <td><input type="text" name="alipay_partner" value="{$alipay_partner}" size="50" />
+	  {if $error_partner}
+            <span class="error">{$error_partner}</span>
+            {/if}</td>
+        </tr>
+
+		<tr>
+          <td><span class="required">*</span> {$entry_security_code}</td>
+          <td><input type="text" name="alipay_security_code" value="{$alipay_security_code}" size="50" />
+	  {if $error_secrity_code}
+            <span class="error">{$error_secrity_code}</span>
+           {/if}</td>
+        </tr>
+	   <tr>
+          <td><span class="required">*</span> {$entry_seller_email}</td>
+          <td><input type="text" name="alipay_seller_email" value="{$alipay_seller_email}" size="50" />
+            {if $error_email}
+            <span class="error">{$error_email}</span>
+            {/if}</td>
+        </tr>
+		
+		<!--
+			<tr>
+		          <td><span class="required">*</span> {$entry_anti_phishing}</td>
+		          <td>
+				   {if ($alipay_anti_phishing==1)}
+						Yes:&nbsp;<input type="radio" name="alipay_anti_phishing" value="1" checked="true"/>&nbsp;&nbsp;
+						No:&nbsp;<input type="radio" name="alipay_anti_phishing" value="0"/>&nbsp;&nbsp;
+					{else}
+						Yes:&nbsp;<input type="radio" name="alipay_anti_phishing" value="1"/>&nbsp;&nbsp;
+						No:&nbsp;<input type="radio" name="alipay_anti_phishing" value="0" checked="true"/>&nbsp;&nbsp;
+					{/if}
+				</td>
+			</tr>
+		-->
+        <tr>
+          <td>{$entry_order_status}</td>
+          <td><select name="alipay_order_status_id">
+              {loop $order_statuses  $order_status}
+                 {if $order_status['order_status_id'] == $alipay_order_status_id}
+                    <option value="{$order_status['order_status_id']}" selected="selected">{$order_status['name']}</option>
+                 {else}
+                    <option value="{$order_status['order_status_id']}">{$order_status['name']}</option>
+                  {/if}
+              {/loop}
+            </select></td>
+        </tr>
+        <tr>
+          <td>{$entry_status}</td>
+          <td><select name="alipay_status">
+              {if $alipay_status}
+              <option value="1" selected="selected">{$text_enabled}</option>
+              <option value="0">{$text_disabled}</option>
+              {else}
+              <option value="1">{$text_enabled}</option>
+              <option value="0" selected="selected">{$text_disabled}</option>
+              {/if}
+            </select></td>
+        </tr>
+        <tr>
+          <td>{$entry_sort_order}</td>
+          <td><input type="text" name="alipay_sort_order" value="{$alipay_sort_order}" size="10" /></td>
+        </tr>
+		 <tr>
+          <td>&nbsp;</td>
+          <td>使用注意已经存在CNY的人民币汇率设置。Code为CNY</td>
+        </tr>
+      </table>
+    </form>
+  </div>
+

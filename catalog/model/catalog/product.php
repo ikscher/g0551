@@ -355,6 +355,8 @@ class ModelCatalogProduct extends Model {
 	*/
 	public function getProductAttributes($product_id,$exclude=false) {
 	    
+		$category_id=$this->getProductCategories($product_id);
+        $category_id=implode(',',$category_id);
 		
 		$product_attribute_group_data = array();
 		$attribute=array();
@@ -365,23 +367,30 @@ class ModelCatalogProduct extends Model {
 		// $product_attribute_group_query = $this->db->query("SELECT ag.attribute_group_id, agd.name FROM " . DB_PREFIX . "product_attribute pa LEFT JOIN " . DB_PREFIX . "attribute a ON (pa.attribute_id = a.attribute_id) LEFT JOIN " . DB_PREFIX . "attribute_group ag ON (a.attribute_group_id = ag.attribute_group_id) LEFT JOIN " . DB_PREFIX . "attribute_group_description agd ON (ag.attribute_group_id = agd.attribute_group_id) WHERE pa.product_id = '" . (int)$product_id  . "' GROUP BY ag.attribute_group_id ORDER BY ag.sort_order, agd.name");
 		$query = $this->db->query("select attribute_id,option_attribute_id FROM ".DB_PREFIX."product_attribute where product_id='{$product_id}'");
 		
-		if(!empty($query->row['attribute_id'])){
-		    $attribute=explode('|',$query->row['attribute_id']);
-		}
-		
-		//排除开始
-		if(!empty($query->row['option_attribute_id']) && $exclude==true){
-		    $option_attribute=explode('|',$query->row['option_attribute_id']);
+		if($exclude=='option'){ //只选择option的属性
+			if(!empty($query->row['option_attribute_id'])){
+				$attribute=explode('|',$query->row['option_attribute_id']);
+			}
+		}else{
+		    if(!empty($query->row['attribute_id'])){
+				$attribute=explode('|',$query->row['attribute_id']);
+			}
 			
-			foreach($attribute as $v){
-			    array_shift($attribute);
-				if(empty($v)) continue;
-				if(!in_array($v, $option_attribute)){
-					array_push($attribute,$v);
+			//排除开始
+			if(!empty($query->row['option_attribute_id']) && $exclude===true){
+				$option_attribute=explode('|',$query->row['option_attribute_id']);
+				
+				foreach($attribute as $v){
+					array_shift($attribute);
+					if(empty($v)) continue;
+					if(!in_array($v, $option_attribute)){
+						array_push($attribute,$v);
+					}
 				}
 			}
+			//排除结束
 		}
-		//排除结束
+		
 		
 		$query=null;
 	
@@ -419,21 +428,30 @@ class ModelCatalogProduct extends Model {
 							'url'         => $product_attribute['url']		 	
 						);
 					}
-				
-					$sql="select agd.name,ag.option_id from ".DB_PREFIX."attribute_group ag left join ".DB_PREFIX."attribute_group_description agd  on ag.attribute_group_id=agd.attribute_group_id where ag.attribute_group_id={$attribute_group_id}";
+				    
+					$sql="select agd.name,ag.option_id,ag.type,c2ag.is_pa from ".DB_PREFIX."attribute_group ag left join ".DB_PREFIX."attribute_group_description agd  on ag.attribute_group_id=agd.attribute_group_id  left join ".DB_PREFIX."category_to_attribute_group c2ag on ag.attribute_group_id=c2ag.attribute_group_id where  ag.attribute_group_id={$attribute_group_id} and c2ag.category_id in({$category_id})";
 					$query_=$this->db->query($sql);
-					$attribute_group_name=$query_->row['name'];
-					$option_id=$query_->row['option_id'];
-
 					
-					$product_attribute_group_data[] = array(
-							'attribute_group_id' => $attribute_group_id,
-								'attribute_group_name'               => $attribute_group_name,
-								'product_option_value'          => $product_attribute_data, //即产品的属性列表
-								'option_id'       => (int)$option_id,
-								'attribute'  => $this->getAttributes($attribute_group_id),
-								'type'  => $this->getOptionTypeByGID($attribute_group_id)
-							);	
+					if($query_->num_rows>0){
+						$attribute_group_name=$query_->row['name'];
+						$option_id=$query_->row['option_id'];
+						$gtype=$query_->row['type'];
+						if($query_->row['is_pa'] && $gtype==2){
+							$gtype=2;
+						}else{
+							$gtype=1;
+						}
+						
+						$product_attribute_group_data[] = array(
+								'attribute_group_id' => $attribute_group_id,
+									'attribute_group_name'               => $attribute_group_name,
+									'product_option_value'          => $product_attribute_data, //即产品的属性列表
+									'option_id'       => (int)$option_id,
+									'attribute'  => $this->getAttributes($attribute_group_id),
+									'gtype'   => $gtype,
+									'type'  => $this->getOptionTypeByGID($attribute_group_id)
+								);	
+					}
 				}
 			}
 			$query_=null;
@@ -443,11 +461,14 @@ class ModelCatalogProduct extends Model {
 
 		return $product_attribute_group_data;
 	}
-			
-	public function getProductOptions($product_id) {
+    
+    /**
+    * 原先获取选项的函数，废弃
+	*/	
+	public function getProductOptions_old($product_id) {
 		$product_option_data = array();
 		
-        $sql="SELECT po.product_option_id,o.option_id,od.name ,o.`type`,po.option_value,po.required,agd.name as attribute_group_name,agd.attribute_group_id FROM " . DB_PREFIX . "product_option po LEFT JOIN `" . DB_PREFIX . "option` o ON (po.option_id = o.option_id) LEFT JOIN " . DB_PREFIX . "option_description od ON (o.option_id = od.option_id) left join ".DB_PREFIX."attribute_group_description agd on po.attribute_group_id=agd.attribute_group_id WHERE po.product_id = '" . (int)$product_id  . "' ORDER BY o.sort_order";
+        $sql="SELECT po.product_option_id,o.option_id,od.name ,o.`type`,po.option_value,po.required,agd.name as attribute_group_name,agd.attribute_group_id FROM " . DB_PREFIX . "product_option po LEFT JOIN `" . DB_PREFIX . "option` o ON (po.option_id = o.option_id) LEFT JOIN " . DB_PREFIX . "option_description od ON (o.option_id = od.option_id) left join ".DB_PREFIX."attribute_group_description agd on po.attribute_group_id=agd.attribute_group_id  left join ".DB_PREFIX."attribute_group ag on po.attribute_group_id=ag.attribute_group_id WHERE  ag.type=2 and po.product_id = '" . (int)$product_id  . "' ORDER BY o.sort_order";
 		$product_option_query = $this->db->query($sql);
 		
 		foreach ($product_option_query->rows as $product_option) {
@@ -482,6 +503,7 @@ class ModelCatalogProduct extends Model {
 					'name'              => $product_option['name'],
 					'attribute_group_name' => isset($product_option['attribute_group_name'])?$product_option['attribute_group_name']:'',
 					'type'              => $product_option['type'],
+					'gtype'            => $this->getAttributeGroupType($product_option['attribute_group_id']),
 					'product_option_value'      => $product_option_value_data,
 					'required'          => $product_option['required']
 				);
@@ -498,6 +520,18 @@ class ModelCatalogProduct extends Model {
       	}
 		
 		return $product_option_data;
+	}
+	
+	public function getProductOptions($product_id) {
+	    $product_option_data = array();
+		
+	    $sql="select product_id,composite_id,price,quantity,subtract from ".DB_PREFIX."product_option_ulity where product_id='{$product_id}'";
+		$query=$this->db->query($sql);
+		
+		$product_option_data=$query->rows;
+		
+		return $product_option_data;
+	  
 	}
 	
 	public function getProductDiscounts($product_id) {
@@ -711,7 +745,7 @@ class ModelCatalogProduct extends Model {
 			
 			
 		}else{
-		    $sql="select distinct(p.product_id) from ".DB_PREFIX."product p inner join ".DB_PREFIX."product_to_category p2c on p.product_id=p2c.product_id where p2c.category_id={$category_id}  limit {$limit}";
+		    $sql="select distinct(p.product_id) from ".DB_PREFIX."product p inner join ".DB_PREFIX."product_to_category p2c on p.product_id=p2c.product_id where p2c.category_id={$category_id} order by date_added desc limit {$limit}";
 		}
 		
 		$product_data = array();
@@ -1029,6 +1063,7 @@ class ModelCatalogProduct extends Model {
 	    $attribute_id='';
 		$option_attribute_group=array();
 		$comma='';
+		$attribute=array();
 		
 	    $sql="select attribute_id,option_attribute_id from ".DB_PREFIX."product_attribute where product_id='{$product_id}'";
 		$query=$this->db->query($sql);
@@ -1039,6 +1074,7 @@ class ModelCatalogProduct extends Model {
 			    $attribute=$query->row['attribute_id'];
 			}
 			
+	
 		    if(!empty($attribute)){
 				$attribute=explode('|',$attribute);
 			
@@ -1049,10 +1085,14 @@ class ModelCatalogProduct extends Model {
 					$comma=',';
 				}
 			}
-			
+			// echo $attribute_id;
 			
 			if(!empty($attribute_id)){
-			    $sql="select attribute_group_id from ".DB_PREFIX."attribute where attribute_id in({$attribute_id}) group by attribute_group_id";
+			    if($option==true){
+			        $sql="select ag.attribute_group_id from ".DB_PREFIX."attribute a  left join ".DB_PREFIX."attribute_group ag on a.attribute_group_id=ag.attribute_group_id where  ag.type=2 and attribute_id in({$attribute_id}) group by a.attribute_group_id";
+				}else{
+				    $sql="select attribute_group_id from ".DB_PREFIX."attribute  where   attribute_id in({$attribute_id}) group by attribute_group_id";
+				}
 				$query_=$this->db->query($sql);
 				if($query_->num_rows>0){
 				    foreach($query_->rows as $v){
@@ -1095,6 +1135,14 @@ class ModelCatalogProduct extends Model {
 		return $data;
 	}
 	
+	public function getAttributeGroupType($attribute_group_id){
+	
+	    $sql="select type from ".DB_PREFIX."attribute_group  where attribute_group_id='{$attribute_group_id}'";
+		$query=$this->db->query($sql);
+		
+		return $query->row['type'];
+	}
+	
 	/* public function getOptionType($option_id){
 	    $data=array();
 	    $sql="select * from `".DB_PREFIX."option` where option_id='{$option_id}'";
@@ -1105,7 +1153,25 @@ class ModelCatalogProduct extends Model {
 		return $data;
 	} */
 	
-    
-    
+    public function getAttributeNameById($attribute_id){
+	    $data='';
+	    $sql="select name from ".DB_PREFIX."attribute_description where attribute_id='{$attribute_id}'";
+		$query=$this->db->query($sql);
+		$data=$query->row['name'];
+		
+		return $data;
+    }
+	
+	
+	public function getProductPriceByAttribute($product_id,$attribute1,$attribute2){
+	    $data='';
+	
+	    $sql="select price from ".DB_PREFIX."product_option_ulity where product_id='{$product_id}' and (composite_id='{$attribute1}' or composite_id='{$attribute2}')";
+		$query=$this->db->query($sql);
+		$data=$query->row;
+		
+		return isset($data['price'])?$data['price']:0;
+		
+	}
 }
 ?>

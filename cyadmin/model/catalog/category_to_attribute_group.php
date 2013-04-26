@@ -12,7 +12,7 @@ class ModelCatalogCategoryToAttributeGroup extends Model {
 	    
 	   
 		
-		return $this->db->query("INSERT INTO " . DB_PREFIX . "category_to_attribute_group SET attribute_group_id='{$attribute_group_id}',category_id='{$category_id}'");
+		return $this->db->query("REPLACE INTO " . DB_PREFIX . "category_to_attribute_group SET attribute_group_id='{$attribute_group_id}',category_id='{$category_id}',is_pa='1'");
 		
 	
 	}
@@ -65,8 +65,8 @@ class ModelCatalogCategoryToAttributeGroup extends Model {
 	
 	public function getAttributeGroups($data = array()) {
 		//$sql = "SELECT ag.attribute_group_id,ag.type,ag.sort_order,agd.name,agd.description,agd.text0,agd.text1,ag.isShow,ag.cid0 FROM " . DB_PREFIX . "attribute_group ag inner JOIN " . DB_PREFIX . "attribute_group_description agd ON (ag.attribute_group_id = agd.attribute_group_id)";
-	    $sql="select c2ag.id,c2ag.attribute_group_id,c2ag.category_id,agd.name from ".DB_PREFIX."category_to_attribute_group  c2ag left join ".DB_PREFIX."attribute_group_description agd on c2ag.attribute_group_id=agd.attribute_group_id left join ".DB_PREFIX."category c on c2ag.category_id=c.category_id";
-		
+	    $sql="select c2ag.id,c2ag.attribute_group_id,c2ag.category_id,agd.name,c2ag.is_pa,ag.type from ".DB_PREFIX."category_to_attribute_group  c2ag left join ".DB_PREFIX."attribute_group_description agd on c2ag.attribute_group_id=agd.attribute_group_id left join ".DB_PREFIX."category c on c2ag.category_id=c.category_id left join ".DB_PREFIX."attribute_group ag on c2ag.attribute_group_id=ag.attribute_group_id";
+	
 		$sql .=" where 1 ";
 		if(!empty($data['filter_name'])){
 		    $sql.= " and agd.name ='{$data['filter_name']}'";
@@ -139,6 +139,11 @@ class ModelCatalogCategoryToAttributeGroup extends Model {
 		return $query->row['total'];
 	}	
 	
+	/**设置价格属性是否有效**/
+	public function setPriceAttributeValid($id,$is_pa){
+		$sql="update ".DB_PREFIX."category_to_attribute_group set is_pa='{$is_pa}' where id='{$id}'";
+		return $this->db->query($sql);
+	}
 	
 }
 ?>

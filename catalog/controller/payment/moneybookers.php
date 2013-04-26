@@ -26,7 +26,7 @@ class ControllerPaymentMoneybookers extends Controller {
         $this->data['lastname'] = $order_info['payment_lastname'];
         $this->data['address'] = $order_info['payment_address_1'];
         $this->data['address2'] = $order_info['payment_address_2'];
-        $this->data['phone_number'] = $order_info['telephone'];
+        $this->data['phone_number'] = $order_info['telphone'];
 		$this->data['postal_code'] = $order_info['payment_postcode'];
         $this->data['city'] = $order_info['payment_city'];
         $this->data['state'] = $order_info['payment_zone'];

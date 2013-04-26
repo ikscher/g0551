@@ -33,15 +33,15 @@ class ControllerMerchantsSold extends Controller {
 		
 		$statusid='4,5,6';//
 		
-		$orderid=isset($this->request->request['i'])?$this->request->request['i']:"";
+		$order_id=isset($this->request->request['i'])?$this->request->request['i']:"";
 		$email=isset($this->request->request['e'])?$this->request->request['e']:"";
 		$mobile=isset($this->request->request['m'])?$this->request->request['m']:"";
 		$cname=isset($this->request->request['cn'])?$this->request->request['cn']:"";
 		$cmobile=isset($this->request->request['cm'])?$this->request->request['cm']:"";
-		$ctelephone=isset($this->request->request['ct'])?$this->request->request['ct']:"";
+		$ctelphone=isset($this->request->request['ct'])?$this->request->request['ct']:"";
 		$order_time=isset($this->request->request['t'])?$this->request->request['t']:"";
 		
-		$state_list=array(1=>"买家未付款",2=>"买家已付款",3=>"正在配货",4=>"已发货",5=>"买家已确认",6=>"交易已关闭");
+		$state_list=array(ORDER_CREATED=>"买家未付款",ORDER_PAID=>"买家已付款",ORDER_DETACHING=>"正在配货",ORDER_OVER=>"已发货",ORDER_SUCCESS=>"交易成功",ORDER_CLOSE=>"交易已关闭");
 		
 		
 		
@@ -57,12 +57,12 @@ class ControllerMerchantsSold extends Controller {
 		
 		$data=array(
 			"state"=>$state,
-			"orderid"=>$orderid,
+			"order_id"=>$order_id,
 			"email"=>$email,
 			"mobile"=>$mobile,
 			"cname"=>$cname,
 			"cmobile"=>$cmobile,
-			"ctelephone"=>$ctelephone,
+			"ctelphone"=>$ctelphone,
 			"order_time"=>$order_time,
 			'start'=>($page-1)*$limit,
 			'limit'=>$limit,
@@ -99,7 +99,7 @@ class ControllerMerchantsSold extends Controller {
 
 		$pagination->limit = $limit;
 		$pagination->text = $this->language->get('text_pagination');
-		$pagination->url = $this->url->link('merchants/sold', "page={page}&s={$state}&e={$email}&m={$mobile}&cn={$cname}&ct={$ctelephone}&cm={$cmobile}&t={$order_time}", 'SSL');
+		$pagination->url = $this->url->link('merchants/sold', "page={page}&s={$state}&e={$email}&m={$mobile}&cn={$cname}&ct={$ctelphone}&cm={$cmobile}&t={$order_time}", 'SSL');
 		$this->data["page"]=$pagination->render();
 		
 		

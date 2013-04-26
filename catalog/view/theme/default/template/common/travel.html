@@ -5,22 +5,6 @@
 		$(function(){$('#promotion').cnckSuperMarquee({distance: 760,duration: 30,time: 6,direction: 'left',navId:'#promotion_nv'});});
 		$(function(){$('#brand_c').cnckSuperMarquee({distance: 810,duration: 50,time: 8,direction: 'left',btnGo:{left:'#brand_z',right:'#brand_y'}});});
 		MyCYAutoTabCon=setInterval("cnckMyAutoTabCon('#rankingl_list_ta','#rankingl_list_co')",3000);
-		
-		/*
-        $(document).ready(function(){
-            
-            $.get("index.php?route=common/home/get_products_by_category&category_id=149", function(result){
-                $("#list_travel_a").html(result);            
-            });   
-             
-            $.get("index.php?route=common/home/get_products_by_category&category_id=150", function(result){
-                $("#list_travel_b").html(result);            
-            });   
-             
-            $.get("index.php?route=common/home/get_products_by_category&category_id=151", function(result){
-                $("#list_travel_c").html(result);            
-        });*/
-        //-->
 </script>
 <!--content begin-->
 <div id="con" class="wp cl">
@@ -38,15 +22,16 @@
 					<li class="z"><img src="catalog/view/theme/default/image/nousefulpic/ad1.gif" width="760" height="420" alt="promotion" /></li>					
 				</ul>				
 				</div>
-				<div id="promotion_nv" class="cl"><ul></ul></div>
-			</div>
+				
 			
-			<div class="brand_box cl h">
-				<div id="brand_z" class="brand_z z"></div>
-				<div id="brand_c" class="brand_c z h">
-					{$brand}
+			    <div id="promotion_nv" ></div>
+				<div class="brand_box  h">
+					<div id="brand_z" class="brand_z z"></div>
+					<div id="brand_c" class="brand_c z h">
+						{$brand}
+					</div>
+					<div id="brand_y" class="brand_y z"></div>
 				</div>
-				<div id="brand_y" class="brand_y z"></div>
 			</div>
 		</div>
 		<!--classify_promotion_brand over-->

@@ -59,10 +59,10 @@
                 {/if}</td>
             </tr>
             <tr>
-              <td><span class="required">*</span> {$entry_telephone}</td>
-              <td><input type="text" name="telephone" value="{$telephone}" />
-                {if $error_telephone}
-                <span class="error">{$error_telephone}</span>
+              <td><span class="required">*</span> {$entry_telphone}</td>
+              <td><input type="text" name="telphone" value="{$telphone}" />
+                {if $error_telphone}
+                <span class="error">{$error_telphone}</span>
                 {/if}</td>
             </tr>
           </table>
@@ -175,7 +175,7 @@ $('input[name=\'customer\']').catcomplete({
 						firstname: item.firstname,
 						lastname: item.lastname,
 						email: item.email,
-						telephone: item.telephone
+						telphone: item.telphone
 					}
 				}));
 			}
@@ -188,7 +188,7 @@ $('input[name=\'customer\']').catcomplete({
 		$('input[name=\'firstname\']').attr('value', ui.item.firstname);
 		$('input[name=\'lastname\']').attr('value', ui.item.lastname);
 		$('input[name=\'email\']').attr('value', ui.item.email);
-		$('input[name=\'telephone\']').attr('value', ui.item.telephone);
+		$('input[name=\'telphone\']').attr('value', ui.item.telphone);
 
 		return false;
 	},

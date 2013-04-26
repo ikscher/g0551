@@ -17,7 +17,7 @@
                 	<input name="category_id" id="category_id" type="hidden" value="{$category_id}" />
                 	{if $product_id>0}<input name="product_id" id="product_id" type="hidden" value="{$product_id}" />{/if}
                     <input name="product_image" id="product_image" type="hidden" value="" />
-				    <table width="760" border="0" align="center" cellpadding="0" cellspacing="0" class="mainTbl">
+				    <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="mainTbl">
 					    <!--
 						<tr>
 						    <td  width="90" align="right" ><label>宝贝属性：</label></td>
@@ -29,10 +29,10 @@
 						
 						
 						
-						<tr>
+						<tr class="sxtpy_attribute_Jxjx_0909">
 						    <td width="90" align="right"><label>宝贝标题：</label></td>
 						    <td><label>
-							<input name="name" type="text" class="input_txt" onfocus="textCounter(this,'leavings',50);" onblur="textCounter(this,'leavings',50);" onkeyup="textCounter(this,'leavings',50);" size="94" maxlength="60" id="name" value="{$info['name']}" /> 
+							<input name="name" type="text" class="input_txt" onfocus="textCounter(this,'leavings',50);" onblur="textCounter(this,'leavings',50);" onkeyup="textCounter(this,'leavings',50);" size="90" maxlength="60" id="name" value="{$info['name']}" /> <a href="javascript:void(0);" target="_blank" class="etao">etao</a>
 							<span >还能输入<em id="leavings">50</em>字</span></label></td>
 						</tr>
 						<tr>
@@ -96,7 +96,7 @@
 					    </tr>
 						<tr>
 						    <td width="90" align="right"><label>宝贝描述：</label></td>
-						    <td><div id="editor_body" style="width:660px;"><textarea name="description" style="width:650px;height:280px;" id="description">{$info['description']}</textarea></div>	  </td>
+						    <td><div id="editor_body" ><textarea name="description" style="width:100%;height:280px;" id="description">{$info['description']}</textarea></div>	  </td>
 						</tr>
 						<tr>
 							<td height="25" colspan="2" style="padding:0px; margin:0px;"></td>
@@ -116,55 +116,44 @@
  	<!--右侧end-->
 	
 	<!--属性的选项begin-->
-	{php $option_row = 0}
-	{php $option_value_row = 0}
-	{loop $product_options   $product_option}
-	<div id="product_option_{$product_option['attribute_group_id']}"  style="display:none" > 
-	<!-- <tr >
-		<td  width="90" align="right" ></td>
-		<td> -->
-				 <input type="hidden" name="product_option[{$option_row}][product_option_id]" value="{$product_option['product_option_id']}" />
-				 <input type="hidden" name="product_option[{$option_row}][name]" value="{$product_option['name']}" />
-				 <input type="hidden" name="product_option[{$option_row}][attribute_group_id]" value="{$product_option['attribute_group_id']}" />
-				 <input type="hidden" name="product_option[{$option_row}][option_id]" value="{$product_option['option_id']}" />
-				 <input type="hidden" name="product_option[{$option_row}][type]" value="{$product_option['type']}" />
+
+	
+	<div id="product_option"  style="display:none" > 
+		<table id="option-value" class="list" >
+			<thead>
+				<tr>
+					{loop $groups $v}
+					<th>{$v['attribute_group_name']}</th>
+					{/loop}
+					<th>商品数量</th>
+					<th>扣减库存</th>
+					<th>销售价格</th>
+					<th>操作</th>
+			    </tr>
+			</thead>
+			<tbody id="option-value-row">
+			    <!-- {loop $product_options $k $product_option}   
+				<input type="hidden" name="product_option[attribute_group][$k][product_option_id]" value="{$product_option['product_option_id']}" />
+				<input type="hidden" name="product_option[attribute_group][$k][name]" value="{$product_option['name']}" />
+				<input type="hidden" name="product_option[attribute_group][$k][attribute_group_id]" value="{$product_option['attribute_group_id']}" />
+				<input type="hidden" name="product_option[attribute_group][$k][option_id]" value="{$product_option['option_id']}" />
+				<input type="hidden" name="product_option[attribute_group][$k][type]" value="{$product_option['type']}" />
+			    {/loop} -->
+			    
+				{php $option_value_row = 0}
 				
-				{if $product_option['type'] == 'select' || $product_option['type'] == 'radio' || $product_option['type'] == 'checkbox' || $product_option['type'] == 'image'}
-				<table id="option-value{$option_row}" class="list">
-				  <thead>
-					<tr>
-					  <td>选项数值</td>
-					  <td>商品数量</td>
-					  <td>扣减库存</td>
-					  <td>销售价格</td>
-					  <td>积分</td>
-					  <td>重量</td>
-					  <td>必填项</td>
-					  <td></td>
-					</tr>
-				  </thead>
-				 
-				  {loop $product_option['product_option_value']   $product_option_value}
-				  <tbody id="option-value-row{$option_value_row}">
-					<tr>
-					  
-					  <td><select name="product_option[{$option_row}][product_option_value][{$option_value_row}][option_value_id]">
-						  {if isset($option_values[$product_option['attribute_group_id']])}
-						  {loop $option_values[$product_option['attribute_group_id']]   $option_value}
-						  {if $option_value['option_value_id'] == $product_option_value['option_value_id']}
-						  <option value="{$option_value['option_value_id']},{$option_value['attribute_id']}" selected="selected">{$option_value['name']}</option>
-						   {else}
-						  <option value="{$option_value['option_value_id']},{$option_value['attribute_id']}">{$option_value['name']}</option>
-						  {/if}
-						  {/loop}
-						  {/if}
-						</select>
-						<input type="hidden" name="product_option[{$option_row}][product_option_value][{$option_value_row}][attribute_id]" value="{$product_option_value['attribute_id']}" />
-						<input type="hidden" name="product_option[{$option_row}][product_option_value][{$option_value_row}][product_option_value_id]" value="{$product_option_value['product_option_value_id']}" />
-					  </td>
-					  <td><input type="text" name="product_option[{$option_row}][product_option_value][{$option_value_row}][quantity]" value="{$product_option_value['quantity']}" size="3" /></td>
-					  <td><select name="product_option[{$option_row}][product_option_value][{$option_value_row}][subtract]">
-						  {if $product_option_value['subtract']}
+				{if !empty($product_options)}
+				{loop $product_options $product_option}
+				    {php $row=1;}
+					<tr class="attribute{$product_option['attribute_id']}" data-role="{$product_option['attribute_id']}">
+					    {loop $product_option['attribute'] $k $a}
+					        <td class="attribute_{$k}">{$a}</td>
+							<input type='hidden' name="product_option[{$option_value_row}][attribute{$row}]]" value="{$k}" />
+							{php $row++;}
+					    {/loop}
+					    <td><input type="text" name="product_option[{$option_value_row}][quantity]" value="{$product_option['quantity']}" size="3" /></td>
+					    <td><select name="product_option[{$option_value_row}][subtract]">
+						  {if isset($product_option['subtract'])}
 						  <option value="1" selected="selected">是</option>
 						  <option value="0">否</option>
 						   {else}
@@ -172,65 +161,20 @@
 						  <option value="0" selected="selected">否</option>
 						  {/if}
 						</select></td>
-					  <td><select name="product_option[{$option_row}][product_option_value][{$option_value_row}][price_prefix]">
-						  {if $product_option_value['price_prefix'] == '+'}
-						  <option value="+" selected="selected">+</option>
-						   {else}
-						  <option value="+">+</option>
-						 {/if}
-						  {if $product_option_value['price_prefix'] == '-'}
-						  <option value="-" selected="selected">-</option>
-						   {else}
-						  <option value="-">-</option>
-						  {/if}
-						</select>
-						<input type="text" name="product_option[{$option_row}][product_option_value][{$option_value_row}][price]" value="{$product_option_value['price']}" size="5" />
+					    <td>
+						<input type="text" name="product_option[{$option_value_row}][price]" value="{$product_option['price']}" size="5" />
 						</td>
-					  <td><select name="product_option[{$option_row}][product_option_value][{$option_value_row}][points_prefix]">
-						  {if $product_option_value['points_prefix'] == '+'}
-						  <option value="+" selected="selected">+</option>
-						   {else}
-						  <option value="+">+</option>
-						  {/if}
-						  {if $product_option_value['points_prefix'] == '-'}
-						  <option value="-" selected="selected">-</option>
-						   {else}
-						  <option value="-">-</option>
-						  {/if}
-						</select>
-						<input type="text" name="product_option[{$option_row}][product_option_value][{$option_value_row}][points]" value="{$product_option_value['points']}" size="5" /></td>
-					  <td><select name="product_option[{$option_row}][product_option_value][{$option_value_row}][weight_prefix]">
-						  {if $product_option_value['weight_prefix'] == '+'}
-						  <option value="+" selected="selected">+</option>
-						   {else}
-						  <option value="+">+</option>
-						  {/if}
-						  {if $product_option_value['weight_prefix'] == '-'}
-						  <option value="-" selected="selected">-</option>
-						   {else}
-						  <option value="-">-</option>
-						  {/if}
-						</select>
-						<input type="text" name="product_option[{$option_row}][product_option_value][{$option_value_row}][weight]" value="{$product_option_value['weight']}" size="5" /></td>
-					  <td><a href="javascript:void(0);"  class="deleteOptionRow">删除</a></td>
+					  
+					    <td><a href="javascript:void(0);"  class="deleteOptionRow">删除</a></td>
 					</tr>
-				  </tbody>
-				  {php $option_value_row++}
-				  {/loop}
-				</table>	
-                 <select id="option-values{$product_option['attribute_group_id']}" style="display: none;">
-				  {if isset($option_values[$product_option['attribute_group_id']])}
-				  {loop $option_values[$product_option['attribute_group_id']]   $option_value}
-				  <option value="{$option_value['option_value_id']},{$option_value['attribute_id']}" >{$option_value['name']}</option>
-				  {/loop}
-				 {/if}
-				</select>				
-			 {/if}		  
-		<!--   </td>
-	</tr> -->
+					{php $option_value_row++;}
+                {/loop}
+				{/if}
+			</tbody>
+		</table>	     		
 	</div>
-	{php $option_row++}
-	{/loop}
+	
+	
 	<!--属性的选项end-->
 	
 	
@@ -241,20 +185,31 @@
 <script type="text/javascript" src="catalog/view/javascript/merchants.js?v=20130320"></script>
 <script type="text/javascript"><!--
 $(document).ready(function(){
+
 	productEditor();
 	window.json={$attributeGroups};
-    console.log(json);
-	if(json.length>0){
-		for(var i=0;i<json.length;i++){
-		    
+    //console.log(json);
+	if(json.length>0){ 
+	    var i=0,maxLen=json.length;
+		for(;i<maxLen;i++){
+		    var gtype=json[i].gtype;
 		    var strAttr=[];
 			strAttr.push('<tr id="tr_'+json[i].attribute_group_id+'">');
-			strAttr.push('<td  width="90" align="right" ><label>'+json[i].attribute_group_name+'：</label></td>');
+			
+			if(gtype==2){//价格属性
+			    strAttr.push('<td  width="90" class="gtype" align="right" ><label>'+json[i].attribute_group_name+'：</label></td>');
+			}else{
+			    strAttr.push('<td  width="90" align="right" ><label>'+json[i].attribute_group_name+'：</label></td>');
+			}
 			
 			strAttr.push('<td><div class="attribute">');
 			strAttr.push('<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="pushAttribute">');
-			strAttr.push('<tr><td  align="left"  id="attribute_group_id'+json[i].attribute_group_id+'">');
-
+			
+			if(gtype==2){
+			    strAttr.push('<tr><td  align="left"  class="composite" id="attribute_group_id'+json[i].attribute_group_id+'">');
+            }else{
+			    strAttr.push('<tr><td  align="left"  id="attribute_group_id'+json[i].attribute_group_id+'">');
+			}
 			var valList=json[i].attribute;
 			if(valList.length>0){
 				//根据不同的显示方式，生成不同的表单控件
@@ -263,7 +218,8 @@ $(document).ready(function(){
 					//下拉列表
 					strAttr.push('<select name="attribute[]" id="attr_'+ json[i].attribute_group_id +'">');
 					strAttr.push('<option value="" selected="selected">请选择'+ json[i].attribute_group_name +'</option>');
-					for(var j=0;j<valList.length;j++){
+					var j=0,max=valList.length;
+					for(;j<max;j++){
 						strAttr.push('<option value="');
 						strAttr.push(valList[j].attribute_id);
 			            
@@ -281,7 +237,8 @@ $(document).ready(function(){
 					strAttr.push('</select>');
 				}else if (json[i].option_id==2){
 					//复选框
-					for(var j=0;j<valList.length;j++){
+					var j=0,max=valList.length;
+					for(;j<max;j++){
 						strAttr.push('<input name="attribute[]" id="attr_');
 						strAttr.push(valList[j].attribute_id);
 						strAttr.push('" type="checkbox" value="');
@@ -304,7 +261,8 @@ $(document).ready(function(){
 				}else if (json[i].option_id==1){
 					//单选框
 					
-					for(var j=0;j<valList.length;j++){
+					var j=0,max=valList.length;
+					for(;j<max;j++){
 						strAttr.push('<input name="attribute[]" id="attr_');
 						strAttr.push(valList[j].attribute_id);
 						strAttr.push('" type="radio" value="');
@@ -330,17 +288,30 @@ $(document).ready(function(){
 	
 			$(".mainTbl").prepend(strAttr.join(""));
 			
-			//初始化，加载属性组的选项
-			if($('#product_option_'+json[i].attribute_group_id+" .list tbody td select[name$='option_value_id]'] option:selected").length){
-				var y='<tr  data-role="optionAddtional" class="optionsAdd_'+json[i].attribute_group_id+'"><td  width="90" align="right" ></td><td>'+$('#product_option_'+json[i].attribute_group_id).html()+  '</td></tr>';
-				$('#tr_'+json[i].attribute_group_id).after(y);
-			}
+			//加载 （显示）属性组的选项
+			
+			//if($('#product_option_'+json[i].attribute_group_id+" .list tbody td select[name$='option_value_id]'] option:selected").length){
+			//	var y='<tr  data-role="optionAddtional" class="optionsAdd"><td  width="90" align="right" ></td><td>'+$('#product_option_'+json[i].attribute_group_id).html()+  '</td></tr>';
+			//	$('.sxtpy_attribute_Jxjx_0909').before(y);
+			//}
+			
+			
 			
 		}
+		
+		if($('#product_option .list tbody tr').length){
+			var y='<tr  data-role="optionAddtional" class="optionsAdd"><td  width="90" align="right" ></td><td>'+$('#product_option').html()+  '</td></tr>';
+			$('.sxtpy_attribute_Jxjx_0909').before(y);
+		}
+			
 		i=null;
 		j=null;
 		y=null;
 	}
+	
+	
+	f_set_num();
+	
 });
 
 
@@ -351,156 +322,234 @@ $("input[name^=attribute]").live('click',function(){
 	
     var attribute_group_id=$(this).parent().attr('id').replace(/attribute_group_id/g,'');
 	
+	
+	
 	var that=$(this);
 	//判断属性组类型：一般属性还是价格属性
 	$.getJSON('index.php?route=merchants/release/getAttributeGroupType',{attribute_group_id:attribute_group_id},function(json){
 	    if(json['type']==1){
 		    return false;
-		}else if (json['type']==2){
+		}else if (json['type']==2 ){
 		    
 		    var attribute_id=that.val();
-	 
-			//没有对应的属性值
-			//var so_len=$("#tr"+attribute_group_id+" select[id=option-values"+attribute_group_id + "] option").size();
-			//if (so_len<=0) return false;
-			
-			//显示对应属性组的选项
-			//$('.mainTbl tbody tr[data-role="optionAddtional"]').hide();
-			//$('.mainTbl tbody tr.optionsAdd_'+attribute_group_id).show();
-			
-			if (($('#tr_'+attribute_group_id).next('.optionsAdd_'+attribute_group_id)).length<=0){//属性组的显示
-				var x='<tr data-role="optionAddtional" class="optionsAdd_'+attribute_group_id+'"><td  width="90" align="right" ></td><td>'+$('#product_option_'+attribute_group_id).html()+  '</td></tr>';
-				$('#tr_'+attribute_group_id).after(x);
-			}
-			
-			var optionRowNum=$('.optionsAdd_'+attribute_group_id + ' td input[name$="attribute_group_id]"]').attr('name');
-			var option_row=optionRowNum.replace(/\D/g,'');
-
-			//属性组选项列表有对应的属性，点击属性不重复增加 属性选项
-			var attributeIds=',';
-			$(".optionsAdd_"+attribute_group_id+" td select[name$='option_value_id]']>option:selected").map(function(i,w){
-				var optionStr=$(w).val();
-				var optionArr=optionStr.split(',');
-				attributeIds=attributeIds.concat(optionArr[1]+',');
-				
-			});
-			if(attributeIds.indexOf(','+attribute_id+',')<0){
-				addOptionValue(attribute_group_id,attribute_id,option_row);
-			}else{
-				//$('#option-value-row3').remove();
-				$(".optionsAdd_"+attribute_group_id + " table.list tbody").map(function(i,w){
-					var tbody=$(w);
-					var android=tbody.find('select[name^="product_option"] option:selected').val();
-					var iphone=android.split(',');
-					if (attribute_id==iphone[1]){
-						$(this).remove();
+            
+			var counter=0;//计数器
+			var gtype_len=$('.gtype').length;
+			var flag;
+			$("td.gtype").each(function(i,w){
+			    flag=false;
+			    $(this).siblings("td").children('.attribute').children('table').children('tbody').children('tr').children('td').children('input').each(function(j,x){
+				    if($(x).attr('checked')=='checked'){
+					    flag=true;
 						return false;
 					}
+					
 				});
-			}
+				if(flag==true) counter++;
+			});
+			//console.log(counter);
+			//console.log(gtype_len);
+			var attribute_={};
+			
+			if(counter==gtype_len){
+			    $('td.composite').each(function(i,w){
+				    var attribute=[];
+				    var gid=$(w).attr('id').replace(/[a-z_]*/,'');
+				    $(w).children('input').each(function(k,y){
+				        if($(y).attr('checked')=='checked'){
+						    var x=$(y).val();
+							var l=$(y).next('label').text();
+						    attribute[x]=l;
+						    
+						}
+				    });
+					
+					attribute_[gid]=attribute;
+				});
+				//console.log(attribute_);
+				
+				
+				var attribute__=[];
+                for(var name in attribute_){
+				    if(attribute_[name]!==undefined && attribute_[name]!==null){
+					    attribute__.push(attribute_[name]);//attribute__[name]=(attribute_[name]);
+					}
+				}
+				
+				//console.log(attribute__.length);
+			
+				
+				
+				if($('.optionsAdd').length<=0){
+					var x='<tr data-role="optionAddtional" class="optionsAdd"><td  width="90" align="right" ></td><td>'+$('#product_option').html()+  '</td></tr>';
+					$('.sxtpy_attribute_Jxjx_0909').before(x);
+				}
+				
+				
+				
+				if(that.attr('checked')=='checked'){
+				    if(attribute__.length==2){ //两个属性决定的价格
+						for(var c in attribute__[1]){
+							for (var d in attribute__[0]){							
+								//console.log($('.optionsAdd  table.list tbody tr.attribute_'+c+'_'+d+'_').length);
+								if($('.optionsAdd  table.list tbody tr.attribute_'+c+'_'+d+'_').length<=0){
+									addOptionValue(c,attribute__[1][c],d,attribute__[0][d]);
+								}
+							}
+						}
+                    }else if(attribute__.length==1){ //一个属性决定的价格
+                        
+						for (var d in attribute__[0]){							
+							//console.log($('.optionsAdd  table.list tbody tr.attribute_'+c+'_'+d+'_').length);
+							if($('.optionsAdd  table.list tbody tr.attribute_'+d+'_').length<=0){
+								addOptionValue(d,attribute__[0][d]);
+							}
+						}
+						
+                    }					
+			    }else{
+				    $(".optionsAdd  table.list tbody tr td.attribute_"+attribute_id).parent().remove();
+					/*
+					if($('.list tbody tr[data-role^=_'+attribute_id+'_]').length>0){
+						$('.list tbody tr[data-role^=_'+attribute_id+'_]').remove();
+					}else{
+						var x=$(".list tbody tr td.attribute_"+attribute_id).parent().attr('data-role');
+						
+						var y=x.split('_');
+		
+						var z=y[1];
+						
+						
+						var len=$('.list tbody tr[data-role^=_'+z+'_]').length;
+						len=len-1;
+						if (len>=1){
+							$('.list tbody tr td.attribute_'+z).attr('rowSpan',len);
+							
+							$(".list tbody tr td.attribute_"+attribute_id).prev().each(function(i,w){
+								if($(this).attr('rowSpan')){
+								   var s=$(this).text();
+								   $('<td class="attribute_'+z+'" rowSpan="'+len+'">'+s+'</td>').prependTo($(this).parent().next());
+								}
+							});
+						}
+						
+						$(".list tbody tr td.attribute_"+attribute_id).parent().remove();
+
+					}
+					*/
+					
+				}
+				
+	
+			}else if(counter!=gtype_len){
+			    $(".optionsAdd").remove();
+            }
+			f_set_num();
 		}
 	});
 	
 	
 });
 
-//针对select 下拉选框 单击事件（2）
-$("select[name^=attribute]").live('change',function(){
-    var option_value=$(this).val();
-	if(!option_value) return false;
-	
-    var attribute_group_id=$(this).parent().attr('id').replace(/attribute_group_id/g,'');
-	var attribute_id=$(this).val();
-	
-	//判断属性组类型：一般属性还是价格属性
-	$.getJSON('index.php?route=merchants/release/getAttributeGroupType',{attribute_group_id:attribute_group_id},function(json){
-		if(json['type']==1){
-		    return false;
-		}else if(json['type']==2){
-		    
-			//没有对应的属性值
-			//var so_len=$("#product_option_"+attribute_group_id+" select[id=option-values"+attribute_group_id + "] option").size();
-			//if (so_len<=0) return false;
-			
-			//显示对应属性组的选项
-			//$('.mainTbl tbody tr[data-role="optionAddtional"]').hide();
-			//$('.mainTbl tbody tr.optionsAdd_'+attribute_group_id).show();
-
-			if (($('#tr_'+attribute_group_id).next('.optionsAdd_'+attribute_group_id)).length<=0){//属性组的显示
-				var x='<tr data-role="optionAddtional" class="optionsAdd_'+attribute_group_id+'"><td  width="90" align="right" ></td><td>'+$('#product_option_'+attribute_group_id).html()+  '</td></tr>';
-				$('#tr_'+attribute_group_id).after(x);
-			}
-			
-			var optionRowNum=$('.optionsAdd_'+attribute_group_id + ' td input[name$="attribute_group_id]"]').attr('name');
-			var option_row=optionRowNum.replace(/\D/g,'');
-			
-			//属性组选项列表有对应的属性，点击属性不重复增加 属性选项
-			var attributeIds=',';
-			$(".optionsAdd_"+attribute_group_id+" td select[name$='option_value_id]']>option:selected").map(function(i,w){
-				var optionStr=$(w).val();
-				var optionArr=optionStr.split(',');
-				attributeIds=attributeIds.concat(optionArr[1]+',');
-				
-			});
-			if(attributeIds.indexOf(','+attribute_id+',')<0){
-				addOptionValue(attribute_group_id,attribute_id,option_row);
-			}
-	
-		}
+$(".optionsAdd input[name$='[quantity]']").live('blur',function(){  
+	var sum=0;
+	$(".optionsAdd input[name$='[quantity]']").each(function(i,w){
+	    var x=parseInt($(w).val());
+	    if(isNaN(x)) return true;
+		sum +=x;
 	});
- 
-	
+	if(sum>0) $('input[name=quantity]').val(sum);
 });
 //--></script>
 
 <script type="text/javascript"><!--	
 var option_value_row = {$option_value_row};
-function addOptionValue(attribute_group_id,attribute_id,option_row) {	
-	html  = '<tbody id="option-value-row' + option_value_row + '">';
-	html += '  <tr>';
-	html += '    <td><select name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][option_value_id]">';
-	html += $('#option-values' + attribute_group_id).html();
-	html += '    </select><input type="hidden" name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][attribute_id]" value="" /><input type="hidden" name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][product_option_value_id]" value="" /></td>';
-	html += '    <td><input type="text" name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][quantity]" value="" size="3" /></td>'; 
-	html += '    <td><select name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][subtract]">';
+
+function addOptionValue(attribute_id1,attribute_name1,attribute_id2,attribute_name2) {	
+    var html='';
+	<!-- html  = '<tbody id="option-value-row">'; -->
+	if(attribute_id2 && attribute_name2){
+		html += '  <tr class="attribute_'+attribute_id1+'_'+attribute_id2+'_" data-role="_'+attribute_id1+'_'+attribute_id2+'_" >';
+		html += '    <td class="attribute_'+attribute_id1+ '">'+attribute_name1+'</td>';
+		html += '   <input type="hidden" name="product_option[' + option_value_row + '][attribute1]" value="'+attribute_id1+'" />';
+		html += '    <td class="attribute_'+attribute_id2+ '" >'+attribute_name2+'</td>';
+		html += '   <input type="hidden" name="product_option[' + option_value_row + '][attribute2]" value="'+attribute_id2+'" />';
+	}else{
+	    html += '  <tr class="attribute_'+attribute_id1+'_" data-role="_'+attribute_id1+'_" >';
+		html += '    <td class="attribute_'+attribute_id1+ '">'+attribute_name1+'</td>';
+		html += '   <input type="hidden" name="product_option[' + option_value_row + '][attribute1]" value="'+attribute_id1+'" />';
+		<!-- html += '    <td class="attribute_'+attribute_id2+ '" >'+attribute_name2+'</td>'; -->
+		<!-- html += '   <input type="hidden" name="product_option[' + option_value_row + '][attribute2]" value="'+attribute_id2+'" />'; -->
+	}
+	
+	html += '    <td><input type="text" name="product_option[' + option_value_row + '][quantity]" value="" size="10" /></td>'; 
+	html += '    <td><select name="product_option[' + option_value_row + '][subtract]">';
 	html += '      <option value="1">是</option>';
 	html += '      <option value="0">否</option>';
 	html += '    </select></td>';
-	html += '    <td><select name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][price_prefix]">';
-	html += '      <option value="+">+</option>';
-	html += '      <option value="-">-</option>';
-	html += '    </select>';
-	html += '    <input type="text" name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][price]" value="" size="5" /></td>';
-	html += '    <td><select name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][points_prefix]">';
-	html += '      <option value="+">+</option>';
-	html += '      <option value="-">-</option>';
-	html += '    </select>';
-	html += '    <input type="text" name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][points]" value="" size="5" /></td>';	
-	html += '    <td><select name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][weight_prefix]">';
-	html += '      <option value="+">+</option>';
-	html += '      <option value="-">-</option>';
-	html += '    </select>';
-	html += '    <input type="text" name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][weight]" value="" size="5" /></td>';
+	html += '    <td><input type="text" name="product_option[' + option_value_row + '][price]" value="" size="12" /></td>';
 	html += '    <td><a href="javascript:void(0);" class="deleteOptionRow">删除</a></td>';
 	html += '  </tr>';
-	html += '</tbody>';
+	<!-- html += '</tbody>'; -->
     //console.log(html);
-	$('tr.optionsAdd_'+attribute_group_id+' .list' ).append(html);
-
-	//$('select[name="product_option[2][product_option_value][4][option_value_id]"] option[value$=",41"]').attr('selected','selected');
-	$('select[name="product_option['+option_row +'][product_option_value]['+option_value_row +'][option_value_id]"] option[value$=",'+attribute_id+'"]').attr('selected','selected');
+	
+	
+	
+	
+	var compositeID,flag=false;
+    $('.optionsAdd  table.list tbody tr').each(function(i,w){
+	    compositeID=$(w).attr('data-role');
+		if(compositeID.indexOf(attribute_id1)>=0){
+		   flag=true;
+		   $(this).before(html);
+		   return false;
+			
+		}
+	});
+  
+	if (flag===false) $('tr.optionsAdd  table.list tbody' ).append(html);
+	
+	
 	option_value_row++;
+	/*
+	var len=$('.list tbody tr[data-role^=_'+attribute_id1+'_]').length;
+	
+	if(len>=2) {
+	    $('.list tbody tr td.attribute_'+attribute_id1).each(function(i,w){
+		    if(i==0){
+		        $(this). attr('rowSpan',len);
+			}else{
+			    $(this).remove();
+			}
+		});
+	}
+		
+	*/
+	
 }
 
 $(".deleteOptionRow").live('click',function(){
-    //onclick="$('#option-value-row{$option_value_row}').remove();"
-    $(this).parent().parent().parent().remove();
-	var compositeID=$(this).parent().parent().children().first().children('select').val();
-	if(compositeID){
-		var y=compositeID.split(',');
-		var attid=y[1];
-		$("#attr_"+attid).removeAttr("checked");
+    
+	var compositeID=$(this).parent().parent().attr('data-role');
+	//console.log(compositeID);
+	var x=compositeID.split('_');
+
+	
+	$(this).parent().parent().remove();
+	
+	
+	for(var m in x){
+	    if(!x[m]) continue;
+	    if($('.optionsAdd  table.list tbody tr td.attribute_'+x[m]).length <=0){
+	       $("#attr_"+x[m]).removeAttr("checked");
+		}
 	}
+	
+	if($(".optionsAdd  table.list tbody tr").length==0) $(".optionsAdd").remove();
+	
+	//console.log($(".optionsAdd input[name$='[quantity]']").length);
+	f_set_num();
+		
 });
 
 $("#special").click(function(){
@@ -527,5 +576,53 @@ $("input[name^=date]").live("click", function(){
     	dateFormat: 'yy-mm-dd',
 		numberOfMonths: 2 //显示两个月
 	});
+});
+
+function f_set_num(){
+	if($(".optionsAdd input[name$='[quantity]']").length>0){
+		$('input[name=quantity]').attr('readonly',true);
+		$('input[name=quantity]').css({'background':'#ECE9D8'});
+	}else{
+		$('input[name=quantity]').removeAttr('readonly');
+		$('input[name=quantity]').css({'background':'#FFFFFF'});
+	}
+	
+	var sum=0;
+	$(".optionsAdd input[name$='[quantity]']").each(function(i,w){
+	    var x=parseInt($(w).val());
+	    if(isNaN(x)) return true;
+		sum +=x;
+	});
+    
+	if (sum>0) $('input[name=quantity]').val(sum);
+}
+
+//链接ETAO
+$('.etao').click(function(){
+	var now = new Date();
+
+	var year = now.getFullYear();       //年
+	var month = now.getMonth() + 1;     //月
+	var day = now.getDate();            //日
+
+   
+	var today = year + "";
+   
+	if(month < 10)
+		today += "0";
+   
+	today += month + "";
+   
+	if(day < 10)
+		today += "0";
+	   
+	today += day ;
+	
+    var productName=$('input[name=name]').val();
+	productName=productName.replace(/\s*/g,'');
+    if(!productName) return false;
+	//productName=encodeURIComponent(productName);
+	var href='http://s.etao.com/search?q='+productName+'&initiative_id=setao_'+today+'&style=grid';
+	window.open(href,'','height=600,width=800,scrollbars=yes,status =yes');
 });
 //--></script> 

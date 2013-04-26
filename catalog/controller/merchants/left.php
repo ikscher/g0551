@@ -7,27 +7,29 @@ class ControllerMerchantsLeft extends Controller {
 	public function index() {
 	    $this->load->language('merchants/left');
 		
-		$this->data['store_management']=$this->language->get('store_management');
-		$this->data['store_list']=$this->language->get('store_list');
-		$this->data['trade_management']=$this->language->get('trade_management');
-		$this->data['iopenstore']=$this->language->get('iopenstore');
-		$this->data['store_setup']=$this->language->get('store_setup');
-		$this->data['soldproduct']=$this->language->get('soldproduct');
-		$this->data['remark_management']=$this->language->get('remark_management');
-		$this->data['product_management']=$this->language->get('product_management');
-		$this->data['releaseproduct']=$this->language->get('releaseproduct');
-		$this->data['sellingproduct']=$this->language->get('sellingproduct');
-		$this->data['baseproduct']=$this->language->get('baseproduct');
-		$this->data['order_management']=$this->language->get('order_management');
-		$this->data['waitingorder']=$this->language->get('waitingorder');
-		$this->data['dealingorder']=$this->language->get('dealingorder');
-		$this->data['createorder']=$this->language->get('createorder');
-		$this->data['dealedorder']=$this->language->get('dealedorder');
-		$this->data['discount_management']=$this->language->get('discount_management');
-		$this->data['coupons']=$this->language->get('coupons');
+		$this->data['text_store_management']=$this->language->get('text_store_management');
+		$this->data['text_store_list']=$this->language->get('text_store_list');
+		$this->data['text_trade_management']=$this->language->get('text_trade_management');
+		$this->data['text_iopenstore']=$this->language->get('text_iopenstore');
+		$this->data['text_store_setup']=$this->language->get('text_store_setup');
+		$this->data['text_soldproduct']=$this->language->get('text_soldproduct');
+		$this->data['text_remark_management']=$this->language->get('text_remark_management');
+		$this->data['text_product_management']=$this->language->get('text_product_management');
+		$this->data['text_releaseproduct']=$this->language->get('text_releaseproduct');
+		$this->data['text_sellingproduct']=$this->language->get('text_sellingproduct');
+		$this->data['text_baseproduct']=$this->language->get('text_baseproduct');
+		$this->data['text_order_management']=$this->language->get('text_order_management');
+		$this->data['text_waitingorder']=$this->language->get('text_waitingorder');
+		$this->data['text_dealingorder']=$this->language->get('text_dealingorder');
+		$this->data['text_createorder']=$this->language->get('text_createorder');
+		$this->data['text_dealedorder']=$this->language->get('text_dealedorder');
+		$this->data['text_discount_management']=$this->language->get('text_discount_management');
+		$this->data['text_coupons']=$this->language->get('text_coupons');
+		$this->data['text_return']=$this->language->get('text_return');
+		$this->data['text_payment_management']=$this->language->get('text_payment_management');
 		
-		$this->data['vouchers']=$this->language->get('vouchers');
-		$this->data['coupon_adds']=$this->language->get('coupon_adds');
+		$this->data['text_vouchers']=$this->language->get('text_vouchers');
+		$this->data['text_coupon_adds']=$this->language->get('text_coupon_adds');
 		
 		
 		
@@ -70,6 +72,8 @@ class ControllerMerchantsLeft extends Controller {
 		$this->data['merchants'] = $this->url->link('merchants/merchants', '', 'SSL');
 		$this->data['store']=$this->url->link('store/store&store_id='.$store_id,'','SSL');
 		$this->data['sold'] = $this->url->link('merchants/sold', '', 'SSL');
+		$this->data['return']=$this->url->link('merchants/return','','SSL');
+		$this->data['payment']=$this->url->link('merchants/payment','','SSL');
     	$this->data['release'] = $this->url->link('merchants/release', '', 'SSL');
 		$this->data['remark'] = $this->url->link('merchants/remark', '', 'SSL');
 		$this->data['sell'] = $this->url->link('merchants/sell');

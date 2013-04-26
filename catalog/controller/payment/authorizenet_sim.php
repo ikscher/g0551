@@ -101,7 +101,7 @@ class ControllerPaymentAuthorizeNetSim extends Controller {
 		$data['x_state'] = html_entity_decode($order_info['payment_zone'], ENT_QUOTES, 'UTF-8');
 		$data['x_zip'] = html_entity_decode($order_info['payment_postcode'], ENT_QUOTES, 'UTF-8');
 		$data['x_country'] = html_entity_decode($order_info['payment_country'], ENT_QUOTES, 'UTF-8');
-		$data['x_phone'] = $order_info['telephone'];
+		$data['x_phone'] = $order_info['telphone'];
 		
 		/* Customer Shipping Address Fields */
 		$data['x_ship_to_first_name'] = html_entity_decode($order_info['shipping_firstname'], ENT_QUOTES, 'UTF-8');

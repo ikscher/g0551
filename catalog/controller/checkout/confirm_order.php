@@ -5,9 +5,9 @@ class ControllerCheckoutConfirmOrder extends Controller {
 		$redirect = '';
 	    $json=array();
 		$data = array();
-		$data['username']=$data['postcode']=$data['email']=$data['telephone']=$date['mobile']=$data['address']='';
-		$flag=false;
-		if(!empty($this->request->post['dbuy'])) $flag=true;
+		$data['username']=$data['postcode']=$data['email']=$data['telphone']=$date['mobile']=$data['address']='';
+
+		$flag=$this->session->data['dbuy_flag'];
 		
 	
 		$this->load->model('account/address');
@@ -18,7 +18,7 @@ class ControllerCheckoutConfirmOrder extends Controller {
 			$data['username'] = isset($shipping_address['username'])?$shipping_address['username']:'';
 			$data['postcode'] = isset($shipping_address['postcode'])?$shipping_address['postcode']:'';
 			$data['email'] = isset($shipping_address['email'])?$shipping_address['email']:'';
-			$data['telephone'] = isset($shipping_address['telephone'])?$shipping_address['telephone']:'';
+			$data['telphone'] = isset($shipping_address['telphone'])?$shipping_address['telphone']:'';
 			$data['mobile'] = isset($shipping_address['mobile'])?$shipping_address['mobile']:'';
 			$data['address'] = isset($shipping_address['address'])?$shipping_address['address']:'';
 		}
@@ -37,7 +37,7 @@ class ControllerCheckoutConfirmOrder extends Controller {
 		   $data['shipping_email']=$data['email'];
 		   $data['shipping_mobile']=$data['mobile'];
 		   $data['shipping_address']=$data['address'];
-		   $data['shipping_telephone']=$data['telephone'];
+		   $data['shipping_telphone']=$data['telphone'];
 		
 		}
 	
@@ -59,7 +59,6 @@ class ControllerCheckoutConfirmOrder extends Controller {
 			}				
 		}
 			
-					
 		if (!$redirect) {
 		    
 		
@@ -86,49 +85,30 @@ class ControllerCheckoutConfirmOrder extends Controller {
 					$this->{'model_total_' . $result['code']}->getTotal($total_data, $total,$flag,true);
 				}
 			}
-			
-		
-			
-			
-		    /* $total_data_=array();
-			foreach ($total_data as $key => $value_) {
-			    $sort_order = array(); 
-			    foreach($value_ as $k=>$v)
-					$sort_order[$k] = $v['sort_order'];
-				}
-				
-			
-				array_multisort($sort_order, SORT_ASC, $value_); 
-				
-				$total_data_[$key]=$value_;
-				
-				
-			} */ 
-	
-			
-	
+
 			$this->language->load('checkout/checkout');
 			
 			
 
-			if(isset($this->request->post['shippingmethod'])){
-			   $shippingmethod=explode(',',$this->request->post['shippingmethod']);
+			if(isset($this->request->post['shipping_method'])){
+			   $shippingmethod=explode(',',$this->request->post['shipping_method']);
 			   $data['shipping_method']=$shippingmethod[1];
 			   $data['shipping_code']=$shippingmethod[0];
 			}else{
 			   $data['shipping_method'] = '';
 			   $data['shipping_code']='';
 			}
-
+            
+			$data['payment_method']=$this->request->post['payment_method'];
 			
 			$product_data = array();
 		
 			
 			
 			foreach ($this->cart->getProducts($flag) as $product) {
-				$option_data = array();
+				//$option_data = array();
 	
-				foreach ($product['option'] as $option) {
+				/* foreach ($product['option'] as $option) {
 					if ($option['type'] != 'file') {
 						$value = $option['option_value'];	
 					} else {
@@ -147,14 +127,14 @@ class ControllerCheckoutConfirmOrder extends Controller {
 						'value'                   => $value,
 						'type'                    => $option['type']
 					);		
-				}  
+				}   */
 	 
 				$product_data[$product['store_id']][] = array(
 					'product_id' => $product['product_id'],
 					'store_id'   => $product['store_id'],
 					'name'       => $product['name'],
 					'model'      => $product['model'],
-					'option'     => $option_data,
+					//'option'     => $option_data,
 					'attribute'  => $product['attribute'],
 					'quantity'   => $product['quantity'],
 					'subtract'   => $product['subtract'],
@@ -237,27 +217,13 @@ class ControllerCheckoutConfirmOrder extends Controller {
 			
 			
 			
-			$this->model_checkout_order->addOrder($data);
-
+			$this->session->data['order_id']=$this->model_checkout_order->addOrder($data);
 			
-			//$this->data['payment'] = $this->getChild('payment/' . $this->session->data['payment_method']['code']);
-			//这里$this->session->data['payment_method']['code'] 默认写死为alipay的支付方式，以后可能要做个页面选择支付方式的，
-			//比如，网银，信用卡，储蓄卡
-			//1：卖家账户号，2：商户订单号，3：订单名称，4：付款金额，5：订单描述，6：商品展示地址，7：客户端的IP地址
-			$json=array();
-			
-			$json['WIDseller_email']='124@132.com';
-			$json['WIDout_trade_no']='';
-			$json['WIDsubject']='';
-			$json['WIDtotal_fee']='';
-			$json['WIDbody']='';
-			$json['WIDshow_url']='';
-			$json['WIDexter_invoke_ip']='';
-			//$json['redirect']=$this->url->link('payment/alipay','','SSL');
-			$this->response->setOutput(json_encode($json));//跳转到支付处理页面
+           
+			$this->response->setOutput(json_encode($json));
 			
 		} else {
-			$json=array();
+			
 			$json['redirect']=$redirect;
 			$this->response->setOutput(json_encode($json));
 		}			

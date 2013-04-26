@@ -296,8 +296,8 @@ class ControllerShowContents extends Controller {
 		if (isset($this->request->get['content_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
       		$content_info = $this->model_show_contents->getContent($this->request->get['content_id']);
     	}
-	
-		
+	    
+		$this->data['content']['createtime']=date('Y-m-d');
 		$this->load->model('tool/image');
 		//显示属性
 		if (!empty($content_info)) {
@@ -309,10 +309,18 @@ class ControllerShowContents extends Controller {
 					    $v=$this->model_tool_image->resize('no_image.jpg', 100, 100);
 					}
 				}
-				if($k=='createtime') $v=date('Y-m-d',$v);
+				if($k=='createtime') {
+				    if(!empty($v)){
+						$v=date('Y-m-d',$v);
+					}else{
+					    $v=date('Y-m-d');
+					}
+				}
 			    $this->data['content'][$k]=$v;
 			}
 		}
+		
+		
         
 		$this->data['no_image'] = $this->model_tool_image->resize('no_image.jpg', 100, 100);
 						

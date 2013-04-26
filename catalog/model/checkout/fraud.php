@@ -22,7 +22,7 @@ class ModelCheckoutFraud extends Model {
 			$request .= '&postal=' . urlencode($data['payment_postcode']);
 			$request .= '&country=' . urlencode($data['payment_country']);
 			$request .= '&domain=' . urlencode(utf8_substr(strrchr($data['email'], '@'), 1));
-			$request .= '&custPhone=' . urlencode($data['telephone']);
+			$request .= '&custPhone=' . urlencode($data['telphone']);
 			$request .= '&license_key=' . urlencode($this->config->get('config_fraud_key'));
 			
 			if ($data['shipping_method']) {

@@ -8,8 +8,8 @@
 		{/if}</td>
 	  <td class="name"><a href="{$product['href']}" title="{$product['allname']}">{$product['name']}</a>
 		<div>
-		  {loop $product['option']   $option}
-		  - <small>{$option['attribute_group_name']} {$option['value']}</small><br />
+		  {loop $product['attribute']   $attribute}
+		  <small>{$attribute['name']}</small>
 		  {/loop}
 		</div></td>
 	  <td class="quantity">x&nbsp;{$product['quantity']}</td>

@@ -8,11 +8,18 @@ class ControllerAccountHeader extends Controller {
             $this->data['username']='';
 			$this->redirect($this->url->link('account/login', '', 'SSL'));
 		}else{
+		    //是否有店铺
+			$store_id=isset($this->request->cookie['storeid'])?$this->cookie->OCAuthCode($this->request->cookie['storeid'],'DECODE'):'';
+			$this->data['store_id']=isset($store_id)?$store_id:'';
 		     // $customer=isset($this->session->data['customer'])?$this->session->data['customer']:'';
 			if(isset($this->request->cookie['customer'])){
 				$customer=$this->cookie->OCAuthCode($this->request->cookie['customer'],'DECODE');
 				$customer=unserialize($customer);
-				$this->data['username']=$customer['email'];
+				if(!empty($store_id)){
+				    $this->data['username']=$customer['shortname'];
+				}else{
+				    $this->data['username']=$customer['email'];
+				}
 			}
 		
 		}
@@ -56,7 +63,7 @@ class ControllerAccountHeader extends Controller {
 		$this->data['release']=$this->url->link('merchants/release','','SSL');
 		
 		//
-		$this->data['telephone']=$this->language->get('telephone');
+		$this->data['telphone']=$this->language->get('telphone');
 		
 		//是否有店铺
 		$store_id=isset($this->request->cookie['storeid'])?$this->cookie->OCAuthCode($this->request->cookie['storeid'],'DECODE'):'';

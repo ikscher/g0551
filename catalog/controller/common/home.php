@@ -36,7 +36,7 @@ class ControllerCommonHome extends Controller {
 		foreach($hot_results as $v){
 		    if(empty($v)) continue;
 		    if ($v['image']) {
-				$v['image'] = $this->model_tool_image->resize($v['image'], 179, 249,'no');                    
+				$v['image'] = $this->model_tool_image->resize($v['image'], 179, 249);                    
 			} else {
 				$v['image'] = false;
 			}   
@@ -54,7 +54,7 @@ class ControllerCommonHome extends Controller {
 		foreach($new_results as $v){
 		    if(empty($v)) continue;
 		    if ($v['image']) {
-				$v['image'] = $this->model_tool_image->resize($v['image'], 179, 249,'no');                    
+				$v['image'] = $this->model_tool_image->resize($v['image'], 179, 249);                    
 			} else {
 				$v['image'] = false;
 			}   
@@ -72,7 +72,7 @@ class ControllerCommonHome extends Controller {
 		foreach($view_results as $v){
 		    if(empty($v)) continue;
 		    if ($v['image']) {
-				$v['image'] = $this->model_tool_image->resize($v['image'], 179, 249,'no');                    
+				$v['image'] = $this->model_tool_image->resize($v['image'], 179, 249);                    
 			} else {
 				$v['image'] = false;
 			}   
@@ -195,7 +195,7 @@ class ControllerCommonHome extends Controller {
 		
 		$drinks_foods=array();
 		$drinks_results=array();
-		$drinks_results=$this->model_catalog_product->getProductByCategoryId('835',8);//茶叶饮料
+		$drinks_results=$this->model_catalog_product->getProductByCategoryId('580',8);//茶叶饮料
 		foreach($drinks_results as $v){
 		    if(empty($v)) continue;
 		    if ($v['image']) {

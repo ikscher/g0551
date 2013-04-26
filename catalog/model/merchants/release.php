@@ -43,7 +43,7 @@ class ModelMerchantsRelease extends Model {
 			//echo $attribute_group_id;
 			if(!empty($attribute_group_id)){
 				//获取属性组列表
-				$query_=$this->db->query("select ag.attribute_group_id,ag.option_id,ag.`type` as gtype, agd.name as attribute_group_name,o.`type` from " . DB_PREFIX . "attribute_group  ag inner join " . DB_PREFIX . "attribute_group_description  agd on ag.attribute_group_id=agd.attribute_group_id  inner join `".DB_PREFIX."option` o on ag.option_id=o.option_id where ag.isShow=1  and ag.attribute_group_id in({$attribute_group_id}) order by ag.sort_order asc,ag.attribute_group_id asc");
+				$query_=$this->db->query("select ag.attribute_group_id,ag.option_id,ag.`type` as gtype, agd.name as attribute_group_name,o.`type`,c2ag.is_pa from " . DB_PREFIX . "attribute_group  ag inner join " . DB_PREFIX . "attribute_group_description  agd on ag.attribute_group_id=agd.attribute_group_id  inner join `".DB_PREFIX."option` o on ag.option_id=o.option_id   inner join ".DB_PREFIX."category_to_attribute_group c2ag on ag.attribute_group_id=c2ag.attribute_group_id where  ag.isShow=1 and c2ag.category_id='{$category_id}' and ag.attribute_group_id in({$attribute_group_id}) order by ag.sort_order asc,ag.attribute_group_id asc");
 				if($query_->num_rows>0){
 				
 					$group_list=$query_->rows;
@@ -51,7 +51,7 @@ class ModelMerchantsRelease extends Model {
 					    if(in_array($item['attribute_group_id'],$attribute_group)) continue;
 						$attr_array=array();
 						//获取属性组下的所有属性值  开始
-						$query__=$this->db->query("select a.attribute_id, b.name as attrName from " . DB_PREFIX . "attribute as a," . DB_PREFIX . "attribute_description as b where a.attribute_id=b.attribute_id and a.isShow=1 and a.attribute_group_id=". $item["attribute_group_id"] ." order by a.sort_order asc,a.attribute_id asc");
+						$query__=$this->db->query("select a.attribute_id, ad.name as attrName from " . DB_PREFIX . "attribute  a  left join " . DB_PREFIX . "attribute_description  ad  on  a.attribute_id=ad.attribute_id   where a.isShow=1 and a.attribute_group_id=". $item["attribute_group_id"] ." order by a.sort_order asc,a.attribute_id asc");
 						if($query__->num_rows>0){
 							$attr_list=$query__->rows;
 							foreach($attr_list as $attr_item){
@@ -67,7 +67,12 @@ class ModelMerchantsRelease extends Model {
 						$item["attribute_group_name"]=trim($item["attribute_group_name"]);
 						$item["attribute"]=$attr_array;
 						$item['product_option_value']=array();
-						$item['gtype']=$item['gtype'];
+						
+						if($item['is_pa'] && $item['gtype']==2){//设置了价格属性
+							$item['gtype']=$item['gtype'];
+						}else{ //其他全部定位一般属性
+						    $item['gtype']=1;
+						}
 						$res[]=$item;
 					}
 					
@@ -135,7 +140,7 @@ class ModelMerchantsRelease extends Model {
 		$store_id=$this->db->escape($data['store_id']);
 	
 		if(empty($store_id)){
-			$this->showMessage("您还没有开店，或登录已超时，请重新登录！");
+			exit("您还没有开店，或登录已超时，请重新登录！");
 		}
 		$date_added=time();
 		$date_available=time()+7776000;//发布的商品90天内有效
@@ -168,7 +173,7 @@ class ModelMerchantsRelease extends Model {
 		
 		//保存商品及相关信息
 		if($intId==0){ //插入
-		    $sql="INSERT INTO " . DB_PREFIX . "product SET store_id = {$store_id},model='{$model}', price = {$price},quantity = {$quantity}, sku = '{$sku}',image='". $imageList[0] ."', shipping = '{$shipping}',  status = '{$status}', date_added = '{$date_added}',date_available='{$date_available}'";
+		    $sql="INSERT INTO " . DB_PREFIX . "product SET store_id = '{$store_id}',model='{$model}', price = '{$price}',quantity = '{$quantity}', sku = '{$sku}',image='". $imageList[0] ."', shipping = '{$shipping}',  status = '{$status}', date_added = '{$date_added}',date_available='{$date_available}'";
 			
 			$query=$this->db->query($sql);
 			$product_id=$this->db->getLastId();
@@ -198,47 +203,38 @@ class ModelMerchantsRelease extends Model {
 			$sql='';
 			$option_attribute_id='';
 			$product_attribute_id='';
-			
+			$optioin_attribute_=array();
 			//====编辑属性end===
 		  
 			if (!empty($data['product_option'])) {
-				foreach ($data['product_option'] as $product_option) {
-					if ($product_option['type'] == 'select' || $product_option['type'] == 'radio' || $product_option['type'] == 'checkbox' || $product_option['type'] == 'image') {
-						$this->db->query("INSERT INTO " . DB_PREFIX . "product_option SET product_id = '" . (int)$product_id . "', option_id = '" . (int)$product_option['option_id'] . "', attribute_group_id = '" . (int)$product_option['attribute_group_id']. "', required = '1'");
+				foreach ($data['product_option'] as $product_option_value) {
 					
-						$product_option_id = $this->db->getLastId();
 					
-						if (isset($product_option['product_option_value'])) {
-							foreach ($product_option['product_option_value'] as $product_option_value) {
-							    $quantity=!empty($product_option_value['quantity'])?(int)$product_option_value['quantity']:1;
-								$price_prefix=$this->db->escape($product_option_value['price_prefix']);
-								$points_prefix=$this->db->escape($product_option_value['points_prefix']);
-								$weight_prefix=$this->db->escape($product_option_value['weight_prefix']);
-								
-								$this->db->query("INSERT INTO " . DB_PREFIX . "product_option_value SET product_option_id = '" . (int)$product_option_id . "', product_id = '" . (int)$product_id . "', option_id = '" . (int)$product_option['option_id'] . "', option_value_id = '" . (int)$product_option_value['option_value_id'] . "', quantity = '{$quantity}', subtract = '" . (int)$product_option_value['subtract'] . "', price = '" . (float)$product_option_value['price'] . "', price_prefix = '{$price_prefix}', points = '" . (int)$product_option_value['points'] . "', points_prefix = '{$points_prefix}', weight = '" . (float)$product_option_value['weight'] . "', weight_prefix = '{$weight_prefix}'");
-								$option_value_attribute_id=array();
-								$option_value_attribute_id=explode(',',$product_option_value['option_value_id']);
+							$quantity=!empty($product_option_value['quantity'])?(int)$product_option_value['quantity']:1;
+							$attribute_id1=$product_option_value['attribute1'];
+							$attribute_id2=isset($product_option_value['attribute2'])?$product_option_value['attribute2']:'';
+							if(!empty($attribute_id2)){
+							    $compositeId='|'.$attribute_id1.'|'.$attribute_id2.'|';
+							}else{
+							    $compositeId='|'.$attribute_id1.'|';
+							}
+							$sql="INSERT INTO " . DB_PREFIX . "product_option_ulity SET  composite_id='{$compositeId}' ,product_id = '" . (int)$product_id. "', quantity = '{$quantity}', subtract = '" . (int)$product_option_value['subtract'] . "', price = '" . (float)$product_option_value['price'] . "'";
 							
-								$option_value_id = $option_value_attribute_id[0];
-								$attribute_id    = $option_value_attribute_id[1];
-								
-								//=================编辑属性开始=================
-								if(!empty($attribute_id)){
-								    $option_attribute_id .=$comma;
-									$option_attribute_id .= $attribute_id;
-									array_push($attribute,$attribute_id);
-									
-								}
-								//=================编辑属性结束==================
-							} 
-						}
-					} else { 
-						$this->db->query("INSERT INTO " . DB_PREFIX . "product_option SET product_id = '" . (int)$product_id . "', option_id = '" . (int)$product_option['option_id'] . "', option_value = '" . $this->db->escape($product_option['option_value']) . "', required = '" . (int)$product_option['required'] . "'");
-					}
+							$this->db->query($sql);
+						    
+							array_push($attribute,$attribute_id1);
+							if(!empty($attribute_id2)){ array_push($attribute,$attribute_id2);}
+							
+							array_push($optioin_attribute_,$attribute_id1);
+							if(!empty($attribute_id2)){ array_push($optioin_attribute_,$attribute_id2);}
+							
+					
+					
 				}
 				
+				
 				//=============编辑属性开始===================
-				$sql.=" product_id = '" . (int)$product_id . "'";
+				$sql=" product_id = '" . (int)$product_id . "'";
 				
 				$attrList=array_unique($attribute);
 				foreach($attrList as $v){
@@ -250,7 +246,15 @@ class ModelMerchantsRelease extends Model {
 				//判断属性值是否全部为空的
 				$s=preg_replace('/|/','',$product_attribute_id);
 				$product_attribute_id .=$comma;
-				$option_attribute_id  .=$comma;
+				
+				$mmm=array_unique($optioin_attribute_);
+				foreach($mmm as $v){
+				    if(empty($v)) continue;
+				    $option_attribute_id .=$comma;
+					$option_attribute_id .="{$v}";
+				
+				}
+				
 				if(!empty($s)) $sql.=", `attribute_id`='{$product_attribute_id}',`option_attribute_id`='{$option_attribute_id}'";
 
 				$this->db->query("insert into ".DB_PREFIX."product_attribute set ".$sql  );
@@ -263,6 +267,7 @@ class ModelMerchantsRelease extends Model {
 		
 			$product_id=$intId;
 			$date_modified=time();
+			$optioin_attribute_=array();
 			//判断是商品是否属于本店
 			$sql="select product_id from " . DB_PREFIX . "product_to_store where product_id='{$product_id}' and store_id='{$store_id}'";
 			$result=$this->db->query($sql);
@@ -270,10 +275,10 @@ class ModelMerchantsRelease extends Model {
 				return "nostore";
 			}
 			
-			$query=$this->db->query("Update " . DB_PREFIX . "product SET model='{$model}', price = {$price},quantity = {$quantity}, sku = '{$sku}', shipping = {$shipping},  status = {$status}, date_modified = {$date_modified} Where product_id={$product_id}");
+			$query=$this->db->query("Update " . DB_PREFIX . "product SET model='{$model}', price = '{$price}',quantity = '{$quantity}', sku = '{$sku}', shipping = '{$shipping}',  status = '{$status}', date_modified = '{$date_modified}' Where product_id='{$product_id}'");
 			
 			//修改商品描述信息
-			$this->db->query("Update " . DB_PREFIX . "product_description SET name='{$name}',description='{$description}' Where product_id={$product_id}");
+			$this->db->query("Update " . DB_PREFIX . "product_description SET name='{$name}',description='{$description}' Where product_id='{$product_id}'");
 			
 			
 			//写入优惠价格表
@@ -292,51 +297,39 @@ class ModelMerchantsRelease extends Model {
 			$product_attribute_id='';
 			$option_attribute_id='';
 
-			$this->db->query("DELETE FROM " . DB_PREFIX . "product_option WHERE product_id = '" . (int)$product_id . "'");
-			$this->db->query("DELETE FROM " . DB_PREFIX . "product_option_value WHERE product_id = '" . (int)$product_id . "'");
+			$this->db->query("DELETE FROM " . DB_PREFIX . "product_option_ulity WHERE product_id = '" . (int)$product_id . "'");
 			
 			
 			if (!empty($data['product_option'])) {
-				foreach ($data['product_option'] as $product_option) {
-					if ($product_option['type'] == 'select' || $product_option['type'] == 'radio' || $product_option['type'] == 'checkbox' || $product_option['type'] == 'image') {
-						$this->db->query("INSERT INTO " . DB_PREFIX . "product_option SET product_option_id = '" . (int)$product_option['product_option_id'] . "', product_id = '" . (int)$product_id . "', option_id = '" . (int)$product_option['option_id'] . "', attribute_group_id = '" . (int)$product_option['attribute_group_id'] . "', required = '1'");
+				
+				foreach ($data['product_option'] as $product_option_value) {
 					
-						$product_option_id = $this->db->getLastId();
-						
-						if (!empty($product_option['product_option_value'])) {
-							foreach ($product_option['product_option_value'] as $product_option_value) {
-								$option_value_attribute_id=array();
-								$option_value_attribute_id=explode(',',$product_option_value['option_value_id']);
-							
-								$option_value_id = $option_value_attribute_id[0];
-								$attribute_id    = $option_value_attribute_id[1];
-								
-								$quantity=!empty($product_option_value['quantity'])?(int)$product_option_value['quantity']:1 ;
-								$price_prefix=$this->db->escape($product_option_value['price_prefix']);
-								$points_prefix=$this->db->escape($product_option_value['points_prefix']);
-								$weight_prefix=$this->db->escape($product_option_value['weight_prefix']);
-								
-								$this->db->query("INSERT INTO " . DB_PREFIX . "product_option_value SET product_option_value_id = '" . (int)$product_option_value['product_option_value_id'] . "', product_option_id = '" . (int)$product_option_id . "', product_id = '" . (int)$product_id . "', option_id = '" . (int)$product_option['option_id'] . "', option_value_id = '" . (int)$option_value_id . "', quantity = '{$quantity}', subtract = '" . (int)$product_option_value['subtract'] . "', price = '" . (float)$product_option_value['price'] . "', price_prefix = '{$price_prefix}', points = '" . (int)$product_option_value['points'] . "', points_prefix = '{$points_prefix}', weight = '" . (float)$product_option_value['weight'] . "', weight_prefix = '{$weight_prefix}'");
-								
-								//=================编辑属性开始=================
-								
-								if(!empty($attribute_id)){
-									$option_attribute_id .=$comma;
-									$option_attribute_id .= $attribute_id;
-									array_push($attribute,$attribute_id);
-									
-								}
-								//=================编辑属性结束==================
+					
+							$quantity=!empty($product_option_value['quantity'])?(int)$product_option_value['quantity']:1;
+							$attribute_id1=$product_option_value['attribute1'];
+							$attribute_id2=isset($product_option_value['attribute2'])?$product_option_value['attribute2']:'';
+							if(!empty($attribute_id2)){
+								$compositeId='|'.$attribute_id1.'|'.$attribute_id2.'|';
+							}else{
+							    $compositeId='|'.$attribute_id1.'|';
 							}
+							$sql="INSERT INTO " . DB_PREFIX . "product_option_ulity SET  composite_id='{$compositeId}' ,product_id = '" . (int)$product_id. "', quantity = '{$quantity}', subtract = '" . (int)$product_option_value['subtract'] . "', price = '" . (float)$product_option_value['price'] . "'";
 							
-						}
-					} else { 
-						$this->db->query("INSERT INTO " . DB_PREFIX . "product_option SET product_option_id = '" . (int)$product_option['product_option_id'] . "', product_id = '" . (int)$product_id . "', option_id = '" . (int)$product_option['option_id'] . "', option_value = '" . $this->db->escape($product_option['option_value']) . "', required = '" . (int)$product_option['required'] . "'");
-					}					
+							$this->db->query($sql);
+						    
+							array_push($attribute,$attribute_id1);
+							if(!empty($attribute_id2)){ array_push($attribute,$attribute_id2);}
+							
+							array_push($optioin_attribute_,$attribute_id1);
+							if(!empty($attribute_id2)){ array_push($optioin_attribute_,$attribute_id2);}
+							
+					
+					
 				}
 				
+				
 				//=============编辑属性开始===================
-				$sql.=" product_id = '" . (int)$product_id . "'";
+				$sql=" product_id = '" . (int)$product_id . "'";
 				
 				$attrList=array_unique($attribute);
 				foreach($attrList as $v){
@@ -345,13 +338,20 @@ class ModelMerchantsRelease extends Model {
 					$product_attribute_id .="{$v}";
 				
 				}
-				
+				//判断属性值是否全部为空的
 				$s=preg_replace('/|/','',$product_attribute_id);
-				
 				$product_attribute_id .=$comma;
-				$option_attribute_id  .=$comma;
-				if(!empty($s)) $sql.=", `attribute_id`='{$product_attribute_id}',`option_attribute_id`='{$option_attribute_id}'";
 				
+				$mmm=array_unique($optioin_attribute_);
+				foreach($mmm as $v){
+				    if(empty($v)) continue;
+				    $option_attribute_id .=$comma;
+					$option_attribute_id .="{$v}";
+				
+				}
+				
+				if(!empty($s)) $sql.=", `attribute_id`='{$product_attribute_id}',`option_attribute_id`='{$option_attribute_id}'";
+
 				$this->db->query("insert into ".DB_PREFIX."product_attribute set ".$sql  );
 				
 									

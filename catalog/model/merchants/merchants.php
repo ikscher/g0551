@@ -10,15 +10,16 @@ class ModelMerchantsMerchants extends Model {
 	public function getInfo(){
 	    $user_id   =$this->db->escape($this->customer->getId());
 	    $res=array();
-	    $query=$this->db->query("select * from " . DB_PREFIX . "store where store_id in(select store_id from " . DB_PREFIX . "customer where customer_id={$user_id})");
+	    $query=$this->db->query("select s.*,c.email from " . DB_PREFIX . "store s  left join " .DB_PREFIX. "customer c on s.store_id=c.store_id where c.customer_id={$user_id}");
         if($query->num_rows>0){
 	   	    $res=$query->row;
-	    }else{
+	    }
+		/* else{
 	        $res['map_x']="117.28428";
 	        $res['map_y']="31.861422";
 			$res['province']='10106000';
 		    $res['city']='10106001';
-		}
+		} */
 	   
 	    return $res;
 	}

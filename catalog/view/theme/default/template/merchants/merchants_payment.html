@@ -1,0 +1,176 @@
+{$header}
+    <script type="text/javascript" src="catalog/view/javascript/jquery/ui/jquery-ui-1.8.16.custom.min.js"></script>
+    <link type="text/css" href="catalog/view/javascript/jquery/ui/themes/ui-lightness/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
+
+ 	<!--左侧begin-->
+	{$left}
+ 	<!--左侧end-->
+    <!--右侧begin-->
+	<div class="right">
+	<div class="account_box1">
+		<div class="item-list">
+		<div class="item-list-hd">
+		<ul class="item-list-tabs item-list-tabs-flexible clearfix" data-spm="9">
+			<li><a>支付方式列表</a></li>
+		</ul>	
+		</div>
+					
+		
+		<div class="item-list-bd">
+			<table class="J_ListTable_payment" >
+				<thead>
+					<tr>
+						<th width="20%">名称</th>
+						<th width="60%">插件说明</th>
+						<th width="10%">启用</th>
+						 <th width="10%">操作</th>
+					</tr>
+				</thead>
+				<tbody>
+				  {loop $payments $payment}
+				
+				  <tr>
+					<td class="center">{$payment['name']}</td>
+					<td class="center">{$payment['description']}</td>
+					<td>{if $payment['status']}是{else}否{/if}</td>
+					<td data-id="{$payment['id']}" data-code="{$payment['code']}">{if $payment['store_id']}<a class="edit" href="javascript:void(0);">配置</a>&nbsp;<a class="delete" href="javascript:void(0);">卸载</a>{else}<a class="setup"  href="javascript:void(0);">安装</a>{/if}</td>
+				  </tr>
+				  
+				
+				{/loop}
+				</tbody>
+			</table> 
+		</div>   
+			
+		</div>
+ 	</div>
+    </div>
+ 	<!--右侧end-->
+</div>
+
+<div id="dialog-form-e" title="配置支付方式"></div>
+<div id="dialog-form-i" title="安装支付方式"></div>
+
+{$footer}
+<script type="text/javascript" src="catalog/view/javascript/merchants.js"></script>
+<script type="text/javascript">
+    $('td a.delete').click(function(){
+	    var id=$(this).parent().attr('data-id');
+	    if(confirm('卸载后使用此支付方式的订单将不可,您确定卸载此支付方式吗?')){
+			$.post('index.php?route=merchants/payment/deleteStorePayment',{id:id},function(str){
+			    if(str=='no'){
+				    alert('卸载失败！');
+				}
+				
+			});
+		   location.href='index.php?route=merchants/payment';
+		}
+	});
+	
+	
+	//编辑
+	$(function() {
+		// a workaround for a flaw in the demo system (http://dev.jqueryui.com/ticket/4375), ignore!
+		//$( "#dialog:ui-dialog" ).dialog( "destroy" );
+		
+		$("#dialog-form-e" ).dialog({
+			bgiframe:true, //兼容IE6
+			autoOpen: false,
+			height: 380,
+			width: 600,
+			modal: true,
+			position:['top','left'],
+			buttons: {
+				"确定": function() {
+				    $.ajax({
+					    url:"index.php?route=merchants/payment/update",
+						type: 'post',
+						data: $('.payment_form input[type=\'text\'], .payment_form input[type=\'radio\']:checked, .payment_form select, .payment_form input[type=\'hidden\'], .payment_form textarea'),
+						dataType: 'text',
+						success: function(str) {
+							if (str=='yes'){
+								window.location.href="index.php?route=merchants/payment";
+							}else{
+								alert("配置失败！");
+							}
+                        }
+					});
+					$( this ).dialog( "close" );
+				},
+				"取消": function() {
+					$( this ).dialog( "close" );
+				}
+			}
+		});
+	});
+	
+	
+	//打开编辑对话框
+	$('td a.edit').click(function(){
+		var id=$(this).parent().attr('data-id');
+		var code=$(this).parent().attr('data-code');
+		//console.log(id);
+		//console.log(code);
+		$.ajax({
+				url:'index.php?route=merchants/payment/update',
+				dataType:'html',
+				data:'id='+id+'&code='+code,
+				success:function(str){
+					$("#dialog-form-e").html(str);
+				},
+				beforeSend:function(){
+				   $("#dialog-form-e").html('正在载入...'); 
+				}
+		});
+		$("#dialog-form-i").html('');
+		$("#dialog-form-e").dialog( "open" );
+	});
+	
+	
+	//新增
+	$(function() {
+		$("#dialog-form-i" ).dialog({
+			bgiframe:true, //兼容IE6
+			autoOpen: false,
+			height: 380,
+			width: 600,
+			modal: true,
+			position:['top','left'],
+			buttons: {
+				 "确定": function() {
+					$.ajax({
+					    url:"index.php?route=merchants/payment/insert",
+						type: 'post',
+						data: $('.payment_form input[type=\'text\'], .payment_form input[type=\'radio\']:checked, .payment_form select, .payment_form input[type=\'hidden\'], .payment_form textarea'),
+						dataType: 'text',
+						success: function(str) {
+							if (str=='yes'){
+								window.location.href="index.php?route=merchants/payment";
+							}else{
+								alert("安装失败！");
+							}
+                        }
+					});
+					$( this ).dialog( "close" );
+				},	
+				 "取消": function(){
+					
+					$( this ).dialog( "close" );
+				 }
+			
+			}
+		});
+	});
+	
+	//新增
+	$('td a.setup').click(function(){
+	    var code=$(this).parent().attr('data-code');
+		$.get('index.php?route=merchants/payment/insert&code='+code,function(str){
+			$("#dialog-form-i").html(str);
+		},'html');
+		$("#dialog-form-e").html('');
+		$("#dialog-form-i").dialog( "open" );
+	});
+
+</script>
+

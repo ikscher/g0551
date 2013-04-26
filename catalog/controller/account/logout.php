@@ -24,6 +24,7 @@ class ControllerAccountLogout extends Controller {
 			unset($this->session->data['reward']);			
 			unset($this->session->data['voucher']);
 			unset($this->session->data['vouchers']);
+			unset($this->session->data['dbuy_flag']);
 			
 			unset($this->session->data['customer_id']);
 
@@ -31,14 +32,14 @@ class ControllerAccountLogout extends Controller {
 			$this->username = '';
 
 			$this->email = '';
-			$this->telephone = '';
+			$this->telphone = '';
 			$this->fax = '';
 			$this->newsletter = '';
 			$this->customer_group_id = '';
 			$this->address_id = ''; */
 			$this->cookie->OCSetCookie("customer",'');
 			$this->cookie->OCSetCookie("memberid",'');
-			
+			$this->cookie->OCSetCookie("storeid",'');
 			
       		$this->redirect($this->url->link('account/logout', '', 'SSL'));
     	}
@@ -47,25 +48,7 @@ class ControllerAccountLogout extends Controller {
 		
 		$this->document->setTitle($this->language->get('heading_title'));
       	
-		$this->data['breadcrumbs'] = array();
-
-      	$this->data['breadcrumbs'][] = array(
-        	'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home'),        	
-        	'separator' => false
-      	);
-      	
-		$this->data['breadcrumbs'][] = array(
-        	'text'      => $this->language->get('text_account'),
-			'href'      => $this->url->link('account/account', '', 'SSL'),       	
-        	'separator' => $this->language->get('text_separator')
-      	);
 		
-      	$this->data['breadcrumbs'][] = array(
-        	'text'      => $this->language->get('text_logout'),
-			'href'      => $this->url->link('account/logout', '', 'SSL'),
-        	'separator' => $this->language->get('text_separator')
-      	);	
 		
     	$this->data['heading_title'] = $this->language->get('heading_title');
 
