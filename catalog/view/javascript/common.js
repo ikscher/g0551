@@ -189,6 +189,49 @@ function addToCart(product_id, quantity) {
 	});
 }
 
+
+
+//直接购买
+function dBuy(product_id, quantity) {
+	quantity = typeof(quantity) != 'undefined' ? quantity : 1;
+    
+	$.ajax({
+		url: 'index.php?route=checkout/dbuy/index',
+		type: 'post',
+		data: $('.product_info input[type=\'text\'], .product_info input[type=\'hidden\'], .product_info input[type=\'radio\']:checked, .product_info input[type=\'checkbox\']:checked, .product_info select, .product_info textarea'),
+		dataType: 'json',
+		success: function(json) {
+		    console.log(json);
+		    $('.success, .warning, .attention, .information, .error').remove();
+			
+			if (json['error']) {
+				if(json['error']['product']){
+					alert('自己不能购买自己的产品！');
+					return false;
+				}
+        
+				if(json['error']['attribute']){
+				    for (i in json['error']['attribute']) {
+						/* $('#attribute-' + i ).append('<span class="error">' + json['error']['attribute'][i] + '</span>'); */
+						$('.attributes').append('<span class="error">' + json['error']['attribute'][i] + '</span>');
+					}
+				}
+				
+				return false;
+			} 
+			
+			if (json['redirect']) {
+				location.href = json['redirect'];
+			}
+			
+			if (json['success']) {
+			    location.href='index.php?route=checkout/checkout';
+			}
+		}
+	});
+}
+
+
 //加入收藏列表
 function addToWishList(product_id) {
 	$.ajax({
@@ -213,58 +256,6 @@ function addToWishList(product_id) {
 		}
 	});
 }
-
-
-//直接购买
-function dBuy(product_id, quantity) {
-	quantity = typeof(quantity) != 'undefined' ? quantity : 1;
-    
-	$.ajax({
-		url: 'index.php?route=checkout/checkout/dbuy',
-		type: 'post',
-		data: $('.product_info input[type=\'text\'], .product_info input[type=\'hidden\'], .product_info input[type=\'radio\']:checked, .product_info input[type=\'checkbox\']:checked, .product_info select, .product_info textarea'),
-		dataType: 'json',
-		success: function(json) {
-		    console.log(json);
-		    $('.success, .warning, .attention, .information, .error').remove();
-			
-			if (json['error']) {
-				if(json['error']['product']){
-					alert('自己不能购买自己的产品！');
-					return false;
-				}
-            }
-			
-		    if (json['error']) {
-				if (json['error']['option']) {
-					for (i in json['error']['option']) {
-						$('#option-' + i).append('<span class="error">' + json['error']['option'][i] + '</span>');
-					}
-					
-				}
-				
-				if(json['error']['attribute']){
-				    for (i in json['error']['attribute']) {
-						/* $('#attribute-' + i ).append('<span class="error">' + json['error']['attribute'][i] + '</span>'); */
-						$('.attributes').append('<span class="error">' + json['error']['attribute'][i] + '</span>');
-					}
-				}
-				
-				return false;
-			} 
-			
-			if (json['redirect']) {
-				location = json['redirect'];
-			}
-			
-			if (json['success']) {
-			    window.location.href='index.php?route=checkout/checkout';
-			}
-		}
-	});
-}
-
-
 
 function addToCompare(product_id) { 
 	$.ajax({

@@ -6,7 +6,7 @@ class ModelCatalogProduct extends Model {
 	    }
 	}
 	
-	public function getProduct($product_id) {
+	public function getProduct($product_id,$status=1) {
 	    $time=time();
 	
 		/* if ($this->customer->isLogged()) {
@@ -25,9 +25,15 @@ class ModelCatalogProduct extends Model {
 		}
 		
 		
+		//(SELECT wcd.unit FROM " . DB_PREFIX . "weight_class_description wcd WHERE p.weight_class_id = wcd.weight_class_id ) AS weight_class,
+        $sql="SELECT  p.*,pd.meta_keyword,pd.description,pd.meta_description, pd.name AS name, p.image, m.name AS manufacturer, (SELECT price FROM " . DB_PREFIX . "product_discount pd2 WHERE pd2.product_id = p.product_id  AND pd2.quantity ='1' and  pd2.date_start <'$time' AND  pd2.date_end >'$time'  ORDER BY pd2.priority ASC, pd2.price ASC LIMIT 1) AS discount,  (SELECT points FROM " . DB_PREFIX . "product_reward pr WHERE pr.product_id = p.product_id ) AS reward, (SELECT ss.name FROM " . DB_PREFIX . "stock_status ss WHERE ss.stock_status_id = p.stock_status_id ) AS stock_status,  (SELECT AVG(rating) AS total FROM " . DB_PREFIX . "review r1 WHERE r1.product_id = p.product_id AND r1.status = '1' GROUP BY r1.product_id) AS rating, (SELECT COUNT(*) AS total FROM " . DB_PREFIX . "review r2 WHERE r2.product_id = p.product_id AND r2.status = '1' GROUP BY r2.product_id) AS reviews, p.sort_order FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) LEFT JOIN " . DB_PREFIX . "product_to_store p2s ON (p.product_id = p2s.product_id) LEFT JOIN " . DB_PREFIX . "manufacturer m ON (p.manufacturer_id = m.manufacturer_id) WHERE p.product_id = '" . (int)$product_id  . "'";		
+	    
+		if($status==1){
+		    $sql .= " AND p.date_available>={$time} AND p.status = '1' ";
+	    }else{
+		    $sql .=" AND p.status='{$status}'";
+		}
 		
-        $sql="SELECT DISTINCT p.*,pd.meta_keyword,pd.description,pd.meta_description, pd.name AS name, p.image, m.name AS manufacturer, (SELECT price FROM " . DB_PREFIX . "product_discount pd2 WHERE pd2.product_id = p.product_id  AND pd2.quantity ='1' and  pd2.date_start <'$time' AND  pd2.date_end >'$time'  ORDER BY pd2.priority ASC, pd2.price ASC LIMIT 1) AS discount,  (SELECT points FROM " . DB_PREFIX . "product_reward pr WHERE pr.product_id = p.product_id ) AS reward, (SELECT ss.name FROM " . DB_PREFIX . "stock_status ss WHERE ss.stock_status_id = p.stock_status_id ) AS stock_status, (SELECT wcd.unit FROM " . DB_PREFIX . "weight_class_description wcd WHERE p.weight_class_id = wcd.weight_class_id ) AS weight_class, (SELECT AVG(rating) AS total FROM " . DB_PREFIX . "review r1 WHERE r1.product_id = p.product_id AND r1.status = '1' GROUP BY r1.product_id) AS rating, (SELECT COUNT(*) AS total FROM " . DB_PREFIX . "review r2 WHERE r2.product_id = p.product_id AND r2.status = '1' GROUP BY r2.product_id) AS reviews, p.sort_order FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) LEFT JOIN " . DB_PREFIX . "product_to_store p2s ON (p.product_id = p2s.product_id) LEFT JOIN " . DB_PREFIX . "manufacturer m ON (p.manufacturer_id = m.manufacturer_id) WHERE p.product_id = '" . (int)$product_id  . "' AND p.status = '1' ";		
-	   
 		$query = $this->db->query($sql);
 		
 		if ($query->num_rows) {
@@ -354,18 +360,22 @@ class ModelCatalogProduct extends Model {
 	*  $exclude  attribute_id排除出现在option_attribute_id后的attribute_id，默认不排除
 	*/
 	public function getProductAttributes($product_id,$exclude=false) {
-	    
-		$category_id=$this->getProductCategories($product_id);
-        $category_id=implode(',',$category_id);
-		
-		$product_attribute_group_data = array();
+	    $product_attribute_group_data = array();
 		$attribute=array();
 		$option_attribute=array();
 		
 		$attribute_id='';
 		$comma='';
-		// $product_attribute_group_query = $this->db->query("SELECT ag.attribute_group_id, agd.name FROM " . DB_PREFIX . "product_attribute pa LEFT JOIN " . DB_PREFIX . "attribute a ON (pa.attribute_id = a.attribute_id) LEFT JOIN " . DB_PREFIX . "attribute_group ag ON (a.attribute_group_id = ag.attribute_group_id) LEFT JOIN " . DB_PREFIX . "attribute_group_description agd ON (ag.attribute_group_id = agd.attribute_group_id) WHERE pa.product_id = '" . (int)$product_id  . "' GROUP BY ag.attribute_group_id ORDER BY ag.sort_order, agd.name");
+		
+	    // $product_attribute_group_query = $this->db->query("SELECT ag.attribute_group_id, agd.name FROM " . DB_PREFIX . "product_attribute pa LEFT JOIN " . DB_PREFIX . "attribute a ON (pa.attribute_id = a.attribute_id) LEFT JOIN " . DB_PREFIX . "attribute_group ag ON (a.attribute_group_id = ag.attribute_group_id) LEFT JOIN " . DB_PREFIX . "attribute_group_description agd ON (ag.attribute_group_id = agd.attribute_group_id) WHERE pa.product_id = '" . (int)$product_id  . "' GROUP BY ag.attribute_group_id ORDER BY ag.sort_order, agd.name");
 		$query = $this->db->query("select attribute_id,option_attribute_id FROM ".DB_PREFIX."product_attribute where product_id='{$product_id}'");
+		
+		if($query->num_rows<=0) return $product_attribute_group_data;//没有属性
+	    
+		$category_id=$this->getProductCategories($product_id);
+        $category_id=implode(',',$category_id);
+		
+		
 		
 		if($exclude=='option'){ //只选择option的属性
 			if(!empty($query->row['option_attribute_id'])){
@@ -709,7 +719,8 @@ class ModelCatalogProduct extends Model {
 	*/
 	public function getProductByCategoryId($category_id,$limit,$order=''){
 	    if(!empty($order)){
-	        $sql="select distinct(p.product_id) from ".DB_PREFIX."product p inner join ".DB_PREFIX."product_to_category p2c on p.product_id=p2c.product_id ";
+		    $time=time();
+	        $sql="select distinct(p.product_id) from ".DB_PREFIX."product p inner join ".DB_PREFIX."product_to_category p2c on p.product_id=p2c.product_id WHERE p.status=1 and date_available>{$time} ";
 		
 			$implode_data = array();
 			

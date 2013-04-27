@@ -230,7 +230,7 @@ function SetProduct(strUrl,strMsg,strMenu,intId){
 		return false;
 	}
 	if(confirm("确定"+ strMsg +"所选"+ strMenu +"吗？")){
-		$.post(strUrl,{"id":intId.toString()},function(html){
+		$.post(strUrl,{"product_id":intId.toString()},function(html){
 			if(html.toString()=="ok"){
 				alert(strMenu.toString()+strMsg.toString()+"成功！");
 				location.reload();
@@ -257,7 +257,7 @@ function SetSelectProduct(strUrl,strMsg,strMenu,strName){
 		return false;
 	}
 	if(confirm("已选择"+ intSelCount +"个"+ strMenu +"，确定"+ strMsg +"所选"+ strMenu +"吗？")){
-		$.post(strUrl,{"id":tmp.join(",")},function(html){
+		$.post(strUrl,{"product_id":tmp.join(",")},function(html){
 			if(html.toString()=="ok"){
 				alert(strMsg.toString()+strMenu.toString()+"成功！");
 				location.reload();

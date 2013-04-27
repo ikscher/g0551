@@ -40,13 +40,14 @@ class ControllerMerchantsWarehouse extends Controller {
 		//当前页
 		$page=isset($this->request->get['page'])?intval($this->request->get['page']):1;
 	    
-
+        $time=time();
 		$data=array();
 		$limit=10;
 		$data=array( 
 					'start'=>($page-1)*$limit,
 					'limit'=>$limit,
-					'status'=>3,
+					'status'=>3,//下架
+					'date_available'=>$time,
 					'name'=>$this->data['name'],
 					'model'=>$this->data['model'],
 					'price1'=>$this->data['price1'],
@@ -59,17 +60,17 @@ class ControllerMerchantsWarehouse extends Controller {
 		
 		//获取分页列表
 		$this->data["list"]=array();
-		$result = $this->model_merchants_product->getList($data);
-		foreach ($result as $item) {
-			$item["category_id"]=$this->model_merchants_product->getCategoryId($item["product_id"]);
-			$item["date_added"]=date("Y-m-d H:i:s",$item["date_added"]);
-			if ($item['image']) {
-				$item['image'] = $this->model_tool_image->resize($item['image'], 50, 50);                    
+		$results = $this->model_merchants_product->getList($data);
+		foreach ($results as $result) {
+			$result["category_id"]=$this->model_merchants_product->getCategoryId($result["product_id"]);
+			$result["date_added"]=date("Y-m-d H:i:s",$result["date_added"]);
+			if ($result['image']) {
+				$result['image'] = $this->model_tool_image->resize($result['image'], 50, 50);                    
 			} else {
-				$item['image'] = false;
+				$result['image'] = false;
 			} 
-			$item["edit_url"]=$this->url->link('merchants/release/detail&cid='. $item["category_id"] .'&product_id='.$item["product_id"], '', 'SSL');
-			$this->data["list"][]=$item;
+			$result["edit_url"]=$this->url->link('merchants/release/detail&status=3&cid='. $result["category_id"] .'&product_id='.$result["product_id"], '', 'SSL');
+			$this->data["list"][]=$result;
 		}
 		
 		$pagination = new Pagination('results','links');

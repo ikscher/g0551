@@ -15,7 +15,7 @@
 			<div class="blue_r">	
                 <form id="formfb" name="formfb" method="post" action="index.php?route=merchants/release/insert" onsubmit="return checkProduct(this)">
                 	<input name="category_id" id="category_id" type="hidden" value="{$category_id}" />
-                	{if $product_id>0}<input name="product_id" id="product_id" type="hidden" value="{$product_id}" />{/if}
+                	<input name="product_id" id="product_id" type="hidden" value="{$product_id}" />
                     <input name="product_image" id="product_image" type="hidden" value="" />
 				    <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="mainTbl">
 					    <!--
@@ -59,18 +59,33 @@
 					  </tr>
 						<tr>
 						  <td align="right"><label>要求配送：</label></td>
-						  <td><label><input name="shipping" type="radio" id="radio"  value="1"  {if $info['shipping']==1}checked="checked" {/if} />
-						    需要　
-                            <input type="radio" name="shipping" id="radio2" {if $info['shipping']==2}checked="checked" value="2" {/if} />
-					        不需要</label></td>
+						  <td>
+						    {if $info['shipping']==1}
+						    <label for="shipping_yes"><input name="shipping" type="radio" id="shipping_yes" value="1"  checked="checked"  />需要</label>　
+                            <label for="shiping_no"><input type="radio" name="shipping" id="shiping_no" />不需要</label>
+							{elseif $info['shipping']==2}
+							<label for="shipping_yes"><input name="shipping" type="radio" id="shipping_yes" value="1"  checked="checked"  />需要</label>　
+                            <label for="shiping_no"><input type="radio" name="shipping" checked="checked" id="shiping_no" />不需要</label>
+							{else}
+							<label for="shipping_yes"><input name="shipping" type="radio" id="shipping_yes" value="1"  checked="checked"  />需要</label>　
+                            <label for="shiping_no"><input type="radio" name="shipping" id="shiping_no" />不需要</label>
+							{/if}
+						  </td>
 					  </tr>
-					  
 						<tr>
 						  <td align="right"><label>当前状态：</label></td>
-						  <td><label><input name="status" type="radio" id="radio"  value="1"  {if $info['status']==1}checked="checked" {/if}/>
-						    上架　
-                            <input type="radio" name="status" id="radio2" {if $info['status']==3}checked="checked" value="3" {/if}/>
-					        下架</label></td>
+						  <td>
+						    {if $info['status']==1}
+						    <label for="online"><input name="status" type="radio" id="online"  value="1"  checked="checked" />上架</label>　
+                            <label for="offline"><input type="radio" name="status"  id="offline"   value="3"/>下架</label>
+							{elseif $info['status']==3}
+							 <label for="online"><input name="status" type="radio" id="online"  value="1"  />上架</label>　
+                            <label for="offline"><input type="radio" name="status"  id="offline"  checked="checked" value="3"/>下架</label>
+							{else}
+							 <label for="online"><input name="status" type="radio" id="online"  value="1"  checked="checked" />上架</label>　
+                            <label for="offline"><input type="radio" name="status"  id="offline"   value="3"/>下架</label>
+							{/if}
+						  </td>
 					  </tr>
 						<tr>
 						  <td width="90" align="right"><label>宝贝编号：</label></td>

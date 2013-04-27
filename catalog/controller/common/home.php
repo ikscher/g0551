@@ -32,7 +32,7 @@ class ControllerCommonHome extends Controller {
 		
 		//热销榜  =>羽绒服
 		$hot_products=array();
-		$hot_results=$this->model_catalog_product->getProductByCategoryId('150',8,'hots');
+		$hot_results=$this->model_catalog_product->getProductByCategoryId('148',8,'hots');
 		foreach($hot_results as $v){
 		    if(empty($v)) continue;
 		    if ($v['image']) {
@@ -50,7 +50,7 @@ class ControllerCommonHome extends Controller {
 		
 		//最新产品 
 		$new_products=array();
-		$new_results=$this->model_catalog_product->getProductByCategoryId('150',8,'date_added');
+		$new_results=$this->model_catalog_product->getProductByCategoryId('148',8,'date_added');
 		foreach($new_results as $v){
 		    if(empty($v)) continue;
 		    if ($v['image']) {
@@ -68,7 +68,7 @@ class ControllerCommonHome extends Controller {
 		
 		//人气产品
 		$view_products=array();
-		$view_results=$this->model_catalog_product->getProductByCategoryId('150',8,'viewed');
+		$view_results=$this->model_catalog_product->getProductByCategoryId('148',8,'viewed');
 		foreach($view_results as $v){
 		    if(empty($v)) continue;
 		    if ($v['image']) {

@@ -168,7 +168,7 @@ class ControllerCheckoutCart extends Controller {
       		$this->data['products'] = array();
 			
 			$products = $this->cart->getProducts();
-           
+            
       		foreach ($products as $product) {
 				$product_total = 0;
 				
@@ -486,6 +486,7 @@ class ControllerCheckoutCart extends Controller {
 			$attribute=isset($this->request->post['attribute'])?$this->request->post['attribute']:array();
             
 			$product_attributes=$this->model_catalog_product->getProductAttributes($product_id,'option');
+
 			foreach ($product_attributes as $product_attribute) {
 				if (empty($attribute[$product_attribute['attribute_group_id']])) {
 					$json['error']['attribute'][$product_attribute['attribute_group_id']] = sprintf($this->language->get('error_required'), $product_attribute['attribute_group_name']);

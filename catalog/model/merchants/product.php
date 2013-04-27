@@ -16,6 +16,7 @@ class ModelMerchantsProduct extends Model {
 		$model=isset($data['model'])?$this->db->escape($data['model']):'';
 		$price1=isset($data['price1'])?$this->db->escape($data['price1']):'';
 		$price2=isset($data['price2'])?$this->db->escape($data['price2']):'';
+		$date_available=isset($data['date_available'])?$this->db->escape($data['date_available']):0;
 		$store_id=$this->cookie->OCAuthCode($this->request->cookie['storeid'],'DECODE');
 		if(empty($store_id)){
 			$this->showMessage("您还没有开店，或登录已超时，请重新登录！");
@@ -29,6 +30,10 @@ class ModelMerchantsProduct extends Model {
 		if(!empty($price2)) $where.=" And price<={$price2}";
 		if(!empty($store_id)) $where .= " And  store_id={$store_id}";
 		
+		if($status==1){
+			if(!empty($date_available)) $where .=" AND date_available>={$date_available}";
+		}
+	
 		if ($data['start'] < 0) {
 			$data['start'] = 0;
 		}
@@ -38,7 +43,7 @@ class ModelMerchantsProduct extends Model {
 		}
 		
 		$sql="select * from view_product ".$where." order by product_id desc LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
-
+       
 		$query=$this->db->query($sql);
 		
 		
@@ -58,6 +63,7 @@ class ModelMerchantsProduct extends Model {
 		$price1=isset($data['price1'])?$this->db->escape($data['price1']):'';
 		$price2=isset($data['price2'])?$this->db->escape($data['price2']):'';
 		$store_id=$this->cookie->OCAuthCode($this->request->cookie['storeid'],'DECODE');
+		$date_available=isset($data['date_available'])?$this->db->escape($data['date_available']):0;
 		if(empty($store_id)){
 			$this->showMessage("您还没有开店，或登录已超时，请重新登录！");
 		}
@@ -69,6 +75,10 @@ class ModelMerchantsProduct extends Model {
 		if(!empty($price1)) $where.=" And price>={$price1}";
 		if(!empty($price2)) $where.=" And price<={$price2}";
 		if(!empty($store_id)) $where .=" and store_id={$store_id}";
+	
+		if($status==1){
+			if(!empty($date_available)) $where .=" AND date_available>={$date_available}";
+		}
 		
 		$sql="select count(product_id) as total from view_product ".$where;
 		$query=$this->db->query($sql);
@@ -93,7 +103,16 @@ class ModelMerchantsProduct extends Model {
 		if(empty($store_id)){
 			$this->showMessage("您还没有开店，或登录已超时，请重新登录！");
 		}
-		$query=$this->db->query("update " . DB_PREFIX . "product SET {$field}={$value} where store_id={$store_id} and product_id in({$intId})");
+		
+		$date_available='';
+		//产品上架
+		if($value==1){
+		    $date_available=time()+7776000;//发布的商品90天内有效
+		    $date_available=",date_available='{$date_available}'";
+		}
+		
+		$sql="update " . DB_PREFIX . "product SET {$field}='{$value}' {$date_available} where store_id={$store_id} and product_id in({$intId})";
+		$query=$this->db->query($sql);
 		if($query===true){
 			return "ok";
 		}

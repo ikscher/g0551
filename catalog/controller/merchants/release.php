@@ -71,6 +71,7 @@ class ControllerMerchantsRelease extends Controller {
 			exit();
 		}
 		
+		$status=isset($this->request->get["status"])?$this->request->get["status"]:'1';
 		
 		if(isset($this->request->get["product_id"]) && is_numeric($this->request->get["product_id"]) && $this->request->get["product_id"]>0){
 			$product_id=$this->request->get["product_id"];
@@ -203,7 +204,7 @@ class ControllerMerchantsRelease extends Controller {
 		}
 		
 		
-		$info=$this->model_catalog_product->getProduct($product_id);
+		$info=$this->model_catalog_product->getProduct($product_id,$status);
 		
 
 		
@@ -373,7 +374,7 @@ class ControllerMerchantsRelease extends Controller {
 		$this->load->model('merchants/release');
 		$result=$this->model_merchants_release->saveInfo($data,$product_id);
 		
-		$url='index.php?route=merchants/release/detail&cid='. $category_id .'&product_id='.$product_id;
+		$url="index.php?route=merchants/release/detail&cid={$category_id}&product_id={$product_id}&status={$status}";
 		if($result=="no"){
 			$this->showMessage("对不起，宝贝信息保存失败！",$url);
 		}elseif($result=="nostore"){

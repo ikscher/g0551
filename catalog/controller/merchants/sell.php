@@ -42,13 +42,14 @@ class ControllerMerchantsSell extends Controller {
 		//当前页
 		$page=isset($this->request->get['page'])?intval($this->request->get['page']):1;
 		
-	
+	    $time=time();
 		$data=array();
 		$limit=10;
 		$data=array( 
 					'start'=>($page-1)*$limit,
 					'limit'=>$limit,
-					'status'=>1,
+					'status'=>1,//上架
+					'date_available'=>$time,
 					'price1'=>$price1,
 					'price2'=>$price2,
 					'name'=>$name,
@@ -59,20 +60,20 @@ class ControllerMerchantsSell extends Controller {
 		
 		//获取分页列表
 		$this->data["list"]=array();
-		$result = $this->model_merchants_product->getList($data);
+		$results = $this->model_merchants_product->getList($data);
 		
-		foreach ($result as $item) {
-			$item["category_id"]=$this->model_merchants_product->getCategoryId($item["product_id"]);
-			$item["date_added"]=date("Y-m-d H:i:s",$item["date_added"]);
+		foreach ($results as $result) {
+			$result["category_id"]=$this->model_merchants_product->getCategoryId($result["product_id"]);
+			$result["date_added"]=date("Y-m-d H:i:s",$result["date_added"]);
 			
 			
-			if ($item['image']) {
-				$item['image'] = $this->model_tool_image->resize($item['image'], 50, 50);                    
+			if ($result['image']) {
+				$result['image'] = $this->model_tool_image->resize($result['image'], 50, 50);                    
 			} else {
-				$item['image'] = false;
+				$result['image'] = false;
 			}  
-			$item["edit_url"]=$this->url->link('merchants/release/detail&cid='. $item["category_id"] .'&product_id='.$item["product_id"], '', 'SSL');
-			$this->data["list"][]=$item;
+			$result["edit_url"]=$this->url->link('merchants/release/detail&cid='. $result["category_id"] .'&product_id='.$result["product_id"], '', 'SSL');
+			$this->data["list"][]=$result;
 		}
 		
 	
@@ -105,7 +106,7 @@ class ControllerMerchantsSell extends Controller {
 	public function del() {
 		$this->check_customer();
 		
-		$intId=isset($this->request->post['id'])?$this->request->post['id']:"";
+		$intId=isset($this->request->post['product_id'])?$this->request->post['product_id']:"";
 		if($intId=="")exit("对不起，操作不正确!");
 
 		$this->load->model('merchants/product');
@@ -120,7 +121,7 @@ class ControllerMerchantsSell extends Controller {
 	public function up() {
 		$this->check_customer();
 		
-		$intId=isset($this->request->post['id'])?$this->request->post['id']:"";
+		$intId=isset($this->request->post['product_id'])?$this->request->post['product_id']:"";
 		if($intId=="")exit("对不起，操作不正确!");
 
 		$this->load->model('merchants/product');
@@ -135,7 +136,7 @@ class ControllerMerchantsSell extends Controller {
 	public function down() {
 		$this->check_customer();
 		
-		$intId=isset($this->request->post['id'])?$this->request->post['id']:"";
+		$intId=isset($this->request->post['product_id'])?$this->request->post['product_id']:"";
 		if($intId=="")exit("对不起，操作不正确!");
 
 		$this->load->model('merchants/product');
