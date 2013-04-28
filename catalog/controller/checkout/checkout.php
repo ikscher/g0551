@@ -2,11 +2,14 @@
 class ControllerCheckoutCheckout extends Controller { 
 	public function index() {
         $flag=$this->session->data['dbuy_flag'];
-
-		if ($flag==true){ //直接购买的
+	
+        $dbuy=isset($this->request->get['dbuy'])?$this->request->get['dbuy']:'';
+		if ($dbuy==1){ //直接购买的
 		    $products = $this->cart->getProducts(TRUE);
+			$flag=true;
+		}
 		
-		}else{ //购物车的
+		if($flag==false){ //购物车的
 			// Validate cart has products and has stock.
 			if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
 				$this->redirect($this->url->link('checkout/cart'));
@@ -70,6 +73,7 @@ class ControllerCheckoutCheckout extends Controller {
 		//产品信息
 		$this->data['products'] = array();
 		$this->load->model('tool/image');
+		$this->load->model('store/store');
 		foreach ($products as $product) {
 			if ($product['image']) {
 				$image = $this->model_tool_image->resize($product['image'], $this->config->get('config_image_cart_width'), $this->config->get('config_image_cart_height'));
@@ -90,7 +94,8 @@ class ControllerCheckoutCheckout extends Controller {
 				'key'      => $product['key'],
 				'thumb'    => $image,
 				'name'  => $product['name'],
-				'model'    => $product['model'], 
+				'model'    => $product['model'],
+                'store' => $this->model_store_store->getStore($product['store_id']),				
 				//'option'   => $option_data,
 				'attribute'=> $product['attribute'],
 				'quantity' => $product['quantity'],
@@ -102,7 +107,7 @@ class ControllerCheckoutCheckout extends Controller {
 			);
 		}
 		
-		
+	
 		// Gift Voucher
 		$this->data['vouchers'] = array();
 		

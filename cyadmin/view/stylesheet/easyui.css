@@ -694,7 +694,7 @@ a.l-btn .l-btn-focus{
 
 .easyui-accordion p a{line-height:20px;}
 
-.hover{
+.panel-body  .hover{
     border:1px solid #7eabcd;
 	cursor:pointer;
 	/* background:url('../image/button_plain_hover.png') repeat-x left bottom; */

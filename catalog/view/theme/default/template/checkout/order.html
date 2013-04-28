@@ -32,7 +32,7 @@
 		
 		<dl>
 			<dt>收货地址：</dt>
-			<dd><input name="address" type="text" /> <span class="star">*</span></dd>
+			<dd><input name="address" type="text" size="80" /> <span class="star">*</span></dd>
 		</dl>
 		<dl>
 			<dt>邮　　编：</dt>
@@ -55,7 +55,7 @@
 	</div>
 	
 	
-	<div class="buyTitle"><a name="payment_" id="payment_" >&nbsp;</a><img src="catalog/view/theme/default/image/order/payment_method.jpg" width="280" height="30" /></div>
+	<!-- <div class="buyTitle"><a name="payment_" id="payment_" >&nbsp;</a><img src="catalog/view/theme/default/image/order/payment_method.jpg" width="280" height="30" /></div>
 	<div class="paymentContent">
 		<dl class="clearfix">
 			<dt>
@@ -81,26 +81,28 @@
 			<dd><input type="radio" name="shipping_method"  value="ems,EMS邮政专递" {if isset($shipping_method['code']) && $shipping_method['code']=='ems'}checked="checked"{/if} /><span>EMS邮政专递</span></dd>
 			<dd><input type="radio" name="shipping_method"  value="diy,上门自提" {if isset($shipping_method['code']) && $shipping_method['code']=='diy'}checked="checked"{/if} /><span>上门自提</span></dd>
 		</dl>
-	</div>
+	</div> -->
 	
 	<div class="buyTitle"><img src="catalog/view/theme/default/image/order/shopping_list.jpg" width="218" height="30" /></div>
 	<div class="buyContent bottonLine">
-		<table class="clearfix">
+		<table class="list" >
 			<thead>
 			  <tr>
-				<td class="photo">商品图片</td>
-				<td class="productName">商品名称</td>
-				<td class="count">数量</td>
+				<td colspan="2" >店铺宝贝</td>
 				<td class="price">单价</td>
+				<td class="count">数量</td>
+				<td>优惠方式</td>
 				<td class="total">小计</td>
 				<!-- <span class="operator">操作</span> -->
 			  </tr>
 			</thead>
 			<tbody>
 			{loop $products $product}
+			<tr class="first"><td colspan="6"></td></tr>
+			<tr><td class="store" colspan="6">店铺：<a href="index.php?route=store/store&store_id={$product['store']['store_id']}" target="_blank">{$product['store']['name']}</a>，卖家：{$product['store']['owner']}</td></tr>
 			<tr>
-				<td class="photo"><a href="{$product['href']}" title="{$product['name']}"><img src="{$product['thumb']}" width="50" height="60" /></a></td>
-				<td class="productName"><a href="{$product['href']}" title="{$product['name']}">{$product['name']}</a> {if !$product['stock']}
+				<td class="photo" ><a href="{$product['href']}" title="{$product['name']}"><img src="{$product['thumb']}" width="50" height="60" /></a></td>
+				<td class="productName" ><a href="{$product['href']}" title="{$product['name']}">{$product['name']}</a> {if !$product['stock']}
 				  <span class="stock">***</span>
 				  {/if}
 				  <div>
@@ -112,10 +114,58 @@
 				  {if $product['reward']}
 				  <small>{$product['reward']}</small>
 				  {/if}</td>
-				<td class="count">{$product['quantity']}</td>
-				<td class="price">{$product['price']}</td>
-				<td class="total">{$product['total']}</td>
+				<td  class="price" >{$product['price']}</td>
+				<td  class="quantity" >{$product['quantity']}</td>
+				<td class="total">
+				    <select name="vc">
+					    <option value=''>无优惠</option>
+					</option>
+				</td>
+				<td class="operation" >{$product['total']}</td>
 				<!-- <span class="operator"><a href="#">删除商品</a></span> -->
+			</tr>
+			<tr class="other">
+			    <td colspan="6">
+				    <ul>
+					    <li class="dib">
+						    <div class="gbook">
+								<label class="label">给卖家留言：</label>
+								<textarea title="选填，可以告诉卖家您对商品的特殊要求，如：颜色、尺码等" name="931142711:2|memo" id="931142711_2_memo" class="tips" autocomplete="off" data-point-url="" placeholder="选填，可以告诉卖家您对商品的特殊要求，如：颜色、尺码等"></textarea>
+							</div>
+						</li>
+					    <li class="dib extra-info">
+						    <div class="gbook">
+							    <ul>
+									{if $payment_methods}
+									<li class="dib title">支付方式：</li>
+									<li class="dib sel"><select name="payment_method" >
+										{loop $payment_methods $payment_method}
+											<option  value="{$payment_method['code']}">{$payment_method['title']}</option>
+										{/loop}
+										</select>
+									</li>
+									{/if}
+									
+								</ul>
+							</div>
+							<div class="farearea">
+							    <ul>
+								    <li class="dib title">配送方式：</li>
+								    <li class="dib sel">
+									    <select name="shipping_method">
+										    <option  value="express,快递公司"  {if isset($shipping_method['code']) && $shipping_method['code']=='express'}checked="checked"{/if} />快递公司</option>
+										    <option  value="ems,EMS邮政专递" {if isset($shipping_method['code']) && $shipping_method['code']=='ems'}checked="checked"{/if} />EMS邮政专递</option>
+										    <option  value="diy,上门自提" {if isset($shipping_method['code']) && $shipping_method['code']=='diy'}checked="checked"{/if} />上门自提</option>
+								        </select>
+									</li>
+								</ul>
+							</div>
+						</li>
+					</ul>
+				</td>
+			</tr>
+			<tr class="other">
+			    <td class="subtotal" colspan="6">ffff</td>
 			</tr>
 			{/loop}
 			 {loop $vouchers   $voucher}

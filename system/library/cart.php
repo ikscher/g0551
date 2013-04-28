@@ -27,17 +27,20 @@ class Cart {
 	*              (2)true  直接购买            cookie
     */	
   	public function getProducts($flag=false) {
+	    global $memcached;
 	    $time=time();
 		$profilo=array();
         $this->data=array();
 		//if (!$this->data) { //缓存数据，重新取数据
 		    
-			if($flag===true){
+			if($flag==true){
+			    //$dbuyproduct=$memcached->get('dbuyproduct');	
+				//if(isset($dbuyproduct)){
 			    if(isset($this->request->cookie['dbuyproduct'])){
 				    $dbuyproduct=$this->request->cookie['dbuyproduct'];
 					$profilo = unserialize(base64_decode($dbuyproduct));
 				
-					array_walk_recursive($profilo,'formatSerializeRev');
+					//array_walk_recursive($profilo,'formatSerializeRev');
 				}
                 
 			}else{

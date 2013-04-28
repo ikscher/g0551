@@ -114,22 +114,7 @@ var editor;
 
 
 function setEditor(){
-	KindEditor.ready(function(K) {
-	editor = K.create('#introduce',{items:['source','fontsize','fontname','|','forecolor','hilitecolor','bold','italic','underline','removeformat','|','justifyleft','justifycenter','justifyright','|','emoticons','image','multiimage','table','link','unlink','|','preview','fullscreen'],resizeType:1,uploadJson:"index.php?route=merchants/upload/index"});
-	K('#upload_logo').click(function() {
-		editor.loadPlugin('image', function() {
-			editor.plugin.imageDialog({
-			    imageSizeLimit:"512KB",
-				showRemote : false,
-				clickFn : function(url, title, width, height, border, align) {  
-					K('#logo_url').val(url);
-					K('.shop-pic').attr('src',url);
-					editor.hideDialog();
-				}
-			});
-		});
-	});
-	});
+	
 }
 
 function selectClass(){
@@ -168,7 +153,7 @@ function checkClass(){
 var productImage=Array();
 function productEditor(){
 	KindEditor.ready(function(K) {
-		editor = K.create('#description',{items:['source','fontsize','fontname','|','forecolor','hilitecolor','bold','italic','underline','removeformat','|','justifyleft','justifycenter','justifyright','|','emoticons','image','multiimage','table','link','unlink','|','preview','fullscreen'],resizeType:1});
+		editor = K.create('#description',{items:['source','fullscreen','fontsize','fontname','|','forecolor','hilitecolor','bold','italic','underline','removeformat','|','justifyleft','justifycenter','justifyright','|','emoticons','image','multiimage','table','link','unlink','|','preview'],resizeType:1});
 		K('#J_selectImage').click(function() {
 			if(productImage.length>=20){
 				alert("对不起，最多只能上传20张宝贝图片！");

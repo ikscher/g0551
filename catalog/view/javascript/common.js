@@ -225,7 +225,7 @@ function dBuy(product_id, quantity) {
 			}
 			
 			if (json['success']) {
-			    location.href='index.php?route=checkout/checkout';
+			    location.href='index.php?route=checkout/checkout&dbuy=1';
 			}
 		}
 	});

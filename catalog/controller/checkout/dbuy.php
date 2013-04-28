@@ -3,7 +3,7 @@ class ControllerCheckoutDbuy extends Controller {
 /**直接购买 *ajax*/
 	public function index(){
 	    //设置标志位
-		$this->session->data['dbuy_flag']=true;
+		//$this->session->data['dbuy_flag']=true;
 	
 	    $this->language->load('checkout/cart');
 	    $product_id=$this->request->post['product_id'];
@@ -86,7 +86,7 @@ class ControllerCheckoutDbuy extends Controller {
 						if ($this->config->get($result['code'] . '_status')) {
 							$this->load->model('total/' . $result['code']);
 				
-							$this->{'model_total_' . $result['code']}->getTotal($total_data, $total,$this->session->data['dbuy_flag']);//, $taxes
+							$this->{'model_total_' . $result['code']}->getTotal($total_data, $total,true);//, $taxes
 						}
 						
 						$sort_order = array(); 

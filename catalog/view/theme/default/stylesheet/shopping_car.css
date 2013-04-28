@@ -22,20 +22,95 @@
 .orderDetail dt{background:#E6E6E6;color:#333333;font-weight:bold;height:30px;line-height:30px;text-indent:130px;}
 .orderDetail dd{margin-left:160px;line-height:180%;padding-bottom:20px;padding-top:5px;}
 
-.buyContent .clearfix{padding-top:12px;width:100%;}
-.buyContent .clearfix  td{text-align:center;line-height:30px;}
-.buyContent.clearfix  td.photo{width:12%;}
-.buyContent .clearfix  td.productName{width:48%;}
-.buyContent .clearfix  td.quantity{width:10%;}
-.buyContent .clearfix  td.price{width:12%;}
-.buyContent .clearfix  td.total{width:12%;}
-.buyContent .clearfix  td.operator{width:12%;}
-.buyContent .clearfix  tbody tr td  input{height:25px;}
+.buyContent .list{padding-top:12px;width:100%;}
+.buyContent .list  td{text-align:center;line-height:30px;}
+
+.buyContent .list  tbody tr td  input{height:25px;}
 span.subadd{padding:1px;height:3px;width:3px;border:1px solid #fcd;margin-left:5px;margin-right:5px;}
 .buyContent  thead{background:#F0F0F0;font-weight:bold;}
-/* .buyContent  tbody tr{padding-left:20px;padding-top:5px;padding-bottom:5px;line-height:50px;}  */
+.buyContent td select {height:24px;}
+.buyContent tr.other {
+	background-color: #f2f7ff;
+}
+
+.dib{
+    display:inline-block;
+	vertical-align:top;
+}
+/* .buyContent tr td ul li{float:left;} */
+.buyContent tr td .gbook {
+	text-align: left;
+	margin-bottom: 5px;
+	margin-top:10px;
+}
+
+.buyContent tr td .farearea {
+	text-align: left;
+	margin-bottom: 5px;
+	border-top: 1px solid #FFF;
+	padding-top:10px;
+}
+   
+.buyContent tr  td.subtotal{
+    border-top: 1px solid #FFF;
+	padding-top:10px;
+	padding-right:10px;
+	text-align:right;
+}
+
+.buyContent tr td .gbook .tips {
+	height: 20px;
+	color: #aaa;
+	width: 394px;
+    resize: none;
+	border: 1px solid #8AB6DD;
+}
+
+.buyContent ul li.extra-info{
+    width: 490px;
+	border-left: 1px solid #fff;
+	
+}
+
+.buyContent tr td .title{
+    text-align:right;
+	width:120px;
+
+}
+
+.buyContent tr td .gbook .label{
+    vertical-align:top;
+}
+
+.buyContent tr td .gbook  .sel{
+	width:194px;
+}
+
+.buyContent tr.first{
+    height:25px;
+}
+
+.buyContent tr td.store{
+    border-bottom: 1px dashed #f5cdf3;
+	text-align:left;
+}
+
+
+.buyContent tr td img{
+   padding-top:10px;
+}
+
+.buyContent .list td.price{width:8%};
+.buyContent .list td.productName{width:30%};
+.buyContent .list td.total{};
+.buyContent .list td.operation{width:10%};
+.buyContent .list td.photo{width:10%};
+.buyContent .list td.quantity{width:8%};
+
+
+/* .buyContent  tbody tr{padding-left:20px;padding-top:5px;padding-bottom:5px;line-height:50px;}  
 .buyContent div.containue{text-align:right;border-top:1px dashed #E0E0E0;padding-top:10px;margin-top:10px;clear:both;}
-.buyContent div.containue a{margin-right:15px;}
+.buyContent div.containue a{margin-right:15px;}*/
 
 
 

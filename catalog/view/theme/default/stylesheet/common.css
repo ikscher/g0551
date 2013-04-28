@@ -41,7 +41,7 @@ body>:last-child{display:none;} /*清除底部多余的空白*/
 
 
 /*-----------------------base_css------------------------*/
-* { font-family:Arial, Helvetica, sans-serif; font-size:13px; line-height:21px; text-decoration:none; border:0px; list-style-type:none; padding:0px 0px 0px 0px; margin:0px 0px 0px 0px; color:#666666; }
+* { font-family:Arial, Helvetica, sans-serif; font-size:13px; line-height:21px; text-decoration:none;  list-style-type:none; padding:0px 0px 0px 0px; margin:0px 0px 0px 0px; color:#666666; }
 input,textarea{border:1px solid #e1e1e1;}
 a{color:#666666; cursor:pointer;}
 /*----------------------com-------------------*/

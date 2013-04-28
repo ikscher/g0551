@@ -116,6 +116,7 @@ Class ModelStoreStore extends Model {
     
 	public function getStore($store_id){
 	    $data=array();
+		if(empty($store_id)) return $data;
 	    $sql="select * from ".DB_PREFIX."store where store_id='{$store_id}'";
 		$query=$this->db->query($sql);
 		$data=$query->row;
