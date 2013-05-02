@@ -4,7 +4,7 @@
 class ControllerCheckoutPaymentMethod extends Controller {
   	public function index() {
 	
-		$flag=$this->session->data['dbuy_flag'];
+		$flag=isset($this->session->data['dbuy_flag'])?$this->session->data['dbuy_flag']:true;
 	
 		$products=$this->cart->getProducts($flag);
 		

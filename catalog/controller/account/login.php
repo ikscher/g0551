@@ -230,7 +230,7 @@ class ControllerAccountLogin extends Controller {
 	    $json=array();
 		$username=$this->request->post['username'];
 		$password=$this->request->post['password'];
-	    if (!$this->validate($username,$password)) {
+	    if(!$this->customer->login($username,$password)) {
 		   $json=array("key"=>"ok");
 	       $this->response->setOutput(json_encode($json));
 

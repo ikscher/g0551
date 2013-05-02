@@ -1,25 +1,22 @@
 <?php  
 class ControllerCheckoutCheckout extends Controller { 
 	public function index() {
-        $flag=$this->session->data['dbuy_flag'];
+        //$flag=isset($this->session->data['dbuy_flag'])?$this->session->data['dbuy_flag']:true;
 	
         $dbuy=isset($this->request->get['dbuy'])?$this->request->get['dbuy']:'';
 		if ($dbuy==1){ //直接购买的
 		    $products = $this->cart->getProducts(TRUE);
 			$flag=true;
-		}
-		
-		if($flag==false){ //购物车的
+		}else{//购物车的
 			// Validate cart has products and has stock.
 			if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
 				$this->redirect($this->url->link('checkout/cart'));
 			}	
-			
+			$flag=false;
 			// Validate minimum quantity requirments.			
 			$products = $this->cart->getProducts();
 		}		
 	     
-		
 		//支付方式
 		$this->load->controller('checkout/payment_method');
 		$this->data['payment_methods']=$this->controller_checkout_payment_method->index();
@@ -90,12 +87,15 @@ class ControllerCheckoutCheckout extends Controller {
 			$total = number_format($product['price'] * $product['quantity'],2,'.',',');
 			
 													
-			$this->data['products'][] = array(
+			
+			
+			
+
+            $this->data['products'][$product['store_id']]['product'][] = array(
 				'key'      => $product['key'],
 				'thumb'    => $image,
 				'name'  => $product['name'],
-				'model'    => $product['model'],
-                'store' => $this->model_store_store->getStore($product['store_id']),				
+				'model'    => $product['model'],		
 				//'option'   => $option_data,
 				'attribute'=> $product['attribute'],
 				'quantity' => $product['quantity'],
@@ -104,10 +104,13 @@ class ControllerCheckoutCheckout extends Controller {
 				'price'    => $price,	
 				'total'    => $total,	
 				'href'     => $this->url->link('product/product', 'product_id=' . $product['product_id'])		
-			);
+			);		
+
+            $this->data['products'][$product['store_id']]['store'] = $this->model_store_store->getStore($product['store_id']);
+			
 		}
-		
-	
+
+	    //var_dump($this->data['products']);
 		// Gift Voucher
 		$this->data['vouchers'] = array();
 		
@@ -161,8 +164,7 @@ class ControllerCheckoutCheckout extends Controller {
 		$this->data['shipping_required'] = $this->cart->hasShipping($flag);	
 		
 		$this->data['payment_method_code']=isset($this->session->data['payment_method']['code'])?$this->session->data['payment_method']['code']:'';
-		//$this->data['payment'] = $this->getChild('payment/' . $this->session->data['payment_method']['code']);
-		// $this->data['action']=$this->url->link('checkout/confirm_order','','SSL');
+	
 		
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/order.html')) {
 			$this->template = $this->config->get('config_template') . '/template/checkout/order.html';
@@ -182,10 +184,12 @@ class ControllerCheckoutCheckout extends Controller {
 	
 	/**设置货运方法**/
 	public function shippingMethod(){
+	    $sm='';
+		$arr=array();
 	    $sm=strtolower($this->request->post['shipping_method']);
 		$arr=explode(',',$sm);
 	
-		$this->session->data['shipping_method']=array();
+		//$this->session->data['shipping_method']=array();
         if(in_array('express',$arr)){
 		    $this->session->data['shipping_method']['title']='快递公司';
 			$this->session->data['shipping_method']['cost']=5.00;
@@ -212,7 +216,7 @@ class ControllerCheckoutCheckout extends Controller {
 	
 	/**刷新总计**/
 	public function refreshTotal(){
-	    $flag=$this->session->data['dbuy_flag'];
+	    $flag=isset($this->session->data['dbuy_flag'])?$this->session->data['dbuy_flag']:true;
 	   
 		$total_data = array();
 		$total = 0;

@@ -153,7 +153,7 @@ function checkClass(){
 var productImage=Array();
 function productEditor(){
 	KindEditor.ready(function(K) {
-		editor = K.create('#description',{items:['source','fullscreen','fontsize','fontname','|','forecolor','hilitecolor','bold','italic','underline','removeformat','|','justifyleft','justifycenter','justifyright','|','emoticons','image','multiimage','table','link','unlink','|','preview'],resizeType:1});
+		editor = K.create('#description',{items:['source','fontsize','fontname','|','forecolor','hilitecolor','bold','italic','underline','removeformat','|','justifyleft','justifycenter','justifyright','|','emoticons','image','multiimage','table','link','unlink','|','preview','fullscreen'],resizeType:1});
 		K('#J_selectImage').click(function() {
 			if(productImage.length>=20){
 				alert("对不起，最多只能上传20张宝贝图片！");
@@ -165,7 +165,8 @@ function productEditor(){
 					imageUploadLimit:20,
 					insertBtnName:"保存图片",
 					clickFn : function(urlList) {
-						var div = K('#J_imageView');
+						//var div = K('#J_imageView');
+						var div=K('#imageList');
 						K.each(urlList, function(i, data) {
 							productImage.push(data.url);
 							div.append('<li><img width="80" height="80" src="' + data.url + '"></li>');

@@ -27,7 +27,6 @@ class ControllerCommonHome extends Controller {
 
 		$this->data['heading_title'] = $this->config->get('config_title');
 		
-		$gfunc=new func();
 		
 		
 		//热销榜  =>羽绒服
@@ -41,7 +40,7 @@ class ControllerCommonHome extends Controller {
 				$v['image'] = false;
 			}   
 			$v['name']=isset($v['name'])?$v['name']:null;
-            $v['shortname']=isset($v['name'])?$gfunc->OcCutstr($v['name'],16):'';	
+            $v['shortname']=isset($v['name'])?OcCutstr($v['name'],16):'';	
             $v['price']=isset($v['price'])?$v['price']:null;			
 			$hot_products[]=$v;		
 		}
@@ -59,7 +58,7 @@ class ControllerCommonHome extends Controller {
 				$v['image'] = false;
 			}   
 			$v['name']=isset($v['name'])?$v['name']:null;
-            $v['shortname']=isset($v['name'])?$gfunc->OcCutstr($v['name'],16):'';	
+            $v['shortname']=isset($v['name'])?OcCutstr($v['name'],16):'';	
             $v['price']=isset($v['price'])?$v['price']:null;			
 			$new_products[]=$v;		
 		}
@@ -77,7 +76,7 @@ class ControllerCommonHome extends Controller {
 				$v['image'] = false;
 			}   
 			$v['name']=isset($v['name'])?$v['name']:null;
-            $v['shortname']=isset($v['name'])?$gfunc->OcCutstr(isset($v['name'])?$v['name']:'',16):'';	
+            $v['shortname']=isset($v['name'])?OcCutstr(isset($v['name'])?$v['name']:'',16):'';	
             $v['price']=isset($v['price'])?$v['price']:null;			
 			$view_products[]=$v;		
 		}
@@ -96,7 +95,7 @@ class ControllerCommonHome extends Controller {
 			} else {
 				$v['image'] = false;
 			}   
-            $v['shortname']=$gfunc->OcCutstr(isset($v['name'])?$v['name']:'',20);				
+            $v['shortname']=OcCutstr(isset($v['name'])?$v['name']:'',20);				
 			$female_clothes[]=$v;
 			
 		}
@@ -117,7 +116,7 @@ class ControllerCommonHome extends Controller {
 			} else {
 				$v['image'] = false;
 			}      
-            $v['shortname']=$gfunc->OcCutstr(isset($v['name'])?$v['name']:'',20);			
+            $v['shortname']=OcCutstr(isset($v['name'])?$v['name']:'',20);			
 			$male_clothes[]=$v;
 			
 		}
@@ -135,7 +134,7 @@ class ControllerCommonHome extends Controller {
 			} else {
 				$v['image'] = false;
 			} 
-            $v['shortname']=$gfunc->OcCutstr(isset($v['name'])?$v['name']:'',20);				
+            $v['shortname']=OcCutstr(isset($v['name'])?$v['name']:'',20);				
 			$sports_clothes[]=$v;
 			
 		}

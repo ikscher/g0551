@@ -304,7 +304,7 @@ class ControllerCheckoutCart extends Controller {
 					if ($this->config->get($result['code'] . '_status')) {//可用的状态sub_total_status,coupon_status ...
 						$this->load->model('total/' . $result['code']);
 			            
-						$this->{'model_total_' . $result['code']}->getTotal($total_data, $total,$this->session->data['dbuy_flag']);
+						$this->{'model_total_' . $result['code']}->getTotal($total_data, $total,isset($this->session->data['dbuy_flag'])?$this->session->data['dbuy_flag']:true);
 					}
 					
 					$sort_order = array(); 

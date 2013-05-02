@@ -637,6 +637,7 @@ $('.etao').click(function(){
     var productName=$('input[name=name]').val();
 	productName=productName.replace(/\s*/g,'');
     if(!productName) return false;
+	productName=productName.substr(0,20);
 	//productName=encodeURIComponent(productName);
 	var href='http://s.etao.com/search?q='+productName+'&initiative_id=setao_'+today+'&style=grid';
 	window.open(href,'','height=600,width=800,scrollbars=yes,status =yes');

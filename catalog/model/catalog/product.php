@@ -751,7 +751,7 @@ class ModelCatalogProduct extends Model {
 			     $implode_data[]=(int)$category_id;
 			     $sql.="and p2c.category_id in(".implode(',',$implode_data).")";
 			}
-
+       
 			$sql .="  order by {$order} desc limit {$limit}";
 			
 			

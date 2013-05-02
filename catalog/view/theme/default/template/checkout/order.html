@@ -55,34 +55,6 @@
 	</div>
 	
 	
-	<!-- <div class="buyTitle"><a name="payment_" id="payment_" >&nbsp;</a><img src="catalog/view/theme/default/image/order/payment_method.jpg" width="280" height="30" /></div>
-	<div class="paymentContent">
-		<dl class="clearfix">
-			<dt>
-				<span>支付方式：</span>
-			</dt>
-			{if $payment_methods}
-			    {loop $payment_methods $payment_method}
-					<dd ><input  name="payment_method" type="radio" value="{$payment_method['code']}"/>{$payment_method['title']}</dd>
-				{/loop}
-			{/if}
-		</dl>
-	</div>
-	
-    
-	<div class="buyTitle"><a name="shipping_" id="shipping_" >&nbsp;</a><img src="catalog/view/theme/default/image/order/shipping_method.jpg" width="280" height="30" /></div>
-	<div class="shippingContent">
-		<dl class="clearfix">
-			<dt>
-				<span>配送方式：</span>
-			</dt>
-			
-			<dd><input type="radio" name="shipping_method"  value="express,快递公司"  {if isset($shipping_method['code']) && $shipping_method['code']=='express'}checked="checked"{/if} /><span>快递公司</span></dd>
-			<dd><input type="radio" name="shipping_method"  value="ems,EMS邮政专递" {if isset($shipping_method['code']) && $shipping_method['code']=='ems'}checked="checked"{/if} /><span>EMS邮政专递</span></dd>
-			<dd><input type="radio" name="shipping_method"  value="diy,上门自提" {if isset($shipping_method['code']) && $shipping_method['code']=='diy'}checked="checked"{/if} /><span>上门自提</span></dd>
-		</dl>
-	</div> -->
-	
 	<div class="buyTitle"><img src="catalog/view/theme/default/image/order/shopping_list.jpg" width="218" height="30" /></div>
 	<div class="buyContent bottonLine">
 		<table class="list" >
@@ -96,10 +68,13 @@
 				<!-- <span class="operator">操作</span> -->
 			  </tr>
 			</thead>
-			<tbody>
-			{loop $products $product}
+			
+			{loop $products $product_}
+			<tbody class="store_{$product_['store']['store_id']}">
 			<tr class="first"><td colspan="6"></td></tr>
-			<tr><td class="store" colspan="6">店铺：<a href="index.php?route=store/store&store_id={$product['store']['store_id']}" target="_blank">{$product['store']['name']}</a>，卖家：{$product['store']['owner']}</td></tr>
+			<tr><td class="store" colspan="6">店铺：<a href="index.php?route=store/store&store_id={$product_['store']['store_id']}" target="_blank">{$product_['store']['name']}</a>，卖家：{$product_['store']['owner']}</td></tr>
+			
+			{loop $product_['product'] $product}
 			<tr>
 				<td class="photo" ><a href="{$product['href']}" title="{$product['name']}"><img src="{$product['thumb']}" width="50" height="60" /></a></td>
 				<td class="productName" ><a href="{$product['href']}" title="{$product['name']}">{$product['name']}</a> {if !$product['stock']}
@@ -117,13 +92,14 @@
 				<td  class="price" >{$product['price']}</td>
 				<td  class="quantity" >{$product['quantity']}</td>
 				<td class="total">
-				    <select name="vc">
-					    <option value=''>无优惠</option>
+					<select name="vc">
+						<option value=''>无优惠</option>
 					</option>
 				</td>
-				<td class="operation" >{$product['total']}</td>
+				<td class="operation"><span>{$product['total']}</span></td>
 				<!-- <span class="operator"><a href="#">删除商品</a></span> -->
 			</tr>
+			{/loop}
 			<tr class="other">
 			    <td colspan="6">
 				    <ul>
@@ -152,21 +128,24 @@
 							    <ul>
 								    <li class="dib title">配送方式：</li>
 								    <li class="dib sel">
-									    <select name="shipping_method">
-										    <option  value="express,快递公司"  {if isset($shipping_method['code']) && $shipping_method['code']=='express'}checked="checked"{/if} />快递公司</option>
-										    <option  value="ems,EMS邮政专递" {if isset($shipping_method['code']) && $shipping_method['code']=='ems'}checked="checked"{/if} />EMS邮政专递</option>
-										    <option  value="diy,上门自提" {if isset($shipping_method['code']) && $shipping_method['code']=='diy'}checked="checked"{/if} />上门自提</option>
+									    <select name="shipping_method" class="shippingMethod" data-id="{$product_['store']['store_id']}">
+										    <option  value="express,快递公司"  {if isset($shipping_method['code']) && $shipping_method['code']=='express'}selected="selected"{/if} />快递公司</option>
+										    <option  value="ems,EMS邮政专递" {if isset($shipping_method['code']) && $shipping_method['code']=='ems'}selected="selected"{/if} />EMS邮政专递</option>
+										    <option  value="diy,上门自提" {if isset($shipping_method['code']) && $shipping_method['code']=='diy'}selected="selected"{/if} />上门自提</option>
 								        </select>
 									</li>
+									<li class="dib shipping_fee"><span></span></li>
 								</ul>
+								
 							</div>
 						</li>
 					</ul>
 				</td>
 			</tr>
 			<tr class="other">
-			    <td class="subtotal" colspan="6">ffff</td>
+			    <td class="subtotal" colspan="6">店铺合计(含运费)：<span></span></td>
 			</tr>
+			</tbody>
 			{/loop}
 			 {loop $vouchers   $voucher}
 			  <tr>
@@ -183,12 +162,16 @@
 	</div>
 	<div class="paybutton">
 		<div class="moneyinfo">
-			{loop $totals   $total}
+			<!-- {loop $totals   $total}
 			  <dl>
 				<dt>{$total['title']}:</dt>
 				<dd>{$total['text']}</dd>
 			  </dl>
-			{/loop}
+			{/loop} -->
+			<dl>
+			    <dt>实付款：<span>¥</span></dt>
+				<dd><span></span></dd>
+			</dl>
 		</div>
 		
 		<div class="cl">
@@ -201,8 +184,31 @@
 <!-- <input type="hidden" name="dbuy" {if isset($dbuy)} value="{$dbuy}"{else} value="" {/if} /> -->
 <input type="hidden" name="payment_method_code" value="{$payment_method_code}" />
 <script type="text/javascript">
-   //提交订单
-   $(".paybutton .submit").click(function(){
+   //initilization
+    $(document).ready(function(){ 
+	    var sum=0;
+        $('table.list tbody').map(function(x,y){
+		    var store_num=0;
+			$(y).find('td.operation span').each(function(m,g){
+			    store_num +=Number($(g).html());
+			})
+			
+			var shipping_fee=Number($(y).find('.shipping_fee span').html());
+			
+			$(y).find('.subtotal span').html((store_num+shipping_fee).toFixed(2));
+		    
+			sum +=store_num+shipping_fee;
+		});
+		
+		$('.moneyinfo dl dd span').html(sum.toFixed(2));
+		
+		sum=null;
+    });
+   
+ 
+    //提交订单
+    $(".paybutton .submit").click(function(){
+        /*
         {if $shipping_required}
 			var flag=false;
 			$(".shippingContent dl dd input").each(function(i,w){
@@ -248,13 +254,13 @@
 				return false;
 			}
 		{/if}
-		
+		*/
 
         $.ajax({
 	        type:'POST',
 	        url:'index.php?route=checkout/confirm_order',
 			dataType:'json',
-			data:$('.shippingContent input[name=\'shipping_method\']:checked ,.paymentContent input[name=\'payment_method\']:checked,input[type=\'hidden\']'),// ,input[name=\'dbuy\']
+			data:$('.shippingContent input[name=\'shipping_method\'] ,.paymentContent input[name=\'payment_method\'],input[type=\'hidden\']'),// ,input[name=\'dbuy\']
 			success:function(json){
                 console.log(json['redirect']);
 			    if (json['redirect']){
@@ -297,71 +303,84 @@
    });
    
    //支付方式
-    $(".paymentContent dl dd").each(function(){
-        $(this).mouseenter(function(){
-	        if($(this).prop('class')!='payment'){
-		       $(this).addClass('payment');
-		    }
-	    }).mouseleave(function(){
-	       if($(this).prop('class')=='payment'){
-		     $(this).removeClass('payment');
-		   }
-		}).click(function(){
-	        $(this).children('input[type=radio]').prop("checked","checked");
-			$.ajax({
-			    url:'index.php?route=checkout/checkout/paymentMethod',
-				type:'post',
-				dataType:'json',
-				data:$('input[name=\'payment_method\']:checked'),
-				success:function(json){
-				    if(json['code']){
-						$('input[name=payment_method_code]').val(json['code']);
-					}
+    $("select[name=payment_method]").change(function(){
+		$.ajax({
+			url:'index.php?route=checkout/checkout/paymentMethod',
+			type:'post',
+			dataType:'json',
+			data:$('.other select'),
+			success:function(json){
+			    //console.log(json);
+				if(json['code']){
+					$('input[name=payment_method_code]').val(json['code']);
 				}
-			});
-		})
+			}
+		});
 	});
    
    //货运方式
-   $(".shippingContent dl dd").each(function(){
-        $(this).mouseenter(function(){
-	        if($(this).prop('class')!='shipping'){
-		       $(this).addClass('shipping');
-		    }
-	    }).mouseleave(function(){
-	       if($(this).prop('class')=='shipping'){
-		     $(this).removeClass('shipping');
-		   }
-	    }).click(function(){
-	        $(this).children('input[type=radio]').prop("checked","checked");
-		    $.ajax({
-			    url:'index.php?route=checkout/checkout/shippingMethod',
-				type:'post',
-				dataType:'json',
-				data:$('input[name=\'shipping_method\']:checked'),
-				beforeSend: function() {
-					$('.moneyinfo').html('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
-				},
-				complete: function() {
-					$('.wait').remove();
-				},	
-				success:function(json){ 
-				    console.log(json['cost']);
-			        //var dbuy='{$dbuy}';
-				    $.ajax({
-						url: 'index.php?route=checkout/checkout/refreshTotal',
-						//data:'dbuy='+dbuy,
-						dataType: 'html',
-						success: function(html) {
-							$('.moneyinfo').html(html);
-						}
-					});
-				}
+   $(".shippingMethod").change(function(){
+        var that_=$(this);
+		var store_id=$(this).attr('data-id');
+
+		$.ajax({
+			url:'index.php?route=checkout/checkout/shippingMethod',
+			type:'post',
+			dataType:'json',
+			data:$('.other select'),
+			beforeSend: function() {
+				$('.moneyinfo dl dd span').html('<img src="catalog/view/theme/default/image/loading.gif" alt="" />');
+			},
+			complete: function() {
+				$('.moneyinfo dl dd span img').remove();
+			},	
+			success:function(json){ 
+				//console.log(json['cost']);
+				//运费
+				var shipping_fee=parseFloat(json['cost']).toFixed(2);
+				that_.parent().next().children('span').html(shipping_fee);
 				
 			
-			});	
-	    });
-   
+				
+				//分店铺金额合计
+				var store_sum=0;
+			    that_.parents('tbody.store_'+store_id).children('tr').children('.operation').children('span').each(function(m,z){
+				    //console.log(z);
+					store_sum +=Number($(z).html());
+				});
+				
+				store_sum=(Number(shipping_fee)+Number(store_sum)).toFixed(2);
+				that_.parents('tbody.store_'+store_id).children('tr').children('.subtotal').children('span').html(store_sum.toString());
+				
+			    //总金额合计
+				var sum=0;
+				$('td.operation span').each(function(i,w){
+				    //console.log(w);
+				    sum +=Number($(w).html());
+				});
+				
+				var shipping_fee_sum=0
+				$('.shipping_fee span').each(function(i,s){
+				    //console.log(s);
+				    shipping_fee_sum +=Number($(s).html());
+				});
+
+				sum=(Number(sum)+Number(shipping_fee_sum)).toFixed(2);
+				$('.moneyinfo dl dd span').html(sum.toString());
+				
+				/*$.ajax({
+					url: 'index.php?route=checkout/checkout/refreshTotal',
+					dataType: 'html',
+					success: function(html) {
+						$('.moneyinfo dl dd span').html(html);
+					}
+				});
+				*/
+			}
+			
+		
+		});	
+	   
    });
    
    

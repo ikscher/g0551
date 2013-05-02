@@ -84,27 +84,26 @@ var login={
 				   $(".form_content ul li:eq(4)>dl:eq(0)").html("密码不能为空！");
 				   return false;
 				}
-				
+		
 	
 				$.ajax({
-			        type:'POST',
+			        type:'post',
 				    url:'index.php?route=account/login/ajaxlogin',
 					dataType:'json',
 					async:false,
-					data:'username='+username+'&password='+password,
+					data:{username:username,password:password},
 				    success:function(json){
-				     if(json.key=='ok'){
-					   alert("错误的用户名和密码！");
-				       $(".form_content ul li:eq(4)>dl:eq(0)").html("错误的用户名和密码！");
-				       return false;
-				     } 
+						if(json.key=='ok'){
+							//alert("错误的用户名和密码！");
+							$(".form_content ul li:eq(4)>dl:eq(0)").html("错误的用户名和密码！");
+							return false;
+						} 
 				    }
 				});
+				return false;
+		
 			}
 			
-			<!-- addStyle:function(){
-			     
-			//} -->
 			
 	};
 	
