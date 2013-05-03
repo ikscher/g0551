@@ -163,8 +163,8 @@ class ControllerCheckoutCheckout extends Controller {
 		$this->data['logged'] = $this->customer->isLogged();
 		$this->data['shipping_required'] = $this->cart->hasShipping($flag);	
 		
-		$this->data['payment_method_code']=isset($this->session->data['payment_method']['code'])?$this->session->data['payment_method']['code']:'';
-	
+		//$this->data['payment_method_code']=isset($this->session->data['payment_method']['code'])?$this->session->data['payment_method']['code']:'';
+	    $this->data['payment_method_code']='alipay';
 		
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/order.html')) {
 			$this->template = $this->config->get('config_template') . '/template/checkout/order.html';
@@ -200,7 +200,7 @@ class ControllerCheckoutCheckout extends Controller {
 			$this->session->data['shipping_method']['code']='ems';
 		}elseif(in_array('diy',$arr)){
 		    $this->session->data['shipping_method']['title']='上门自提';
-			$this->session->data['shipping_method']['cost']='0.00';
+			$this->session->data['shipping_method']['cost']=0.00;
 			$this->session->data['shipping_method']['code']='diy';
 		}
 		$this->response->setOutput(json_encode($this->session->data['shipping_method']));

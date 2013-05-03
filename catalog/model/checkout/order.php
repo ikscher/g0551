@@ -671,7 +671,7 @@ class ModelCheckoutOrder extends Model {
 	/*取订单号*/
 	public function getOrderid(){
 	    $Orderid='';
-		$randNum=rand(1,9999);
+		$randNum=rand(1000,9999);
 	    $Orderid=date('ymdHis').$randNum;
 		
 		

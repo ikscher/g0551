@@ -93,15 +93,14 @@ var login={
 					async:false,
 					data:{username:username,password:password},
 				    success:function(json){
-						if(json.key=='ok'){
+						if(json.key=='no'){
 							//alert("错误的用户名和密码！");
 							$(".form_content ul li:eq(4)>dl:eq(0)").html("错误的用户名和密码！");
 							return false;
 						} 
 				    }
 				});
-				return false;
-		
+				
 			}
 			
 			

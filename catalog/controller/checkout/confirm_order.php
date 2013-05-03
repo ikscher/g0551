@@ -7,7 +7,7 @@ class ControllerCheckoutConfirmOrder extends Controller {
 		$data = array();
 		$data['username']=$data['postcode']=$data['email']=$data['telphone']=$date['mobile']=$data['address']='';
 
-		$flag=$this->session->data['dbuy_flag'];
+		$flag=isset($this->session->data['dbuy_flag'])?$this->session->data['dbuy_flag']:true;
 		
 	
 		$this->load->model('account/address');
@@ -99,7 +99,7 @@ class ControllerCheckoutConfirmOrder extends Controller {
 			   $data['shipping_code']='';
 			}
             
-			$data['payment_method']=$this->request->post['payment_method'];
+			$data['payment_method']=isset($this->request->post['payment_method'])?$this->request->post['payment_method']:'alipay';
 			
 			$product_data = array();
 		

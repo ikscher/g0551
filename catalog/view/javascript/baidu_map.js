@@ -5,16 +5,17 @@ $(document).ready(function(){
 
 	var map_x=map[0];
 	var map_y=map[1];
-	var title=document.getElementById('map').getAttribute('title');
+	//var title=document.getElementById('map').getAttribute('title');
 	var baidumap={
 			map : new BMap.Map("container"),
 			point : new BMap.Point(map_x,map_y),
+			/*
 			infowindow :  new BMap.InfoWindow(title, {
 			    width:150,
 				height:50
 				//title:'hello'
 			}),  // 创建信息窗口对象  
-			
+			*/
 			addMarker:function(point, index){   // 创建图标对象  
 			    this.map.centerAndZoom(point, 15);
 				var myIcon = new BMap.Icon("catalog/view/theme/default/image/marker.png", new BMap.Size(20, 32), {  

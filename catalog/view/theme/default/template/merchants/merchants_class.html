@@ -12,8 +12,10 @@
 					<li class="br"><span class="red">*</span> 表示该项必填</li>
 				</ul>
 			</div>
-			<div class="blue_r">	
+			<div class="blue_r">
+                <form name="releaseProduct"  onSubmit="return checkClass();">			
 				    <input name="id" id="class_id" type="hidden" value="" />
+					<input name="payment_method" type='hidden'  value="{$payment_method}" />
                     <div class="product_class">
                         <div id="loading_info">分类加载中……</div>
                         {if $classList}
@@ -29,10 +31,11 @@
                     </div>
                     <div class="submit">
 						<div class="float-submitbar">
-							<button type="button" name="" class="J_Submit btn btn-main-primary btn-submit" value="发布" onclick="checkClass()">
+							<button type="submit" name="release" class="J_Submit btn btn-main-primary btn-submit" value="发布" >
 							<span class="btn-txt">发布商品</span>  </button>
 						</div>
 				    </div>
+				</form>
 			</div>
 		</div>
     

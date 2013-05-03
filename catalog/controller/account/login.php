@@ -231,10 +231,11 @@ class ControllerAccountLogin extends Controller {
 		$username=$this->request->post['username'];
 		$password=$this->request->post['password'];
 	    if(!$this->customer->login($username,$password)) {
-		   $json=array("key"=>"ok");
-	       $this->response->setOutput(json_encode($json));
-
-	   } 
+		    $json=array("key"=>"no");
+	    }else{
+		    $json=array('key'=>'ok');
+		}
+		$this->response->setOutput(json_encode($json));
 	  
     }
 

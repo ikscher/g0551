@@ -66,7 +66,7 @@ class ControllerMerchantsLeft extends Controller {
 		}else{ 
 		    $this->load->model('account/customer');
 			$customer=$this->model_account_customer->getCustomer($this->customer->getId(),$store_id);
-			if($customer['hasshop'])  $this->data['hasShop']=$customer['hasshop'];
+			if(!empty($customer['hasshop']))  $this->data['hasShop']=$customer['hasshop'];
 		}	
 
 		$this->data['merchants'] = $this->url->link('merchants/merchants', '', 'SSL');

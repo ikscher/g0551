@@ -260,7 +260,7 @@
 	        type:'POST',
 	        url:'index.php?route=checkout/confirm_order',
 			dataType:'json',
-			data:$('.shippingContent input[name=\'shipping_method\'] ,.paymentContent input[name=\'payment_method\'],input[type=\'hidden\']'),// ,input[name=\'dbuy\']
+			data:$('select[name=\'shipping_method\'] ,select[name=\'payment_method\'],input[type=\'hidden\']'),// ,input[name=\'dbuy\']
 			success:function(json){
                 console.log(json['redirect']);
 			    if (json['redirect']){

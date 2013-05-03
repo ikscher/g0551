@@ -57,49 +57,9 @@ String.prototype.Trim=function(){
 	return this.replace(/(^\s*)|(\s*$)/g,"");	
 }
 
-var marker;
-
-
-/*
-//创建和初始化地图函数：
-function initMap(intX,intY){
-	createMap(intX,intY);//创建地图
-	setMapEvent();//设置地图事件
-	addMapControl();//向地图添加控件
-}
-
-//创建地图函数：
-function createMap(intX,intY){
-	var map = new BMap.Map("dituContent");//在百度地图容器中创建一个地图
-	var point = new BMap.Point(intX,intY);//定义一个中心点坐标
-	map.centerAndZoom(point,13);//设定地图的中心点和坐标并将地图显示在地图容器中
-	marker = new BMap.Marker(point);  // 创建标注
-	map.addOverlay(marker);              // 将标注添加到地图中
-	marker.enableDragging();    //可拖拽
-	window.map = map;//将map变量存储在全局
-}
-
-//地图事件设置函数：
-function setMapEvent(){
-	map.enableDragging();//启用地图拖拽事件，默认启用(可不写)
-	//map.enableScrollWheelZoom();//启用地图滚轮放大缩小
-	map.enableDoubleClickZoom();//启用鼠标双击放大，默认启用(可不写)
-	map.enableKeyboard();//启用键盘上下左右键移动地图
-}
-
-//地图控件添加函数：
-function addMapControl(){
-	//向地图中添加缩放控件
-	var ctrl_nav = new BMap.NavigationControl({anchor:BMAP_ANCHOR_TOP_LEFT,type:BMAP_NAVIGATION_CONTROL_LARGE});
-	map.addControl(ctrl_nav);
-}
-
-*/
 
 function checkStore(obj){
-	//var p=marker.getPosition();
-	//obj.map_x.value=p.lng;
-	//obj.map_y.value=p.lat;
+
 	if(obj.name.value.Trim()==""){alert("请输入店铺名称！");obj.name.focus();return false;}
 	if(obj.province.value.Trim()==""){alert("请输选择省份！");obj.province.focus();return false;}
 	if(obj.city.value.Trim()==""){alert("请选择城市！");obj.city.focus();return false;}
@@ -142,11 +102,19 @@ function selectClass(){
 	});
 }
 
+
 function checkClass(){
+    var payment_method=$('input[name=payment_method]').val();
+	if(payment_method=='[]' || payment_method.length==0){
+	    alert('请至少安装一种支付方式,并启用它！');
+		location.href='index.php?route=merchants/payment';
+		return false;
+	}
 	if($("#class_id").val()==""){
 		alert("对不起，请选择商品所属分类！");
 		return false;
 	}
+	
 	location.href="index.php?route=merchants/release/detail&cid="+$("#class_id").val();
 }
 

@@ -20,9 +20,14 @@ class ControllerMerchantsRelease extends Controller {
 	public function index() {
 		$this->check_customer();
 		
+		$store_id=$this->cookie->OCAuthCode($this->request->cookie['storeid'],'DECODE');
 		
 		
+		$this->load->model('payment/payment_method');
 		$this->load->model('merchants/release');
+		
+		$this->data['payment_method']=json_encode($this->model_payment_payment_method->getMethod($store_id));
+		
 		$result=$this->model_merchants_release->getClass(0,false);
 		$this->data["classList"]=$result;
 		
