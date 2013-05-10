@@ -9,7 +9,7 @@ Add these functions  formatSerialize and formatSerializeRev:
 
 function file_type($filename){
 	$file = fopen($filename, "rb");
-	$bin = fread($file, 2); //Ö»¶Á2×Ö½Ú
+	$bin = fread($file, 2); //åªè¯»2å­—èŠ‚
 	fclose($file);
 	$strInfo = @unpack("C2chars", $bin);
 	$typeCode = intval($strInfo['chars1'].$strInfo['chars2']);
@@ -47,7 +47,7 @@ function utf8_strlen($string) {
 	return strlen(utf8_decode($string));
 }
 
-//È¥³ıÊı×é¿Õ×Ö·û
+//å»é™¤æ•°ç»„ç©ºå­—ç¬¦
 function filter($var){
 	if(empty($var)){
 		return false;
@@ -866,11 +866,11 @@ function utf8_from_unicode($data) {
 
 
 /**
-* ¸ù¾İÖĞÎÄ²Ã¼õ×Ö·û´®
-* @param string $string - ´ı½ØÈ¡µÄ×Ö·û´®
-* @param integer $length - ½ØÈ¡×Ö·û´®µÄ³¤¶È
-* @param string $dot - ËõÂÔºó×º
-* @return string ·µ»Ø´øÊ¡ÂÔºÅ±»²Ã¼õºÃµÄ×Ö·û´®
+* æ ¹æ®ä¸­æ–‡è£å‡å­—ç¬¦ä¸²
+* @param string $string - å¾…æˆªå–çš„å­—ç¬¦ä¸²
+* @param integer $length - æˆªå–å­—ç¬¦ä¸²çš„é•¿åº¦
+* @param string $dot - ç¼©ç•¥åç¼€
+* @return string è¿”å›å¸¦çœç•¥å·è¢«è£å‡å¥½çš„å­—ç¬¦ä¸²
 */
 function OcCutstr($string, $length, $dot = ' ...', $charset = 'utf-8') {
 		//global $charset;
@@ -878,7 +878,7 @@ function OcCutstr($string, $length, $dot = ' ...', $charset = 'utf-8') {
 		if(strlen($string) <= $length) {
 			return $string;
 		}
-		$string = str_replace(array('&amp;', '&quot;', '&lt;', '&gt;','¡£'), array('&', '"', '<', '>',''), $string);
+		$string = str_replace(array('&amp;', '&quot;', '&lt;', '&gt;','ã€‚'), array('&', '"', '<', '>',''), $string);
 		$strcut = '';
 		if(strtolower($charset) == 'utf-8') {
 			$n = $tn = $noc = 0;
@@ -906,20 +906,20 @@ function OcCutstr($string, $length, $dot = ' ...', $charset = 'utf-8') {
 			if($noc > $length) {
 				$n -= $tn;
 			}
-			$strcut = substr($string, 0, $n);
+			$strcut = mb_substr($string, 0, $n);
 		} else {
 			for($i = 0; $i < $length; $i++) {
 				$strcut .= ord($string[$i]) > 127 ? $string[$i].$string[++$i] : $string[$i];
 			}
 		}
-		$strcut = str_replace(array('&', '"', '<', '>','¡£'), array('&amp;', '&quot;', '&lt;', '&gt;',''), $strcut);
+		$strcut = str_replace(array('&', '"', '<', '>','ã€‚'), array('&amp;', '&quot;', '&lt;', '&gt;',''), $strcut);
 
 		return $strcut.$dot;
 }
 
 
 /**
- * »ñµÃIP
+ * è·å¾—IP
  * return string;
  */
 /* function GetIP(){

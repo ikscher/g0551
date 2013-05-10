@@ -26,11 +26,14 @@
   </tr>
   <tr>
     <td align="right"><em>*</em>联系地址：</td>
-    <td><select name="province" id="province" onchange="changCity(this.value)">
+    <td><select name="province" id="province">
 			<option value="">请选择省份</option>
 		</select>
         <select name="city" id="city">
 			<option value="">请选择城市</option>
+		</select>
+		<select name="zone" id="zone">
+			<option value="">请选择区</option>
 		</select>
         <input name="address" type="text" class="text1" id="address" maxlength="100" value="{if isset($info['address'])}{$info['address']}{/if}"/></td>
   </tr>
@@ -88,11 +91,21 @@
 <script type="text/javascript" src="catalog/view/javascript/merchants.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
-	showProvince({$info['province']});
-	//setEditor();
+    
+	selectProvince({$info['province']});
+	selectCity({$info['province']},{$info['city']});
+	selectZone({$info['city']},{$info['zone']});
 	
-	<!-- initMap({$info['map_x']},{$info['map_y']}); -->
-	changCity({$info['province']},{$info['city']});
+	$('#province').change(function(){
+	    var v_=$(this).val();
+		selectCity(v_);
+	});
+	
+	$('#city').change(function(){
+	    var v_=$(this).val();
+		selectZone(v_);
+	});
+	
 });
 
 

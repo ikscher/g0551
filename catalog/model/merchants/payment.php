@@ -13,7 +13,7 @@ class ModelMerchantsPayment extends Model {
         
 		if(empty($store_id)) return;
 		//$sql="select code from ".DB_PREFIX."extension where type='payment'";
-	    $sql="select e.code,s2p.store_id,s2p.status,s2p.id from ".DB_PREFIX."extension e left join ".DB_PREFIX."store_to_payment s2p on e.code=s2p.payment_code where e.type='payment'";
+	    $sql="select s2p.store_id,s2p.status,s2p.id,(select `code` from ".DB_PREFIX."extension e where e.`code`=s2p.payment_code) as `code`,(select `name` from ".DB_PREFIX."extension e where e.`code`=s2p.payment_code) as `name` from ".DB_PREFIX."store_to_payment s2p where  s2p.store_id={$store_id} and s2p.status=1";
 		
 		$query=$this->db->query($sql);
 		$results=$query->rows;
@@ -22,7 +22,7 @@ class ModelMerchantsPayment extends Model {
 		    if($v['code']=='alipay') {
 		        $v['code']='alipay';
 				$v['name']='支付宝';
-				$v['description']='支付宝网站(www.alipay.com) 是国内先进的网上支付平台，穿悦商城联合支付宝推出优惠套餐：无预付/年费，单笔费率1.5%，无流量限制。';
+				$v['description']='支付宝网站(www.alipay.com) 是国内先进的网上支付平台，穿悦商城联合支付宝推出优惠套餐：无预付/年费，单笔费率1.5%，无流量限制。<a href="https://www.alipay.com/himalayas/product_info.htm?type=from_agent_contract&id=C4335319945672464113" target="_blank" style="color:red; font-weight:bold;">立即在线申请</a>';
 			}
 			
 			if($v['code']=='tenpay'){

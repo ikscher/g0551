@@ -169,8 +169,7 @@
             <!--地址薄end-->
         </div>
  	<!--右侧end-->
-</div>
- <!--个人中心body_end-->
+
  
  <script type="text/javascript">
     $("input[name=dataid]").live('click',function(){
@@ -316,7 +315,7 @@
 	   
 	    var mobile=$.trim($("#insertAddress input[name=mobile]").val());
 
-	    if(!(/^1[3|4|5|8][0-9]\d{4,8}$/.test(mobile))){
+	    if(!(/^1[3|4|5|8]\d{9,9}$/.test(mobile))){
 		   arr.push("输入的手机号格式不正确！");
 	    }
 	   

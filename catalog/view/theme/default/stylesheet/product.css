@@ -330,9 +330,15 @@ ul#thumblist li a.zoomThumbActive{
 				.jia{width:18px; height:14px; display:block; background:url(../image/index.png) no-repeat right -336px; overflow:hidden;cursor: pointer;border: 1px solid #A7A6AB;margin:0 0 3px 3px;}
 				.jian{width:18px; height:14px; display:block; background:url(../image/index.png) no-repeat -456px -336px; overflow:hidden;cursor: pointer;border: 1px solid #A7A6AB;margin:0 0 3px 3px;}
 				.l2{height:1px; border-bottom:1px solid #999999; padding:0; margin:0; overflow:hidden;}
-			.product_info_buy a{float:left; margin-left:10px;}
-			.goodsbuy{width:122px; height:31px; display:block; overflow:hidden; background:url(../image/index.png) no-repeat right -350px;}
-			.goodscar{width:122px; height:31px; display:block; overflow:hidden; background:url(../image/index.png) no-repeat right -380px;}
+			.product_info_o  ul li div{float:left;}
+			.product_info_o  ul li div  a{margin-left:10px;}
+			
+			
+			.goodsbuy{width:126px; height:37px; display:block; overflow:hidden; background:url(../image/index.png) no-repeat 0px -688px;}
+			.goodscar{width:130px; height:37px; display:block; overflow:hidden; background:url(../image/index.png) no-repeat -126px -688px;}
+			
+			.product_info_buy a:hover{background:url(../image/index.png) no-repeat 0px -725px;}
+			.product_info_car a:hover{background:url(../image/index.png) no-repeat -126px -725px;}
 				
 		.clothes_recommend{width:946px; margin:10px 17px 10px 17px;}
 		.clothes_recommend dl dt,.clothes_recommend dl dd{float:left; margin-left:20px; line-height:24px;}
@@ -612,8 +618,5 @@ div.attribute{
    margin:5px 0 5px 0;
 }
 
-.product_info_buy a{
-   margin-top:20px;
-}
 
 

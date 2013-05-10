@@ -1,23 +1,262 @@
 <?php  
 class ControllerCommonHome extends Controller {
+    
+	/**
+	*  首页  
+	*/
+	public function index(){
+	    $time=time();
 
+		$this->document->setTitle($this->config->get('config_title'));
+		$this->document->setDescription($this->config->get('config_meta_description'));
+
+		$this->data['heading_title'] = $this->config->get('config_title');
+		$this->load->model('catalog/category');	
+		$this->load->model('catalog/product');
+		$this->load->model('tool/image');
+		
+		
+		//衣
+		$clothes_products=array();
+		$results=$this->model_catalog_product->getProductByCategoryId(ModelCatalogCategory::$CATEGORY_CLOTHES,20,'date_added');
+		foreach($results as $v){
+		    if(empty($v)) continue;
+		    if ($v['image']) {
+				$v['image'] = $this->model_tool_image->resize($v['image'], 160, 160);                    
+			} else {
+				$v['image'] = false;
+			}   
+			$v['name']=isset($v['name'])?$v['name']:null;
+            $v['shortname']=isset($v['name'])?OcCutstr($v['name'],20):'';	
+            $v['price']=isset($v['price'])?$v['price']:null;
+			if(isset($v['special']['date_start']) && isset($v['special']['date_end'])){
+				if(strtotime($v['special']['date_start'])<$time && strtotime($v['special']['date_end'])>$time){
+					$v['special_price']=$v['special']['price'];
+				}
+            }				
+			$products[]=$v;		
+		}
+		$this->data['clothes_products']=array_slice($products,0,10);
+		$results=null;
+		$products=null;
+		
+		//食
+		$foods_products=array();
+		$results=$this->model_catalog_product->getProductByCategoryId(ModelCatalogCategory::$CATEGORY_FOODS,20,'date_added');
+		foreach($results as $v){
+		    if(empty($v)) continue;
+		    if ($v['image']) {
+				$v['image'] = $this->model_tool_image->resize($v['image'], 160, 160);                    
+			} else {
+				$v['image'] = false;
+			}   
+			$v['name']=isset($v['name'])?$v['name']:null;
+            $v['shortname']=isset($v['name'])?OcCutstr($v['name'],20):'';	
+            $v['price']=isset($v['price'])?$v['price']:null;
+			if(isset($v['special']['date_start']) && isset($v['special']['date_end'])){
+				if(strtotime($v['special']['date_start'])<$time && strtotime($v['special']['date_end'])>$time){
+					$v['special_price']=$v['special']['price'];
+				}	
+            }				
+			$products[]=$v;		
+		}
+		$this->data['foods_products']=array_slice($products,0,10);
+		$results=null;
+		$products=null;
+		
+		
+		//住
+		$house_products=array();
+		$results=$this->model_catalog_product->getProductByCategoryId(ModelCatalogCategory::$CATEGORY_HOUSE,20,'date_added');
+		foreach($results as $v){
+		    if(empty($v)) continue;
+		    if ($v['image']) {
+				$v['image'] = $this->model_tool_image->resize($v['image'], 160, 160);                    
+			} else {
+				$v['image'] = false;
+			}   
+			$v['name']=isset($v['name'])?$v['name']:null;
+            $v['shortname']=isset($v['name'])?OcCutstr($v['name'],16):'';	
+            $v['price']=isset($v['price'])?$v['price']:null;
+			if(isset($v['special']['date_start']) && isset($v['special']['date_end'])){
+				if(strtotime($v['special']['date_start'])<$time && strtotime($v['special']['date_end'])>$time){
+					$v['special_price']=$v['special']['price'];
+				}	
+            }				
+			$products[]=$v;		
+		}
+		$this->data['house_products']=array_slice($products,0,10);
+		$results=null;
+		$products=null;
+		
+		//行
+		$travel_products=array();
+		$results=$this->model_catalog_product->getProductByCategoryId(ModelCatalogCategory::$CATEGORY_TRAVEL,20,'date_added');
+		foreach($results as $v){
+		    if(empty($v)) continue;
+		    if ($v['image']) {
+				$v['image'] = $this->model_tool_image->resize($v['image'], 160, 160);                    
+			} else {
+				$v['image'] = false;
+			}   
+			$v['name']=isset($v['name'])?$v['name']:null;
+            $v['shortname']=isset($v['name'])?OcCutstr($v['name'],16):'';	
+            $v['price']=isset($v['price'])?$v['price']:null;
+			if(isset($v['special']['date_start']) && isset($v['special']['date_end'])){			
+				if(strtotime($v['special']['date_start'])<$time && strtotime($v['special']['date_end'])>$time){
+					$v['special_price']=$v['special']['price'];
+				}			
+		    }
+			$products[]=$v;		
+		}
+		$this->data['travel_products']=array_slice($products,0,10);
+		$results=null;
+		$products=null;
+		
+		
+		
+		if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
+			$server = HTTPS_IMAGE;
+		} else {
+			$server = HTTP_IMAGE;
+		}
+		
+		if ($this->config->get('config_icon') && file_exists(DIR_IMAGE . $this->config->get('config_icon'))) {
+			$this->data['icon'] = $server . $this->config->get('config_icon');
+		} else {
+			$this->data['icon'] = '';
+		}
+		
+		
+		$this->data['text_home'] = $this->language->get('text_home');
+		$this->data['text_wishlist'] = sprintf($this->language->get('text_wishlist'), (isset($this->session->data['wishlist']) ? count($this->session->data['wishlist']) : 0));
+		$this->data['text_shopping_cart'] = $this->language->get('text_shopping_cart');
+    	$this->data['text_search'] = $this->language->get('text_search');
+		$this->data['text_welcome'] = sprintf($this->language->get('text_welcome'), $this->url->link('account/login', '', 'SSL'), $this->url->link('account/register', '', 'SSL'));
+		$this->data['text_logged'] = sprintf($this->language->get('text_logged'), $this->url->link('account/account', '', 'SSL'), $this->customer->getUserName(), $this->url->link('account/logout', '', 'SSL'));
+		$this->data['text_account'] = $this->language->get('text_account');
+    	$this->data['text_checkout'] = $this->language->get('text_checkout');
+        
+		$this->data['text_login']=$this->url->link('account/login', '', 'SSL');
+		$this->data['text_register']=$this->url->link('account/register', '', 'SSL');
+		$this->data['text_logout']=$this->url->link('account/logout', '', 'SSL');
+		$this->data['home'] = $this->url->link('common/home');
+		$this->data['wishlist'] = $this->url->link('account/wishlist', '', 'SSL');
+		$this->data['logged'] = $this->customer->isLogged();
+		$this->data['account'] = $this->url->link('account/account', '', 'SSL');
+		$this->data['merchants'] = $this->url->link('merchants/merchants', '', 'SSL');
+		$this->data['shoppingcart'] = $this->url->link('checkout/cart','','SSL');
+		$this->data['checkout'] = $this->url->link('checkout/checkout', '', 'SSL');	
+		
+		$this->data['home'] = $this->url->link('common/home');//首页
+		$this->data['clothes'] = $this->url->link('common/home/clothes');//衣服首页
+		$this->data['foods'] = $this->url->link('common/home/foods');//食品首页
+		$this->data['house'] = $this->url->link('common/home/house');//住房首页
+		$this->data['travel'] = $this->url->link('common/home/travel');//行首页
+		$this->data['joy'] = $this->url->link('common/home/joy');//爽首页
+		
+		//我的穿悦
+		$this->data['account']=$this->url->link('account/account','','SSL');
+		$this->data['wishlist'] = $this->url->link('account/wishlist','','SSL');
+    	$this->data['order'] = $this->url->link('account/order', '', 'SSL');
+		$this->data['return'] = $this->url->link('account/return', '', 'SSL');
+		$this->data['transaction'] = $this->url->link('account/transaction', '', 'SSL');
+		
+		//卖家中心
+		$this->data['merchants']=$this->url->link('merchants/merchants','','SSL');
+		$this->data['sell']=$this->url->link('merchants/sell','','SSL');
+		$this->data['sold']=$this->url->link('merchants/sold','','SSL');
+		$this->data['remark']=$this->url->link('merchants/remark','','SSL');
+		$this->data['release']=$this->url->link('merchants/release','','SSL');
+		
+		//购物车的物品数量（件）
+		$this->data['countProducts']=$this->cart->countProducts() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0);
+
+
+		if (isset($this->request->get['filter_name'])) {
+			$this->data['filter_name'] = $this->request->get['filter_name'];
+		} else {
+			$this->data['filter_name'] = '';
+		}
+        
+		//子模板加载
+		$this->children = array(
+			//'module/language',
+			//'module/currency',
+			'module/cart'
+		);
+		
+		//是否有店铺
+		$store_id=isset($this->request->cookie['storeid'])?$this->cookie->OCAuthCode($this->request->cookie['storeid'],'DECODE'):'';
+		$this->data['store_id']=isset($store_id)?$store_id:'';
+		
+		
+		//登录的用户名
+		if ($this->customer->isLogged()){
+		    // $customer=isset($this->session->data['customer'])?$this->session->data['customer']:'';
+			if(isset($this->request->cookie['oc_customer'])){
+				$customer=$this->cookie->OCAuthCode($this->request->cookie['customer'],'DECODE');
+				$customer=unserialize($customer);
+				
+				if(!empty($store_id)){
+				    $this->data['username']=$customer['shortname'];
+				}else{
+				    $this->data['username']=$customer['email'];
+				}
+			}
+		}else{
+		    $this->data['username']='';
+			//$this->redirect($this->url->link('account/login'));
+		}
+		
+		$this->data['telphone']=$this->language->get('telphone');
+		
+		
+		$this->data['clothes'] = $this->url->link('product/category','category_id='.ModelCatalogCategory::$CATEGORY_CLOTHES,'SSL');
+		$this->data['foods']   = $this->url->link('product/category','category_id='.ModelCatalogCategory::$CATEGORY_FOODS,'SSL');
+		$this->data['house']   = $this->url->link('product/category','category_id='.ModelCatalogCategory::$CATEGORY_HOUSE,'SSL');
+		$this->data['travel']   = $this->url->link('product/category','category_id='.ModelCatalogCategory::$CATEGORY_TRAVEL,'SSL');
+		/* $this->data['joy']   = $this->url->link('product/category','category_id='.ModelCatalogCategory::$CATEGORY_JOY,'SSL'); */
+		$this->data['joy']    =  $this->url->link('common/home/joy','','SSL');
+		
+		$this->load->controller('common/left');
+		$this->data['category_list']=$this->controller_common_left->getCategoryList();
+		
+		
+		
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/home.html')) {
+			$this->template = $this->config->get('config_template') . '/template/common/home.html';
+		} else {
+			$this->template = 'default/template/common/home.html';
+		}
+
+        $this->data['header'] = $this->getChild('common/header');
+        $this->data['footer'] = $this->getChild('common/footer');
+		
+	
+	    $this->response->setOutput($this->render());
+	
+
+	} 
     
 	/**
 	*   默认首页
 	* 
 	*/
-	public function index() 
+	
+	
+	/* public function index() 
     
 	{    
 
 		$this->clothes();
     }
-    
+     */
 
 	/**
 	*  衣服首页 ***********穿
 	*/
-	public function clothes(){
+	/* public function clothes(){
 	    $this->load->model('catalog/product');
 		$this->load->model('tool/image');
 		$this->load->library('func');
@@ -155,13 +394,13 @@ class ControllerCommonHome extends Controller {
 		$this->data['brand'] = $this->getChild('common/brand');
 	
 	    $this->response->setOutput($this->render());		
-	}
+	} */
 	
     
 	/**
 	*  食品首页 *************吃***************
 	*/
-	public function foods(){
+	/* public function foods(){
 	    $this->load->model('catalog/product');
 		$this->load->model('tool/image');
         $this->load->library('func');
@@ -241,13 +480,13 @@ class ControllerCommonHome extends Controller {
 		$this->data['brand'] = $this->getChild('common/brand');
 	
 	    $this->response->setOutput($this->render());		
-	}
+	} */
 	
     
 	/**
 	*  住房首页  ***************住***************
 	*/
-	public function house(){
+	/* public function house(){
 	    $this->load->model('catalog/product');
 		$this->load->model('tool/image');
 		$this->load->library('func');
@@ -334,13 +573,13 @@ class ControllerCommonHome extends Controller {
 	    $this->response->setOutput($this->render());
 	
 	
-	}
+	} */
 	
     
 	/**
 	*  旅行首页    ***************行
 	*/
-	public function travel(){
+	/* public function travel(){
 	    $this->load->model('catalog/product');
 		$this->load->model('tool/image');
 		$this->load->library('func');
@@ -388,7 +627,7 @@ class ControllerCommonHome extends Controller {
 	
 	
 	}
-	
+	 */
 	
 	/**
 	*  爽首页  ****************玩
@@ -415,72 +654,7 @@ class ControllerCommonHome extends Controller {
 	
 	
 	}
-	
-    
 
-	
-    
-    /**
-    * 返回指定类别的商品
-    * 
-    * $category_id 商品类别id
-    * $limit 返回的商品数量，默认：10
-    */
-	/*
-    public function get_products_by_category()
-    {                
-        $this->load->model('tool/image');
-        $this->load->model('catalog/product');
-        
-        // default for clothes
-        $image_width = 180;
-        $image_height = 180;
-        $formated = '<div class="clothes_pro"><p><a href="%s" target=_blank><img src="%s" width="180" height="180" alt="%s" /></a></p><p><a href="%s" target=_blank class="f3n">%s</a></p><p><a class="f2 f_h">￥%s</a></p></div> ';
-        $list_count = 10;
-        $max_title_length = 15;
-        
-        $style = $this->request->get['style'];
-        //if($style == 'clothes') ... default for clothes or unknown;
-        if($style == 'foods')
-        {
-            $image_width = 180;
-            $image_height = 180;
-            $formated = '<dl><dd><a href="%s" target=_blank><img src="%s" width="180" height="180" alt="%s" /></a></dd><dd class="fpro_intr_pric_bg"></dd><dd class="fpro_intr_pric">';
-			$formated = $formated . '<div class="fpro_intr z"><a href="%s" target=_blank>%s</a></div><div class="fpro_pric tc f_b z">￥<font class="f1 f_b">%s</font></div></dd></dl>';						
-            $list_count = 8;
-            $max_title_length = 8;
-        }
-        
-        if($style == 'house')
-        {
-            $image_width = 180;
-            $image_height = 135;
-            $formated = '<dl><dd><a href="%s"><img src="%s" width="180" height="135" alt="%s" /></a></dd>';
-			$formated = $formated . '<dd class="txt"><a href="%s">%s</a></dd><dd class="txt"><a class="f_h">价格 ￥%s</a></dd></dl>';						
-            $list_count = 10;
-            $max_title_length = 15;
-        }
-        
-        $category_id = (int)$this->request->get['category_id'];
-        $products = $this->model_catalog_product->get_products_by_category($category_id, $list_count);
-        if($products == null) echo ' ';
-        
-        foreach($products as $product)
-        {
-            $id = $product['product_id'];
-            $title = $product['name'];
-            $price = sprintf ("%01.2f", $product['price']);
-            $alt = $product['name'];
-            $path = $this->model_tool_image->resize($product['image'], $image_width, $image_height);
-            if($path == null) $path = $this->model_tool_image->resize('no_image.jpg', $image_width, $image_height);
-            $url = 'index.php?route=product/product&product_id=' . $id;
-            
-            echo sprintf($formated, $url, $path, $alt, $url, $title, $price);
-            echo "\r\n";
-        }
-    }
-	*/
-    
 	
 }
 ?>

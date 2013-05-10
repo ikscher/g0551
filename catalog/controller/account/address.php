@@ -193,18 +193,20 @@ class ControllerAccountAddress extends Controller {
     	$this->data['insert'] = $this->url->link('account/address/insert', '', 'SSL');
 		$this->data['back'] = $this->url->link('account/account', '', 'SSL');
 		$this->data['logout']=$this->url->link('account/logout','','SSL');
-				
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/address_list.html')) {
-			$this->template = $this->config->get('config_template') . '/template/account/address_list.html';
-		} else {
-			$this->template = 'default/template/account/address_list.html';
-		}
 		
 		$this->children = array(
 			'account/left',
 			'account/footer',
 			'account/header'		
 		);
+		
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/address_list.html')) {
+			$this->template = $this->config->get('config_template') . '/template/account/address_list.html';
+		} else {
+			$this->template = 'default/template/account/address_list.html';
+		}
+		
+		
 						
 		$this->response->setOutput($this->render());		
   	}

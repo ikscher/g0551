@@ -11,7 +11,7 @@
 		<dl>
 			<dt>我的订单</dt>
 			<dd><a href="{$order}">已买到的宝贝</a></dd>
-			<dd><a href="{$download}">下载商品</a></dd>
+			<!-- <dd><a href="{$download}">下载商品</a></dd> -->
 			<dd><a href="{$return}">商品退换</a></dd>
 			<dd><a href="{$transaction}">购买过的店铺</a></dd>
 		</dl>
@@ -24,11 +24,35 @@
 
 <script type="text/javascript">
 
-$("dd ").hover(function(){
+
+
+$(".leftClass dd ").hover(function(){
    $(this).addClass('current');
 },function(){
-  
    $(this).removeClass('current');
+});
+
+$(".leftClass dd ").click(function(){
+    var href=$(this).children('a').attr('href');
+	location.href=href;
+});
+
+$(document).ready(function(){
+	//if(getURLVar('route') == 'account/account') {
+	//	$('.leftClass dl:eq(0) dd:eq(0)').addClass('selected');
+	//}else{
+	    var s=location.search;
+		
+		var href;
+		$('dd a').each(function(i,w){
+		    href=$(w).attr('href');
+			console.log(href);
+		    if(href.indexOf(s)>=0){
+			    $(w).parent().addClass('selected');
+				return false;
+			}
+		})
+	//}
 });
 
 </script>

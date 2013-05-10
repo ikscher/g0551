@@ -1,332 +1,380 @@
-{$header}
+<!DOCTYPE html>
+<!--[if IE 7]><html class="ie7 old-ie no-js" lang="en"> <![endif]-->
+<!--[if lte IE 8]>     <html class="old-ie no-js" lang="en">     <![endif]-->
+<html class="not-ie  csstransforms csstransforms3d csstransitions" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="穿悦商城,购物商城,合肥购物商城,合肥B2C,网上买,网上卖,电子商务,网店,网购,合肥网店,店铺" />
+<meta name="description" content="穿悦商城 - 合肥最大、最安全的网上交易平台，提供各类服饰、美容、家居、数码、食品、汽车配件，同时提供担保交易(先收货后付款)、先行赔付、假一赔三、七天无理由退换货、数码免费维修等安全交易保障服务，让你全面安心享受网上购物乐趣！">
+{if $icon}
+<link href="{$icon}"  type="image/x-icon" rel="icon" />
+{/if}
+<link href="catalog/view/theme/default/stylesheet/common.css" rel="stylesheet" type="text/css" />
+<link href="catalog/view/theme/default/stylesheet/home.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="catalog/view/javascript/jquery/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="catalog/view/javascript/common.js"></script>
+<script type="text/javascript" src="catalog/view/javascript/menudropdown.js"></script>
+<script type="text/javascript">  var _gaq = _gaq || [];  _gaq.push(['_setAccount', 'UA-34801627-1']);  _gaq.push(['_setDomainName', 'lefeng.com']);  _gaq.push(['_setCampNameKey', 'utm_campaign']);  _gaq.push(['_trackPageview']);  (function() {    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);  })();</script>
+<title>穿悦商城</title>
 
-		<script><!--clothes
-		$(function(){$('#promotion').cnckSuperMarquee({distance: 760,duration: 20,time: 6,direction: 'left',navId:'#promotion_nv'});});
-		$(function(){$('#brand_c').cnckSuperMarquee({distance: 810,duration: 50,time: 8,direction: 'left',btnGo:{left:'#brand_z',right:'#brand_y'}});});
-		MyCYAutoTabCon=setInterval("cnckMyAutoTabCon('#ranking_list_ta','#ranking_list_co')",3000);
-		//--></script>
-<!--content begin-->
-<div id="con" class="wp cl">
-	<div id="con_z" class="z">
-		<!--classify_promotion_brand 960*510-->
-		<div class="classify_promotion_brand h">
-			<div class="classify z h">
-				<ul class="classify_z z">
-					<li class="classify_z_lc1">所有商品</li>
-					<li class="classify_z_lo2"><font class="fonts">服饰</font></li>
-					<li class="classify_z_lc3"><font class="fonts">食品</font></li>
-					<li class="classify_z_lc4"><font class="fonts">家居</font></li>
-					<li class="classify_z_lc5"><font class="fonts">旅游</font></li>
-					<li class="classify_z_lc6"><font class="fonts">品牌展示</font></li>
-				</ul>
-				<ul class="classify_y z">
-					<li class="classify_y_lo1 dn">
-						<dl><dt class="f_dh">所有商品</dt></dl>
-						<dl><dt class="f_dh">所有商品</dt></dl>
-						<dl><dt class="f_dh">所有商品</dt></dl>
-						<dl><dt class="f_dh">所有商品</dt></dl>
-						<dl><dt class="f_dh">所有商品</dt></dl>
-						<dl><dt class="f_dh">所有商品</dt></dl>
-						<dl><dt class="f_dh">所有商品</dt></dl>
-						<dl><dt class="f_dh">所有商品</dt></dl>
-						<dl><dt class="f_dh">所有商品</dt></dl>
-					</li>
-					<li class="classify_y_lo2">
-						<dl><dt class="f_b"><a href="#" class="f_b">服饰/服饰/服饰/服饰</a></dt></dl>
-						<dl><dt class="f_b">服饰/服饰/服饰</dt></dl>
-						<dl><dt class="f_b"><a href="#" class="f_b">服饰/服饰/服饰</a></dt><dd class="f_b"><a href="#" class="f_b">卸妆油/卸妆液/卸妆膏/去角质膏/去角质霜/眼霜/精华/面膜/免洗/水洗/纸/隔离霜/防晒霜/BB霜</a></dd></dl>
-						<dl><dt class="f_b">服饰/服饰/服饰</dt></dl>
-						<dl><dt class="f_b">服饰/服饰/服饰</dt></dl>
-						<dl><dt class="f_b">服饰/服饰/服饰</dt></dl>
+</head>
 
-					</li>
-					<li class="classify_y_lo3 dn">
-						<dl><dt class="f_b">食品/食品/食品</dt></dl>
-						<dl><dt class="f_b">食品/食品/食品</dt></dl>
-						<dl><dt class="f_b">食品/食品/食品</dt></dl>
-						<dl><dt class="f_b">食品/食品/食品</dt></dl>
-						<dl><dt class="f_b">食品/食品/食品</dt></dl>
-						<dl><dt class="f_b">食品/食品/食品</dt></dl>
-						<dl><dt class="f_b">食品/食品/食品</dt></dl>
-					</li>
-					<li class="classify_y_lo4 dn">
-						<dl><dt class="f_b">家居/家居/家居</dt></dl>
-						<dl><dt class="f_b">家居/家居/家居</dt></dl>
-						<dl><dt class="f_b">家居/家居/家居</dt></dl>
-						<dl><dt class="f_b">家居/家居/家居</dt></dl>
-						<dl><dt class="f_b">家居/家居/家居</dt></dl>
-						<dl><dt class="f_b">家居/家居/家居</dt></dl>
-						<dl><dt class="f_b">家居/家居/家居</dt></dl>
-						<dl><dt class="f_b">家居/家居/家居</dt></dl>
-						<dl><dt class="f_b">家居/家居/家居</dt></dl>
-					</li>
-					<li class="classify_y_lo5 dn">
-						<dl><dt class="f_b">旅游/旅游</dt></dl>
-						<dl><dt class="f_b">旅游/旅游</dt></dl>
-						<dl><dt class="f_b">旅游/旅游</dt></dl>
-						<dl><dt class="f_b">旅游/旅游</dt></dl>
-						<dl><dt class="f_b">旅游/旅游</dt></dl>
-						<dl><dt class="f_b">旅游/旅游</dt></dl>
-						<dl><dt class="f_b">旅游/旅游</dt></dl>
-						<dl><dt class="f_b">旅游/旅游</dt></dl>
-					</li>
-					<li class="classify_y_lo6 dn">
-						<dl><dt class="f_b">品牌展示</dt><dd class="f_b">长城/熊猫/海尔/东</dd></dl>
-						<dl><dt class="f_b">品牌展示</dt></dl>
-						<dl><dt class="f_b">品牌展示</dt></dl>
-						<dl><dt class="f_b">品牌展示</dt></dl>
-						<dl><dt class="f_b">品牌展示</dt></dl>
-						<dl><dt class="f_b">品牌展示</dt></dl>
-						<dl><dt class="f_b">品牌展示</dt></dl>
-					</li>
-				</ul>
-			</div>
-
-			<div class="promotion_box z h">
-				<div id="promotion" class="promotion h">
-				<ul>
-					<li class="z"><img src="pic/ad1.gif" width="760" height="420" alt="promotion" /></li>
-					<li class="z"><img src="pic/ad2.gif" width="760" height="420" alt="promotion" /></li>
-				</ul>				
-				</div>
-				<div id="promotion_nv" class="cl"><ul></ul></div>
-			</div>
-			
-			<div class="brand_box cl h">
-				<div id="brand_z" class="brand_z z"></div>
-				<div id="brand_c" class="brand_c z h">
-					{$brand}
-				</div>
-				<div id="brand_y" class="brand_y z"></div>
-			</div>
-		</div>
-		<!--classify_promotion_brand over-->
-		
-		<!--ranking_ad_list-->
-		<div class="ranking_ad_list cl h">
-			<div class="ranking_ad z">
-				<div class="ranking_ad_box cl h"><a href="#"><img src="pic/ads1.gif" width="198" height="173" alt="ranking_ad" /></a></div>
-				<div class="ranking_ad_box cl h"><a href="#"><img src="pic/ads2.gif" width="198" height="173" alt="ranking_ad" /></a></div>
-			</div>
-			<div class="ranking_list z">
-				<ul id="ranking_list_ta" class="cl">
-					<li class="lio f1 f_b">热销榜</li>
-					<li class="f1 f_b">最潮新品</li>
-					<li class="f1 f_b">热销商品</li>
-				</ul>
-				<ul id="ranking_list_co" class="cl h">
-					<li>
-						<dl>
-							<dt class="f1 f_dh tc">品牌羽绒</dt>
-							<dd class="dds f3n tc">品牌新品全场8折</dd>
-							<dd class="ddimg"><img src="pic/rnk1.gif" width="179" height="249" alt="rnk" /></dd>
-						</dl>
-						<dl>
-							<dt class="f1 f_dh tc">秋季裙装</dt>
-							<dd class="dds f3n tc">绽放女人十足魅力</dd>
-							<dd class="ddimg"><img src="pic/rnk2.gif" width="179" height="249" alt="rnk" /></dd>
-						</dl>
-						<dl>
-							<dt class="f1 f_dh tc">羊绒送好礼</dt>
-							<dd class="dds f3n tc">全场质检8折免邮</dd>
-							<dd class="ddimg"><img src="pic/rnk3.gif" width="179" height="249" alt="rnk" /></dd>
-						</dl>
-						<dl>
-							<dt class="f1 f_dh tc">胖妞裙装</dt>
-							<dd class="dds f3n tc">让肉肉永无天日</dd>
-							<dd class="ddimg"><img src="pic/rnk4.gif" width="179" height="249" alt="rnk" /></dd>
-						</dl>
-					</li>
-					<li class="dn">
-						<dl>
-							<dt class="f1 f_dh tc">羊绒送好礼</dt>
-							<dd class="dds f3n tc">全场质检8折免邮</dd>
-							<dd class="ddimg"><img src="pic/rnk3.gif" width="179" height="249" alt="rnk" /></dd>
-						</dl>
-						<dl>
-							<dt class="f1 f_dh tc">品牌羽绒</dt>
-							<dd class="dds f3n tc">品牌新品全场8折</dd>
-							<dd class="ddimg"><img src="pic/rnk1.gif" width="179" height="249" alt="rnk" /></dd>
-						</dl>
-						<dl>
-							<dt class="f1 f_dh tc">胖妞裙装</dt>
-							<dd class="dds f3n tc">让肉肉永无天日</dd>
-							<dd class="ddimg"><img src="pic/rnk4.gif" width="179" height="249" alt="rnk" /></dd>
-						</dl>
-						<dl>
-							<dt class="f1 f_dh tc">秋季裙装</dt>
-							<dd class="dds f3n tc">绽放女人十足魅力</dd>
-							<dd class="ddimg"><img src="pic/rnk2.gif" width="179" height="249" alt="rnk" /></dd>
-						</dl>
-					</li>
-					<li class="dn">
-						<dl>
-							<dt class="f1 f_dh tc">品牌羽绒</dt>
-							<dd class="dds f3n tc">品牌新品全场8折</dd>
-							<dd class="ddimg"><img src="pic/rnk1.gif" width="179" height="249" alt="rnk" /></dd>
-						</dl>
-						<dl>
-							<dt class="f1 f_dh tc">胖妞裙装</dt>
-							<dd class="dds f3n tc">让肉肉永无天日</dd>
-							<dd class="ddimg"><img src="pic/rnk4.gif" width="179" height="249" alt="rnk" /></dd>
-						</dl>
-						<dl>
-							<dt class="f1 f_dh tc">秋季裙装</dt>
-							<dd class="dds f3n tc">绽放女人十足魅力</dd>
-							<dd class="ddimg"><img src="pic/rnk2.gif" width="179" height="249" alt="rnk" /></dd>
-						</dl>
-						<dl>
-							<dt class="f1 f_dh tc">羊绒送好礼</dt>
-							<dd class="dds f3n tc">全场质检8折免邮</dd>
-							<dd class="ddimg"><img src="pic/rnk3.gif" width="179" height="249" alt="rnk" /></dd>
-						</dl>
-					</li>
-				</ul>
-			</div>
-		</div>
-		<!--ranking_ad_list over-->
-		
-		<!--clothes 960*x-->
-		<div class="clothes cl h">
-			<dl class="dress cl">
-				<dt></dt>
-				<dd class="clothes_ad cl h"><a href="#"><img src="pic/cad1.gif" width="948" height="180" alt="clothes_ad" /></a></dd>
-				<dd class="clothes_pro_box cl h">
-					<div class="clothes_pro"><p><a href="#"><img src="pic/cpro1.gif" width="180" height="180" alt="clothes_pro" /></a></p><p><a href="#" class="f3n">2012年夏季新款女装 韩版糖果色垫肩耸肩修身短袖T恤女式潮</a></p><p><a href="#" class="f2 f_h">￥39.00</a></p></div>
-					<div class="clothes_pro"><p><a href="#"><img src="pic/cpro1.gif" width="180" height="180" alt="clothes_pro" /></a></p><p><a href="#" class="f3n">2012年夏季新款女装 韩版糖果色垫肩耸肩修身短袖T恤女式潮</a></p><p><a href="#" class="f2 f_h">￥39.00</a></p></div>
-					<div class="clothes_pro"><p><a href="#"><img src="pic/cpro1.gif" width="180" height="180" alt="clothes_pro" /></a></p><p><a href="#" class="f3n">2012年夏季新款女装 韩版糖果色垫肩耸肩修身短袖T恤女式潮</a></p><p><a href="#" class="f2 f_h">￥39.00</a></p></div>
-					<div class="clothes_pro"><p><a href="#"><img src="pic/cpro1.gif" width="180" height="180" alt="clothes_pro" /></a></p><p><a href="#" class="f3n">2012年夏季新款女装 韩版糖果色垫肩耸肩修身短袖T恤女式潮</a></p><p><a href="#" class="f2 f_h">￥39.00</a></p></div>
-					<div class="clothes_pro"><p><a href="#"><img src="pic/cpro1.gif" width="180" height="180" alt="clothes_pro" /></a></p><p><a href="#" class="f3n">2012年夏季新款女装 韩版糖果色垫肩耸肩修身短袖T恤女式潮</a></p><p><a href="#" class="f2 f_h">￥39.00</a></p></div>
-					<div class="clothes_pro"><p><a href="#"><img src="pic/cpro1.gif" width="180" height="180" alt="clothes_pro" /></a></p><p><a href="#" class="f3n">2012年夏季新款女装 韩版糖果色垫肩耸肩修身短袖T恤女式潮</a></p><p><a href="#" class="f2 f_h">￥39.00</a></p></div>
-					<div class="clothes_pro"><p><a href="#"><img src="pic/cpro1.gif" width="180" height="180" alt="clothes_pro" /></a></p><p><a href="#" class="f3n">2012年夏季新款女装 韩版糖果色垫肩耸肩修身短袖T恤女式潮</a></p><p><a href="#" class="f2 f_h">￥39.00</a></p></div>
-					<div class="clothes_pro"><p><a href="#"><img src="pic/cpro1.gif" width="180" height="180" alt="clothes_pro" /></a></p><p><a href="#" class="f3n">2012年夏季新款女装 韩版糖果色垫肩耸肩修身短袖T恤女式潮</a></p><p><a href="#" class="f2 f_h">￥39.00</a></p></div>
-					<div class="clothes_pro"><p><a href="#"><img src="pic/cpro1.gif" width="180" height="180" alt="clothes_pro" /></a></p><p><a href="#" class="f3n">2012年夏季新款女装 韩版糖果色垫肩耸肩修身短袖T恤女式潮</a></p><p><a href="#" class="f2 f_h">￥39.00</a></p></div>
-					<div class="clothes_pro"><p><a href="#"><img src="pic/cpro1.gif" width="180" height="180" alt="clothes_pro" /></a></p><p><a href="#" class="f3n">2012年夏季新款女装 韩版糖果色垫肩耸肩修身短袖T恤女式潮</a></p><p><a href="#" class="f2 f_h">￥39.00</a></p></div>
-				</dd>
-			</dl>
-			<dl class="clothing cl">
-				<dt></dt>
-				<dd class="clothes_ad cl h"><a href="#"><img src="pic/cad2.gif" width="948" height="180" alt="clothes_ad" /></a></dd>
-				<dd class="clothes_pro_box cl h">
-					<div class="clothes_pro"><p><a href="#"><img src="pic/cpro2.gif" width="180" height="180" alt="clothes_pro" /></a></p><p><a href="#" class="f3n">2012年夏季新款女装 韩版糖果色垫肩耸肩修身短袖T恤女式潮</a></p><p><a href="#" class="f2 f_h">￥39.00</a></p></div>
-					<div class="clothes_pro"><p><a href="#"><img src="pic/cpro2.gif" width="180" height="180" alt="clothes_pro" /></a></p><p><a href="#" class="f3n">2012年夏季新款女装 韩版糖果色垫肩耸肩修身短袖T恤女式潮</a></p><p><a href="#" class="f2 f_h">￥39.00</a></p></div>
-					<div class="clothes_pro"><p><a href="#"><img src="pic/cpro2.gif" width="180" height="180" alt="clothes_pro" /></a></p><p><a href="#" class="f3n">2012年夏季新款女装 韩版糖果色垫肩耸肩修身短袖T恤女式潮</a></p><p><a href="#" class="f2 f_h">￥39.00</a></p></div>
-					<div class="clothes_pro"><p><a href="#"><img src="pic/cpro2.gif" width="180" height="180" alt="clothes_pro" /></a></p><p><a href="#" class="f3n">2012年夏季新款女装 韩版糖果色垫肩耸肩修身短袖T恤女式潮</a></p><p><a href="#" class="f2 f_h">￥39.00</a></p></div>
-					<div class="clothes_pro"><p><a href="#"><img src="pic/cpro2.gif" width="180" height="180" alt="clothes_pro" /></a></p><p><a href="#" class="f3n">2012年夏季新款女装 韩版糖果色垫肩耸肩修身短袖T恤女式潮</a></p><p><a href="#" class="f2 f_h">￥39.00</a></p></div>
-					<div class="clothes_pro"><p><a href="#"><img src="pic/cpro2.gif" width="180" height="180" alt="clothes_pro" /></a></p><p><a href="#" class="f3n">2012年夏季新款女装 韩版糖果色垫肩耸肩修身短袖T恤女式潮</a></p><p><a href="#" class="f2 f_h">￥39.00</a></p></div>
-					<div class="clothes_pro"><p><a href="#"><img src="pic/cpro2.gif" width="180" height="180" alt="clothes_pro" /></a></p><p><a href="#" class="f3n">2012年夏季新款女装 韩版糖果色垫肩耸肩修身短袖T恤女式潮</a></p><p><a href="#" class="f2 f_h">￥39.00</a></p></div>
-					<div class="clothes_pro"><p><a href="#"><img src="pic/cpro2.gif" width="180" height="180" alt="clothes_pro" /></a></p><p><a href="#" class="f3n">2012年夏季新款女装 韩版糖果色垫肩耸肩修身短袖T恤女式潮</a></p><p><a href="#" class="f2 f_h">￥39.00</a></p></div>
-					<div class="clothes_pro"><p><a href="#"><img src="pic/cpro2.gif" width="180" height="180" alt="clothes_pro" /></a></p><p><a href="#" class="f3n">2012年夏季新款女装 韩版糖果色垫肩耸肩修身短袖T恤女式潮</a></p><p><a href="#" class="f2 f_h">￥39.00</a></p></div>
-					<div class="clothes_pro"><p><a href="#"><img src="pic/cpro2.gif" width="180" height="180" alt="clothes_pro" /></a></p><p><a href="#" class="f3n">2012年夏季新款女装 韩版糖果色垫肩耸肩修身短袖T恤女式潮</a></p><p><a href="#" class="f2 f_h">￥39.00</a></p></div>
-				</dd>
-			</dl>
-			<dl class="sportswear cl">
-				<dt></dt>
-				<dd class="clothes_ad cl h"><a href="#"><img src="pic/cad3.gif" width="948" height="180" alt="clothes_ad" /></a></dd>
-				<dd class="clothes_pro_box cl h">
-					<div class="clothes_pro"><p><a href="#"><img src="pic/cpro3.gif" width="180" height="180" alt="clothes_pro" /></a></p><p><a href="#" class="f3n">2012年夏季新款女装 韩版糖果色垫肩耸肩修身短袖T恤女式潮</a></p><p><a href="#" class="f2 f_h">￥39.00</a></p></div>
-					<div class="clothes_pro"><p><a href="#"><img src="pic/cpro3.gif" width="180" height="180" alt="clothes_pro" /></a></p><p><a href="#" class="f3n">2012年夏季新款女装 韩版糖果色垫肩耸肩修身短袖T恤女式潮</a></p><p><a href="#" class="f2 f_h">￥39.00</a></p></div>
-					<div class="clothes_pro"><p><a href="#"><img src="pic/cpro3.gif" width="180" height="180" alt="clothes_pro" /></a></p><p><a href="#" class="f3n">2012年夏季新款女装 韩版糖果色垫肩耸肩修身短袖T恤女式潮</a></p><p><a href="#" class="f2 f_h">￥39.00</a></p></div>
-					<div class="clothes_pro"><p><a href="#"><img src="pic/cpro3.gif" width="180" height="180" alt="clothes_pro" /></a></p><p><a href="#" class="f3n">2012年夏季新款女装 韩版糖果色垫肩耸肩修身短袖T恤女式潮</a></p><p><a href="#" class="f2 f_h">￥39.00</a></p></div>
-					<div class="clothes_pro"><p><a href="#"><img src="pic/cpro3.gif" width="180" height="180" alt="clothes_pro" /></a></p><p><a href="#" class="f3n">2012年夏季新款女装 韩版糖果色垫肩耸肩修身短袖T恤女式潮</a></p><p><a href="#" class="f2 f_h">￥39.00</a></p></div>
-					<div class="clothes_pro"><p><a href="#"><img src="pic/cpro3.gif" width="180" height="180" alt="clothes_pro" /></a></p><p><a href="#" class="f3n">2012年夏季新款女装 韩版糖果色垫肩耸肩修身短袖T恤女式潮</a></p><p><a href="#" class="f2 f_h">￥39.00</a></p></div>
-					<div class="clothes_pro"><p><a href="#"><img src="pic/cpro3.gif" width="180" height="180" alt="clothes_pro" /></a></p><p><a href="#" class="f3n">2012年夏季新款女装 韩版糖果色垫肩耸肩修身短袖T恤女式潮</a></p><p><a href="#" class="f2 f_h">￥39.00</a></p></div>
-					<div class="clothes_pro"><p><a href="#"><img src="pic/cpro3.gif" width="180" height="180" alt="clothes_pro" /></a></p><p><a href="#" class="f3n">2012年夏季新款女装 韩版糖果色垫肩耸肩修身短袖T恤女式潮</a></p><p><a href="#" class="f2 f_h">￥39.00</a></p></div>
-					<div class="clothes_pro"><p><a href="#"><img src="pic/cpro3.gif" width="180" height="180" alt="clothes_pro" /></a></p><p><a href="#" class="f3n">2012年夏季新款女装 韩版糖果色垫肩耸肩修身短袖T恤女式潮</a></p><p><a href="#" class="f2 f_h">￥39.00</a></p></div>
-					<div class="clothes_pro"><p><a href="#"><img src="pic/cpro3.gif" width="180" height="180" alt="clothes_pro" /></a></p><p><a href="#" class="f3n">2012年夏季新款女装 韩版糖果色垫肩耸肩修身短袖T恤女式潮</a></p><p><a href="#" class="f2 f_h">￥39.00</a></p></div>
-				</dd>
-			</dl>
-		</div>
-		<!--clothes over-->
-		<!--clothes_bot_ad 960*60-->
-		<div class="clothes_bot_ad cl h"><a href="#"><img src="pic/cbtnad.gif" width="958" height="58" alt="clothes_bot_ad" /></a></div>
-		<!--clothes_bot_ad over-->
-	</div>
+<body>
+<!--top -->
+<!-- <div class="redtop30"><img src="catalog/view/theme/default/image/home//toptt.jpg"/></div> -->
+<div id="head_top" class="box cl">
+	<div class="wp cl h">
+		<ul class="z">
+			<li class="z collect"><a href="javascript:void(0);" onclick="AddFavorite('{$title}','{$home}')">收藏本站</a></li>
+			<li class="z">您好，{if !empty($username)}{$username} ！欢迎来到穿悦商城<a href="{$text_logout}" class="f_h exit">退出</a>{else}欢迎来到穿悦商城！<a href="{$text_login}" class="f_h">登录</a>，<a href="{$text_register}" class="f_h">快速注册</a>{/if}</li>
+		</ul>
+		<ul class="y" id="menu">
+		    {if !empty($username)}
 	
-	
-	
-	<div id="con_y" class="z">
-
-		<!--notice_recommend 240*510-->
-		<script><!--
-		$(function(){$('#recommend').cnckSuperMarquee({distance: 238,duration: 20,time: 6,direction: 'left',navId:'#recommend_nv'});});
-		//--></script>
-		<!--div class="notice_recommend"-->
-			<dl class="notice h">
-				<dt>穿悦公告</dt>
-				<dd class="tip"><a href="#">芙丽芳丝携千万点击微电影全力</a></dd>
-				<dd class="tip"><a href="#">芙丽芳丝携千万点击微电影全力</a></dd>
-				<dd class="tip"><a href="#">芙丽芳丝携千万点击微电影全力</a></dd>
-				<dd class="tip"><a href="#">芙丽芳丝携千万点击微电影全力</a></dd>
-				<dd class="tip"><a href="#">芙丽芳丝携千万点击微电影全力</a></dd>
-				<dd class="tip"><a href="#">芙丽芳丝携千万点击微电影全力</a></dd>
-				<dd class="tip"><a href="#">芙丽芳丝携千万点击微电影全力</a></dd>
-			</dl>
-			<dl class="recommend h">
-				<dt><font class="f2 f_q z">推荐</font> <font class="z">根据浏览记录</font> <div id="recommend_nv" class="y"><ul></ul></div></dt>
-				<dd id="recommend">
+		    <li class="z ">
+			<div class="menulist" id="myaccount">
+				<span><a href="{$account}">我的穿悦</a></span>
 					<ul>
-						<li>
-							<div><img src="pic/eg1.gif" width="100" height="100" alt="recommend" /><span><font>￥ 188.00</font></span></div>
-							<div><img src="pic/eg1.gif" width="100" height="100" alt="recommend" /><span><font>￥ 188.00</font></span></div>
-							<div><img src="pic/eg1.gif" width="100" height="100" alt="recommend" /><span><font>￥ 188.00</font></span></div>
-							<div><img src="pic/eg1.gif" width="100" height="100" alt="recommend" /><span><font>￥ 188.00</font></span></div>
-						</li>
-						<li>
-							<div><img src="pic/eg1.gif" width="100" height="100" alt="recommend" /><span><font>￥ 111.00</font></span></div>
-							<div><img src="pic/eg1.gif" width="100" height="100" alt="recommend" /><span><font>￥ 111.00</font></span></div>
-							<div><img src="pic/eg1.gif" width="100" height="100" alt="recommend" /><span><font>￥ 111.00</font></span></div>
-							<div><img src="pic/eg1.gif" width="100" height="100" alt="recommend" /><span><font>￥ 111.00</font></span></div>
-						</li>
-						<li>
-							<div><img src="pic/eg1.gif" width="100" height="100" alt="recommend" /><span><font>￥ 333.00</font></span></div>
-							<div><img src="pic/eg1.gif" width="100" height="100" alt="recommend" /><span><font>￥ 333.00</font></span></div>
-							<div><img src="pic/eg1.gif" width="100" height="100" alt="recommend" /><span><font>￥ 333.00</font></span></div>
-							<div><img src="pic/eg1.gif" width="100" height="100" alt="recommend" /><span><font>￥ 333.00</font></span></div>
-						</li>
+						<li><a href="{$order}">我的订单</a></li>
+						<li><a href="{$transaction}">我的交易</a></li>
+						<li><a href="{$wishlist}">收藏列表</a></li>
+						<li><a href="{$return}">商品退换</a></li>
 					</ul>
-				</dd>
-			</dl>
-		<!--/div-->
-		<!--notice_recommend over-->
-		
-		<!--hot_sale_brand 240*360-->
-			<dl class="hot_sale_brand h">
-				<dt><font class="f2 f_q z">热卖品牌</font> <a href="#"><font class="brandmore y">查看所有品牌</font></a></dt>
-				<dd>
-					<div><a href="#"><img src="pic/hsb1.gif" width="110" height="58" alt="hot_sale_brand" /></a></div>
-					<div><a href="#"><img src="pic/hsb1.gif" width="110" height="58" alt="hot_sale_brand" /></a></div>
-					<div><a href="#"><img src="pic/hsb1.gif" width="110" height="58" alt="hot_sale_brand" /></a></div>
-					<div><a href="#"><img src="pic/hsb1.gif" width="110" height="58" alt="hot_sale_brand" /></a></div>
-					<div><a href="#"><img src="pic/hsb1.gif" width="110" height="58" alt="hot_sale_brand" /></a></div>
-					<div><a href="#"><img src="pic/hsb1.gif" width="110" height="58" alt="hot_sale_brand" /></a></div>
-					<div><a href="#"><img src="pic/hsb1.gif" width="110" height="58" alt="hot_sale_brand" /></a></div>
-					<div><a href="#"><img src="pic/hsb1.gif" width="110" height="58" alt="hot_sale_brand" /></a></div>
-					<div><a href="#"><img src="pic/hsb1.gif" width="110" height="58" alt="hot_sale_brand" /></a></div>
-					<div><a href="#"><img src="pic/hsb1.gif" width="110" height="58" alt="hot_sale_brand" /></a></div>
-				</dd>
-			</dl>
-		<!--hot_sale_brand over-->
-		<!--style_tag 240*360-->
-			<dl class="style_tag h">
-				<dt><font class="f2 f_q">风格标签</font></dt>
-				<dd>
-					<div><a href="#">标签</a></div><div><a href="#">标签</a></div><div><a href="#">标签</a></div><div><a href="#">标签</a></div><div><a href="#">标签</a></div><div><a href="#">标签</a></div><div><a href="#" class="f_h">标签</a></div><div><a href="#">标签</a></div><div><a href="#">标签</a></div><div><a href="#">标签</a></div><div><a href="#">标签</a></div><div><a href="#">标签</a></div><div><a href="#">标签</a></div><div><a href="#" class="f_h">标签</a></div><div><a href="#">标签</a></div><div><a href="#">标签</a></div><div><a href="#">标签</a></div><div><a href="#" class="f_h">标签</a></div><div><a href="#">标签</a></div><div><a href="#">标签</a></div><div><a href="#">标签</a></div><div><a href="#">标签</a></div><div><a href="#">标签</a></div><div><a href="#">标签</a></div><div><a href="#">标签</a></div><div><a href="#">标签</a></div><div><a href="#" class="f_h">标签</a></div><div><a href="#">标签</a></div><div><a href="#">标签</a></div><div><a href="#">标签</a></div><div><a href="#" class="f_h">标签</a></div><div><a href="#">标签</a></div><div><a href="#">标签</a></div><div><a href="#">标签</a></div><div><a href="#">标签</a></div><div><a href="#">标签</a></div><div><a href="#">标签</a></div><div><a href="#">标签</a></div>
-				</dd>
-			</dl>
-		<!--style_tag over-->
-		<!--con_y_ads 240*x-->
-			<dl><img src="pic/cads1.gif" width="240" height="420" alt="" /></dl>
-			<dl><img src="pic/cads1.gif" width="240" height="420" alt="" /></dl>
-			<dl><img src="pic/cads1.gif" width="240" height="420" alt="" /></dl>
-			<dl><img src="pic/cads1.gif" width="240" height="420" alt="" /></dl>
-			<dl style="height:190px;" class="h"><img src="pic/cads1.gif" width="240" height="420" alt="" /></dl>
-		<!--con_y_ads over-->
+			</div>
+		    </li>
+			
+			{if !empty($store_id)}
+			<li class="z ">
+			<div class="menulist" id="merchants">
+				<span><a href="{$merchants}">卖家中心</a></span>
+					<ul>
+						<li><a href="{$sold}">已卖出的商品</a></li>
+						<li><a href="{$sell}">出售中的商品</a></li>
+						<li><a href="{$release}">发布商品</a></li>
+						<li><a href="{$remark}">评价管理</a></li>
+					</ul>
+			</div>
+		    </li>
+			{/if}
+		    
+			<li class="z" >
+			  <div class="menulist" id="cart">
+				<span id="cart-total"><a href="{$shoppingcart}" >购物车{$countProducts}件</a></span>
+                <div class="car-content" style="display: none;"></div>
+				
+			  </div>
+			</li>
+			
+			{/if}
+			<li class="z hotline f2 f_c">{$telphone}</li>
+		</ul>
 	</div>
 </div>
-<div class="cl_div"></div>
-<!--content end-->
-<script type="text/javascript">
-    gotoTop();//返回顶部
-</script>
+
+<div class="redtop110 w1210">
+	<h1><img src="catalog/view/theme/default/image/logo.png"width="210"height="88"/></h1>
+
+	<div class="search_ z">
+	    <div class="search-triggers">
+		    <ul class="ks-switchable-nav">
+			    <li data-searchtype="item" data-defaultpage="index.php?route=search/search" class="selected"><a href="javascript:void(0);">宝贝</a><!--[if lt IE 9]><s class="search-fix search-fix-triggerlt"></s><s class="search-fix search-fix-triggerrt"></s><![endif]--></li>
+			    <li data-searchtype="shop" data-action="index.php?route=store/list"><a href="javascript:void(0);">店铺</a><!--[if lt IE 9]><s class="search-fix search-fix-triggerlt"></s><s class="search-fix search-fix-triggerrt"></s><![endif]--></li>
+			</ul>
+		</div>
+		<div class="search_box h" id="search_box">
+			<input id="search" name="search" class="search_input z h" accesskey="s" autofocus="true" autocomplete="off" x-webkit-speech="" x-webkit-grammar="builtin:translate" />
+			<button id="search_btn" class="search_btn"></button>
+		</div>
+		<div class="search_hot f3n">
+            热门搜索：
+            <a href="">山核桃</a> 
+            <a href="">鱿鱼 </a>
+            <a href="">铁观音 </a>
+            <a href="">罐头 </a>
+            <a href="">卵磷脂 </a>
+            <a href="">鹿茸 </a>
+            <a href="">阿胶 </a>
+            <a href="">雪蛤 </a>
+            <a href="">婴幼保健</a>
+        </div>
+	</div>
+	<div class="redmainmenu">
+		<ul>
+		<li><a href="{$clothes}"><img src="catalog/view/theme/default/image/home/redtop01.jpg" width="87" height="47"/></a></li>
+		<li><a href="{$foods}"><img src="catalog/view/theme/default/image/home/redtop02.jpg" width="87" height="46"/></a></li>
+		<li><a href="{$house}"><img src="catalog/view/theme/default/image/home/redtop03.jpg" width="88" height="51"/></a></li>
+		<li><a href="{$travel}"><img src="catalog/view/theme/default/image/home/redtop04.jpg" width="96" height="48"/></a></li>
+		<li><a href="{$joy}"><img src="catalog/view/theme/default/image/home/redtop05.jpg" width="88" height="42"/></a></li>
+		</ul>
+	</div>
+</div>
+<!--nav -->
+<div class="rednav">
+<div class="w1210">
+	<div class="rednavmenu">
+	<ul>
+		<li><img src="catalog/view/theme/default/image/home//rednav01.jpg" width="230"/></li>
+		<li><a href="{$clothes}">服装配饰</a></li>
+		<li><a href="{$foods}">美食特产</a></li>
+		<li><a href="{$house}">家居建材</a></li>
+		<li><a href="{$travel}">运动户外</a></li>
+		<li><a href="{$joy}">文化玩乐</a></li>
+		<li class="right"><img src="catalog/view/theme/default/image/home//rednav02.jpg" width="42"/></li>
+		<!-- <li class="gowuche"><a href="#">我的购物车</a><span class="jiesuan"></span></li> -->
+	</ul>
+	</div>
+</div>
+</div>
+<!--分类图 -->
+<!--nav s-->
+<div class="cnav">
+	<div class="cnav-main">
+		<div class="float-list" id="float-list">
+		    {loop $category_list $k $list}
+			<dl>
+			    <dt>
+			    {loop $list['list'] $key_ $list_}
+				    {if $key_==0}<strong>{/if}
+				    <a  href="index.php?route=product/category&category_id={$list_['category_id']}">{$list_['name']}</a>
+					{if $key_==2}</strong>{/if}
+					<b class="float-list-ico1"></b>
+				{/loop}
+				</dt>
+				    
+					<dd>
+					    
+						<ul>
+						    {loop $list['list'] $key_ $list_}
+							{if !empty($list_['list'])}
+							<li><div class="float-list-cont">
+						    {loop $list_['list']  $key__ $list__} 
+							   {if $key__==0}<strong>{/if}<a  href="index.php?route=product/category&category_id={$list__['category_id']}">{$list__['name']}</a>{if $key__==0}</strong>{/if}
+							{/loop}
+							</div></li>
+							{/if}
+							{/loop}
+						</ul>
+						
+						<!-- 促销活动 -->
+						<div class="float-list-info">
+							<h4>促销活动</h4>
+							<a  href=""><img width="200" height="70" load="http://img1.imglafaso.com/userfiles/file/2013/04/9/20130409014958.jpg" /></a>
+							<p><a href="">雅歌布新品上市 荷兰原装进口</a></p>
+							<div class="flost-list-hot">
+							<h4>热门品牌</h4>
+							<a  href="">玉兰油</a>
+							<a  href="">依泉</a>
+							<a  href="">雅诗兰黛</a>
+							<a  href="">御泥坊</a>
+							<a  href="">玫琳凯</a>
+							<a  href="">相宜本草</a>
+							<a  href="">玉兰油</a>
+							<a  href="">依泉</a>
+							<a  href="">雅诗兰黛</a>
+							<a  href="">御泥坊</a>
+							<a  href="">玫琳凯</a>
+							<a  href="">相宜本草</a>
+							<a  href="">森田药妆</a>
+							<a  href="">膜法世家</a>
+							<a  href="">更多</a></div>
+						</div>
+						
+					</dd>
+					
+			</dl>
+			{/loop}
+
+			<div class="float-list-dnav">
+				<a  href="">新品</a>
+				<a  href="">促销</a>
+				<a  href="">清仓</a>
+				<a  href="">有机馆</a>
+				<a  href="">药妆馆</a>
+				<a  href="">瘦身馆</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--first s-->
+<div class="big-box first-show" id="first-show">
+	<div class="slider" id="slider">
+        <script type="text/javascript">var imageUrl='catalog\/view\/theme\/default\/image\/home\/tryon.jpg';var carousel_figure_49474=[{"linkUrl":"","imageUrl":imageUrl,"areaLinks":"","imageBackgroundColor":"#ffffff","alt":"活动"},{"linkUrl":"","imageUrl":imageUrl,"areaLinks":"","imageBackgroundColor":"#ffffff","alt":"爆款"},{"linkUrl":"","imageUrl":imageUrl,"areaLinks":"","imageBackgroundColor":"#ffffff","alt":"独享"},{"linkUrl":"","imageUrl":imageUrl,"areaLinks":"","imageBackgroundColor":"#ffffff","alt":"尝鲜"},{"linkUrl":"","imageUrl":imageUrl,"areaLinks":"","imageBackgroundColor":"#ffffff","alt":"专题"},{"linkUrl":"","imageUrl":imageUrl,"areaLinks":"","imageBackgroundColor":"#ffffff","alt":"搭配"}];</script>
+		<script type="text/javascript">	
+			(function() {
+				var sliderCont = '';
+				var sliderBtn = '<div class="content_nav">';
+				var sliderData = carousel_figure_49474; //变量值传递
+				for (var i = 0; i < sliderData.length; i++) {
+					sliderBtn += '<b ' + (i ? (i + 1 == sliderData.length ? 'class="bg"' : '') : 'class="on"') + '>' + sliderData[i].alt + '</b>';
+					if(sliderData[i].areaLinks){
+						sliderCont += '<div id="webs' + i + '" class="sliderbox" c="' + sliderData[i].imageBackgroundColor + '"><img ' + (i ? 'load' : 'src') + '="' + sliderData[i].imageUrl + '"' + (i ? 'style="display:none;"' : '') + '/><a class="b1"  href="' + sliderData[i].linkUrl + '"></a>';
+						for (var u = 0; u < sliderData[i].areaLinks.length; u++) {
+							sliderCont += '<a href="' + sliderData[i].areaLinks[u] + '"  class="s'+ (u + 1) +' sh"></a>'
+						}
+						sliderCont += '</div>';
+					}else{
+						sliderCont += '<a id="webs' + i + '" class="sliderbox" c="' + sliderData[i].imageBackgroundColor + '"  href="' + sliderData[i].linkUrl + '"><img ' + (i ? 'load' : 'src') + '="' + sliderData[i].imageUrl + '"' + (i ? 'style="display:none;"' : '') + '/></a>';
+					}
+				}
+				sliderBtn += '</div>';
+				
+				document.write(sliderBtn + sliderCont);
+			})();
+        </script>
+	</div>
+
+	<div class="adv" id="adv">
+		<a id="weba1"  href=""><img alt="花粉" width="240" height="170" src="http://img2.imglafaso.com/userfiles/file/2013/04/10/20130410071225_11-4_12.jpg" /></a>
+		<a id="weba2"  href=""><img alt="无线" width="240" height="170" src="http://img3.imglafaso.com/userfiles/file/2013/04/9/20130409043303.jpg" /></a>
+		<a id="weba3"  href=""><img alt="抽奖" width="240" height="170" src="http://img1.imglafaso.com/userfiles/file/2013/04/7/20130407075822.jpg" /></a>
+		<a id="weba4"  href=""><img alt="抽奖" width="240" height="170" src="http://img1.imglafaso.com/userfiles/file/2013/04/7/20130407075822.jpg" /></a>
+	</div>
+	<dl class="announcement" id="announcement">
+	<dt>公告：</dt>
+	<dd class="on"><a  href="">桃花节大促之“快递也疯狂”！</a>
+	<a  href="">静佳声明：对瑕疵零容忍 品质合格有保障！</a></dd>
+	<dd><a  href="">最好用美妆品榜单揭晓，会员专享赠品自助选！</a>
+	<a  href="">防诈骗重要提示，提高自我保护意识，避免上当！</a></dd>
+	</dl>
+	<b class="box-shadow"></b>
+</div>
+<!--index dom e-->
+
+<!--衣 -->
+<div class="Fclothes">
+	<h1><img src="catalog/view/theme/default/image/home//layer_yi.jpg" width="66" height="42"/></h1>
+	<div class="Redclass">
+		<a href="">性感内衣</a><a href="">显瘦牛仔裤</a><a href="">2013新款</a><a href="">长袖T恤</a><a href="">短袖T恤</a><a href="">风衣</a><a href="">针织衫</a><a href="">连衣裙</a><a href="">衬衫</a><a href="">小脚裤</a>
+	</div>
+	<div class="yimore"><a href="{$clothes}"><img src="catalog/view/theme/default/image/home//more_yi.jpg"></a></div>
+</div>
+<div class="Red518">
+	<div class="Fleft">
+	<ul>
+		<li><a href=""><img src="catalog/view/theme/default/image/home//ad01.jpg"></a></li>
+		<li><a href=""><img src="catalog/view/theme/default/image/home//ad02.jpg"></a></li>
+		<li><a href=""><img src="catalog/view/theme/default/image/home//ad03.jpg"></a></li>
+		<li><a href=""><img src="catalog/view/theme/default/image/home//ad04.jpg"></a></li>
+		<li><a href=""><img src="catalog/view/theme/default/image/home//ad05.jpg"></a></li>
+	</ul>
+	</div>
+	<div class="Fright">
+		<dl>
+		    {loop $clothes_products $c}
+			<dd>
+				<ul>
+					<li><a href="index.php?route=product/product&product_id={$c['product_id']}"><img src="{$c['image']}" title="{$c['name']}" alt="{$c['name']}"></a></li>
+					<li><a href="index.php?route=product/product&product_id={$c['product_id']}">{$c['shortname']}</a></li>
+					<li><b class="price1">¥{$c['price']}</b> {if !empty($c['special_price'])}<span class="price2">¥{$c['special_price']}</span>{/if}</li>
+				</ul>
+			</dd>
+		    {/loop}
+		</dl>
+	</div>
+</div>
+<div class="Redbshow"></div>
+<!--食 -->
+<div class="Ffood">
+	<h1><img src="catalog/view/theme/default/image/home//layer_shi.jpg" width="66" height="42"/></h1>
+	<div class="Redclass">
+		<a href="">性感内衣</a><a href="">显瘦牛仔裤</a><a href="">2013新款</a><a href="">长袖T恤</a><a href="">短袖T恤</a><a href="">风衣</a><a href="">针织衫</a><a href="">连衣裙</a><a href="">衬衫</a><a href="">小脚裤</a>
+	</div>
+	<div class="chimore"><a href="{$foods}"><img src="catalog/view/theme/default/image/home//more_shi.jpg"></a></div>
+</div>
+<div class="Red518">
+	<div class="Fleft">
+	<ul>
+		<li><a href=""><img src="catalog/view/theme/default/image/home//ad06.jpg"></a></li>
+		<li><a href=""><img src="catalog/view/theme/default/image/home//ad07.jpg"></a></li>
+		<li><a href=""><img src="catalog/view/theme/default/image/home//ad08.jpg"></a></li>
+		<li><a href=""><img src="catalog/view/theme/default/image/home//ad06.jpg"></a></li>
+		<li><a href=""><img src="catalog/view/theme/default/image/home//ad09.jpg"></a></li>
+	</ul>
+	</div>
+	<div class="Fright">
+		<dl>
+		    {loop $foods_products $f}
+			<dd>
+				<ul>
+					<li><a href="index.php?route=product/product&product_id={$f['product_id']}"><img src="{$f['image']}" title="{$f['name']}" alt="{$f['name']}"></a></li>
+					<li><a href="index.php?route=product/product&product_id={$f['product_id']}">{$f['shortname']}</a></li>
+					<li><b class="price1">¥{$f['price']}</b> {if !empty($f['special_price'])}<span class="price2">¥{$f['special_price']}</span>{/if}</li>
+				</ul>
+			</dd>
+			{/loop}
+		</dl>
+	</div>
+</div>
+<div class="Redbshow"></div>
+<!--住 -->
+<div class="Flive">
+	<h1><img src="catalog/view/theme/default/image/home//layer_zhu.jpg" width="66" height="42"/></h1>
+	<div class="Redclass">
+		<a href="">性感内衣</a><a href="">显瘦牛仔裤</a><a href="">2013新款</a><a href="">长袖T恤</a><a href="">短袖T恤</a><a href="">风衣</a><a href="">针织衫</a><a href="">连衣裙</a><a href="">衬衫</a><a href="">小脚裤</a>
+	</div>
+	<div class="zhumore"><a href="{$house}"><img src="catalog/view/theme/default/image/home//more_zhu.jpg"></a></div>
+</div>
+<div class="Red518">
+	<div class="Fleft">
+	<ul>
+		<li><a href=""><img src="catalog/view/theme/default/image/home//ad06.jpg"></a></li>
+		<li><a href=""><img src="catalog/view/theme/default/image/home//ad07.jpg"></a></li>
+		<li><a href=""><img src="catalog/view/theme/default/image/home//ad08.jpg"></a></li>
+		<li><a href=""><img src="catalog/view/theme/default/image/home//ad06.jpg"></a></li>
+		<li><a href=""><img src="catalog/view/theme/default/image/home//ad09.jpg"></a></li>
+	</ul>
+	</div>
+	<div class="Fright">
+		<dl>
+		    {loop $house_products $h}
+			<dd>
+				<ul>
+					<li><a href="index.php?route=product/product&product_id={$h['product_id']}"><img src="{$h['image']}" title="{$h['name']}" alt="{$h['name']}"></a></li>
+					<li><a href="index.php?route=product/product&product_id={$h['product_id']}">{$h['shortname']}</a></li>
+					<li><b class="price1">¥{$h['price']}</b> {if !empty($h['special_price'])}<span class="price2">¥{$h['special_price']}</span>{/if}</li>
+				</ul>
+			</dd>
+			{/loop}
+		</dl>
+	</div>
+</div>
+<div class="Redbshow"></div>
+
+<!--行 -->
+<div class="Fline">
+	<h1><img src="catalog/view/theme/default/image/home//layer_xing.jpg" width="66" height="42"/></h1>
+	<div class="Redclass">
+		<a href="">性感内衣</a><a href="">显瘦牛仔裤</a><a href="">2013新款</a><a href="">长袖T恤</a><a href="">短袖T恤</a><a href="">风衣</a><a href="">针织衫</a><a href="">连衣裙</a><a href="">衬衫</a><a href="">小脚裤</a>
+	</div>
+	<div class="xingmore"><a href="{$travel}"><img src="catalog/view/theme/default/image/home//more_xing.jpg"></a></div>
+</div>
+<div class="Red518">
+	<div class="Fleft">
+	<ul>
+		<li><a href=""><img src="catalog/view/theme/default/image/home//ad10.jpg"></a></li>
+		<li><a href=""><img src="catalog/view/theme/default/image/home//ad11.jpg"></a></li>
+		<li><a href=""><img src="catalog/view/theme/default/image/home//ad12.jpg"></a></li>
+		<li><a href=""><img src="catalog/view/theme/default/image/home//ad13.jpg"></a></li>
+		<li><a href=""><img src="catalog/view/theme/default/image/home//ad14.jpg"></a></li>
+	</ul>
+	</div>
+	<div class="Fright">
+		<dl>
+		    {loop $travel_products $t}
+			<dd>
+				<ul>
+					<li><a href="index.php?route=product/product&product_id={$t['product_id']}"><img src="{$t['image']}" title="{$t['name']}" alt="{$t['name']}"></a></li>
+					<li><a href="index.php?route=product/product&product_id={$t['product_id']}">{$t['shortname']}</a></li>
+					<li><b class="price1">¥{$t['price']}</b> {if !empty($t['special_price'])}<span class="price2">¥{$t['special_price']}</span>{/if}</li>
+				</ul>
+			</dd>
+			{/loop}
+		</dl>
+	</div>
+</div>
+<div class="Redbshow"></div>
+<script type="text/javascript" src="catalog/view/javascript/home.js"></script>
+<!--bottom -->
 {$footer}
+

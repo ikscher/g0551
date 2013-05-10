@@ -2,17 +2,8 @@
 /**店铺支付方法**/
 
 class ControllerCheckoutPaymentMethod extends Controller {
-  	public function index() {
-	
-		$flag=isset($this->session->data['dbuy_flag'])?$this->session->data['dbuy_flag']:true;
-	
-		$products=$this->cart->getProducts($flag);
-		
-		foreach($products as $product){
-			$store_id=$product['store_id'];
-		}
-	
-			
+  	public function index($store_id) {
+
 		// Payment Methods
 		$method_data = array();
 		

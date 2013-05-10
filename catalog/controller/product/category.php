@@ -11,9 +11,7 @@ class ControllerProductCategory extends Controller {
 		$this->load->model('catalog/product');	
 		$this->load->model('catalog/category');	
 		$this->load->model('tool/image'); 
-		$this->load->library('func');
-		 
-		$gfunc=new func();
+		
 
 		if (!empty($this->request->get['category_id'])){
 			$category_id = $this->request->get['category_id'];   	
@@ -25,7 +23,8 @@ class ControllerProductCategory extends Controller {
 		$this->data['category_id']=$category_id;
 		$this->data['categoryList']=array();
 		$this->data['searchCondition']=array();
-		$results=array();
+		$this->data['top']=0;
+		$result=array();
 		/**衣类别下的所有子类*/
 		$clothes_cid=$this->model_catalog_category->getCategories(ModelCatalogCategory::$CATEGORY_CLOTHES);
 		if($flag==true){
@@ -35,10 +34,13 @@ class ControllerProductCategory extends Controller {
 				    $flag=false;
 				    $this->data['categoryList']=$this->getCategoryList(ModelCatalogCategory::$CATEGORY_CLOTHES);//左侧显示类列表
 					//搜索条件列表.
-					$results=$this->model_catalog_category->getCategory($category_id);
-					if(!empty($results)){
-					    $attribute_group=$results['attribute_group'];
-		                $this->data['searchCondition']=$this->model_catalog_category->getAttributeByType($attribute_group);
+					$result=$this->model_catalog_category->getCategory($category_id);
+					if(!empty($result)){
+					    $this->data['top']=$result['top'];
+						if($result['top']>=3){
+							$attribute_group=$result['attribute_group'];
+							$this->data['searchCondition']=$this->model_catalog_category->getAttributeByType($attribute_group);
+						}
 					}
 				    break;
 				 
@@ -46,7 +48,7 @@ class ControllerProductCategory extends Controller {
 			}
 			
 		}
-		
+		$result=null;
         $clothes_cid=null;
 
 	
@@ -59,15 +61,19 @@ class ControllerProductCategory extends Controller {
 					$flag=false;
 					$this->data['categoryList']=$this->getCategoryList(ModelCatalogCategory::$CATEGORY_FOODS);
 					//搜索条件列表
-		            $results=$this->model_catalog_category->getCategory($category_id);
-					if(!empty($results)){
-						$attribute_group=$results['attribute_group'];
-						$this->data['searchCondition']=$this->model_catalog_category->getAttributeByType($attribute_group);
+		            $result=$this->model_catalog_category->getCategory($category_id);
+					if(!empty($result)){
+					    $this->data['top']=$result['top'];
+						if($result['top']>=3){
+							$attribute_group=$result['attribute_group'];
+							$this->data['searchCondition']=$this->model_catalog_category->getAttributeByType($attribute_group);
+						}
 					}
 				    break;
 				}
 			}
 		}
+		$result=null;
 		$foods_cid=null;
 		
 		/**住类别下的所有子类*/
@@ -79,15 +85,20 @@ class ControllerProductCategory extends Controller {
 					$flag=false;
 					$this->data['categoryList']=$this->getCategoryList(ModelCatalogCategory::$CATEGORY_HOUSE);
 					//搜索条件列表
-		            $results=$this->model_catalog_category->getCategory($category_id);
-					if(!empty($results)){
-						$attribute_group=$results['attribute_group'];
-						$this->data['searchCondition']=$this->model_catalog_category->getAttributeByType($attribute_group);
+		            $result=$this->model_catalog_category->getCategory($category_id);
+					if(!empty($result)){
+					    $this->data['top']=$result['top'];
+						
+						if($result['top']>=3){
+							$attribute_group=$result['attribute_group'];
+							$this->data['searchCondition']=$this->model_catalog_category->getAttributeByType($attribute_group);
+						}
 					}
 				    break;
 				}
 			}
 		}
+		$result=null;
 		$house_cid=null;
 		
 		/**行类别下的所有子类*/
@@ -99,20 +110,23 @@ class ControllerProductCategory extends Controller {
 					$flag=false;
 					$this->data['categoryList']=$this->getCategoryList(ModelCatalogCategory::$CATEGORY_TRAVEL);
 					//搜索条件列表
-		            $results=$this->model_catalog_category->getCategory($category_id);
-					if(!empty($results)){
-						$attribute_group=$results['attribute_group'];
-						$this->data['searchCondition']=$this->model_catalog_category->getAttributeByType($attribute_group);
+		            $result=$this->model_catalog_category->getCategory($category_id);
+					if(!empty($result)){
+					    $this->data['top']=$result['top'];
+						if($result['top']>=3){
+							$attribute_group=$result['attribute_group'];
+							$this->data['searchCondition']=$this->model_catalog_category->getAttributeByType($attribute_group);
+						}
 					}
 				  	break;
 				}
 			}
 		}
+		$result=null;
 		$travel_cid=null;
 		
 		// var_dump($this->data['categoryList']);
 		
-	    $results=null;
         $this->data['category_id'] = $category_id; 
 		
 		$url .="&category_id={$category_id}";
@@ -127,7 +141,7 @@ class ControllerProductCategory extends Controller {
 			} else {
 				$v['image'] = false;
 			}       
-            $v['shortname'] = isset($v['name'])?$gfunc->OcCutstr($v['name'], 15):'';  
+            $v['shortname'] = isset($v['name'])?OcCutstr($v['name'], 15):'';  
 			
 			$hot_products[]=$v;
 		}
@@ -144,7 +158,7 @@ class ControllerProductCategory extends Controller {
 			} else {
 				$v['image'] = false;
 			}       
-            $v['shortname'] = isset($v['name'])?$gfunc->OcCutstr($v['name'], 15):'';  
+            $v['shortname'] = isset($v['name'])?OcCutstr($v['name'], 15):'';  
 			
 			$foryou_products[]=$v;
 		}
@@ -161,7 +175,7 @@ class ControllerProductCategory extends Controller {
 			} else {
 				$v['image'] = false;
 			}       
-            $v['shortname'] = isset($v['name'])?$gfunc->OcCutstr($v['name'], 15):'';  
+            $v['shortname'] = isset($v['name'])?OcCutstr($v['name'], 15):'';  
 			
 			$recommend_products[]=$v;
 		}
@@ -322,7 +336,7 @@ class ControllerProductCategory extends Controller {
 			} else {
 				$item['image'] = false;
 			}       
-            $item['shortname'] = $gfunc->OcCutstr($item['name'], 15);  
+            $item['shortname'] = OcCutstr($item['name'], 15);  
 			
 			$products[]=$item;
 		}

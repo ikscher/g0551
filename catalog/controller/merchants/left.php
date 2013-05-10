@@ -30,14 +30,11 @@ class ControllerMerchantsLeft extends Controller {
 		
 		$this->data['text_vouchers']=$this->language->get('text_vouchers');
 		$this->data['text_coupon_adds']=$this->language->get('text_coupon_adds');
+		$this->data['text_shipping']=$this->language->get('text_shipping');
 		
 		
 		
-	    if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/merchants/left.html')) {
-			$this->template = $this->config->get('config_template') . '/template/merchants/left.html';
-		} else {
-			$this->template = 'default/template/merchants/left.html';
-		}
+	   
 		
 		if(!$this->customer->getId()){
 		    $this->redirect($this->url->link('account/login','','SSL'));
@@ -85,6 +82,13 @@ class ControllerMerchantsLeft extends Controller {
 		$this->data['coupon'] = $this->url->link('merchants/coupon');
 		$this->data['voucher'] = $this->url->link('merchants/voucher');
 		$this->data['warehouse'] = $this->url->link('merchants/warehouse');
+		$this->data['shipping'] = $this->url->link('merchants/shipping');
+		
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/merchants/left.html')) {
+			$this->template = $this->config->get('config_template') . '/template/merchants/left.html';
+		} else {
+			$this->template = 'default/template/merchants/left.html';
+		}
 		
 		$this->response->setOutput($this->render());
   	}

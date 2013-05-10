@@ -33,7 +33,7 @@ address,caption,cite,code,dfn,em,th,var {font-style:normal;font-weight:500;}
 
 
 /* 个人中心 */
-.mainContent {width:980px;margin:10px auto 0 auto;}
+.mainContent {width:980px;margin: 0 auto;}
 .tablecenter td{text-align:center;}
 
 .left{float:left;width:190px;padding-bottom:10px;}
@@ -41,7 +41,8 @@ address,caption,cite,code,dfn,em,th,var {font-style:normal;font-weight:500;}
 .leftClass dl{margin-bottom:20px;}
 .leftClass dt{height:26px;line-height:26px;font-weight:bold;background:url(../image/member/memberClassLeft.jpg) repeat-x;color:#E92658;margin-bottom:10px;text-indent:20px;}
 .leftClass dd{height:28px;line-height:28px;}
-.leftClass dd.current{background:#F9F9F9;line-height:28px;border-top:1px solid #E4E4E4;border-bottom:1px solid #E4E4E4;}
+.leftClass dd.current{background:#39F9F9;line-height:28px;cursor:pointer;}
+.leftClass dd.selected{background:#39F9F9;line-height:28px;}
 .leftClass dd a{margin-left:30px;line-height:24px;color:#333333;}
 .leftClass dd a:hover{color:#FF0000;}
 
@@ -225,7 +226,7 @@ body{ background:#fff url(../image/member/head_top_bg.jpg) repeat-x;}
 .logomenu5{background-position:-400px 0px;  top:28px; }
  a.logo{width:97px; height:89px; position:absolute;left:50px;top:40px;}
 
-.navbg{background:url(../image/member/navbg.jpg) repeat-x; height:58px; line-height:40px;}
+.navbg{background:url(../image/member/navbg.jpg) repeat-x; height:58px; line-height:40px;width:976px;margin:0 auto;}
 .navmenu{ width:980px; margin:0 auto; position:relative; color:#FFF; padding-left:20px;}
 .navmenu img{ margin-top:6px; margin-left:6px;}
 /* .citylist,.searchtype{position:absolute;top:3px;z-index:100;left:370px;} */

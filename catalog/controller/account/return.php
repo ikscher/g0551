@@ -13,20 +13,7 @@ class ControllerAccountReturn extends Controller {
 
     	$this->document->setTitle($this->language->get('heading_title'));
 			
-      	$this->data['breadcrumbs'] = array();
-
-      	$this->data['breadcrumbs'][] = array(
-        	'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home'),        	
-        	'separator' => false
-      	); 
-
-      	$this->data['breadcrumbs'][] = array(
-        	'text'      => $this->language->get('text_account'),
-			'href'      => $this->url->link('account/account', '', 'SSL'),        	
-        	'separator' => $this->language->get('text_separator')
-      	);
-		
+      
 		$url = '';
 		
 		if (isset($this->request->get['page'])) {
@@ -59,11 +46,17 @@ class ControllerAccountReturn extends Controller {
 			$page = 1;
 		}
 		
+		$data=array();
+		$limit=10;
+		$data=array( 
+					'start'=>($page-1)*$limit,
+					'limit'=>$limit);
+		
 		$this->data['returns'] = array();
 		
 		$return_total = $this->model_account_return->getTotalReturns();
 		
-		$results = $this->model_account_return->getReturns(($page - 1) * 10, 10);
+		$results = $this->model_account_return->getReturns($data);
 		
 		foreach ($results as $result) {
 			$this->data['returns'][] = array(

@@ -55,6 +55,7 @@ class ControllerMerchantsMerchants extends Controller {
 		$name   =isset($this->request->post["name"])?$this->request->post["name"]:"";
 		$province   =isset($this->request->post["province"])?$this->request->post["province"]:"";
 		$city   =isset($this->request->post["city"])?$this->request->post["city"]:"";
+		$zone   =isset($this->request->post["zone"])?$this->request->post["zone"]:"";
 		$address    =isset($this->request->post["address"])?$this->request->post["address"]:"";
 		/* $zone  =isset($this->request->post["zone"])?$this->request->post["zone"]:""; */
 		$tel  =isset($this->request->post["tel"])?$this->request->post["tel"]:"";
@@ -70,6 +71,7 @@ class ControllerMerchantsMerchants extends Controller {
 		if($name=="")$this->showMessage("对不起，店铺名称必须填写！");
 		if($province=="")$this->showMessage("对不起，请选择所在省份！");
 		if($city=="")$this->showMessage("对不起，请选择所在城市！");
+		if($zone=="")$this->showMessage("对不起，请选择所在的区！");
 		if($address=="")$this->showMessage("对不起，店铺地址必须填写！");
 		if($tel=="")$this->showMessage("对不起，联系电话必须填写！");
 		if($mobile=="")$this->showMessage("对不起，手机号码必须填写！");
@@ -83,7 +85,7 @@ class ControllerMerchantsMerchants extends Controller {
 			"province"=>$province,
 			"city"=>$city,
 			"address"=>$address,
-
+            "zone" =>$zone,
 			"tel"=>$tel,
 			"mobile"=>$mobile,
 			"fax"=>$fax,

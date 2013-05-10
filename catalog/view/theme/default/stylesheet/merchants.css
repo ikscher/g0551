@@ -51,6 +51,7 @@
 .item-list .all-selector{*margin:0 8px 0 3px;_margin:2px 8px 0 4px;}
 .item-list .selector{*margin:-2px 8px 0 2px;}
 
+td.single-col{padding:5px 15px 5px 5px;}
 
 tr.order-hd td{border:1px solid #B4D5FF;border-bottom-color:#eee;padding:8px 0;}
 

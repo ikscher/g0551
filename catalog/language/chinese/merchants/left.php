@@ -21,6 +21,6 @@ $_['text_dealingorder']  = '发货中的订单';
 $_['text_dealedorder']  = '已发货订单';
 $_['text_coupons']  = '优惠券管理';
 $_['text_coupon_adds']  = '优惠券添加';
-
+$_['text_shipping']='配送方式管理';
 
 ?>

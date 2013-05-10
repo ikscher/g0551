@@ -23,14 +23,13 @@ class ModelAccountAddress extends Model {
 		//$company    =$this->db->escape($data['company']);
 		$customer_id=$this->db->escape($this->customer->getId());
 	    
-		$query=$this->db->query("INSERT INTO " . DB_PREFIX . "address SET customer_id = '{$customer_id}', username = '{$username}',telphone = '{$telphone}', mobile = '{$mobile}',  address = '{$address}', postcode = '{$postcode}' ");
+		//note update other address status
+		$this->db->query("update ".DB_PREFIX."address set status=0");
+		$query=$this->db->query("INSERT INTO " . DB_PREFIX . "address SET customer_id = '{$customer_id}', username = '{$username}',telphone = '{$telphone}', mobile = '{$mobile}',  address = '{$address}', postcode = '{$postcode}' ,status=1");
 		
 		
 		if($query===true){
 		   $address_id=$this->db->getLastId();
-		   //$str['address_id']=$address_id;
-		   //$str['customer_id']=$customer_id;
-		   
 		}
 		
 		return $address_id;

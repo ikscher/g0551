@@ -4,9 +4,10 @@
 	<div class="leftClass">
 		<dl>
 			<dt>{$text_store_management}</dt>
-			<dd class="current"><a  href="{$merchants}">{$text_store_setup}</a></dd>
+			<dd ><a  href="{$merchants}">{$text_store_setup}</a></dd>
 			<dd><a  href="{$store}">{$text_store_list}</a></dd>
 			<dd><a  href="{$payment}">{$text_payment_management}</a></dd>
+			<dd><a  href="{$shipping}">{$text_shipping}</a></dd>
 		</dl>
 		<dl>
 			<dt>{$text_trade_management}</dt>
@@ -48,11 +49,36 @@
 	});
 {/if}
 
-$("dd ").hover(function(){
+$(".leftClass dd ").hover(function(){
    $(this).addClass('current');
 },function(){
-  
    $(this).removeClass('current');
 });
+
+$(".leftClass dd ").click(function(){
+    var href=$(this).children('a').attr('href');
+	location.href=href;
+});
+
+$(document).ready(function(){
+	if(getURLVar('route') == 'merchants/merchants') {
+		$('.leftClass dl:eq(0) dd:eq(0)').addClass('selected');
+	}else{
+	    var s=location.search;
+		
+		var href;
+		$('dd a').each(function(i,w){
+		    href=$(w).attr('href');
+			console.log(href);
+		    if(href.indexOf(s)>=0){
+			    $(w).parent().addClass('selected');
+				return false;
+			}
+		})
+	}
+});
+
+
+
 
 </script>

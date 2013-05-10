@@ -15,11 +15,10 @@ class ControllerCheckoutCheckout extends Controller {
 			$flag=false;
 			// Validate minimum quantity requirments.			
 			$products = $this->cart->getProducts();
-		}		
-	     
-		//支付方式
-		$this->load->controller('checkout/payment_method');
-		$this->data['payment_methods']=$this->controller_checkout_payment_method->index();
+		}	
+        
+        $this->data['flag']=$flag;		
+	    
 		
 		//货运方式
 		if(isset($this->session->data['shipping_method'])){
@@ -46,6 +45,7 @@ class ControllerCheckoutCheckout extends Controller {
 		$this->language->load('checkout/checkout');
 		
 		$this->document->setTitle($this->language->get('heading_title')); 
+		$this->load->controller('checkout/payment_method');
 		
 	
 		
@@ -67,6 +67,7 @@ class ControllerCheckoutCheckout extends Controller {
 				'status'     => $result['status']);
 	    }
 		
+		
 		//产品信息
 		$this->data['products'] = array();
 		$this->load->model('tool/image');
@@ -87,9 +88,7 @@ class ControllerCheckoutCheckout extends Controller {
 			$total = number_format($product['price'] * $product['quantity'],2,'.',',');
 			
 													
-			
-			
-			
+		
 
             $this->data['products'][$product['store_id']]['product'][] = array(
 				'key'      => $product['key'],
@@ -103,14 +102,14 @@ class ControllerCheckoutCheckout extends Controller {
 				'reward'   => ($product['reward'] ? sprintf($this->language->get('text_points'), $product['reward']) : ''),
 				'price'    => $price,	
 				'total'    => $total,	
-				'href'     => $this->url->link('product/product', 'product_id=' . $product['product_id'])		
+				'href'     => $this->url->link('product/product', 'product_id=' . $product['product_id'])
 			);		
 
-            $this->data['products'][$product['store_id']]['store'] = $this->model_store_store->getStore($product['store_id']);
-			
+            $this->data['products'][$product['store_id']]['store'] = $this->model_store_store->getStore($product['store_id']);//店铺信息
+			$this->data['products'][$product['store_id']]['payment_methods']= $this->controller_checkout_payment_method->index($product['store_id']);//店铺支付方式
 		}
-
-	    //var_dump($this->data['products']);
+       
+	    // var_dump($this->data['products']);
 		// Gift Voucher
 		$this->data['vouchers'] = array();
 		
@@ -214,7 +213,7 @@ class ControllerCheckoutCheckout extends Controller {
 	}
 	
 	
-	/**刷新总计**/
+	/**刷新总计  已删除的函数**/
 	public function refreshTotal(){
 	    $flag=isset($this->session->data['dbuy_flag'])?$this->session->data['dbuy_flag']:true;
 	   

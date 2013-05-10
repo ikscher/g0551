@@ -7,8 +7,8 @@ class ControllerCheckoutConfirmOrder extends Controller {
 		$data = array();
 		$data['username']=$data['postcode']=$data['email']=$data['telphone']=$date['mobile']=$data['address']='';
 
-		$flag=isset($this->session->data['dbuy_flag'])?$this->session->data['dbuy_flag']:true;
-		
+		//$flag=isset($this->session->data['dbuy_flag'])?$this->session->data['dbuy_flag']:true;
+		$flag=empty($this->request->post['dbuy'])?false:true;
 	
 		$this->load->model('account/address');
 		if($this->customer->isLogged()){

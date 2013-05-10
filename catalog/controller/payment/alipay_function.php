@@ -34,7 +34,8 @@ function arg_sort($array) {
 }
 
 function  log_result($word) {
-	$fp = fopen("log_alipay.txt","alex");
+	$fp = fopen("/var/www/g0551/log_alipay.txt","a+");
+	//chmod("/var/www/g0551/log_alipay.txt", 777);
 	flock($fp, LOCK_EX) ;
 	fwrite($fp,$word."：excute ：".strftime("%Y-%m-%d %H:%I:%S",time())."\t\n");
 	flock($fp, LOCK_UN);

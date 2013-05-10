@@ -1,16 +1,7 @@
 <link rel="stylesheet" href="catalog/view/theme/default/stylesheet/footer.css" type="text/css" />
 <div id="footer" class="box cl">
 	<div class="cl_div"></div>
-	<!-- <div class="policy wp cl">
-		<ul>
-			<li><a href="javascript:void(0);"><em class="policyem1"></em></a><a href="javascript:void(0);"><b class="f1">正品保证</b></a><br /><a href="javascript:void(0);">中华保险</a></li>
-			<li><em class="policyem2"></em><b class="f1">开箱验货</b><br />先验货再签收</li>
-			<li><em class="policyem3"></em><b class="f1">7天保障</b><br />无理由退货</li>
-			<li><em class="policyem4"></em><b class="f1">货到付款</b><br />全国范围</li>
-			<li><em class="policyem5"></em><b class="f1">免运费</b><br />购满288元</li>
-			<li><em class="policyem6"></em><b class="f1">积分抵现金</b><br />100分=￥1元</li>
-		</ul>
-	</div> -->
+	
 	<div class="support wp cl">
 		<ul class="support_ser z"><li></li></ul>
 		<ul class="support_lis z">
@@ -56,10 +47,18 @@
 	<div class="cart-bottom">
 	    {$cart_bottom}
 	</div>
+	
+	<div id="backtotop" class="showme">
+	   <div class="bttbg"></div>
+	</div>
 </div>
 
 </body>
 <script type="text/javascript">
+    if(getURLVar('route') == 'checkout/cart' || getURLVar('route') == 'checkout/checkout') {
+	    $('.cart-bottom').remove();
+	}
+
     {if empty($userid)}
 		$(".tmMCHandler").hover(function(){
 			$(this).addClass('unlogin_hover');
@@ -100,5 +99,13 @@
 		});
 		*/
 	{/if}
+	
+	
+	function initGoToTop(){
+    var b=jQuery("#footer").position().top - jQuery(window).height()-200;
+	jQuery(function(){jQuery(window).scroll(function(){if(jQuery(this).scrollTop()>100){jQuery("#backtotop ").addClass("showme ")}else{jQuery("#backtotop ").removeClass("showme ")}});
+	jQuery("#backtotop ").click(function(){jQuery("body,html ").animate({scrollTop:0},400);return false})});if(jQuery(window).scrollTop()==0){jQuery("#backtotop ").removeClass("showme ")}else{jQuery("#backtotop ").addClass("showme ")}}
+
+	initGoToTop();
 </script>
 </html>

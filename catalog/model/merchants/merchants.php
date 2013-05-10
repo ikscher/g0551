@@ -34,7 +34,7 @@ class ModelMerchantsMerchants extends Model {
 		$province    =$this->db->escape($data['province']);
 		$city    =$this->db->escape($data['city']);
 		$address    =$this->db->escape($data['address']);
-		/* $zone  =$this->db->escape($data['zone']); */
+		$zone  =$this->db->escape($data['zone']);
 		$tel  =$this->db->escape($data['tel']);
 		$mobile  =$this->db->escape($data['mobile']);
 		$fax    =$this->db->escape($data['fax']);
@@ -49,7 +49,7 @@ class ModelMerchantsMerchants extends Model {
 		
 		$result=$this->db->query("select customer_id,store_id from " . DB_PREFIX . "customer where customer_id={$user_id} and store_id>0");
 		if($result->num_rows==0){
-			$query=$this->db->query("INSERT INTO " . DB_PREFIX . "store SET name = '{$name}',province = {$province},city = {$city}, address = '{$address}',tel = '{$tel}',mobile = '{$mobile}', fax = '{$fax}', owner = '{$owner}',  introduce = '{$introduce}', map_x = '{$map_x}', map_y = '{$map_y}', logo = '{$logo}', createtime = '{$createtime}' ");
+			$query=$this->db->query("INSERT INTO " . DB_PREFIX . "store SET name = '{$name}',province = {$province},city = {$city},zone={$zone}, address = '{$address}',tel = '{$tel}',mobile = '{$mobile}', fax = '{$fax}', owner = '{$owner}',  introduce = '{$introduce}', map_x = '{$map_x}', map_y = '{$map_y}', logo = '{$logo}', createtime = '{$createtime}' ");
 			//将店铺ID写入会员信息表
 			$store_id=$this->db->getLastId();
 			$store_id=$this->cookie->OCAuthCode($this->request->cookie['storeid'],'DECODE');
@@ -59,7 +59,7 @@ class ModelMerchantsMerchants extends Model {
 			$this->db->query("UPDATE " . DB_PREFIX . "customer SET store_id={$store_id} Where customer_id={$user_id}");
 		}else{
 			$store_id=$result->row["store_id"];
-			$query=$this->db->query("UPDATE " . DB_PREFIX . "store SET name = '{$name}',province = {$province},city = {$city}, address = '{$address}',tel = '{$tel}',mobile = '{$mobile}', fax = '{$fax}', owner = '{$owner}',  introduce = '{$introduce}', map_x = '{$map_x}', map_y = '{$map_y}', logo = '{$logo}' Where store_id={$store_id}");
+			$query=$this->db->query("UPDATE " . DB_PREFIX . "store SET name = '{$name}',province = {$province},city = {$city},zone={$zone}, address = '{$address}',tel = '{$tel}',mobile = '{$mobile}', fax = '{$fax}', owner = '{$owner}',  introduce = '{$introduce}', map_x = '{$map_x}', map_y = '{$map_y}', logo = '{$logo}' Where store_id={$store_id}");
 		}
 		
 		if($query===true){

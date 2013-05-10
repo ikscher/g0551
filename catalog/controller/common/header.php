@@ -241,11 +241,16 @@ class ControllerCommonHeader extends Controller {
 		$this->data['checkout'] = $this->url->link('checkout/checkout', '', 'SSL');		
 		
 		$this->data['home'] = $this->url->link('common/home');//首页
-		$this->data['clothes'] = $this->url->link('common/home/clothes');//衣服首页
+		/* $this->data['clothes'] = $this->url->link('common/home/clothes');//衣服首页
 		$this->data['foods'] = $this->url->link('common/home/foods');//食品首页
 		$this->data['house'] = $this->url->link('common/home/house');//住房首页
-		$this->data['travel'] = $this->url->link('common/home/travel');//行首页
-		$this->data['joy'] = $this->url->link('common/home/joy');//爽首页
+		$this->data['travel'] = $this->url->link('common/home/travel');//行首页*/
+		$this->data['joy'] = $this->url->link('common/home/joy');//爽首页 
+		$this->data['clothes'] = $this->url->link('product/category','category_id='.ModelCatalogCategory::$CATEGORY_CLOTHES,'SSL');
+		$this->data['foods']   = $this->url->link('product/category','category_id='.ModelCatalogCategory::$CATEGORY_FOODS,'SSL');
+		$this->data['house']   = $this->url->link('product/category','category_id='.ModelCatalogCategory::$CATEGORY_HOUSE,'SSL');
+		$this->data['travel']   = $this->url->link('product/category','category_id='.ModelCatalogCategory::$CATEGORY_TRAVEL,'SSL');
+		//$this->data['joy']   = $this->url->link('product/category','category_id='.ModelCatalogCategory::$CATEGORY_JOY,'SSL');
 		
 		//我的穿悦
 		$this->data['account']=$this->url->link('account/account','','SSL');

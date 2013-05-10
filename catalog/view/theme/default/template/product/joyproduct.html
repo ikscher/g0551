@@ -7,7 +7,7 @@
 			<!---------->
 			<div class="share-user">
 				<p class="share-avatar"><a><img src="{$msg['poster']['avatar']}" width="50" height="50" /></a></p>
-				<p><a class="f16b">{$msg['poster']['nickname']}</a></p>
+				<p><a class="f16b">{if isset($msg['poster']['nickname'])}{$msg['poster']['nickname']}{else}游客{/if}</a></p>
 				<p><span class="when">{$msg['createtime']}</span><span>来自穿悦网</span></p>
 			</div>
 			<div class="share-cont">

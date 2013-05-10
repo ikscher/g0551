@@ -28,7 +28,7 @@
 			
 			<tr>
 				<td >{if $product['thumb']} <a href="{$product['href']}"><img src="{$product['thumb']}"  width="50" height="60"  alt="{$product['name']}" title="{$product['name']}" /></a>{/if}</td>
-				<td ><a href="{$product['href']}">{$product['name']}></a>
+				<td ><a href="{$product['href']}">{$product['name']}</a>
 				  {if !$product['stock']}
 				  <span class="stock">***</span>
 				  {/if}
@@ -41,7 +41,7 @@
 				  <small>{$product['reward']}</small>
 				  {/if}
 				</td>
-				<td ><span class="subadd"> - </span><input type="text" name="quantity[{$product['key']}]" value="{$product['quantity']}" size="1" /><span class="subadd">+</span></td>
+				<td ><span class="subadd"> - </span><input type="text" name="quantity[{$product['key']}]" value="{$product['quantity']}" size="4" maxlength="4" /><span class="subadd">+</span></td>
 				<td >{$product['price']}</td>
 				<td class="total_">{$product['total']}</td>
 			    <input type="submit" name="sbt" id="sbt" style="display:none" />
@@ -99,7 +99,7 @@
      
       
 		<div class="shoppingAndcheckout" >
-		    <a href="{$continue}"><img src="catalog/view/theme/default/image/order/continue.jpg" border="0" /></a>&nbsp;&nbsp;&nbsp;
+		    <!-- <a href="{$continue}"><img src="catalog/view/theme/default/image/order/continue.jpg" border="0" /></a>&nbsp;&nbsp;&nbsp; -->
 		    <a href="{$checkout}"><img src="catalog/view/theme/default/image/order/checkout.jpg" /></a>
 		</div>
 	</div>
@@ -137,20 +137,28 @@ $(".subadd").each(function(index){
 
 
 $(".subadd").each(function(index){
-  
+   
    $(this).click(function(){
-	   var operator=$.trim($(this).html());
-	   var v=parseInt($(this).siblings('input').val());
-	   if(operator=='-'){
-	       if (v>1) $(this).siblings('input').val(v-1);
-	   }else if(operator='+'){
-		   $(this).siblings('input').val(v+1);
-	   }
+	    var operator=$.trim($(this).html());
+	    var v=parseInt($(this).siblings('input').val());
+	    if(operator=='-'){
+	        if (v>1) $(this).siblings('input').val(v-1);
+	    }else if(operator='+'){
+		    $(this).siblings('input').val(v+1);
+	    }
+	    
+		//var total=0;
+	    //$('td.total_').each(function(i,w){
+	    //    total +=Number(parseFloat($(w).html()).toFixed(2));
+		//});
+	    
 	   setTimeout(function(){$("#sbt").click()},1000);
 	  
 	   
 	});
 });
+
+
 
 $(".deleteProduct").click(function(){
   if(!confirm("确认要删除这个产品吗?")){
@@ -163,11 +171,27 @@ $(document).ready(function(){
     var sum=0;
 	var x;
 	$('.total_').each(function(i,w){
-	    x=parseFloat($(w).html());
-	    sum =sum+x;
+	    
+	    x=$(w).html().replace(/\,/g,'');
+	    sum =Number(sum)+Number(x);
 	});
-	sum=Number(sum).toFixed(2);
+	
+	sum=sum.toFixed(2);
 	$('.show_total_').html(sum);
+});
+
+$('input[name^=quantity]').keydown(function(e){
+    if((e.keyCode>=48 && e.keyCode<=57) || (e.keyCode<=105 && e.keyCode>=96) || jQuery.inArray(e.keyCode,[8,46,37,39])>=0){
+	    return true;
+	}else{
+	    return false;
+	}
+});
+
+$('input[name^=quantity]').keyup(function(e){
+    if((e.keyCode>=48 && e.keyCode<=57) || (e.keyCode<=105 && e.keyCode>=96) || jQuery.inArray(e.keyCode,[8,46,37,39])>=0){
+	   $("#sbt").click();
+	}
 });
 //--></script>
 

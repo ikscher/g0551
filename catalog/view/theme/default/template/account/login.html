@@ -32,7 +32,7 @@
                 	<ul class="input_ul">
                     	<li>
                         	<dl class="IU_title">用户名：</dl>
-                        	<dl class="IU_input"><input type="text" class="IUI_box_L" name="username" value="手机号/邮箱" onclick="if(this.value=='手机号/邮箱'){this.value='';}" ></dl>
+                        	<dl class="IU_input"><input type="text" class="IUI_box_L" name="username" value="{if isset($username)}{$username}{else}手机号/邮箱{/if}" onclick="if(this.value=='手机号/邮箱'){this.value='';}" ></dl>
                         </li>
                         <li>
                         	<dl class="IU_title">密码：</dl>
@@ -85,7 +85,7 @@ var login={
 				   return false;
 				}
 		
-	
+	            /*
 				$.ajax({
 			        type:'post',
 				    url:'index.php?route=account/login/ajaxlogin',
@@ -93,20 +93,28 @@ var login={
 					async:false,
 					data:{username:username,password:password},
 				    success:function(json){
-						if(json.key=='no'){
+					    console.log(json);
+						if(json['key']=='no'){
 							//alert("错误的用户名和密码！");
 							$(".form_content ul li:eq(4)>dl:eq(0)").html("错误的用户名和密码！");
 							return false;
 						} 
 				    }
+
 				});
-				
+				*/
 			}
 			
 			
 	};
 	
 	$("#sbt").click(login.check);
+	
+	var error_login_info="{$error_login_info}";
+	if(error_login_info){
+	    $(".form_content ul li:eq(4)>dl:eq(0)").html(error_login_info);
+	}
+	
 	$(".input_ul").delegate("input[class^=IUI_box_L]","focus",function(){
 	      $(this).css('border','1px #F60 solid');
 	});

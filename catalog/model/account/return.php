@@ -23,7 +23,7 @@ class ModelAccountReturn extends Model {
 	    
 		$sql="SELECT r.return_id, r.order_id, r.username, rs.name as status, r.date_added FROM `" . DB_PREFIX . "return` r LEFT JOIN " . DB_PREFIX . "return_status rs ON (r.return_status_id = rs.return_status_id) WHERE r.customer_id = '" . $this->customer->getId()  . "'";
 		
-		$sql .= " ORDER BY r.return_id DESC LIMIT " . (int)$start . "," . (int)$limit;
+		$sql .= " ORDER BY r.return_id DESC LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
 		$query = $this->db->query($sql);
 		
 		return $query->rows;

@@ -62,6 +62,7 @@ class ControllerProductJoy extends Controller {
 			if(empty($content)) return ;
 			
 			$poster=$this->model_account_customer->getCustomer($content['customer_id']);
+			
 			$customer=$this->model_account_customer->getCustomer($this->customer->getId());
 		    
 			$this->data['customer']=$customer;
