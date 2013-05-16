@@ -2,7 +2,7 @@
 /* 商家中心 */
 
 .productImg{width:170px; height:170px;}
-
+.hidden{display:none;}
 .account_box1 {margin-bottom:20px; padding:1px; border:solid 1px #AED2FF;}
 .fa{color:#0579C6;}
 
@@ -340,3 +340,40 @@ table{ border-collapse:collapse; border-spacing:0; }
 .results{float:left;padding-right:20px;}
 
 .optionsAdd  table.list{border-collapse:collapse;}
+
+/*配送管理*/
+#postage-tpl .manage-list {margin: 0 auto;color: #404040;}
+#postage-tpl .manage-list .link-help {float: right;line-height: 25px;margin-right:10px;margin-top:10px;}
+#postage-tpl .manage-list .long-btn{display:block;margin-left:10px;margin-top:10px;}
+#postage-tpl .manage-list .section {margin-top: 10px;}
+#postage-tpl .manage-list .tbl-prefix {padding: 0 10px;height: 38px;line-height: 38px;background-color: #e8f2ff;border-width: 1px 1px 0;border-color: #bbb;border-style: solid;}
+#postage-tpl .manage-list .tbl-prefix .meta {float: right;color: #808080;}
+#postage-tpl .manage-list .tbl-prefix {line-height: 38px;}
+#postage-tpl .manage-list .tbl-prefix a {color: #36c;}
+#postage-tpl .manage-list .tbl-head {position: relative;}
+#postage-tpl .manage-list table {width: 100%;table-layout: fixed;border-width: 1px 0 0 1px;border-color: #bbb;border-style: solid;}
+.item-list-bd  #postage-tpl .tbl-head th {border-bottom:none;}
+#postage-tpl .manage-list th {height: 28px;font-weight: 400;}/* background-color: #f5f5f5; */
+#postage-tpl .manage-list th, #postage-tpl .manage-list td {border-width: 0 1px 1px 0;border-color: #bbb;border-style: solid;text-align: center;}
+/* #postage-tpl .manage-list .entity {margin-top: -1px;width: 100%;max-height: 190px;overflow-y: auto;_overflow-y: scroll;height: expression(this.scrollHeight>140 ? "140px":"auto");} */
+
+/* #postage-tpl .list-attach .pagination {float: right;}
+.pagination {height: 22px;font-size: 12px;font-family: Tahoma;margin-top: 3px;} */
+
+#postage-tpl .setting {margin: 0 auto;width: 760px;color: #404040;z-index: 1000;}
+#postage-tpl .setting h2 {height: 36px;line-height: 36px;font-size: 14px;}
+#postage-tpl .setting .form-elem {padding-left: 7em;margin-bottom: 8px;_height: 1%;overflow: hidden;}
+#postage-tpl .setting .label-like {float: left;margin-left: -7em;width: 7em;text-align: right;_position: absolute;}
+#postage-tpl .setting .input-address {width: 30em;}
+#postage-tpl .setting .input-text {height: 15px;line-height: 15px;padding: 1px 0;border: 1px solid #7f9db9;}
+#postage-tpl .setting input {vertical-align: middle;}
+#postage-tpl .setting a {color: #36c;}
+#postage-tpl .setting .field-note {color: #808080;}
+#postage-tpl .setting .express .section {margin-bottom: 8px;}
+#postage-tpl .setting .postage-detail {margin: 5px 0;padding: 5px;border: 1px solid #b2d1ff;}
+#postage-tpl .setting .btns {text-align: center;}
+#postage-tpl .setting .postage-detail .default {margin-top: 5px;padding: 0 15px 5px;line-height: 32px;background-color: #f3feed;}
+#postage-tpl .setting .tbl-attach {margin-top: 5px;line-height: 24px;}
+#postage-tpl .setting .postage-detail .default input {width: 6em;}
+.default .j_sellerBearFrePrice {text-align: left;}
+.j_sellerBearFrePrice {display: none;width: 4em;height: 15px;line-height: 15px;padding: 1px 0;border: 1px solid #7f9db9;text-align: right;}

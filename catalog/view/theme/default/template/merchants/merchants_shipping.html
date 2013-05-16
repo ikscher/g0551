@@ -1,0 +1,280 @@
+{$header}
+    <script type="text/javascript" src="catalog/view/javascript/jquery/ui/jquery-ui-1.8.16.custom.min.js"></script>
+    <link type="text/css" href="catalog/view/javascript/jquery/ui/themes/ui-lightness/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
+
+ 	<!--左侧begin-->
+	{$left}
+ 	<!--左侧end-->
+    <!--右侧begin-->
+	<div class="right">
+	<div class="account_box1">
+		<div class="item-list">
+		<div class="item-list-hd">
+		<ul class="item-list-tabs item-list-tabs-flexible clearfix" data-spm="9">
+			<li><a>配送方式管理</a></li>
+		</ul>	
+		</div>
+					
+		
+		<div class="item-list-bd">
+			<form name="templateList" id="templateList" action="template_list.htm" method="post">
+			<input type="hidden" name="fromType" value="fromListAll">
+			<input type="hidden" name="selectedPostageid" value="">
+			<input type="hidden" name="fenxiaoid" value="">
+			<input type="hidden" name="auctionid" value="">
+			<input type="hidden" name="auctionids" value="">
+			<input type="hidden" name="toolAuth" value="">
+			<input type="hidden" name="categoryid" value="">
+			
+            <div id="list">
+                <div id="content">
+                    <div id="postage-tpl">
+                        <div class="manage-list" id="J_TemplateList">
+                            <p style="overflow:hidden;*zoom:1">
+                               <span class="skin-gray">
+							        <a href="http://www.alibado.com/learning/study/detail-6797.htm" target="blank" class="link-help">使用帮助</a>
+								    <a href="http://delivery.taobao.com/user/template_setting.htm?fromType=fromListAll&amp;auctionids=&amp;auctionid=&amp;fenxiaoid=&amp;selectedPostageid=&amp;categoryid=" class="long-btn">新增运费模板 </a>
+								</span>
+                            </p>																								
+                            <div class="section J_Section" data-uid="1849257">
+                                <div class="tbl-prefix">
+                                    <span class="meta">|<a href="javascript:void(0);" class="J_Modify"> 修改</a> | <a href="#postage-tpl" data-action="http://delivery.taobao.com/user/template_delete.do?_tb_token_=e5eeb03418eee&amp;categoryid=&amp;uid={uid}" class="J_Delete">删除 </a></span>
+                                    <h3 class="J_Title">小于1公斤的产品</h3>
+                                </div>
+								<div class="tbl-head">
+                                    <table border="0" cellpadding="0" cellspacing="0">
+										<colgroup>
+											<col class="col-express">
+											<col class="col-area">
+											<col class="col-starting">
+											<col class="col-postage">
+											<col class="col-plus">
+											<col class="col-postageplus">
+										</colgroup>
+										<tbody><tr>
+											<th>运送方式</th>
+											<th>运送到</th>
+											<th>首件(个)</th>
+											<th>运费(元)</th>
+											<th>续件(个)</th>
+											<th>运费(元)</th>
+										</tr>
+										</tbody>
+									</table>
+                                </div>
+								<div class="entity">
+									<table border="0" cellpadding="0" cellspacing="0">
+										<colgroup>
+											<col class="col-express">
+											<col class="col-area">
+											<col class="col-starting">
+											<col class="col-postage">
+											<col class="col-plus">
+											<col class="col-postageplus">
+										</colgroup>
+										<tbody>
+											<tr>
+												<td>EMS</td>
+												<td class="cell-area">全国</td>
+													<td>1</td>
+													<td>25.00</td>
+													<td>1</td>
+													<td>0.00</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>	                                            																																	                                                                    </div>
+                        </div>
+					
+                        <div class="page">
+							<table>
+								<tr>
+									<td></td>
+								</tr>		
+							</table>
+						</div>
+                    </div>
+			    </div>
+			</div>
+			</form>
+		</div>   
+	    <!--end-->
+		
+ 	    <!--begin-->
+		<div class="item-list-bd" >	
+			<div id="list">
+				<div id="content">
+				<div id="postage-tpl">
+				<div class="setting">
+					<h2> 修改运费模板 </h2>
+						<form method="post" id="J_TPLForm">
+						<input name="_tb_token_" type="hidden" value="e5eeb03418eee">
+						
+						<input type="hidden" name="action" value="user/template_setting_action">
+						<input type="hidden" name="event_submit_do_create_template" value="1">
+						<input type="hidden" name="isUpdate" value="1">
+						<input id="J_Cube" type="hidden" value="m³">
+									<input type="hidden" name="templateId" value="1849257">
+						<input type="hidden" name="templateName" value="小于1公斤的产品">
+						<input type="hidden" name="auctionids" value="">
+						<input type="hidden" name="forceSellerPay" value="false">
+						<input type="hidden" name="unique" value="">
+						<input type="hidden" name="type" value="">
+						<input type="hidden" name="fromType" value="fromListAll">
+						<input type="hidden" name="selectedPostageid" value="">
+						<input type="hidden" name="postageid" value="">
+						<input type="hidden" name="auctionid" value="">
+						<input type="hidden" name="categoryid" value="">
+						<input type="hidden" name="isSupportWandV" value="">
+						<ul>
+							<li class="form-elem">
+								<label class="label-like" for="J_TemplateTitle">模板名称：</label>
+								<input type="text" name="_fm.cr._0.t" value="小于1公斤的产品" class="input-text input-address" autocomplete="off" id="J_TemplateTitle">
+								
+							</li>
+						
+							<li class="form-elem">
+								<span class="label-like">宝贝地址：</span>
+								<span id="J_AddressChoose">
+								   <select id="J_LogisProvince" name="province" title="所在省"><option value="">请选择...</option><option value="110000">北京</option><option value="120000">天津</option><option value="130000">河北省</option><option value="140000">山西省</option><option value="150000">内蒙古自治区</option><option value="210000">辽宁省</option><option value="220000">吉林省</option><option value="230000">黑龙江省</option><option value="310000">上海</option><option value="320000">江苏省</option><option value="330000">浙江省</option><option value="340000">安徽省</option><option value="350000">福建省</option><option value="360000">江西省</option><option value="370000">山东省</option><option value="410000">河南省</option><option value="420000">湖北省</option><option value="430000">湖南省</option><option value="440000">广东省</option><option value="450000">广西壮族自治区</option><option value="460000">海南省</option><option value="500000">重庆</option><option value="510000">四川省</option><option value="520000">贵州省</option><option value="530000">云南省</option><option value="540000">西藏自治区</option><option value="610000">陕西省</option><option value="620000">甘肃省</option><option value="630000">青海省</option><option value="640000">宁夏回族自治区</option><option value="650000">新疆维吾尔自治区</option><option value="710000">台湾省</option><option value="810000">香港特别行政区</option><option value="820000">澳门特别行政区</option><option value="990000">海外</option></select>&nbsp;省
+								   <select id="J_LogisCity" name="city" title="市"><option value="">请选择...</option></select>&nbsp;市
+								   <select id="J_LogisArea" name="county" title="区"><option value="">请选择...</option></select>&nbsp;区
+								</span>
+							</li>
+							<li class="form-elem">
+								<span class="label-like">发货时间：</span>
+								<span>
+									<select name="consignDate" id="J_prescription">
+										<option>请选择..</option> 
+										<option value="12">12小时内</option>
+										<option value="24">24小时内</option>
+										<option value="48">48小时内</option>
+										<option value="72">72小时内</option>
+										<option value="120">5天内</option>
+										<option value="168">7天内</option>
+										<option value="360">15天内</option>
+										<option value="720">30天内</option>
+										<option value="1080">45天内</option>
+									</select>
+								</span>
+								<span>承诺买家付款后该时间内录入物流信息并发货，以物流公司收单信息为准。
+							</li>
+						   
+							<li class="form-elem">
+								<span class="label-like">是否包邮：</span>
+								<span><input type="radio" name="bearFreight" checked="" value="0" id="J_buyerBearFre">
+										<label for="J_buyerBearFre">买家承担运费</label>
+										<input type="radio" name="bearFreight" value="2" id="J_sellerBearFre">
+										<label for="J_sellerBearFre">卖家承担运费</label>
+								</span>
+							</li>
+						
+							<li class="form-elem calc-method">
+								<span class="label-like">计价方式：</span>
+								<span>
+									<input type="hidden" name="valuation" value="0">
+									<label>按件数</label>
+								</span>
+							</li>
+						
+							<li class="form-elem express">
+								<span class="label-like">运送方式：</span>
+								<p>
+									<span class="field-note">除指定地区外，其余地区的运费采用“默认运费”</span>
+								</p>
+								<div class="section J_Section">
+									<p>
+										<input type="checkbox" name="tplType" value="-4" id="J_DeliveryEXPRESS" class="J_Delivery">
+										<label for="J_DeliveryEXPRESS">快递</label>
+									</p>
+								
+									<div class="postage-detail hidden J_PostageDetail" data-delivery="express"></div>
+                                </div>
+								
+								<div class="section J_Section">
+									<p>
+										<input type="checkbox" name="tplType" value="-7" id="J_DeliveryEMS" class="J_Delivery">
+										<label for="J_DeliveryEMS">EMS</label>
+									</p>
+									<div class="postage-detail hidden J_PostageDetail" data-delivery="ems" style=""></div>
+								</div>
+								<div class="section J_Section">
+									<p>
+										<input type="checkbox" name="tplType" value="-1" id="J_DeliveryPOST" class="J_Delivery">
+										<label for="J_DeliveryPOST">平邮</label>
+									</p>
+									<div class="postage-detail hidden J_PostageDetail" data-delivery="post"></div>
+								</div>
+							</li>
+						</ul>
+						<p class="btns">
+							<button type="submit" class="save">
+								保存并返回
+							</button>
+							<button type="button" class="cancel">
+								取消
+							</button>
+						</p>
+						<input type="hidden" name="deliveryJson" id="J_TPLPostData" value="">
+						<input type="hidden" name="deliveryAddress" id="J_address" value="">
+						<input type="hidden" name="deliveryPrescription" id="J_deliveryPrescription" value="">
+						<input type="hidden" name="hasConsignDate" value="false">
+					</form>
+				</div>
+				</div>
+				</div>
+			</div>
+			
+	
+		</div>   
+		<!--end-->
+		
+		</div>
+ 	</div>
+    </div>
+ 	<!--右侧end-->
+</div>
+
+
+{$footer}
+<script type="text/javascript" src="catalog/view/javascript/merchants.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+	    $('.right .item-list-bd:eq(0)').css({'display':'block'});
+		$('.right .item-list-bd:eq(1)').css({'display':'none'});
+	
+	});
+	
+	//修改
+	$('.J_Modify').click(function(){
+	    $('.right .item-list-bd:eq(1)').css({'display':'block'});
+		$('.right .item-list-bd:eq(0)').css({'display':'none'});
+	
+	});
+	
+	//保存并返回
+	$('.btns .save').click(function(){
+	    location.href='index.php?route=merchants/shipping';
+	});
+	
+	//取消
+	$('.btns .cancel').click(function(){
+	    location.href='index.php?route=merchants/shipping';
+	});
+	
+    $('.J_Delivery').click(function(){ 
+	    if($(this).parent().next('div').children('.entity').length<=0 && $(this).prop('checked')==true){
+			var html='<div class="entity"><div class="default J_DefaultSet">默认运费：<input type="text" name="ems_start" value="1" data-field="start" class="input-text " autocomplete="off" maxlength="6" aria-label="默认运费件数"> 件内，'+
+													'<input type="text" class="j_sellerBearFrePrice" value="0.00" disabled="disabled" style="display: none;"><input type="text" data-field="postage" name="ems_postage" value="25.00" class="input-text " autocomplete="off" maxlength="6" aria-label="默认运费价格" style=""> 元，'+
+													'每增加 <input type="text" name="ems_plus" data-field="plus" value="1" class="input-text " autocomplete="off" maxlength="6" aria-label="每加件"> 件，'+
+													'增加运费 <input type="text" class="j_sellerBearFrePrice" value="0.00" disabled="disabled" style="display: none;"><input type="text" name="ems_postageplus" data-field="postageplus" value="0.00" class="input-text " autocomplete="off" maxlength="6" aria-label="加件运费" style="">元'+
+													'<div class="J_DefaultMessage"></div></div><div class="tbl-attach"><div class="J_SpecialMessage"></div><a href="#" class="J_AddRule">为指定地区城市设置运费</a></div></div>';
+			//console.log(html);
+			$(this).parent().next('div').removeClass('hidden');
+			$(this).parent().next('div').append(html);
+		}else{
+		    $(this).parent().next('div').addClass('hidden');
+		    $(this).parent().next('div').children('.entity').remove();
+		}
+    });
+</script>
