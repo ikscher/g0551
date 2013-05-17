@@ -16,11 +16,37 @@ class ControllerMerchantsShipping extends Controller {
 	public function index() {
 		$this->check_customer();
 		
-		//$this->load->model('merchants/shipping');
+		$this->load->model('merchants/shipping');
 		
-		//$payments=$this->model_merchants_shipping->getEnabledPayments();
+		$store_id=$this->cookie->OCAuthCode($this->request->cookie['storeid'],'DECODE');
+		if(empty($store_id)){
+			$this->showMessage("您还未登陆");
+		}
 		
-		//$this->data['payments']=$payments;
+		$page=isset($this->request->get['page'])?$this->request->get['page']:1;
+		$data=array();
+		$limit=5;
+		$data=array(
+		        'store_id'=>$store_id,
+		        'status'=>1,
+		        'start'=>($page-1)*$limit,
+				'limit'=>$limit
+			);
+		
+		$shippings=$this->model_merchants_shipping->getStoreShippings($data);
+		$total=$this->model_merchants_shipping->getTotalStoreShippings($data);
+		
+		$this->data['shippings']=$shippings;
+	
+		
+		$pagination = new Pagination('results','links');
+		$pagination->total = $total;
+		$pagination->page = $page;
+		$pagination->limit = $limit;
+		$pagination->text = $this->language->get('text_pagination');
+		$pagination->url = $this->url->link('merchants/shipping', 'page={page}', 'SSL');
+		
+		$this->data['pagination'] = $pagination->render();
 		
 		$this->children = array(
 			'merchants/left',
@@ -53,34 +79,31 @@ class ControllerMerchantsShipping extends Controller {
 	}
 	
 	public function update(){
-	    $this->load->language('merchants/payment');
-	    $this->load->model('merchants/payment');
+	    //$this->load->language('merchants/shipping');
+	    $this->load->model('merchants/shipping');
         
+		$shipping_id=$this->request->get['shipping_id'];
 		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
-		    $id=$this->request->post['id'];
-			if(!empty($id)){
-				if($this->model_merchants_payment->editStorePayment($id,$this->request->post)){
-                    exit('yes');
-                }else{
-				    exit('no');
+		    
+			if(!empty($shipping_id)){
+				if($this->model_merchants_payment->editStoreShipping($shipping_id,$this->request->post)){
+                    $this->redirect($this->url->link('merchants/shipping/update', '','SSL'));
 				}
 			}
 		}
 		
-	    $this->getForm();
+	    $this->getForm($shipping_id);
 	}
 	
 	
 	public function insert(){
-        $this->load->language('merchants/payment');
-		$this->load->model('merchants/payment');
+        //$this->load->language('merchants/payment');
+		$this->load->model('merchants/shipping');
         
 		
 		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
-			if($this->model_merchants_payment->addStorePayment($this->request->post)){
-				exit('yes');
-			}else{
-			    exit('no');
+			if($this->model_merchants_shipping->addStoreShipping($this->request->post)){
+				$this->redirect($this->url->link('merchants/shipping/insert','','SSL'));
 			}
 		}
 		
@@ -89,7 +112,7 @@ class ControllerMerchantsShipping extends Controller {
 	
 	
 	
-	public function getForm() {
+	public function getForm($shipping_id='') {
 	
 		$this->document->settitle($this->language->get('heading_title'));
 		
@@ -112,11 +135,6 @@ class ControllerMerchantsShipping extends Controller {
 		}
 		
 		
-	    $this->data['payment_bank']=$this->model_merchants_payment->getPaymentBanks();
-		
-		
-		$this->data['heading_title'] = $this->language->get('heading_title');
-
 		$this->data['text_enabled'] = $this->language->get('text_enabled');
 		$this->data['text_disabled'] = $this->language->get('text_disabled');
 		
@@ -138,8 +156,6 @@ class ControllerMerchantsShipping extends Controller {
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
 
-		$this->data['tab_general'] = $this->language->get('tab_general');
-
  		if (isset($this->error['warning'])) {
 			$this->data['error_warning'] = $this->error['warning'];
 		} else {
@@ -151,90 +167,17 @@ class ControllerMerchantsShipping extends Controller {
 		} else {
 			$this->data['error_email'] = '';
 		}
-
-        $code=isset($this->request->get['code'])?$this->request->get['code']:'';
-		$this->data['code']=$code;
-		
-		if (!isset($this->request->get['id'])) {
-			$this->data['action'] = $this->url->link('setting/payment/insert', '', 'SSL');
-			
+        
+		$shipping_info=array();
+		if (empty($shipping_id)) {
+			$this->data['action'] = $this->url->link('merchants/shipping/insert', '', 'SSL');
+			$this->data['heading_title'] = '新增';//$this->language->get('heading_title');
 		} else {
-			$this->data['action'] = $this->url->link('setting/payment/update','&id=' . $this->request->get['id'], 'SSL');
-			
+			$this->data['action'] = $this->url->link('merchants/shipping/update','&shipping_id=' . $shipping_id, 'SSL');
+			$this->data['heading_title'] = '修改';
+			$shipping_info=$this->model_merchants_shipping->getStoreShipping($shipping_id);
 		}
-		
-		$id=!empty($this->request->get['id'])?$this->request->get['id']:'';
-		$this->data['id']=$id;
-		if(!empty($id)){
-		    $paymentInfo=$this->model_merchants_payment->getStorePayment($id);
-		
-		}
-		
-		// $this->data['cancel'] =  HTTPS_SERVER . 'index.php?route=setting/payment';
-		
-		
-		$this->data['payment_code']=isset($paymentInfo['payment_code'])?$paymentInfo['payment_code']:$code;
-		//$this->data['store_id']=isset($paymentInfo['store_id'])?$paymentInfo['store_id']:'';
-		if (isset($this->request->post['seller_email'])) {
-			$this->data['seller_email'] = $this->request->post['seller_email'];
-		} else {
-			$this->data['seller_email'] = isset($paymentInfo['seller_email'])?$paymentInfo['seller_email']:'';
-		}
-
-		if (isset($this->request->post['security_code'])) {
-			$this->data['security_code'] = $this->request->post['security_code'];
-		} else {
-			$this->data['security_code'] = isset($paymentInfo['security_code'])?$paymentInfo['security_code']:'';
-		}
-
-		if (isset($this->request->post['partner'])) {
-			$this->data['partner'] = $this->request->post['partner'];
-		} else {
-			$this->data['partner'] = isset($paymentInfo['partner'])?$paymentInfo['partner']:'';
-		}		
-
-		if (isset($this->request->post['trade_type'])) {
-			$this->data['trade_type'] = $this->request->post['trade_type'];
-		} else {
-			$this->data['trade_type'] = isset($paymentInfo['trade_type'])?$paymentInfo['trade_type']:'';
-		}
-		
-		if (isset($this->request->post['description'])) {
-			$this->data['description'] = $this->request->post['description'];
-		} else {
-			$this->data['description'] = isset($paymentInfo['description'])?$paymentInfo['description']:'';
-		}
-		
-	/*	if (isset($this->request->post['alipay_anti_phishing'])) {
-			$this->data['alipay_anti_phishing'] = $this->request->post['alipay_anti_phishing'];
-		} else {
-			$this->data['alipay_anti_phishing'] = $this->config->get('alipay_anti_phishing');
-		}
-		*/
-		if (isset($this->request->post['order_status_id'])) {
-			$this->data['order_status_id'] = $this->request->post['order_status_id'];
-		} else {
-			$this->data['order_status_id'] = isset($paymentInfo['order_status_id'])?$paymentInfo['order_status_id']:'';
-		} 
-
-	
-		$this->data['order_statuses'] = $this->model_merchants_payment->getOrderStatuses();
-			
-		
-		if (isset($this->request->post['status'])) {
-			$this->data['status'] = $this->request->post[''];
-		} else {
-			$this->data['status'] = isset($paymentInfo['status'])?$paymentInfo['status']:'';
-		}
-		
-		if (isset($this->request->post['sort_order'])) {
-			$this->data['sort_order'] = $this->request->post['sort_order'];
-		} else {
-			$this->data['sort_order'] =isset($paymentInfo['sort_order'])?$paymentInfo['sort_order']:'';
-		}
-		
-		
-		
+        $this->data['shipping_info']=$shipping_info;
 		
 		$this->children = array(
 			'merchants/left',
@@ -242,17 +185,17 @@ class ControllerMerchantsShipping extends Controller {
 			'merchants/header'		
 		);
 		
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/merchants/merchants_payment_form.html')) {
-			$this->template = $this->config->get('config_template') . '/template/merchants/merchants_payment_form.html';
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/merchants/merchants_shipping_form.html')) {
+			$this->template = $this->config->get('config_template') . '/template/merchants/merchants_shipping_form.html';
 		} else {
-			$this->template = 'default/template/merchants/merchants_payment_form.html';
+			$this->template = 'default/template/merchants/merchants_shipping_form.html';
 		}
 		
 		$this->response->setOutput($this->render());
 	}
 	
 	
-	/* private function validateForm() {
+	private function validateForm() {
 	
 		if (!$this->request->post['seller_email']) {
 			$this->error['email'] = $this->language->get('error_email');
@@ -271,7 +214,7 @@ class ControllerMerchantsShipping extends Controller {
 		} else {
 			return FALSE;
 		}	
-	} */
+	} 
 
 	
 }

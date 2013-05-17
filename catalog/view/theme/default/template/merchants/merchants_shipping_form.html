@@ -1,0 +1,232 @@
+{$header}
+    <script type="text/javascript" src="catalog/view/javascript/merchants.js"></script>
+    <script type="text/javascript" src="catalog/view/javascript/area.js"></script>
+ 	<!--左侧begin-->
+	{$left}
+ 	<!--左侧end-->
+    <!--右侧begin-->
+	<div class="right">
+	<div class="account_box1">
+		<div class="item-list">
+		<div class="item-list-hd">
+		<ul class="item-list-tabs item-list-tabs-flexible clearfix" data-spm="9">
+			<li><a>配送方式管理</a></li>
+		</ul>	
+		</div>
+
+ 	    <!--begin-->
+		<div class="item-list-bd" >	
+			<div id="list">
+				<div id="content">
+				<div id="postage-tpl">
+				<div class="setting">
+					<h2> {$heading_title}运费模板 </h2>
+						<form method="post" id="J_TPLForm" action="{$action}">
+						<input name="_tb_token_" type="hidden" value="e5eeb03418eee">
+						
+						<input type="hidden" name="action" value="user/template_setting_action">
+						<input type="hidden" name="event_submit_do_create_template" value="1">
+						<input type="hidden" name="isUpdate" value="1">
+						<input id="J_Cube" type="hidden" value="m³">
+									<input type="hidden" name="templateId" value="1849257">
+						<input type="hidden" name="templateName" value="小于1公斤的产品">
+						<input type="hidden" name="auctionids" value="">
+						<input type="hidden" name="forceSellerPay" value="false">
+						<input type="hidden" name="unique" value="">
+						<input type="hidden" name="type" value="">
+						<input type="hidden" name="fromType" value="fromListAll">
+						<input type="hidden" name="selectedPostageid" value="">
+						<input type="hidden" name="postageid" value="">
+						<input type="hidden" name="auctionid" value="">
+						<input type="hidden" name="categoryid" value="">
+						<input type="hidden" name="isSupportWandV" value="">
+						<ul>
+							<li class="form-elem">
+								<label class="label-like" for="J_TemplateTitle">模板名称：</label>
+								<input type="text" name="_fm.cr._0.t" {if isset($shipping_info['shipping_desc'])}value="{$shipping_info['shipping_desc']}"{else}value=""{/if} class="input-text input-address" autocomplete="off" id="J_TemplateTitle">
+								
+							</li>
+						
+							<li class="form-elem">
+								<span class="label-like">宝贝地址：</span>
+								<span id="J_AddressChoose">
+								  <script type="text/javascript">var zone={if isset($shipping_info['zone'])}{$shipping_info['zone']}{else}0{/if};ylmf_area.make_select(zone);</script>
+								</span>
+							</li>
+							<li class="form-elem">
+								<span class="label-like">发货时间：</span>
+								<span>
+									<select name="consignDate" id="J_prescription">
+										<option>请选择..</option> 
+										<option value="12" {if isset($shipping_info['detach_time']) && $shipping_info['detach_time']==12}selected="selected"{/if}>12小时内</option>
+										<option value="24" {if isset($shipping_info['detach_time']) && $shipping_info['detach_time']==24}selected="selected"{/if}>24小时内</option>
+										<option value="48" {if isset($shipping_info['detach_time']) && $shipping_info['detach_time']==48}selected="selected"{/if}>48小时内</option>
+										<option value="72" {if isset($shipping_info['detach_time']) && $shipping_info['detach_time']==72}selected="selected"{/if}>72小时内</option>
+										<option value="120" {if isset($shipping_info['detach_time']) && $shipping_info['detach_time']==120}selected="selected"{/if}>5天内</option>
+										<option value="168" {if isset($shipping_info['detach_time']) && $shipping_info['detach_time']==168}selected="selected"{/if}>7天内</option>
+										<option value="360" {if isset($shipping_info['detach_time']) && $shipping_info['detach_time']==360}selected="selected"{/if}>15天内</option>
+										<option value="720" {if isset($shipping_info['detach_time']) && $shipping_info['detach_time']==720}selected="selected"{/if}>30天内</option>
+										<option value="1080" {if isset($shipping_info['detach_time']) && $shipping_info['detach_time']==1080}selected="selected"{/if}>45天内</option>
+									</select>
+								</span>
+								<span>承诺买家付款后该时间内录入物流信息并发货，以物流公司收单信息为准。
+							</li>
+						   
+							<li class="form-elem">
+								<span class="label-like">是否包邮：</span>
+								<span><input type="radio" name="bearFreight" checked="" value="0" id="J_buyerBearFre">
+										<label for="J_buyerBearFre">买家承担运费</label>
+										<input type="radio" name="bearFreight" value="2" id="J_sellerBearFre">
+										<label for="J_sellerBearFre">卖家承担运费</label>
+								</span>
+							</li>
+						
+							<li class="form-elem calc-method">
+								<span class="label-like">计价方式：</span>
+								{if !empty($shipping_info)}
+									{if isset($shipping_info['type']) && $shipping_info['type']==1}
+									<span><label for="J_CalcRuleNumber">&nbsp;按件数</label></span>
+									{elseif isset($shipping_info['type']) && $shipping_info['type']==2}
+									<span><label for="J_CalcRuleNumber">&nbsp;按重量</label></span>
+									{elseif isset($shipping_info['type']) && $shipping_info['type']==3}
+									<span><label for="J_CalcRuleNumber">&nbsp;按体积</label></span>
+									{/if}
+								{else}
+									<span>
+										<input type="radio" name="valuation" checked="checked" value="1" class="J_CalcRule" data-type="number" id="J_CalcRuleNumber">
+										<label for="J_CalcRuleNumber">&nbsp;按件数</label>
+									</span>
+									<span>
+										<input type="radio" name="valuation" value="2" class="J_CalcRule" data-type="weight" id="J_CalcRuleWeight">
+										<label for="J_CalcRuleWeight">&nbsp;按重量</label>
+									</span>
+									<span>
+										<input type="radio" name="valuation" value="3" class="J_CalcRule" data-type="volume" id="J_CalcRuleVolume">
+										<label for="J_CalcRuleVolume">&nbsp;按体积</label>
+									</span>
+								{/if}
+							</li>
+						
+							<li class="form-elem express">
+								<span class="label-like">运送方式：</span>
+								<p>
+									<span class="field-note">除指定地区外，其余地区的运费采用“默认运费”</span>
+								</p>
+								<div class="section J_Section">
+									<p>
+										<input type="checkbox" name="tplType" value="-4" id="J_DeliveryEXPRESS" class="J_Delivery">
+										<label for="J_DeliveryEXPRESS">快递</label>
+									</p>
+								
+									<div class="postage-detail hidden J_PostageDetail" data-delivery="express"></div>
+                                </div>
+								
+								<div class="section J_Section">
+									<p>
+										<input type="checkbox" name="tplType" value="-7" id="J_DeliveryEMS" class="J_Delivery">
+										<label for="J_DeliveryEMS">EMS</label>
+									</p>
+									<div class="postage-detail hidden J_PostageDetail" data-delivery="ems" style=""></div>
+								</div>
+								<div class="section J_Section">
+									<p>
+										<input type="checkbox" name="tplType" value="-1" id="J_DeliveryPOST" class="J_Delivery">
+										<label for="J_DeliveryPOST">平邮</label>
+									</p>
+									<div class="postage-detail hidden J_PostageDetail" data-delivery="post"></div>
+								</div>
+							</li>
+						</ul>
+						<p class="btns">
+							<button type="submit" class="save">保存并返回</button>
+							<button type="button" class="cancel">取消</button>
+						</p>
+						<input type="hidden" name="deliveryJson" id="J_TPLPostData" value="">
+						<input type="hidden" name="deliveryAddress" id="J_address" value="">
+						<input type="hidden" name="deliveryPrescription" id="J_deliveryPrescription" value="">
+						<input type="hidden" name="hasConsignDate" value="false">
+					</form>
+				</div>
+				</div>
+				</div>
+			</div>
+			
+	
+		</div>   
+		<!--end-->
+		
+		
+		</div>
+ 	</div>
+    </div>
+ 	<!--右侧end-->
+</div>
+
+
+{$footer}
+
+<script type="text/javascript">
+
+	//保存并返回
+	$('.btns .save').click(function(){
+	    location.href='index.php?route=merchants/shipping';
+	});
+	
+	//取消
+	$('.btns .cancel').click(function(){
+	    location.href='index.php?route=merchants/shipping';
+	});
+	
+	var obj={
+	     flag:false,
+		 freight:''
+	};
+	
+	
+	$('input[name=valuation]').change(function(e){
+	    
+	    //if($(this).prop('checked')==true) return false;
+	    if(confirm('切换计价方式后，所设置当前模板的运输信息将被清空，确定继续么？')){
+		    obj.flag=true;
+		}else{
+			obj.flag=false;
+		}
+	});
+	
+	$('input[name=valuation]').click(function(){
+	    return obj.flag;
+	});
+	
+	obj.freight=$('input[name=bearFreight]').val();
+	
+	$('input[name=bearFreight]').click(function(){
+	    obj.freight=$(this).val();
+		if(obj.freight==2){
+			alert('选择 卖家承担运费后，所有区域的运费将设置为0元且原运费无法还原，请保存原有运费设置。');
+	    }else{
+		    alert('您的运费将变为未设置状态，请设置运费！');
+		}
+		
+	});
+	
+	var html='<div class="entity"><div class="default J_DefaultSet">默认运费：<input type="text" name="ems_start" value="1" data-field="start" class="input-text " autocomplete="off" maxlength="6" aria-label="默认运费件数"> 件内，'+
+														'<input type="text" class="j_sellerBearFrePrice" value="0.00" disabled="disabled" style="display: none;"><input type="text" data-field="postage" name="ems_postage" value="25.00" class="input-text " autocomplete="off" maxlength="6" aria-label="默认运费价格" style=""> 元，'+
+														'每增加 <input type="text" name="ems_plus" data-field="plus" value="1" class="input-text " autocomplete="off" maxlength="6" aria-label="每加件"> 件，'+
+														'增加运费 <input type="text" class="j_sellerBearFrePrice" value="0.00" disabled="disabled" style="display: none;"><input type="text" name="ems_postageplus" data-field="postageplus" value="0.00" class="input-text " autocomplete="off" maxlength="6" aria-label="加件运费" style="">元'+
+														'<div class="J_DefaultMessage"></div></div><div class="tbl-attach"><div class="J_SpecialMessage"></div><a href="#" class="J_AddRule">为指定地区城市设置运费</a></div></div>';
+				//console.log(html);
+	
+	$('.J_Delivery').click(function(){ 
+	    if(obj.freight==0){
+			if($(this).parent().next('div').children('.entity').length<=0 && $(this).prop('checked')==true){
+				
+				$(this).parent().next('div').removeClass('hidden');
+				$(this).parent().next('div').append(html);
+			}else{
+				$(this).parent().next('div').addClass('hidden');
+				$(this).parent().next('div').children('.entity').remove();
+			}
+		}
+	});
+	
+</script>
