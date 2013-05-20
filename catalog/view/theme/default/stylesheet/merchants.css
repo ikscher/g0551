@@ -377,3 +377,8 @@ table{ border-collapse:collapse; border-spacing:0; }
 #postage-tpl .setting .postage-detail .default input {width: 6em;}
 .default .j_sellerBearFrePrice {text-align: left;}
 .j_sellerBearFrePrice {display: none;width: 4em;height: 15px;line-height: 15px;padding: 1px 0;border: 1px solid #7f9db9;text-align: right;}
+
+.msg .error, .msg .stop, .msg .alert, .msg .attention, .msg .tips, .msg .ok, .msg .notice, .msg .question, .msg .help, .msg .small-help {color: #404040;background: url(../image/msg_bg.png) no-repeat;border: 1px solid #ddd;float: left;padding: 2px 10px 2px 23px;line-height: 18px;}
+.msg .error {background-position: 3px 3px;border-color: #ff8080;background-color: #fff2f2;}
+#postage-tpl .setting span.error, #postage-tpl .setting span.stop {float: none;display: inline-block;}
+#postage-tpl .setting span.msg {margin-right: 3px;}

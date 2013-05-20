@@ -43,7 +43,7 @@
 						<ul>
 							<li class="form-elem">
 								<label class="label-like" for="J_TemplateTitle">模板名称：</label>
-								<input type="text" name="_fm.cr._0.t" {if isset($shipping_info['shipping_desc'])}value="{$shipping_info['shipping_desc']}"{else}value=""{/if} class="input-text input-address" autocomplete="off" id="J_TemplateTitle">
+								<input type="text" name="t_x" {if isset($shipping_info['shipping_desc'])}value="{$shipping_info['shipping_desc']}"{else}value=""{/if} class="input-text input-address" autocomplete="off" id="J_TemplateTitle">
 								
 							</li>
 						
@@ -114,7 +114,7 @@
 								</p>
 								<div class="section J_Section">
 									<p>
-										<input type="checkbox" name="tplType" value="-4" id="J_DeliveryEXPRESS" class="J_Delivery">
+										<input type="checkbox" name="tplType" value="1" id="J_DeliveryEXPRESS" class="J_Delivery">
 										<label for="J_DeliveryEXPRESS">快递</label>
 									</p>
 								
@@ -123,14 +123,14 @@
 								
 								<div class="section J_Section">
 									<p>
-										<input type="checkbox" name="tplType" value="-7" id="J_DeliveryEMS" class="J_Delivery">
+										<input type="checkbox" name="tplType" value="2" id="J_DeliveryEMS" class="J_Delivery">
 										<label for="J_DeliveryEMS">EMS</label>
 									</p>
 									<div class="postage-detail hidden J_PostageDetail" data-delivery="ems" style=""></div>
 								</div>
 								<div class="section J_Section">
 									<p>
-										<input type="checkbox" name="tplType" value="-1" id="J_DeliveryPOST" class="J_Delivery">
+										<input type="checkbox" name="tplType" value="3" id="J_DeliveryPOST" class="J_Delivery">
 										<label for="J_DeliveryPOST">平邮</label>
 									</p>
 									<div class="postage-detail hidden J_PostageDetail" data-delivery="post"></div>
@@ -169,7 +169,32 @@
 
 	//保存并返回
 	$('.btns .save').click(function(){
-	    location.href='index.php?route=merchants/shipping';
+	    $('p.msg').empty();
+		$('span.msg').empty();
+	    if(!$('input[name=t_x]').val()){
+		    var x_='<p class="msg"><span class="error">请选择宝贝所在地</span></p>';
+			$('#J_AddressChoose').after(x_);
+			
+		}
+		
+		
+		if($('input[name=express_postage]').length>0){
+		    var f_= parseFloat($('input[name=express_postage]').val());
+			var p_= parseFloat($('input[name=express_postageplus]').val());
+		    var x_='<span class="msg J_Message"><span class="error">首费应输入0.00至999.99的数字</span></span>';
+			var y_='<span class="msg J_Message"><span class="error">续费应输入0.00至999.99的数字</span></span>';
+			if(isNaN(f_) || f_>999.99 || f_<0){
+				$('input[name=express_postage]').parent().children('.J_DefaultMessage').append(x_);
+			}
+			
+			if(isNaN(p_) || p_>999.99 || p_<0){
+				$('input[name=express_postageplus]').parent().children('.J_DefaultMessage').append(y_);
+			}
+			
+		}
+		
+		return false;
+	    
 	});
 	
 	//取消
@@ -179,7 +204,9 @@
 	
 	var obj={
 	     flag:false,
-		 freight:''
+		 freight:'',
+		 CalcRule:'',
+		 html:''
 	};
 	
 	
@@ -199,32 +226,78 @@
 	
 	obj.freight=$('input[name=bearFreight]').val();
 	
-	$('input[name=bearFreight]').click(function(){
+	
+	
+	var calc={
+	        'number':'件',
+			'weight':'kg',
+			'volume':'m³'};
+	
+    obj.html='<div class="entity"><div class="default J_DefaultSet">默认运费：<input type="text" name="ems_start" value="1" data-field="start" class="input-text " autocomplete="off" maxlength="6" aria-label="默认运费件数"> '+calc.number+
+														'内，<input type="text" class="j_sellerBearFrePrice" value="0.00" disabled="disabled" style="display: none;"><input type="text" data-field="postage" name="ems_postage" value="" class="input-text " autocomplete="off" maxlength="6" aria-label="默认运费价格" style=""> 元，'+
+														'每增加 <input type="text" name="ems_plus" data-field="plus" value="1" class="input-text " autocomplete="off" maxlength="6" aria-label="每加件"> '+calc.number+
+														'，增加运费 <input type="text" class="j_sellerBearFrePrice" value="0.00" disabled="disabled" style="display: none;"><input type="text" name="ems_postageplus" data-field="postageplus" value="" class="input-text " autocomplete="off" maxlength="6" aria-label="加件运费" style="">元'+
+														'<div class="J_DefaultMessage"></div></div><div class="tbl-attach"><div class="J_SpecialMessage"></div><a href="#" class="J_AddRule">为指定地区城市设置运费</a></div></div>';
+	
+    $('input[name=bearFreight]').click(function(){
 	    obj.freight=$(this).val();
 		if(obj.freight==2){
 			alert('选择 卖家承担运费后，所有区域的运费将设置为0元且原运费无法还原，请保存原有运费设置。');
+			$('.postage-detail').addClass('hidden');
+			$('.entity').remove();
 	    }else{
 		    alert('您的运费将变为未设置状态，请设置运费！');
+			$('.J_Delivery').each(function(i,w){
+			    if($(w).prop('checked')==true){
+				    $(w).parent().next('div').removeClass('hidden');
+					$(w).parent().next('div').append(obj.html);
+				}
+			});
 		}
 		
 	});
 	
-	var html='<div class="entity"><div class="default J_DefaultSet">默认运费：<input type="text" name="ems_start" value="1" data-field="start" class="input-text " autocomplete="off" maxlength="6" aria-label="默认运费件数"> 件内，'+
-														'<input type="text" class="j_sellerBearFrePrice" value="0.00" disabled="disabled" style="display: none;"><input type="text" data-field="postage" name="ems_postage" value="25.00" class="input-text " autocomplete="off" maxlength="6" aria-label="默认运费价格" style=""> 元，'+
-														'每增加 <input type="text" name="ems_plus" data-field="plus" value="1" class="input-text " autocomplete="off" maxlength="6" aria-label="每加件"> 件，'+
-														'增加运费 <input type="text" class="j_sellerBearFrePrice" value="0.00" disabled="disabled" style="display: none;"><input type="text" name="ems_postageplus" data-field="postageplus" value="0.00" class="input-text " autocomplete="off" maxlength="6" aria-label="加件运费" style="">元'+
-														'<div class="J_DefaultMessage"></div></div><div class="tbl-attach"><div class="J_SpecialMessage"></div><a href="#" class="J_AddRule">为指定地区城市设置运费</a></div></div>';
-				//console.log(html);
+			
+	$('.J_CalcRule').click(function(){
+		if(obj.flag){
+		    $('.entity').remove();
+		    $('.postage-detail').addClass('hidden');
+		    $('.J_Delivery').attr('checked',false);
+			
+			
+			for (var key in calc){
+				if($(this).attr('data-type')==key){
+					obj.CalcRule=calc[key];
+					break;
+				}
+				
+			}
+			
+			
+		}
+	});
+	
+	
+	
+	
 	
 	$('.J_Delivery').click(function(){ 
-	    if(obj.freight==0){
-			if($(this).parent().next('div').children('.entity').length<=0 && $(this).prop('checked')==true){
-				
-				$(this).parent().next('div').removeClass('hidden');
-				$(this).parent().next('div').append(html);
+	    var s_=$(this).parent().next('div');
+	    if(obj.freight==0){ //买家承担运费
+			if(s_.children('.entity').length<=0 && $(this).prop('checked')==true){
+			    var delivery_type=s_.attr('data-delivery');
+
+				obj.html='<div class="entity"><div class="default J_DefaultSet">默认运费：<input type="text" name="'+delivery_type+'_start" value="1" data-field="start" class="input-text " autocomplete="off" maxlength="6" aria-label="默认运费件数"> '+obj.CalcRule+
+														'内，<input type="text" class="j_sellerBearFrePrice" value="0.00" disabled="disabled" style="display: none;"><input type="text" data-field="postage" name="'+delivery_type+'_postage" value="" class="input-text " autocomplete="off" maxlength="6" aria-label="默认运费价格" style=""> 元，'+
+														'每增加 <input type="text" name="'+delivery_type+'_plus" data-field="plus" value="1" class="input-text " autocomplete="off" maxlength="6" aria-label="每加件"> '+obj.CalcRule+
+														'，增加运费 <input type="text" class="j_sellerBearFrePrice" value="0.00" disabled="disabled" style="display: none;"><input type="text" name="'+delivery_type+'_postageplus" data-field="postageplus" value="" class="input-text " autocomplete="off" maxlength="6" aria-label="加件运费" style="">元'+
+														'<div class="J_DefaultMessage"></div></div><div class="tbl-attach"><div class="J_SpecialMessage"></div><a href="#" class="J_AddRule">为指定地区城市设置运费</a></div></div>';
+			
+				s_.removeClass('hidden');
+				s_.append(obj.html);
 			}else{
-				$(this).parent().next('div').addClass('hidden');
-				$(this).parent().next('div').children('.entity').remove();
+				s_.addClass('hidden');
+				s_.children('.entity').remove();
 			}
 		}
 	});

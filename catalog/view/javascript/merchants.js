@@ -127,20 +127,7 @@ function selectClass(){
 }
 
 
-function checkClass(){
-    var payment_method=$('input[name=payment_method]').val();
-	if(payment_method=='[]' || payment_method.length==0){
-	    alert('请至少安装一种支付方式,并启用它！');
-		location.href='index.php?route=merchants/payment';
-		return false;
-	}
-	if($("#class_id").val()==""){
-		alert("对不起，请选择商品所属分类！");
-		return false;
-	}
-	
-	location.href="index.php?route=merchants/release/detail&cid="+$("#class_id").val();
-}
+
 
 var productImage=Array();
 function productEditor(){

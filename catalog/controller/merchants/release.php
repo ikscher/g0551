@@ -211,7 +211,7 @@ class ControllerMerchantsRelease extends Controller {
 		
 		$info=$this->model_catalog_product->getProduct($product_id,$status);
 		
-
+    
 		
 		$this->data["info"]=$info;
 		$this->data["product_id"]=$product_id;
@@ -323,9 +323,10 @@ class ControllerMerchantsRelease extends Controller {
 		$product_image    =isset($this->request->post["product_image"])?$this->request->post["product_image"]:"";
 		$attribute  =isset($this->request->post["attribute"])?$this->request->post["attribute"]:"";
 	
-		$name    =isset($this->request->post["name"])?$this->request->post["name"]:"";
+		$name    =isset($this->request->post["name"])?trim($this->request->post["name"]):"";
 		$price   =isset($this->request->post["price"])?$this->request->post["price"]:"";
 		$special_price = isset($this->request->post["special_price"])?$this->request->post["special_price"]:"";
+		$is_try= isset($this->request->post['try'])?$this->request->post['try']:0;
 		$date_start = isset($this->request->post['date_start'])?strtotime($this->request->post['date_start']):$date_start;
 		$date_end = isset($this->request->post['date_end'])?strtotime($this->request->post['date_end']):$date_end;
 		
@@ -358,23 +359,24 @@ class ControllerMerchantsRelease extends Controller {
 		}
 		
 		$data=array(
-			"product_id"=>$product_id,
-			"category_id"=>$category_id,
-			"product_image"=>$product_image,
-			"attribute"=>$attribute,
-			"name"=>$name,
-			"price"=>$price,
-			"special_price"=>$special_price,
-			"date_start" =>$date_start,
-			"date_end" =>$date_end,
-			"quantity"=>$quantity,
-			"sku"=>$sku,
-			"shipping"=>$shipping,
-			"status"=>$status,
-			"model"=>$model,
-			"description"=>$description,
-			"store_id"=>$store_id,
-			"product_option"=>$product_option
+			"product_id"      => $product_id,
+			"category_id"     => $category_id,
+			"product_image"   => $product_image,
+			"attribute"       => $attribute,
+			"name"            => $name,
+			"price"           => $price,
+			"special_price"   => $special_price,
+			"is_try"          => $is_try,
+			"date_start"      => $date_start,
+			"date_end"        => $date_end,
+			"quantity"        => $quantity,
+			"sku"			  => $sku,
+			"shipping"        => $shipping,
+			"status"          => $status,
+			"model"           => $model,
+			"description"     => $description,
+			"store_id"        => $store_id,
+			"product_option"  => $product_option
 		);
 		$this->load->model('merchants/release');
 		$result=$this->model_merchants_release->saveInfo($data,$product_id);

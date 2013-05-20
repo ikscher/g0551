@@ -123,12 +123,13 @@ class ModelMerchantsRelease extends Model {
 	* $intId :要修改商品ID，0表示添加新商品
 	*/
 	public function saveInfo($data,$intId) {
-		$category_id   =$this->db->escape($data['category_id']);
-		$product_image    =$this->db->escape($data['product_image']);
-		$attribute  =$data['attribute'];
-		$name    =$this->db->escape($data['name']);
-		$price   =$this->db->escape($data['price']);
-		$special_price = $this->db->escape($data['special_price']);
+		$category_id      = $this->db->escape($data['category_id']);
+		$product_image    = $this->db->escape($data['product_image']);
+		$attribute        = $data['attribute'];
+		$name             = $this->db->escape($data['name']);
+		$price            = $this->db->escape($data['price']);
+		$special_price    = $this->db->escape($data['special_price']);
+		$is_try           = $this->db->escape($data['is_try']);
 		$date_start = $this->db->escape($data['date_start']);
 		$date_end   = $this->db->escape($data['date_end']);
 		$quantity   =$this->db->escape($data['quantity']);
@@ -148,7 +149,7 @@ class ModelMerchantsRelease extends Model {
 	    //获取有效属性值数组
 		$attrList=array();
 		
-	
+	 
 		
 		//获取宝贝图片数组
 		$imageList=array();
@@ -173,7 +174,7 @@ class ModelMerchantsRelease extends Model {
 		
 		//保存商品及相关信息
 		if($intId==0){ //插入
-		    $sql="INSERT INTO " . DB_PREFIX . "product SET store_id = '{$store_id}',model='{$model}', price = '{$price}',quantity = '{$quantity}', sku = '{$sku}',image='". $imageList[0] ."', shipping = '{$shipping}',  status = '{$status}', date_added = '{$date_added}',date_available='{$date_available}'";
+		    $sql="INSERT INTO " . DB_PREFIX . "product SET store_id = '{$store_id}',model='{$model}', price = '{$price}',quantity = '{$quantity}', sku = '{$sku}',image='". $imageList[0] ."', shipping = '{$shipping}',  status = '{$status}', date_added = '{$date_added}',date_available='{$date_available}',is_try='{$is_try}'";
 			
 			$query=$this->db->query($sql);
 			$product_id=$this->db->getLastId();
@@ -275,7 +276,7 @@ class ModelMerchantsRelease extends Model {
 				return "nostore";
 			}
 			
-			$query=$this->db->query("Update " . DB_PREFIX . "product SET model='{$model}', price = '{$price}',quantity = '{$quantity}', sku = '{$sku}', shipping = '{$shipping}',  status = '{$status}', date_modified = '{$date_modified}' Where product_id='{$product_id}'");
+			$query=$this->db->query("Update " . DB_PREFIX . "product SET model='{$model}', price = '{$price}',quantity = '{$quantity}', sku = '{$sku}', shipping = '{$shipping}',  status = '{$status}', date_modified = '{$date_modified}',is_try='{$is_try}' Where product_id='{$product_id}'");
 			
 			//修改商品描述信息
 			$this->db->query("Update " . DB_PREFIX . "product_description SET name='{$name}',description='{$description}' Where product_id='{$product_id}'");

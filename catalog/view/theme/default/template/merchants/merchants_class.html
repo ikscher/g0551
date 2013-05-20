@@ -13,9 +13,9 @@
 				</ul>
 			</div>
 			<div class="blue_r">
-                <form name="releaseProduct"  onSubmit="return checkClass();">			
+                		
 				    <input name="id" id="class_id" type="hidden" value="" />
-					<input name="payment_method" type='hidden'  value="{$payment_method}" />
+					<input name="payment_method" type='hidden'  value={$payment_method} />
                     <div class="product_class">
                         <div id="loading_info">分类加载中……</div>
                         {if $classList}
@@ -35,7 +35,7 @@
 							<span class="btn-txt">发布商品</span>  </button>
 						</div>
 				    </div>
-				</form>
+				
 			</div>
 		</div>
     
@@ -46,5 +46,21 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	selectClass();
+});
+
+$(".btn-txt").click(function(){
+    var payment_method=$('input[name=payment_method]').val();
+	
+	if(payment_method=='[]' || payment_method.length==0){
+	    alert('请至少安装一种支付方式,并启用它！');
+		location.href='index.php?route=merchants/payment';
+		return false;
+	}
+	if($("#class_id").val()==""){
+		alert("对不起，请选择商品所属分类！");
+		return false;
+	}
+
+	location.href="index.php?route=merchants/release/detail&cid="+$("#class_id").val();
 });
 </script>
