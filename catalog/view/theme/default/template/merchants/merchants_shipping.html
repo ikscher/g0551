@@ -37,7 +37,7 @@
 							{loop $shippings $shipping}
                             <div class="section J_Section" data-id="{$shipping['shipping_id']}">
                                 <div class="tbl-prefix">
-                                    <span class="meta">|<a href="javascript:void(0);" class="J_Modify"> 修改</a> | <a href="#postage-tpl" data-action="http://delivery.taobao.com/user/template_delete.do?_tb_token_=e5eeb03418eee&amp;categoryid=&amp;uid={uid}" class="J_Delete">删除 </a></span>
+                                    <span class="meta">|<a href="javascript:void(0);" class="J_Modify"> 修改</a> | <a href="javascript:void(0);"  class="J_Delete">删除 </a></span>
                                     <h3 class="J_Title">{$shipping['shipping_desc']}</h3>
                                 </div>
 								<div class="tbl-head">
@@ -50,7 +50,7 @@
 											<col class="col-plus">
 											<col class="col-postageplus">
 										</colgroup>
-										<tbody><tr>
+										<thead><tr>
 											<th>运送方式</th>
 											<th>运送到</th>
 											<th>首件(个)</th>
@@ -58,7 +58,7 @@
 											<th>续件(个)</th>
 											<th>运费(元)</th>
 										</tr>
-										</tbody>
+										</thead>
 									</table>
                                 </div>
 								<div class="entity">
@@ -72,14 +72,16 @@
 											<col class="col-postageplus">
 										</colgroup>
 										<tbody>
+										    {loop $shipping['shipping_fee_'] $shipping_fee}
 											<tr>
-												<td>{$shipping['shipping_name']}</td>
+												<td>{$shipping_fee['shipping_name']}</td>
 												<td class="cell-area">全国</td>
-													<td>{$shipping['first_num']}</td>
-													<td>{$shipping['first_price']}</td>
-													<td>{$shipping['step_num']}</td>
-													<td>{$shipping['step_price']}</td>
+													<td>{$shipping_fee['first_num']}</td>
+													<td>{$shipping_fee['first_price']}</td>
+													<td>{$shipping_fee['step_num']}</td>
+													<td>{$shipping_fee['step_price']}</td>
 											</tr>
+											{/loop}
 										</tbody>
 									</table>
 								</div>
@@ -113,6 +115,12 @@
 	$('.J_Modify').click(function(){
 	    var shipping_id=$(this).parents('.J_Section').attr('data-id');
 	    location.href='index.php?route=merchants/shipping/update&shipping_id='+shipping_id;
+	});
+	
+	//删除
+	$('.J_Delete').click(function(){
+	    var shipping_id=$(this).parents('.J_Section').attr('data-id');
+	    location.href='index.php?route=merchants/shipping/delete&shipping_id='+shipping_id;
 	});
 	
 	//新增

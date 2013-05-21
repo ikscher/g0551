@@ -375,6 +375,7 @@ table{ border-collapse:collapse; border-spacing:0; }
 #postage-tpl .setting .postage-detail .default {margin-top: 5px;padding: 0 15px 5px;line-height: 32px;background-color: #f3feed;}
 #postage-tpl .setting .tbl-attach {margin-top: 5px;line-height: 24px;}
 #postage-tpl .setting .postage-detail .default input {width: 6em;}
+#postage-tpl .setting p.msg {margin-top: 5px;}
 .default .j_sellerBearFrePrice {text-align: left;}
 .j_sellerBearFrePrice {display: none;width: 4em;height: 15px;line-height: 15px;padding: 1px 0;border: 1px solid #7f9db9;text-align: right;}
 

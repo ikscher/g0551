@@ -97,6 +97,7 @@ this.make_select = function(sel_value) {
     html += sel_prov==0 ? "<option value='0'>选择省份</option>\n" :
                           "<option value='0' selected='selected'>选择省份</option>\n";
     var provs = this.get_provs( sel_prov );
+	
     for(p in provs) {
         html += provs[p]['sel'] ?  "<option value='"+provs[p]['id']+"' selected='selected'>"+provs[p]['name']+"</option>\n" :
                                    "<option value='"+provs[p]['id']+"'>"+provs[p]['name']+"</option>\n";

@@ -26,6 +26,7 @@ class ControllerMerchantsShipping extends Controller {
 		$page=isset($this->request->get['page'])?$this->request->get['page']:1;
 		$data=array();
 		$limit=5;
+		
 		$data=array(
 		        'store_id'=>$store_id,
 		        'status'=>1,
@@ -33,11 +34,43 @@ class ControllerMerchantsShipping extends Controller {
 				'limit'=>$limit
 			);
 		
-		$shippings=$this->model_merchants_shipping->getStoreShippings($data);
-		$total=$this->model_merchants_shipping->getTotalStoreShippings($data);
 		
-		$this->data['shippings']=$shippings;
+		$shippings=$this->model_merchants_shipping->getStoreShippings($data);
+		
+		$total=$this->model_merchants_shipping->getTotalStoreShippings($data);
+       
+		$s_=array();
+		$w=array();
+		foreach($shippings as $s){
+		    if(!empty($s['shipping_fee'])){
+			    $s_=unserialize($s['shipping_fee']);
+			}
+			foreach($s_ as $k=>$s__){
+			    
+			    $sv[$k]['first_num']=isset($s__['express_start'])?$s__['express_start']:(isset($s__['ems_start'])?$s__['ems_start']:(isset($s__['post_start'])?$s__['post_start']:''));
+				
+				$sv[$k]['first_price']=isset($s__['express_postage'])?$s__['express_postage']:(isset($s__['ems_postage'])?$s__['ems_postage']:(isset($s__['post_postage'])?$s__['post_postage']:''));
+		
+				$sv[$k]['step_num']=isset($s__['express_plus'])?$s__['express_plus']:(isset($s__['ems_plus'])?$s__['ems_plus']:(isset($s__['post_plus'])?$s__['post_plus']:''));
 	
+				$sv[$k]['step_price']=isset($s__['express_postageplus'])?$s__['express_postageplus']:(isset($s__['ems_postageplus'])?$s__['ems_postageplus']:(isset($s__['post_postageplus'])?$s__['post_postageplus']:''));
+                
+				if($k=='express') $sv[$k]['shipping_name']='快递';
+				if($k=='ems')     $sv[$k]['shipping_name']='EMS';
+				if($k=='post')    $sv[$k]['shipping_name']='平邮';
+				
+				$s['shipping_fee_'][]=$sv[$k];
+				
+                				
+			}
+			$w[]=$s;
+		}
+		
+		 // var_dump($w);
+		//$total=count($w);
+	    $this->data['shippings']=$w;
+		//$this->data['shippings']=array_slice($w,($page-1)*$limit,$limit);
+	    
 		
 		$pagination = new Pagination('results','links');
 		$pagination->total = $total;
@@ -64,16 +97,14 @@ class ControllerMerchantsShipping extends Controller {
   	}
 	
 	//删除
-	public function deleteStorePayment(){
-	    $id=$this->request->post['id'];
-		$this->load->model('merchants/payment');
+	public function delete(){
+	    $shipping_id=$this->request->get['shipping_id'];
+		$this->load->model('merchants/shipping');
 		
-		if(empty($id)) exit('no');
+		if(empty($shipping_id)) return;
 		
-		if($this->model_merchants_payment->deleteStorePayment($id)){
-		    exit('ok');//equal  echo 1;exit;
-		}else{
-		    exit('no');
+		if($this->model_merchants_shipping->deleteShipping($shipping_id)){
+		    $this->redirect($this->url->link("merchants/shipping", '','SSL'));
 		}
 	
 	}
@@ -86,8 +117,8 @@ class ControllerMerchantsShipping extends Controller {
 		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
 		    
 			if(!empty($shipping_id)){
-				if($this->model_merchants_payment->editStoreShipping($shipping_id,$this->request->post)){
-                    $this->redirect($this->url->link('merchants/shipping/update', '','SSL'));
+				if($this->model_merchants_shipping->editStoreShipping($shipping_id,$this->request->post)){
+                    $this->redirect($this->url->link("merchants/shipping/update&shipping_id={$shipping_id}", '','SSL'));
 				}
 			}
 		}
@@ -100,7 +131,7 @@ class ControllerMerchantsShipping extends Controller {
         //$this->load->language('merchants/payment');
 		$this->load->model('merchants/shipping');
         
-		
+		//var_dump($this->request->post);
 		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
 			if($this->model_merchants_shipping->addStoreShipping($this->request->post)){
 				$this->redirect($this->url->link('merchants/shipping/insert','','SSL'));
@@ -176,7 +207,9 @@ class ControllerMerchantsShipping extends Controller {
 			$this->data['action'] = $this->url->link('merchants/shipping/update','&shipping_id=' . $shipping_id, 'SSL');
 			$this->data['heading_title'] = '修改';
 			$shipping_info=$this->model_merchants_shipping->getStoreShipping($shipping_id);
+			$this->data['calc_rule']=$shipping_info['calc_rule']==1?'件':(($shipping_info['calc_rule']==2)?'kg':(($shipping_info['calc_rule']==3)?'m³':''));
 		}
+	    // var_dump($shipping_info);
         $this->data['shipping_info']=$shipping_info;
 		
 		$this->children = array(
@@ -195,7 +228,7 @@ class ControllerMerchantsShipping extends Controller {
 	}
 	
 	
-	private function validateForm() {
+	/* private function validateForm() {
 	
 		if (!$this->request->post['seller_email']) {
 			$this->error['email'] = $this->language->get('error_email');
@@ -214,7 +247,7 @@ class ControllerMerchantsShipping extends Controller {
 		} else {
 			return FALSE;
 		}	
-	} 
+	}  */
 
 	
 }
