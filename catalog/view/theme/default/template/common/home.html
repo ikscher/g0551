@@ -77,8 +77,8 @@
 	<div class="search_ z">
 	    <div class="search-triggers">
 		    <ul class="ks-switchable-nav">
-			    <li data-searchtype="item" data-defaultpage="index.php?route=search/search" class="selected"><a href="javascript:void(0);">宝贝</a><!--[if lt IE 9]><s class="search-fix search-fix-triggerlt"></s><s class="search-fix search-fix-triggerrt"></s><![endif]--></li>
-			    <li data-searchtype="shop" data-action="index.php?route=store/list"><a href="javascript:void(0);">店铺</a><!--[if lt IE 9]><s class="search-fix search-fix-triggerlt"></s><s class="search-fix search-fix-triggerrt"></s><![endif]--></li>
+			    <li data-searchtype="item" data-defaultpage="index.php?route=search/search" class="selected"><a href="javascript:void(0);">宝贝</a></li>
+			    <li data-searchtype="shop" data-action="index.php?route=store/list"><a href="javascript:void(0);">店铺</a></li>
 			</ul>
 		</div>
 		<div class="search_box h" id="search_box">
@@ -137,7 +137,7 @@
 				    {if $key_==0}<strong>{/if}
 				    <a  href="index.php?route=product/category&category_id={$list_['category_id']}">{$list_['name']}</a>
 					{if $key_==2}</strong>{/if}
-					<b class="float-list-ico1"></b>
+					
 				{/loop}
 				</dt>
 				    
@@ -225,10 +225,10 @@
 	</div>
 
 	<div class="adv" id="adv">
-		<a id="weba1"  href=""><img alt="花粉" width="240" height="170" src="http://img2.imglafaso.com/userfiles/file/2013/04/10/20130410071225_11-4_12.jpg" /></a>
-		<a id="weba2"  href=""><img alt="无线" width="240" height="170" src="http://img3.imglafaso.com/userfiles/file/2013/04/9/20130409043303.jpg" /></a>
-		<a id="weba3"  href=""><img alt="抽奖" width="240" height="170" src="http://img1.imglafaso.com/userfiles/file/2013/04/7/20130407075822.jpg" /></a>
-		<a id="weba4"  href=""><img alt="抽奖" width="240" height="170" src="http://img1.imglafaso.com/userfiles/file/2013/04/7/20130407075822.jpg" /></a>
+		<a id="weba1"  href=""><img alt="花粉"  src="http://img2.imglafaso.com/userfiles/file/2013/04/10/20130410071225_11-4_12.jpg" /></a>
+		<a id="weba2"  href=""><img alt="无线"  src="http://img3.imglafaso.com/userfiles/file/2013/04/9/20130409043303.jpg" /></a>
+		<a id="weba3"  href=""><img alt="抽奖"  src="http://img1.imglafaso.com/userfiles/file/2013/04/7/20130407075822.jpg" /></a>
+		<a id="weba4"  href=""><img alt="抽奖"  src="http://img1.imglafaso.com/userfiles/file/2013/04/7/20130407075822.jpg" /></a>
 	</div>
 	<dl class="announcement" id="announcement">
 	<dt>公告：</dt>
@@ -284,14 +284,17 @@
 </div>
 <div class="Red518">
 	<div class="Fleft">
-	<ul>
-		<li><a href=""><img src="catalog/view/theme/default/image/home//ad06.jpg"></a></li>
-		<li><a href=""><img src="catalog/view/theme/default/image/home//ad07.jpg"></a></li>
-		<li><a href=""><img src="catalog/view/theme/default/image/home//ad08.jpg"></a></li>
-		<li><a href=""><img src="catalog/view/theme/default/image/home//ad06.jpg"></a></li>
-		<li><a href=""><img src="catalog/view/theme/default/image/home//ad09.jpg"></a></li>
-	</ul>
+		<ul>
+			<li><a href=""><img src="catalog/view/theme/default/image/home//ad06.jpg"></a></li>
+			<li><a href=""><img src="catalog/view/theme/default/image/home//ad07.jpg"></a></li>
+			<li><a href=""><img src="catalog/view/theme/default/image/home//ad08.jpg"></a></li>
+			<li><a href=""><img src="catalog/view/theme/default/image/home//ad06.jpg"></a></li>
+			<li><a href=""><img src="catalog/view/theme/default/image/home//ad09.jpg"></a></li>
+		</ul>
 	</div>
+	
+	
+	
 	<div class="Fright">
 		<dl>
 		    {loop $foods_products $f}
@@ -305,6 +308,8 @@
 			{/loop}
 		</dl>
 	</div>
+	
+	
 </div>
 <div class="Redbshow"></div>
 <!--住 -->

@@ -275,7 +275,7 @@
 		<!-- JiaThis Button BEGIN -->
 		
 		<!-- JiaThis Button END -->
-		<dd>
+		<dd class="jiathis">
 		    <!-- JiaThis Button BEGIN -->
 			<div class="jiathis_style_24x24">
 			    <span class="z">分享到：</span>
@@ -462,11 +462,12 @@ $(".favoriate").click(function(){
 
 //直接购买
 $(".goodsbuy").click(function(){
+    
     {if empty($customer_id)}
 	    var referer='{$referer}';
 	    location.href="index.php?route=account/login&referer="+encodeURIComponent(referer);
 	{else}
-        dBuy('{$product['product_id']}');
+        dBuy();
 	{/if}
 });
 

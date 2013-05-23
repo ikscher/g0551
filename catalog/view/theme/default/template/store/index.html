@@ -14,9 +14,9 @@
 		
 	</script>
 	
-<!--店铺开始 -->
+
 <div class="store">
-<!--穿悦LOGO和搜索 -->
+
 <div class="store_top90">
 	<div class="topl"><a href="index.php?route=common/home" ><img src="catalog/view/theme/default/image/store/store_logo.jpg"/></a></div>
 	<div class="topr">
@@ -30,7 +30,7 @@
 	</ul></form>
 	</div>
 </div>
-<!--穿悦LOGO和搜索end -->
+
 <div class="store_banner">
     <ul>
 		<li><img src="{if isset($store_info['logo'])}{$store_info['logo']}{/if}"/></li>
@@ -38,16 +38,16 @@
 		<li class="fav"><a href="#"><img src="catalog/view/theme/default/image/store/favoriate.gif" width="90px" height="60px"/></a></li>
 	</ul>
 </div>
-<!--菜单menu begin -->
+
 <div class="store_menured">
 	<ul>
 		<li class="menuon"><a href="{$action}"  hidefocus="true">店铺首页</a></li>
 		<li><a href="#" onclick=""  hidefocus="true">店铺地图</a></li>
 	</ul>
 </div>
-<!--菜单menu end -->
-<!--主体body begin --><div class="store_body">
-<!--左边 begin -->
+
+<div class="store_body">
+
 <div class="redleft">
     <div class="rednavbg">店铺信息</div>
 	<div class="storeinfo">
@@ -122,9 +122,7 @@
 		</ul>
 	</div>
 </div>
-<!--左边 end -->
 
-<!--右边 begin -->
 <div class="redright">
 	<div class="rednavbg">店铺所有新品</div>
 	<div class="rproducts">
@@ -137,7 +135,7 @@
 							<li class="bor236"><a href="{$product['href']}"><img src="{$product['image']}" title="{$product['name']}" /></a></li>
 							<li ><a href="{$product['href']}">{$product['shortname']}</a></li>
 							<li class="price">¥{$product['price']}</li>
-							<li >已销售：<span class="sales">{$product['hots']}</span>件</li>
+							<li ><span class="sold">已销售：</span><span class="sales">{$product['hots']}</span> 件</li>
 							</ul>
 						</div>
 					</li>
@@ -156,13 +154,12 @@
 		<!-- <div class="map" id="container"></div> -->
 	</div>
 </div>
-<!--右边 end -->
 
 <div class="pagination">{$pagination}</div>
-<!--主体body end -->
+
 </div>
-<!--店铺end -->
-</div>
+
+
 <script type="text/javascript">
     $(".store_menured ul li").mouseenter(function(){
 	    $(this).parent().children('li').removeClass('menuon');
@@ -241,4 +238,5 @@ var baidumap={
 	baidumap.map.addControl(new BMap.OverviewMapControl());
 	baidumap.map.enableScrollWheelZoom();     //启用滚轮放大缩小，默认禁用。
 </script>
+
 {$footer}

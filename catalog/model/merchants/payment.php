@@ -12,9 +12,11 @@ class ModelMerchantsPayment extends Model {
 		$store_id=$this->cookie->OCAuthCode(isset($this->request->cookie['storeid'])?$this->request->cookie['storeid']:'','DECODE');
         
 		if(empty($store_id)) return;
-		//$sql="select code from ".DB_PREFIX."extension where type='payment'";
-	    $sql="select s2p.store_id,s2p.status,s2p.id,(select `code` from ".DB_PREFIX."extension e where e.`code`=s2p.payment_code) as `code`,(select `name` from ".DB_PREFIX."extension e where e.`code`=s2p.payment_code) as `name` from ".DB_PREFIX."store_to_payment s2p where  s2p.store_id={$store_id} and s2p.status=1";
 		
+	    //$sql="select s2p.store_id,s2p.status,s2p.id,(select `code` from ".DB_PREFIX."extension e where e.`code`=s2p.payment_code) as `code`,(select `name` from ".DB_PREFIX."extension e where e.`code`=s2p.payment_code) as `name` from ".DB_PREFIX."store_to_payment s2p where  s2p.store_id={$store_id} and s2p.status=1";
+		//$sql="SELECT s.name,s2p.* FROM ".DB_PREFIX. "store_to_payment  s2p  left join ".DB_PREFIX."store s  on s2p.store_id=s.store_id left join ".DB_PREFIX."extension e on s2p.payment_code=e.code";
+		$sql="select e.*,s2p.status,s2p.store_id,s2p.id from ".DB_PREFIX."extension e left join  ".DB_PREFIX."store_to_payment s2p on e.code=s2p.payment_code  where e.type='payment' ";
+
 		$query=$this->db->query($sql);
 		$results=$query->rows;
 		
@@ -49,10 +51,10 @@ class ModelMerchantsPayment extends Model {
 				$v['description']='收款人信息: 姓名 ***; 地址:***; 邮编 ***';
 			}
 			
-			if($v['store_id']!=$store_id){
+			/*  if($v['store_id']!=$store_id){
 			    $v['store_id']='';
 				$v['status']='';
-			}
+			} */
 			
 			$payments[]=$v;
 		}

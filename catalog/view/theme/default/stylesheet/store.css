@@ -3,10 +3,12 @@
 
 .store_top90{height:90px; background:#FFFFFF; clear:both;}
 .store_top90 .topl{width:236px; float:left;}
-.store_top90 .topr{width:652px; float:left; margin-top:20px;}
+.store_top90 .topl a img{border:none;}
+.store_top90 .topr{width:652px; float:left; margin-top:20px;position:relative;}
+.store_top90 .topr ul{width:600px;}
 .store_top90 .topr .searcht{width:60px;height:23px; float:left; background:url(../image/store/store_search01.jpg) no-repeat; padding-left:18px; line-height:23px;}
 .store_top90 .topr .searchb{width:468px;height:34px;float:left; background:url(../image/store/store_search02.jpg) no-repeat;clear:both; padding-left:30px;line-height:34px;}
-.store_top90 .topr .searchr{width:72px;height:34px;float:left; background:url(../image/store/store_search03.jpg) no-repeat;line-height:34px;color:#ffffff; font-size:14px; font-weight:bold;padding-left:30px;}
+.store_top90 .topr .searchr{width:72px;height:34px;position:absolute;top:23px;left:497px;background:url(../image/store/store_search03.jpg) no-repeat;line-height:34px;color:#ffffff; font-size:14px; font-weight:bold;padding-left:30px;}
 .store_top90 .topr .searchr2{height:34px;float:left; padding-left:2px;}
 .store_top90 .formbor{ border:0px; height:26px; width:400px;margin:3px;}
 .store_top90 .formbtn{border:0 none;padding:0 0 0 3px;margin:0;vertical-align:middle;white-space:nowrap;cursor:pointer;*overflow:visible;background:transparent;color:#ffffff; font-size:14px; font-weight:bold; line-height:34px;}
@@ -40,10 +42,12 @@
 .store_body .lranking .picbor img{border:1px solid #ccc; padding:1px;}
 .store_body .lranking .title{height:80px; line-height:20px;}
 .store_body .lranking .price{color:#FF0000;font-size:14px;}
-.store_body .rproducts{}
+
 .store_body .rproducts li{margin:10px; float:left;}
 .store_body .rproducts .display{width:236px;}
-.store_body .rproducts .display li{ line-height:20px; margin:0; clear:both;}
+.store_body .rproducts .display li{ line-height:20px; margin:0; clear:both;width:236px;}
+.store_body .rproducts .display li span.sold{width:56px;}
+.store_body .rproducts .display li a{width:236px;}
 .store_body .rproducts .bor236{width:234px; height:228px; text-align:center;border:1px solid #ccc; padding-top:6px;}
 .store_body .rproducts .bor236 img{ max-width:220px; max-height:220px;}
 .store_body .rproducts .price{color:#FF0000; font-weight:bold; font-family:Verdana; font-size:14px;}
@@ -55,7 +59,7 @@
 .store_banner ul li{float:left; height:90px; font-family:"宋体"; font-size:16px;color:#ffff66;}
 .store_banner ul li.breakword{ margin-left:10px;width:380px;word-wrap:break-word; word-break:break-all;overflow:hidden;}
 .store_banner li img{border:1px solid #ffffff; margin-top:10px; }
-.store_banner .fav{float:right;font-size:30px;filter:alpha(Opacity=80);-moz-opacity:0.5;opacity: 0;z-index:100; background-color:#ffffff; }
+.store_banner .fav{float:right;font-size:30px;filter:alpha(Opacity=0);-moz-opacity:0.5;opacity: 0;z-index:100; background-color:#ffffff; }
 
 
 /**分页**/

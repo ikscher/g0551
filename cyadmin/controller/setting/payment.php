@@ -210,6 +210,7 @@ class ControllerSettingPayment extends Controller {
 		$this->data['entry_trade_type'] = $this->language->get('entry_trade_type');
 		$this->data['entry_anti_phishing'] = $this->language->get('entry_anti_phishing');
 		$this->data['entry_order_status'] = $this->language->get('entry_order_status');	
+		$this->data['entry_description'] = $this->language->get('entry_description');	
 		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		$this->data['entry_store'] = $this->language->get('entry_store');
@@ -248,7 +249,7 @@ class ControllerSettingPayment extends Controller {
 		$this->data['cancel'] =  HTTPS_SERVER . 'index.php?route=setting/payment&token=' . $this->session->data['token'];
 		
 		
-		$this->data['payment_code']=isset($paymentInfo['payment_code'])?$paymentInfo['payment_code']:'';
+		$this->data['payment_code']=isset($paymentInfo['payment_code'])?$paymentInfo['payment_code']:'alipay';
 		$this->data['store_id']=isset($paymentInfo['store_id'])?$paymentInfo['store_id']:'';
 		if (isset($this->request->post['alipay_seller_email'])) {
 			$this->data['alipay_seller_email'] = $this->request->post['alipay_seller_email'];
@@ -267,6 +268,8 @@ class ControllerSettingPayment extends Controller {
 		} else {
 			$this->data['alipay_partner'] = isset($paymentInfo['partner'])?$paymentInfo['partner']:'';
 		}		
+		
+		
 
 		if (isset($this->request->post['alipay_trade_type'])) {
 			$this->data['alipay_trade_type'] = $this->request->post['alipay_trade_type'];
@@ -290,9 +293,11 @@ class ControllerSettingPayment extends Controller {
 		
 		$this->data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 			
-		$this->load->model('localisation/geo_zone');
-										
-		// $this->data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
+		if (isset($this->request->post['description'])) {
+			$this->data['description'] = $this->request->post['description'];
+		} else {
+			$this->data['description'] = isset($paymentInfo['description'])?$paymentInfo['description']:'';
+		}
 		
 		if (isset($this->request->post['alipay_status'])) {
 			$this->data['alipay_status'] = $this->request->post['alipay_status'];
@@ -324,15 +329,15 @@ class ControllerSettingPayment extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 		
-		if (!$this->request->post['alipay_seller_email']) {
+		if (isset($this->request->post['alipay_seller_email']) && !$this->request->post['alipay_seller_email']) {
 			$this->error['email'] = $this->language->get('error_email');
 		}
 
-		if (!$this->request->post['alipay_security_code']) {
+		if (isset($this->request->post['alipay_security_code']) && !$this->request->post['alipay_security_code']) {
 			$this->error['secrity_code'] = $this->language->get('error_secrity_code');
 		}
 
-		if (!$this->request->post['alipay_partner']) {
+		if (isset($this->request->post['alipay_partner']) && !$this->request->post['alipay_partner']) {
 			$this->error['partner'] = $this->language->get('error_partner');
 		}
 

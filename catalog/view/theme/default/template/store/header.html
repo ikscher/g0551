@@ -18,7 +18,7 @@
     
  	<div class="toolbar">
 	    {if !empty($username)}
-	    <ul>
+	    <ul class="fst">
 		     <li><a href="javascript:void(0);" class="favorites" onclick="AddFavorite('','{$home}')">{$favoriate}</a></li>
 		     <li>{$welcome}{$username}！</li>
 		     <li><a href="{$logout}" class="exit">{$quit}</a></li>
@@ -58,7 +58,7 @@
 			 <li class="tel">服务热线：0551-4374866</li>
         </ul>
 		{else}
-		<ul>
+		<ul class="fst">
 		     <li><a href="javascript:void(0);" class="favorites" onclick="AddFavorite('','{$home}')">{$favoriate}</a></li>
 		     <li>{$welcome}游客！</li>
 			 <li><a class="exit" href="index.php?route=account/login">登录</li>

@@ -77,6 +77,7 @@ body{ background:#fff } /* url(../images/index_body_bg.gif) repeat-x; */
 .float-list dl dt a:hover {color:#dc0000;}
 .float-list dl dt strong {float:left;width:152px;height:28px;background-position:144px -55px;overflow:hidden;}
 .float-list dl dt strong a {color:#585858;font-size:14px;line-height:28px;}
+
 .float-list dl dt strong a:hover {color:#dc0000;}
 /* .float-list dl dt p {clear:both;height:22px;line-height:22px;overflow:hidden;} */
 .float-list dl dt b {display:noneposition:absolute;top:13px;left:7px;width:18px;height:20px;}
@@ -116,7 +117,8 @@ body{ background:#fff } /* url(../images/index_body_bg.gif) repeat-x; */
 .slider .content_nav b.bg{background:none;width:161px;_width:159px;}
 .slider .content_nav b.on{background:url(../image/home/tab-cur.png) no-repeat 0 0;}
 .first-show .adv {float:right;width:978px;height:170px;margin:12px 0 0;}
-.first-show .adv img {float:left;width:242px;height:170px;margin:0 1px;}
+.first-show .adv  a {float:left;margin:0 1px;display:in-block;}
+.first-show .adv img{width:242px;height:170px;}
 
 
 /*20121023add*/
@@ -150,18 +152,21 @@ body{ background:#fff } /* url(../images/index_body_bg.gif) repeat-x; */
 .Fleft{width:220px;  float:left; padding-right:20px;clear:both;}
 .Fleft li{margin-bottom:2px;}
 /* .Fright{padding:10px;} */
-.Fright dd{ float:left;width:162px;padding-top:1px; padding-left:14px;padding-right:14px;padding-bottom:9px;border:1px solid #fff;}
+
+.Fright dd{ float:left;width:162px;padding-top:1px; padding-left:14px;padding-right:14px;padding-bottom:9px;padding-top:14px;border:1px solid #fff;}
+.Fright dd ul {height:222px;}
 .Fright dd li{margin-bottom:6px;}
 .Fright dd li a{color:#666;}
 .Fright dd li a:hover{color:#FF0000;}
 .Fright .price1{ padding-right:6px;color:#DC0250; font-family:Verdana, Arial, Helvetica, sans-serif;}
 .Fright .price2{color:#A8B6B7; font-family:Verdana, Arial, Helvetica, sans-serif;text-decoration: line-through;}
 
+
 .Fright li img{width:162px; height:162px;}
 .Redbshow{clear:both;margin:0 auto;margin-bottom:15px;width:1210px;height:6px;bottom:-6px;left:-1px;background:url(../image/home/bshow.jpg) no-repeat;overflow:hidden;}
 
 .wp ul li a.exit{padding-left:5px;}
-.search_{margin-top:15px;}
+.search_{margin-top:15px;width:488px;}
 
 
 /*go to top*/

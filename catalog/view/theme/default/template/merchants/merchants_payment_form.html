@@ -25,10 +25,14 @@
 					<input type="radio" name="trade_type"  id="trade_create_by_buyer" value="trade_create_by_buyer"/><label for="trade_create_by_buyer">双接口
 					<input type="radio" name="trade_type"  id="create_direct_pay_by_user" value="create_direct_pay_by_user"  checked="true"/><label for="create_direct_pay_by_user">直接到帐
 					<input type="radio" name="trade_type"  id="create_partner_trade_by_buyer" value="create_partner_trade_by_buyer"/><label for="create_partner_trade_by_buyer">担保接口
-				{else}
+				{elseif $trade_type=='create_partner_trade_by_buyer'}
 					<input type="radio" name="trade_type" id="trade_create_by_buyer" value="trade_create_by_buyer"/><label for="trade_create_by_buyer">双接口</label>
 					<input type="radio" name="trade_type" id="create_direct_pay_by_user"  value="create_direct_pay_by_user"/><label for="create_direct_pay_by_user">直接到帐
 					<input type="radio" name="trade_type"  id="create_partner_trade_by_buyer" value="create_partner_trade_by_buyer"  checked="true"/><label for="create_partner_trade_by_buyer">担保接口
+				{else}
+				    <input type="radio" name="trade_type" id="trade_create_by_buyer" value="trade_create_by_buyer" checked="true" /><label for="trade_create_by_buyer">双接口</label>
+					<input type="radio" name="trade_type" id="create_direct_pay_by_user"  value="create_direct_pay_by_user"/><label for="create_direct_pay_by_user">直接到帐
+					<input type="radio" name="trade_type"  id="create_partner_trade_by_buyer" value="create_partner_trade_by_buyer"  /><label for="create_partner_trade_by_buyer">担保接口
 				{/if}
 			</td>
 			</tr>
@@ -114,7 +118,7 @@
 				</td>
 			</tr>
 			<tr>
-			    <td style="text-align:right;padding-right:10px;width:40%"><span class="required">*</span> {$entry_description}</td>
+			    <td ><span class="required">*</span> {$entry_description}</td>
 				<td><textarea name="description" style="width:373px;height:96px" >{$description}</textarea></td>
 			</tr>
 		    <tr>

@@ -119,8 +119,10 @@
 	
 	//删除
 	$('.J_Delete').click(function(){
-	    var shipping_id=$(this).parents('.J_Section').attr('data-id');
-	    location.href='index.php?route=merchants/shipping/delete&shipping_id='+shipping_id;
+	    if(confirm('您确定删除么？')){
+			var shipping_id=$(this).parents('.J_Section').attr('data-id');
+			location.href='index.php?route=merchants/shipping/delete&shipping_id='+shipping_id;
+		}
 	});
 	
 	//新增

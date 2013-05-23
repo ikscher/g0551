@@ -129,7 +129,7 @@ function addToCart(product_id, quantity) {
 		success: function(json) {
 			$('.success, .warning, .attention, .information, .error').remove();
 			//console.log(json['attribute']);
-			
+		
 			if (json['error']) {
 				if(json['error']['product']){
 					alert('自己不能购买自己的产品！');
@@ -180,9 +180,10 @@ function addToCart(product_id, quantity) {
 				$(".tmMCTopBorder").css({'display':'block'});
 				
 				//动画移动到底部购物车
-				$(".goodscar").before("<span  class=\"square\" style=\"position:absolute; left:300px;top:300px;background-color:#fff; width:50px;height:50px; border:1px solid black;z-index:1000;\"><img src='"+json['cartimage']+"'</span>");
+				var x__= '<span  class="square" style="position:absolute; left:300px;top:300px;background-color:#fff; width:50px;height:50px; border:1px solid black;z-index:1000;"><img src="'+json['cartimage']+'"></span>';
+				$(".goodscar").before(x__);
 			
-				$(".square").animate({top:$("#J_CommonBottomBar").offset().top, left: $("#J_CommonBottomBar").offset().left+100, width: 50, height:50},'slow',function(){$(this).remove();}).fadeOut('slow');
+				$('.square').animate({top:$("#J_CommonBottomBar").offset().top, left: $("#J_CommonBottomBar").offset().left+100, width: 50, height:50},'slow',function(){$(this).remove();}).fadeOut('slow');
 				
 			}	
 		}
@@ -192,18 +193,18 @@ function addToCart(product_id, quantity) {
 
 
 //直接购买
-function dBuy(product_id, quantity) {
-	quantity = typeof(quantity) != 'undefined' ? quantity : 1;
+function dBuy() {
+	//quantity = typeof(quantity) != 'undefined' ? quantity : 1;
     
 	$.ajax({
 		url: 'index.php?route=checkout/dbuy/index',
 		type: 'post',
-		data: $('.product_info input[type=\'text\'], .product_info input[type=\'hidden\'], .product_info input[type=\'radio\']:checked, .product_info input[type=\'checkbox\']:checked, .product_info select, .product_info textarea'),
+		data: $('.product_info input[type="text"], .product_info input[type="hidden"], .product_info input[type="radio"]:checked, .product_info input[type="checkbox"]:checked, .product_info select, .product_info textarea'),
 		dataType: 'json',
 		success: function(json) {
-		    console.log(json);
+		
 		    $('.success, .warning, .attention, .information, .error').remove();
-			
+	
 			if (json['error']) {
 				if(json['error']['product']){
 					alert('自己不能购买自己的产品！');
@@ -227,6 +228,9 @@ function dBuy(product_id, quantity) {
 			if (json['success']) {
 			    location.href='index.php?route=checkout/checkout&dbuy=1';
 			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
 	});
 }

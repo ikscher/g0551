@@ -58,8 +58,9 @@
         <!--属性搜索条件列表begin-->    
 		{if !empty($top) && $top>=3}
 		<dl><a ><img name="" src="catalog/view/theme/default/image/clad1.gif" width="1000" height="100" alt="" /></a></dl>
+		{if !empty($searchCondition)}
 		<dl class="clist_content_classify">
-			{if !empty($searchCondition)}
+			
 				{loop $searchCondition $k $s}
 					{if count($s)>=1}
 						<dd class="cl">
@@ -82,9 +83,9 @@
 						</dd>
 					{/if}
 				{/loop}
-			{/if}
+			
 		</dl>
-		
+		{/if}
         <!--属性搜索条件列表end-->   
         
         <div class="clist_calssify_explore"></div>

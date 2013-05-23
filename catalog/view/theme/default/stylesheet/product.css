@@ -342,7 +342,11 @@ ul#thumblist li a.zoomThumbActive{
 				
 		.clothes_recommend{width:946px; margin:10px 17px 10px 17px;}
 		.clothes_recommend dl dt,.clothes_recommend dl dd{float:left; margin-left:20px; line-height:24px;}
-		.clothes_recommend dl dt a,.clothes_recommend dl dd a{line-height:20px;}
+		.clothes_recommend dl dt a,.clothes_recommend dl dd a{line-height:24px;}
+		
+			/* .clothes_recommend dl dd.jiathis{width:248px;}
+			.jiathis_style_24x24{width:248px;} */
+			
 			.discuss{width:18px; height:18px; margin:1px; display:block; overflow:hidden; background:url(../image/index.png) no-repeat -454px -412px;}
 			.favrate{width:18px; height:18px; margin:1px; display:block; overflow:hidden; background:url(../image/index.png) no-repeat -472px -412px;}
 		
@@ -617,6 +621,5 @@ div.attribute dl dd ul li i{
 div.attribute{
    margin:5px 0 5px 0;
 }
-
 
 

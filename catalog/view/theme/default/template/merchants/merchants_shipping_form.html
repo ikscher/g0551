@@ -47,7 +47,7 @@
 							<li class="form-elem">
 								<span class="label-like">宝贝地址：</span>
 								<span id="J_AddressChoose">
-								  <script type="text/javascript">var zone={if !empty($shipping_info['zone'])}{$shipping_info['zone']}{else}{if !empty($shipping_info['city'])}{$shipping_info['city']}{else}0{/if}{/if};ylmf_area.make_select(zone);</script>
+								  <script type="text/javascript">var zone={if !empty($shipping_info['zone'])}{$shipping_info['zone']}{else}{if !empty($shipping_info['city'])}{$shipping_info['city']}{else}220100{/if}{/if};ylmf_area.make_select(zone);</script>
 								</span>
 							</li>
 							<li class="form-elem">
@@ -79,14 +79,14 @@
 							</li>
 						
 							<li class="form-elem calc-method">
-								<span class="label-like">计价方式：</span>
+								    <span class="label-like">计价方式：</span>
 								{if !empty($shipping_info)}
 									{if isset($shipping_info['calc_rule']) && $shipping_info['calc_rule']==1}
-									<span><label for="J_CalcRuleNumber">&nbsp;按件数</label></span>
+									<span><label data-type="number">&nbsp;按件数</label></span>
 									{elseif isset($shipping_info['calc_rule']) && $shipping_info['calc_rule']==2}
-									<span><label for="J_CalcRuleNumber">&nbsp;按重量</label></span>
+									<span><label data-type="weight">&nbsp;按重量</label></span>
 									{elseif isset($shipping_info['calc_rule']) && $shipping_info['calc_rule']==3}
-									<span><label for="J_CalcRuleNumber">&nbsp;按体积</label></span>
+									<span><label data-type="volume">&nbsp;按体积</label></span>
 									{/if}
 								{else}
 									<span>
@@ -240,20 +240,22 @@
 			$('.J_Section:last').after(b_);
 		}
 		
-		if($('input[name=express_postage]').length>0){
-		    var f_= parseFloat($('input[name=express_postage]').val());
-			var p_= parseFloat($('input[name=express_postageplus]').val());
-		    var x_='<span class="msg J_Message"><span class="error">首费应输入0.00至999.99的数字</span></span>';
-			var y_='<span class="msg J_Message"><span class="error">续费应输入0.00至999.99的数字</span></span>';
-			if(isNaN(f_) || f_>999.99 || f_<0){
-				$('input[name=express_postage]').parent().children('.J_DefaultMessage').append(x_);
+		$('input[name$=_postage]').each(function(i,w){
+			if($(w).length>0){
+				var f_= parseFloat($(w).val());
+				var p_= parseFloat($(w).siblings('input[name$=_postageplus]').val());
+				var x_='<span class="msg J_Message"><span class="error">首费应输入0.00至999.99的数字</span></span>';
+				var y_='<span class="msg J_Message"><span class="error">续费应输入0.00至999.99的数字</span></span>';
+				if(isNaN(f_) || f_>999.99 || f_<0){
+					$(w).parent().children('.J_DefaultMessage').append(x_);
+				}
+				
+				if(isNaN(p_) || p_>999.99 || p_<0){
+					$(w).parent().children('.J_DefaultMessage').append(y_);
+				}
+				
 			}
-			
-			if(isNaN(p_) || p_>999.99 || p_<0){
-				$('input[name=express_postageplus]').parent().children('.J_DefaultMessage').append(y_);
-			}
-			
-		}
+		});
 		
 		if($('.error').length>0){
 		    return false;
@@ -272,7 +274,7 @@
 	     flag:false,
 		 freight:'',
 		 CalcRule:'件',
-		 html:''
+		 html:'',
 	};
 	
 	
@@ -299,9 +301,19 @@
 			'weight':'kg',
 			'volume':'m³'};
 	
-    obj.html='<div class="entity"><div class="default J_DefaultSet">默认运费：<input type="text" name="ems_start" value="1" data-field="start" class="input-text " autocomplete="off" maxlength="6" > '+calc.number+
+  
+	
+	for(var i in calc){
+	    if(i==$('.calc-method  span label').attr('data-type')){
+		    obj.CalcRule=calc[i];
+			break;
+		}
+	}
+	
+	
+    obj.html='<div class="entity"><div class="default J_DefaultSet">默认运费：<input type="text" name="ems_start" value="1" data-field="start" class="input-text " autocomplete="off" maxlength="6" > '+obj.CalcRule+
 														'内，<input type="text" class="j_sellerBearFrePrice" value="0.00" disabled="disabled" style="display: none;"><input type="text" data-field="postage" name="ems_postage" value="" class="input-text " autocomplete="off" maxlength="6" aria-label="默认运费价格" > 元，'+
-														'每增加 <input type="text" name="ems_plus" data-field="plus" value="1" class="input-text " autocomplete="off" maxlength="6" > '+calc.number+
+														'每增加 <input type="text" name="ems_plus" data-field="plus" value="1" class="input-text " autocomplete="off" maxlength="6" > '+obj.CalcRule+
 														'，增加运费 <input type="text" class="j_sellerBearFrePrice" value="0.00" disabled="disabled" style="display: none;"><input type="text" name="ems_postageplus" data-field="postageplus" value="" class="input-text " autocomplete="off" maxlength="6" >元'+
 														'<div class="J_DefaultMessage"></div></div><div class="tbl-attach"><div class="J_SpecialMessage"></div><a href="#" class="J_AddRule">为指定地区城市设置运费</a></div></div>';
 	
@@ -353,10 +365,10 @@
 			if(s_.children('.entity').length<=0 && $(this).prop('checked')==true){
 			    var delivery_type=s_.attr('data-delivery');
 
-				obj.html='<div class="entity"><div class="default J_DefaultSet">默认运费：<input type="text" name="'+delivery_type+'_start" value="1" data-field="start" class="input-text " autocomplete="off" maxlength="6" > '+obj.CalcRule+
-														'内，<input type="text" class="j_sellerBearFrePrice" value="0.00" disabled="disabled" style="display: none;"><input type="text" data-field="postage" name="'+delivery_type+'_postage" value="" class="input-text " autocomplete="off" maxlength="6" > 元，'+
-														'每增加 <input type="text" name="'+delivery_type+'_plus" data-field="plus" value="1" class="input-text " autocomplete="off" maxlength="6" > '+obj.CalcRule+
-														'，增加运费 <input type="text" class="j_sellerBearFrePrice" value="0.00" disabled="disabled" style="display: none;"><input type="text" name="'+delivery_type+'_postageplus" data-field="postageplus" value="" class="input-text " autocomplete="off" maxlength="6" >元'+
+				obj.html='<div class="entity"><div class="default J_DefaultSet">默认运费：<input type="text" name="'+delivery_type+'_start" value="1" class="input-text " autocomplete="off" maxlength="6" > '+obj.CalcRule+
+														'内，<input type="text" data-field="postage" name="'+delivery_type+'_postage" value="" class="input-text " autocomplete="off" maxlength="6" > 元，'+
+														'每增加 <input type="text" name="'+delivery_type+'_plus"  value="1" class="input-text " autocomplete="off" maxlength="6" > '+obj.CalcRule+
+														'，增加运费 <input type="text" name="'+delivery_type+'_postageplus"  value="" class="input-text " autocomplete="off" maxlength="6" >元'+
 														'<div class="J_DefaultMessage"></div></div><div class="tbl-attach"><div class="J_SpecialMessage"></div><a href="#" class="J_AddRule">为指定地区城市设置运费</a></div></div>';
 			
 				s_.removeClass('hidden');
