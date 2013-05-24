@@ -29,7 +29,7 @@ class ControllerMerchantsShipping extends Controller {
 		
 		$data=array(
 		        'store_id'=>$store_id,
-		        'status'=>1,
+		        //'status'=>1,
 		        'start'=>($page-1)*$limit,
 				'limit'=>$limit
 			);

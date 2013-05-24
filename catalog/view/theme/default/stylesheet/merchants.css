@@ -355,6 +355,8 @@ table{ border-collapse:collapse; border-spacing:0; }
 .item-list-bd  #postage-tpl .tbl-head th {border-bottom:none;}
 #postage-tpl .manage-list th {height: 28px;font-weight: 400;}/* background-color: #f5f5f5; */
 #postage-tpl .manage-list th, #postage-tpl .manage-list td {border-width: 0 1px 1px 0;border-color: #bbb;border-style: solid;text-align: center;}
+
+.J_Section h3 span{margin-left:20px;font-size:12px;font-weight:normal;}
 /* #postage-tpl .manage-list .entity {margin-top: -1px;width: 100%;max-height: 190px;overflow-y: auto;_overflow-y: scroll;height: expression(this.scrollHeight>140 ? "140px":"auto");} */
 
 /* #postage-tpl .list-attach .pagination {float: right;}

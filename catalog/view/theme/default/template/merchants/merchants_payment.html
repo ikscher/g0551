@@ -140,16 +140,18 @@
 			position:['top','left'],
 			buttons: {
 				 "确定": function() {
+				    
 					$.ajax({
 					    url:"index.php?route=merchants/payment/insert",
 						type: 'post',
 						data: $('.payment_form input[type=\'text\'], .payment_form input[type=\'radio\']:checked, .payment_form select, .payment_form input[type=\'hidden\'], .payment_form textarea'),
 						dataType: 'text',
 						success: function(str) {
+						    //console.log(str);
 							if (str=='yes'){
 								window.location.href="index.php?route=merchants/payment";
 							}else{
-								alert("安装失败！");
+								alert("安装失败，请填入必需的选项！");
 							}
                         }
 					});

@@ -66,7 +66,7 @@
 										<option value="1080" {if isset($shipping_info['consignDate']) && $shipping_info['consignDate']==1080}selected="selected"{/if}>45天内</option>
 									</select>
 								</span>
-								<span>承诺买家付款后该时间内录入物流信息并发货，以物流公司收单信息为准。
+								<span>承诺买家付款后该时间内录入物流信息并发货，以物流公司收单信息为准。</span>
 							</li>
 						   
 							<li class="form-elem">
@@ -176,6 +176,28 @@
 										<div class="postage-detail hidden J_PostageDetail" data-delivery="post"></div>
 									{/if}
 								</div>
+							</li>
+							
+							<li class="form-elem">
+								<span class="label-like">是否启用：</span>
+								<span>  
+								    {if !empty($shipping_info['enabled']) &&  $shipping_info['enabled']==1}
+								        <input type="radio" name="enabled" checked="checked" value="1" id="J_enabled">
+										<label for="J_enabled">启用</label>
+										<input type="radio" name="enabled" value="0" id="J_disabled">
+										<label for="J_disabled">不启用</label>
+									{elseif  !empty($shipping_info['enabled']) && $shipping_info['enabled']==0}
+								        <input type="radio" name="enabled"value="1" id="J_enabled">
+										<label for="J_enabled">启用</label>
+										<input type="radio" name="enabled"  checked="checked"  value="0" id="J_disabled">
+										<label for="J_disabled">不启用</label>
+									{else}
+								        <input type="radio" name="enabled" value="1" id="J_enabled">
+										<label for="J_enabled">启用</label>
+										<input type="radio" name="enabled" value="0"  checked="checked" id="J_disabled">
+										<label for="J_disabled">不启用</label>
+									{/if}
+								</span>
 							</li>
 						</ul>
 						<p class="btns">

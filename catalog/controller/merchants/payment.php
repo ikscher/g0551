@@ -3,6 +3,7 @@
 	* 支付方式管理
 	*/
 class ControllerMerchantsPayment extends Controller { 
+    private $error=array();
 	//身份验证
 	private function check_customer(){
 		if (!$this->customer->isLogged()) {
@@ -59,7 +60,7 @@ class ControllerMerchantsPayment extends Controller {
 	    $this->load->language('merchants/payment');
 	    $this->load->model('merchants/payment');
         
-		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
+		if ($this->request->server['REQUEST_METHOD'] == 'POST' && $this->validateForm()) {
 		    $id=$this->request->post['id'];
 			if(!empty($id)){
 				if($this->model_merchants_payment->editStorePayment($id,$this->request->post)){
@@ -79,11 +80,10 @@ class ControllerMerchantsPayment extends Controller {
 		$this->load->model('merchants/payment');
         
 		
-		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
+		if ($this->request->server['REQUEST_METHOD'] == 'POST' && $this->validateForm() ) {
+		    
 			if($this->model_merchants_payment->addStorePayment($this->request->post)){
 				exit('yes');
-			}else{
-			    exit('no');
 			}
 		}
 		
@@ -112,6 +112,19 @@ class ControllerMerchantsPayment extends Controller {
 			$this->data['error_partner'] = $this->error['partner'];
 		} else {
 			$this->data['error_partner'] = '';
+		}
+		
+		if (isset($this->error['description'])) {
+			$this->data['error_description'] = $this->error['description'];
+		} else {
+			$this->data['error_description'] = '';
+		}
+		
+		
+ 		if (isset($this->error['warning'])) {
+			$this->data['error_warning'] = $this->error['warning'];
+		} else {
+			$this->data['error_warning'] = '';
 		}
 		
 		
@@ -143,17 +156,7 @@ class ControllerMerchantsPayment extends Controller {
 
 		$this->data['tab_general'] = $this->language->get('tab_general');
 
- 		if (isset($this->error['warning'])) {
-			$this->data['error_warning'] = $this->error['warning'];
-		} else {
-			$this->data['error_warning'] = '';
-		}
-		
- 		if (isset($this->error['email'])) {
-			$this->data['error_email'] = $this->error['email'];
-		} else {
-			$this->data['error_email'] = '';
-		}
+ 		
 
         $code=isset($this->request->get['code'])?$this->request->get['code']:'';
 		$this->data['code']=$code;
@@ -225,7 +228,7 @@ class ControllerMerchantsPayment extends Controller {
 			
 		
 		if (isset($this->request->post['status'])) {
-			$this->data['status'] = $this->request->post[''];
+			$this->data['status'] = $this->request->post['status'];
 		} else {
 			$this->data['status'] = isset($paymentInfo['status'])?$paymentInfo['status']:'';
 		}
@@ -255,26 +258,31 @@ class ControllerMerchantsPayment extends Controller {
 	}
 	
 	
-	/* private function validateForm() {
+	private function validateForm() {
 	
-		if (!$this->request->post['seller_email']) {
-			$this->error['email'] = $this->language->get('error_email');
+		if (isset($this->request->post['seller_email'])) {
+			!$this->request->post['seller_email'] &&  $this->error['email'] = $this->language->get('error_email');
 		}
 
-		if (!$this->request->post['security_code']) {
-			$this->error['secrity_code'] = $this->language->get('error_secrity_code');
+		if (isset($this->request->post['security_code'])) {
+			!$this->request->post['security_code'] &&  $this->error['secrity_code'] = $this->language->get('error_secrity_code');
 		}
 
-		if (!$this->request->post['partner']) {
-			$this->error['partner'] = $this->language->get('error_partner');
+		if (isset($this->request->post['partner'])) {
+			!$this->request->post['partner'] &&  $this->error['partner'] = $this->language->get('error_partner');
 		}
-
+		
+		if (isset($this->request->post['description'])) {
+			!$this->request->post['description'] && $this->error['description'] = $this->language->get('error_description');
+		}
+		
+		
 		if (!$this->error) {
 			return TRUE;
 		} else {
 			return FALSE;
 		}	
-	} */
+	}
 
 	
 }

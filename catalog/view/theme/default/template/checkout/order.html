@@ -110,9 +110,11 @@
 							</div>
 						</li>
 					    <li class="dib extra-info">
+						    {if $product_['payment_methods']}
 						    <div class="gbook">
+							    
 							    <ul>
-									{if $product_['payment_methods']}
+									
 									<li class="dib title">支付方式：</li>
 									<li class="dib sel"><select name="payment_method" >
 										{loop $product_['payment_methods'] $payment_method}
@@ -120,27 +122,38 @@
 										{/loop}
 										</select>
 									</li>
-									{/if}
+									
 									
 								</ul>
+								
 							</div>
+							{/if}
+							
+							{if $product_['shipping_methods']}
 							<div class="farearea">
 							    <ul>
 								    <li class="dib title">配送方式：</li>
 								    <li class="dib sel">
 									    <select name="shipping_method" class="shippingMethod" data-id="{$product_['store']['store_id']}">
-										    <option  value="express,快递公司"  {if isset($shipping_method['code']) && $shipping_method['code']=='express'}selected="selected"{/if} />快递公司</option>
+										    {loop $product_['shipping_methods'] $k $sm}
+											    <option value="{$k},{$sm['name']}" />{$sm['name']}</option>
+											
+											{/loop}
+										   <!--  <option  value="express,快递公司"  {if isset($shipping_method['code']) && $shipping_method['code']=='express'}selected="selected"{/if} />快递公司</option>
 										    <option  value="ems,EMS邮政专递" {if isset($shipping_method['code']) && $shipping_method['code']=='ems'}selected="selected"{/if} />EMS邮政专递</option>
-										    <option  value="diy,上门自提" {if isset($shipping_method['code']) && $shipping_method['code']=='diy'}selected="selected"{/if} />上门自提</option>
-								        </select>
+										    <option  value="diy,上门自提" {if isset($shipping_method['code']) && $shipping_method['code']=='diy'}selected="selected"{/if} />上门自提</option> -->
+								            
+										</select>
 									</li>
 									<li class="dib shipping_fee"><span></span></li>
 								</ul>
 								
 							</div>
+							{/if}
 						</li>
 					</ul>
 				</td>
+				<input type='hidden' name="s_s_s" value="{$product_['store']['store_id']}" />
 			</tr>
 			<tr class="other">
 			    <td class="subtotal" colspan="6">店铺合计(含运费)：<span></span></td>
@@ -210,6 +223,7 @@
  
     //提交订单
     $(".paybutton .submit").click(function(){
+	   
 	    var flag_=false;
 		if((".sendAddress dl").length<=0){
 		    flag_=true;
@@ -242,6 +256,8 @@
 		    alert(storename+'  没有提供收款的方式！');
 			return false;
 		}
+		
+		
         /*
         {if $shipping_required}
 			var flag=false;
@@ -282,16 +298,16 @@
 	        type:'POST',
 	        url:'index.php?route=checkout/confirm_order',
 			dataType:'json',
-			data:$('select[name=\'shipping_method\'] ,select[name=\'payment_method\'],input[type=\'hidden\']'),// ,input[name=\'dbuy\']
+			data:$('select[name="shipping_method"] ,select[name="payment_method"],input[type="hidden"]'),// ,input[name=\'dbuy\']
 			success:function(json){
-                console.log(json['redirect']);
+                //alert(json['redirect']);
 			    if (json['redirect']){
 				    location.href=json['redirect'];
 					return false;
 				}else if (typeof json['redirect']=='undefined'){
 				    //window.location.href='{$payment_action}';
 					var payment_method_code=$('input[name=payment_method_code]').val();
-					console.log(payment_method_code);
+					//alert(payment_method_code);
 					$.ajax({
 					    url:'index.php?route=payment/'+payment_method_code,
 						type:'post',
@@ -349,7 +365,7 @@
 			url:'index.php?route=checkout/checkout/shippingMethod',
 			type:'post',
 			dataType:'json',
-			data:$('.other select'),
+			data:$('.other select,input[type="hidden"]'),
 			beforeSend: function() {
 				$('.moneyinfo dl dd span').html('<img src="catalog/view/theme/default/image/loading.gif" alt="" />');
 			},
@@ -357,6 +373,7 @@
 				$('.moneyinfo dl dd span img').remove();
 			},	
 			success:function(json){ 
+			    //console.log(json);
 				//console.log(json['cost']);
 				//运费
 				var shipping_fee=parseFloat(json['cost']).toFixed(2);

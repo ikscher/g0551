@@ -38,7 +38,7 @@
                             <div class="section J_Section" data-id="{$shipping['shipping_id']}">
                                 <div class="tbl-prefix">
                                     <span class="meta">|<a href="javascript:void(0);" class="J_Modify"> 修改</a> | <a href="javascript:void(0);"  class="J_Delete">删除 </a></span>
-                                    <h3 class="J_Title">{$shipping['shipping_desc']}</h3>
+                                    <h3 class="J_Title">{$shipping['shipping_desc']}<span>{if $shipping['enabled']==1}已启用{elseif $shipping['enabled']==0}未启用{/if}</span></h3>
                                 </div>
 								<div class="tbl-head">
                                     <table border="0" cellpadding="0" cellspacing="0">
