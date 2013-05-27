@@ -100,7 +100,7 @@
 				<!-- <span class="operator"><a href="#">删除商品</a></span> -->
 			</tr>
 			{/loop}
-			<tr class="other">
+			<tr class="other ps_info">
 			    <td colspan="6">
 				    <ul>
 					    <li class="dib">
@@ -242,57 +242,46 @@
 			return false;
 		}
 		
-		var storename=[];
-		$('select[name=shipping_method]').each(function(i,w){
-		    if($(w).parents('.farearea').siblings('.gbook').children('ul').children('li').length<=0){
-				var x=$(w).parents('.other').siblings('.first').next().children('td').children('a').html();
-				storename.push(x);
+		var __info__=[];
+		$('td.store').each(function(i,w){
+		    var storename=$(w).children('a').html();
+			
+			var x=$(w).parent().siblings('.ps_info').find('select[name=payment_method]');
+			var y=$(w).parent().siblings('.ps_info').find('select[name=shipping_method]');
+			
+			
+			
+			if(x.length<=0){
+			    __info__.push(storename);
+			    if(y.length<=0){
+			        __info__.push(' 店铺没有提供有效的收款方式和配送方式！');
+				}else{
+				    __info__.push(' 店铺没有提供有效的收款方式！');
+				}
+				
+				
+		    }else{
+			    if(y.length<=0){
+				    __info__.push(storename);
+				    __info__.push(' 店铺没有提供有效的配送方式！');
+			    }else if(!y.val()){
+				    __info__.push(storename);
+					__info__.push(' 店铺没有选择配送！');
+				}
 			}
 			
+			if(__info__.toString().indexOf('方式')>=0)  __info__.push('\n');
+
 		});
-
-
-		if(storename.length>0){
-		    alert(storename+'  没有提供收款的方式！');
+	
+		if(__info__.toString().indexOf('方式')>=0){
+			alert(__info__.toString().replace(/\,/g,''));
 			return false;
 		}
 		
 		
-        /*
-        {if $shipping_required}
-			var flag=false;
-			$(".shippingContent dl dd input").each(function(i,w){
-				if($(this).attr("checked")=='checked'){
-				   flag=true;
-				   return false;//退出循环
-				}
-			});
-			
-			if(flag===false) {
-				alert('请选择配送方式！');
-				location.hash="#shipping_";
-				return false;
-			}
-			
-			//================================
-			
-			
-			//================================
-			var flag__=false;
-			$(".paymentContent dl dd input").each(function(i,w){
-				if($(this).attr("checked")=='checked'){
-				   flag__=true;
-				   return false;//退出循环
-				}
-			});
-			
-			if(flag__===false) {
-				alert('请选择支付方式！');
-				location.hash="#payment_";
-				return false;
-			}
-		{/if}
-		*/
+		
+	
 
         $.ajax({
 	        type:'POST',
@@ -342,11 +331,12 @@
    
    //支付方式
     $("select[name=payment_method]").change(function(){
+	    var payment_method=$(this).parents('.other').find('select[name="payment_method"]').val();
 		$.ajax({
 			url:'index.php?route=checkout/checkout/paymentMethod',
 			type:'post',
 			dataType:'json',
-			data:$('.other select'),
+			data:{payment_method:payment_method},
 			success:function(json){
 			    //console.log(json);
 				if(json['code']){
@@ -360,12 +350,15 @@
    $(".shippingMethod").change(function(){
         var that_=$(this);
 		var store_id=$(this).attr('data-id');
-
+        
+		var shipping_method=that_.parents('.other').find('select[name="shipping_method"]').val();
+		var store_id=that_.parents('.other').find('input[type="hidden"]').val();
 		$.ajax({
 			url:'index.php?route=checkout/checkout/shippingMethod',
 			type:'post',
 			dataType:'json',
-			data:$('.other select,input[type="hidden"]'),
+			//data:$('.other select,.other input[type="hidden"]'),
+			data:{shipping_method:shipping_method,s_s_s:store_id},
 			beforeSend: function() {
 				$('.moneyinfo dl dd span').html('<img src="catalog/view/theme/default/image/loading.gif" alt="" />');
 			},
@@ -373,8 +366,8 @@
 				$('.moneyinfo dl dd span img').remove();
 			},	
 			success:function(json){ 
-			    //console.log(json);
-				//console.log(json['cost']);
+			    console.log(json);
+				console.log(json['cost']);
 				//运费
 				var shipping_fee=parseFloat(json['cost']).toFixed(2);
 				that_.parent().next().children('span').html(shipping_fee);

@@ -110,7 +110,7 @@ class ControllerCheckoutCheckout extends Controller {
 			$this->data['products'][$product['store_id']]['shipping_methods']= $this->model_store_store->getStoreShippingMethod($product['store_id']);//店铺的货运方式
 		}
        
-	    //var_dump($this->data['products']);
+	    // var_dump($this->data['products']);
 		// Gift Voucher
 		$this->data['vouchers'] = array();
 		
@@ -195,7 +195,7 @@ class ControllerCheckoutCheckout extends Controller {
 		$v_v_v = $this->model_store_store->getStoreShippingMethod($s_s_s);
 		
 		
-		//$this->response->setOutput(json_encode($v_v_v));
+		//$this->response->setOutput(json_encode($s_s_s));
 		foreach($v_v_v as $k=>$v){
 		    if(in_array($k,$arr)){
 				$data['shipping_method']['title']=$v['name'];
@@ -205,7 +205,7 @@ class ControllerCheckoutCheckout extends Controller {
 			}
 		}
        
-		$this->response->setOutput(json_encode($data['shipping_method'])); 
+		$this->response->setOutput(json_encode($data['shipping_method']));   
 	}
 	
 	/**设置支付方式**/

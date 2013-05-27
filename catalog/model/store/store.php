@@ -129,15 +129,18 @@ Class ModelStoreStore extends Model {
 	*获取店铺的货运方式
 	*/
 	public function getStoreShippingMethod($store_id){
+	    $result =array();
+		$result_=array();
 	    $sql="select shipping_fee from ".DB_PREFIX."shipping where store_id='{$store_id}' and enabled=1 order by shipping_id asc limit 1";
+	
 		$query=$this->db->query($sql);
 		
-		$result_=$query->row;
+		$result=$query->row;
 		
 		if (empty($result)) return;
-		$s__=unserialize($result_['shipping_fee']);
+		$s__=unserialize($result['shipping_fee']);
 		
-		unset($result_['shipping_fee']);
+		unset($result['shipping_fee']);
 		
 		$result_['express']['start']=isset($s__['express']['express_start'])?$s__['express']['express_start']:'';
 		$result_['ems']['start']=isset($s__['ems']['ems_start'])?$s__['ems']['ems_start']:'';

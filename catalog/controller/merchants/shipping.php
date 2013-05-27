@@ -50,11 +50,14 @@ class ControllerMerchantsShipping extends Controller {
 			    $sv[$k]['first_num']=isset($s__['express_start'])?$s__['express_start']:(isset($s__['ems_start'])?$s__['ems_start']:(isset($s__['post_start'])?$s__['post_start']:''));
 				
 				$sv[$k]['first_price']=isset($s__['express_postage'])?$s__['express_postage']:(isset($s__['ems_postage'])?$s__['ems_postage']:(isset($s__['post_postage'])?$s__['post_postage']:''));
+		        $sv[$k]['first_price']=number_format($sv[$k]['first_price'],2);
+		
 		
 				$sv[$k]['step_num']=isset($s__['express_plus'])?$s__['express_plus']:(isset($s__['ems_plus'])?$s__['ems_plus']:(isset($s__['post_plus'])?$s__['post_plus']:''));
 	
 				$sv[$k]['step_price']=isset($s__['express_postageplus'])?$s__['express_postageplus']:(isset($s__['ems_postageplus'])?$s__['ems_postageplus']:(isset($s__['post_postageplus'])?$s__['post_postageplus']:''));
-                
+                $sv[$k]['step_price']=number_format($sv[$k]['step_price'],2);
+				
 				if($k=='express') $sv[$k]['shipping_name']='快递';
 				if($k=='ems')     $sv[$k]['shipping_name']='EMS';
 				if($k=='post')    $sv[$k]['shipping_name']='平邮';
@@ -209,7 +212,7 @@ class ControllerMerchantsShipping extends Controller {
 			$shipping_info=$this->model_merchants_shipping->getStoreShipping($shipping_id);
 			$this->data['calc_rule']=$shipping_info['calc_rule']==1?'件':(($shipping_info['calc_rule']==2)?'kg':(($shipping_info['calc_rule']==3)?'m³':''));
 		}
-	    // var_dump($shipping_info);
+	     // var_dump($shipping_info);
         $this->data['shipping_info']=$shipping_info;
 		
 		$this->children = array(
