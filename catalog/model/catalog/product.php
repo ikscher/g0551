@@ -19,8 +19,8 @@ class ModelCatalogProduct extends Model {
 		$sql="SELECT date_start,date_end,price FROM " . DB_PREFIX . "product_special ps WHERE ps.product_id='".(int)$product_id . "' AND  ps.date_start <'$time' AND  ps.date_end >'$time' ORDER BY ps.priority ASC, ps.price ASC LIMIT 1";//."' and  ps.customer_group_id = '" . (int)$customer_group_id 只有登录的情况下出现的bug
 		$query_=$this->db->query($sql);
 		if($query_->num_rows>0){
-			$query_->row['date_start']=date('Y-m-d',($query_->row['date_start']));
-			$query_->row['date_end']  =date('Y-m-d',($query_->row['date_end']));
+			$query_->row['date_start']=date('Y-m-d H:i:s',($query_->row['date_start']));
+			$query_->row['date_end']  =date('Y-m-d H:i:s',($query_->row['date_end']));
 			$special=$query_->row;
 		}
 		

@@ -19,7 +19,7 @@
 		    
 				<tr>
 				  <td><span class="required">*</span> 店铺名称</td>
-				  <td><input type="text" name="name" value="<?php if(isset($store['name'])) { ?><?php echo $store['name'];?><?php } ?>" size="80" /><?php if($error_storename) { ?>
+				  <td><input type="text" name="name" value="<?php if(isset($store['name'])) { ?><?php echo $store['name'];?><?php } ?>" size="80" /><a  class="simulate_login" href="javascript:void(0);">模拟登录</a><?php if($error_storename) { ?>
 					<span class="error"><?php echo $error_storename;?></span>
 					 <?php } ?></td></td>
 				</tr>
@@ -155,4 +155,8 @@ function image_upload(field, thumb) {
 		modal: false
 	});
 };
+
+$('.simulate_login').click(function(){
+   alert('fff');
+});
 //--></script> 

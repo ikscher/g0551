@@ -395,8 +395,9 @@ $("input[name=try]").click(function(){
 
 
 $("input[name^=date]").live("click", function(){
-    $(this).datepicker({
+    $(this).datetimepicker({
     	dateFormat: 'yy-mm-dd',
+		timeFormat: 'hh:mm:ss',
 		numberOfMonths: 2 //显示两个月
 	});
 });

@@ -77,8 +77,8 @@
 	<div class="search_ z">
 	    <div class="search-triggers">
 		    <ul class="ks-switchable-nav">
-			    <li data-searchtype="item" data-defaultpage="index.php?route=search/search" class="selected"><a href="javascript:void(0);">宝贝</a></li>
-			    <li data-searchtype="shop" data-action="index.php?route=store/list"><a href="javascript:void(0);">店铺</a></li>
+			    <li data-searchtype="item" data-defaultpage="?route=search/search" class="selected"><a href="javascript:void(0);">宝贝</a></li>
+			    <li data-searchtype="shop" data-action="?route=store/list"><a href="javascript:void(0);">店铺</a></li>
 			</ul>
 		</div>
 		<div class="search_box h" id="search_box">
@@ -121,7 +121,7 @@
 		<li><a href="{$joy}">文化玩乐</a></li>
 		<li class="right"><img src="catalog/view/theme/default/image/home/rednav02.jpg" width="42"/></li>
 		<!-- <li class="gowuche"><a href="#">我的购物车</a><span class="jiesuan"></span></li> -->
-		<li ><a href="#">试中心</a></li>
+		<li ><a href="{$try}">试中心</a></li>
 	</ul>
 	</div>
 </div>
@@ -136,7 +136,7 @@
 			    <dt>
 			    {loop $list['list'] $key_ $list_}
 				    {if $key_==0}<strong>{/if}
-				    <a  href="index.php?route=product/category&category_id={$list_['category_id']}">{$list_['name']}</a>
+				    <a  href="?route=product/category&category_id={$list_['category_id']}">{$list_['name']}</a>
 					{if $key_==2}</strong>{/if}
 					
 				{/loop}
@@ -149,7 +149,7 @@
 							{if !empty($list_['list'])}
 							<li><div class="float-list-cont">
 						    {loop $list_['list']  $key__ $list__} 
-							   {if $key__==0}<strong>{/if}<a  href="index.php?route=product/category&category_id={$list__['category_id']}">{$list__['name']}</a>{if $key__==0}</strong>{/if}
+							   {if $key__==0}<strong>{/if}<a  href="?route=product/category&category_id={$list__['category_id']}">{$list__['name']}</a>{if $key__==0}</strong>{/if}
 							{/loop}
 							</div></li>
 							{/if}
@@ -265,8 +265,8 @@
 		    {loop $clothes_products $c}
 			<dd>
 				<ul>
-					<li><a href="index.php?route=product/product&product_id={$c['product_id']}"><img src="{$c['image']}" title="{$c['name']}" alt="{$c['name']}"></a></li>
-					<li><a href="index.php?route=product/product&product_id={$c['product_id']}">{$c['shortname']}</a></li>
+					<li><a href="?route=product/product&product_id={$c['product_id']}"><img src="{$c['image']}" title="{$c['name']}" alt="{$c['name']}"></a></li>
+					<li><a href="?route=product/product&product_id={$c['product_id']}">{$c['shortname']}</a></li>
 					<li><b class="price1">¥{$c['price']}</b> {if !empty($c['special_price'])}<span class="price2">¥{$c['special_price']}</span>{/if}</li>
 				</ul>
 			</dd>
@@ -301,8 +301,8 @@
 		    {loop $foods_products $f}
 			<dd>
 				<ul>
-					<li><a href="index.php?route=product/product&product_id={$f['product_id']}"><img src="{$f['image']}" title="{$f['name']}" alt="{$f['name']}"></a></li>
-					<li><a href="index.php?route=product/product&product_id={$f['product_id']}">{$f['shortname']}</a></li>
+					<li><a href="?route=product/product&product_id={$f['product_id']}"><img src="{$f['image']}" title="{$f['name']}" alt="{$f['name']}"></a></li>
+					<li><a href="?route=product/product&product_id={$f['product_id']}">{$f['shortname']}</a></li>
 					<li><b class="price1">¥{$f['price']}</b> {if !empty($f['special_price'])}<span class="price2">¥{$f['special_price']}</span>{/if}</li>
 				</ul>
 			</dd>
@@ -336,8 +336,8 @@
 		    {loop $house_products $h}
 			<dd>
 				<ul>
-					<li><a href="index.php?route=product/product&product_id={$h['product_id']}"><img src="{$h['image']}" title="{$h['name']}" alt="{$h['name']}"></a></li>
-					<li><a href="index.php?route=product/product&product_id={$h['product_id']}">{$h['shortname']}</a></li>
+					<li><a href="?route=product/product&product_id={$h['product_id']}"><img src="{$h['image']}" title="{$h['name']}" alt="{$h['name']}"></a></li>
+					<li><a href="?route=product/product&product_id={$h['product_id']}">{$h['shortname']}</a></li>
 					<li><b class="price1">¥{$h['price']}</b> {if !empty($h['special_price'])}<span class="price2">¥{$h['special_price']}</span>{/if}</li>
 				</ul>
 			</dd>
@@ -370,8 +370,8 @@
 		    {loop $travel_products $t}
 			<dd>
 				<ul>
-					<li><a href="index.php?route=product/product&product_id={$t['product_id']}"><img src="{$t['image']}" title="{$t['name']}" alt="{$t['name']}"></a></li>
-					<li><a href="index.php?route=product/product&product_id={$t['product_id']}">{$t['shortname']}</a></li>
+					<li><a href="?route=product/product&product_id={$t['product_id']}"><img src="{$t['image']}" title="{$t['name']}" alt="{$t['name']}"></a></li>
+					<li><a href="?route=product/product&product_id={$t['product_id']}">{$t['shortname']}</a></li>
 					<li><b class="price1">¥{$t['price']}</b> {if !empty($t['special_price'])}<span class="price2">¥{$t['special_price']}</span>{/if}</li>
 				</ul>
 			</dd>

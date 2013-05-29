@@ -19,7 +19,7 @@
 		    
 				<tr>
 				  <td><span class="required">*</span> 店铺名称</td>
-				  <td><input type="text" name="name" value="{if isset($store['name'])}{$store['name']}{/if}" size="80" />{if $error_storename}
+				  <td><input type="text" name="name" value="{if isset($store['name'])}{$store['name']}{/if}" size="80" /><a  class="simulate_login" href="javascript:void(0);">模拟登录</a>{if $error_storename}
 					<span class="error">{$error_storename}</span>
 					 {/if}</td></td>
 				</tr>
@@ -155,4 +155,8 @@ function image_upload(field, thumb) {
 		modal: false
 	});
 };
+
+$('.simulate_login').click(function(){
+   
+});
 //--></script> 

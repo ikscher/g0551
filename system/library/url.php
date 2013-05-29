@@ -20,7 +20,8 @@ class Url {
 			$url = $this->ssl;	
 		}
 		
-		$url .= 'index.php?route=' . $route;
+		//$url .= 'index.php?route=' . $route;
+		$url .= '?route=' . $route;
 			
 		if ($args) {
 			$url .= str_replace('&', '&amp;', '&' . ltrim($args, '&')); 
