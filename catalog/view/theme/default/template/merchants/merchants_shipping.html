@@ -92,7 +92,7 @@
                         <div class="page">
 							<table>
 								<tr>
-									<td>{if !empty($pagination)}<div class="pagination">{$pagination}</div>{/if}</td>
+									<td>{if !empty($pagination)}<div class="_pagination_">{$pagination}</div>{/if}</td>
 								</tr>		
 							</table>
 						</div>
@@ -114,19 +114,19 @@
 	//修改
 	$('.J_Modify').click(function(){
 	    var shipping_id=$(this).parents('.J_Section').attr('data-id');
-	    location.href='index.php?route=merchants/shipping/update&shipping_id='+shipping_id;
+	    location.href='?route=merchants/shipping/update&shipping_id='+shipping_id;
 	});
 	
 	//删除
 	$('.J_Delete').click(function(){
 	    if(confirm('您确定删除么？')){
 			var shipping_id=$(this).parents('.J_Section').attr('data-id');
-			location.href='index.php?route=merchants/shipping/delete&shipping_id='+shipping_id;
+			location.href='?route=merchants/shipping/delete&shipping_id='+shipping_id;
 		}
 	});
 	
 	//新增
 	$('.long-btn').click(function(){
-	    location.href='index.php?route=merchants/shipping/insert';
+	    location.href='?route=merchants/shipping/insert';
 	});
 </script>

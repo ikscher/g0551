@@ -1,3 +1,5 @@
+
+
 //省份
 var provice = new Array("10106000,安徽","10102000,北京","10103000,上海","10101000,广东","10104000,天津","10105000,重庆","10107000,福建","10108000,甘肃","10109000,广西","10110000,贵州","10111000,海南","10112000,河北","10113000,河南","10114000,黑龙江","10115000,湖北","10116000,湖南","10117000,吉林","10118000,江苏","10119000,江西","10120000,辽宁","10121000,内蒙古","10122000,宁夏","10123000,青海","10124000,山东","10125000,山西","10126000,陕西","10127000,四川","10128000,西藏","10129000,新疆","10130000,云南","10131000,浙江","10132000,澳门","10133000,香港","10134000,台湾");
 
@@ -110,7 +112,7 @@ function selectClass(){
 		var intId=$(this).attr("data-rel");
 		var objParent=$(this).parent();
 		objParent.nextAll(".class_list").remove();
-		$.getJSON("index.php?route=merchants/release/getClass&id="+ intId.toString(),function(json){
+		$.getJSON("?route=merchants/release/getClass&id="+ intId.toString(),function(json){
 			$("#loading_info").hide();
 			if(json.length>0){
 				var list_con="<ul class=\"class_list\">";
@@ -236,7 +238,7 @@ function SetSelectProduct(strUrl,strMsg,strMenu,strName){
 //设置商品主图
 function setProductImage(intId){
 	if(confirm("确定设置当前图片为宝贝主图吗？")){
-		$.post("index.php?route=merchants/sell/setimg",{"img_id":intId,"pro_id":$("#product_id").val()},function(html){
+		$.post("?route=merchants/sell/setimg",{"img_id":intId,"pro_id":$("#product_id").val()},function(html){
 			if(html.toString()=="ok"){
 				$("#imageList li").removeClass("current");
 				$("#img_item"+intId.toString()).addClass("current");
@@ -250,7 +252,7 @@ function setProductImage(intId){
 //删除商品图片
 function delProductImage(intId){
 	if(confirm("确定删除所选宝贝主图吗？")){
-		$.post("index.php?route=merchants/sell/delimg",{"img_id":intId,"pro_id":$("#product_id").val()},function(html){
+		$.post("?route=merchants/sell/delimg",{"img_id":intId,"pro_id":$("#product_id").val()},function(html){
 			if(html.toString()=="ok"){
 				$("#img_item"+intId.toString()).remove();
 			}else{
@@ -263,7 +265,7 @@ function delProductImage(intId){
 //设置订单状态
 function setOrderStatus(action,strMsg,order_id){
 	if(confirm(strMsg)){
-		$.post("index.php?route=merchants/order/"+action,{order_id:order_id},function(str){
+		$.post("?route=merchants/order/"+action,{order_id:order_id},function(str){
 			if(str=="ok"){
 				location.reload();
 			}else{
@@ -293,7 +295,7 @@ function CheckCoupon(obj){
 
 //设置退换货状态
 function setReturn(intId,intState){
-	$.post("index.php?route=merchants/return/setstate",{"id":intId.toString(),"state":intState.toString()},function(html){
+	$.post("?route=merchants/return/setstate",{"id":intId.toString(),"state":intState.toString()},function(html){
 		if(html.toString()=="ok"){
 			alert("退换状态设置成功！");
 			location.reload();
@@ -308,7 +310,7 @@ var modifyOrderTotal={
 		 mot:function(){
 		    if($('input[name=total]').length<=0){
 				modifyOrderTotal.total=$('.modifyOrderTotal').parent().prev().children('.total').html();
-				$('.modifyOrderTotal').parent().prev().children('.total').html('<input type="text" name="total" size="8" value="'+modifyOrderTotal.total+'"/><br><a href="javascrip:void(0)" class="ok">确定</a><a href="javascript:void(0)" class="cancel">取消</a>');
+				$('.modifyOrderTotal').parent().prev().children('.total').html('<input type="text" name="total" class="input-small" value="'+modifyOrderTotal.total+'"/><br><a href="javascrip:void(0)" class="ok">确定</a><a href="javascript:void(0)" class="cancel">取消</a>');
 			
 			}
 		 },
@@ -327,7 +329,7 @@ var total;
 $(".modifyOrderTotal").click(function(){
     if($(this).parent().prev().children('.total').children('input[name=total]').length<=0){
 		total=$(this).parent().prev().children('.total').html();
-		$(this).parent().prev().children('.total').html('<input type="text" name="total" size="8" value="'+total+'"/><br><a  style="cursor:pointer" class="ok">确定</a><a href="javascript:void(0)" class="cancel">取消</a>');
+		$(this).parent().prev().children('.total').html('<input type="text" name="total" class="input-mini" value="'+total+'"/><br><a  style="cursor:pointer" class="ok">确定</a><a href="javascript:void(0)" class="cancel">取消</a>');
 	
 	}
 });
@@ -359,7 +361,7 @@ $('td').on('click','.ok',function(){
 	}
     var that=$(this).parent();
 	$.ajax({
-	    url:'index.php?route=merchants/order_create/setOrderTotal',
+	    url:'?route=merchants/order_create/setOrderTotal',
 		data:{order_id:order_id,total:xt},
 		//data:'order_id='+order_id+'&total='+xt,
 		type:'post',

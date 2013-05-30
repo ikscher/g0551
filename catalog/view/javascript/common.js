@@ -1,7 +1,7 @@
 $(document).ready(function() {
 	/* Search */
 	$('.button-search').bind('click', function() {
-		url = $('base').attr('href') + 'index.php?route=product/search';
+		url = $('base').attr('href') + '?route=product/search';
 				 
 		var filter_name = $('input[name=\'filter_name\']').attr('value');
 		
@@ -14,7 +14,7 @@ $(document).ready(function() {
 	
 	$('#header input[name=\'filter_name\']').bind('keydown', function(e) {
 		if (e.keyCode == 13) {
-			url = $('base').attr('href') + 'index.php?route=product/search';
+			url = $('base').attr('href') + '?route=product/search';
 			 
 			var filter_name = $('input[name=\'filter_name\']').attr('value');
 			
@@ -31,10 +31,10 @@ $(document).ready(function() {
 		//$('#cart').addClass('active');
 		$('.car-content').css('display','block');
 		
-		//$('#cart').load('index.php?route=module/cart .car_content > *');
+		//$('#cart').load('?route=module/cart .car_content > *');
 
 		$.ajax({
-		        url:'index.php?route=module/cart ',
+		        url:'?route=module/cart ',
 		        dataType:'html',
 				success:function(data){
 				   //alert(data);
@@ -122,7 +122,7 @@ function getURLVar(urlVarName) {
 function addToCart(product_id, quantity) {
 	quantity = typeof(quantity) != 'undefined' ? quantity : 1;
 	$.ajax({
-		url: 'index.php?route=checkout/cart/add',
+		url: '?route=checkout/cart/add',
 		type: 'post',
 		data: $('.product_info input[type=\'text\'], .product_info input[type=\'hidden\'], .product_info input[type=\'radio\']:checked, .product_info input[type=\'checkbox\']:checked, .product_info select, .product_info textarea'),
 		dataType: 'json',
@@ -197,7 +197,7 @@ function dBuy() {
 	//quantity = typeof(quantity) != 'undefined' ? quantity : 1;
     
 	$.ajax({
-		url: 'index.php?route=checkout/dbuy/index',
+		url: '?route=checkout/dbuy/index',
 		type: 'post',
 		data: $('.product_info input[type="text"], .product_info input[type="hidden"], .product_info input[type="radio"]:checked, .product_info input[type="checkbox"]:checked, .product_info select, .product_info textarea'),
 		dataType: 'json',
@@ -226,7 +226,7 @@ function dBuy() {
 			}
 			
 			if (json['success']) {
-			    location.href='index.php?route=checkout/checkout&dbuy=1';
+			    location.href='?route=checkout/checkout&dbuy=1';
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -239,7 +239,7 @@ function dBuy() {
 //加入收藏列表
 function addToWishList(product_id) {
 	$.ajax({
-		url: 'index.php?route=account/wishlist/add',
+		url: '?route=account/wishlist/add',
 		type: 'post',
 		data: 'product_id=' + product_id,
 		dataType: 'json',
@@ -263,7 +263,7 @@ function addToWishList(product_id) {
 
 function addToCompare(product_id) { 
 	$.ajax({
-		url: 'index.php?route=product/compare/add',
+		url: '?route=product/compare/add',
 		type: 'post',
 		data: 'product_id=' + product_id,
 		dataType: 'json',

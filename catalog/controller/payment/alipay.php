@@ -11,73 +11,81 @@ class ControllerPaymentAlipay extends Controller {
 
 		$this->load->model('checkout/order');
        
-		$order_id = isset($this->session->data['order_id'])?$this->session->data['order_id']:'';
-   
-		if(!empty($order_id)){
-			$store_payment_info = $this->model_checkout_order->getStoreInfoByOrderid($order_id);
+		$order_id_arr = !empty($this->session->data['order_id_arr'])?unserialize($this->session->data['order_id_arr']):array();
+        
 		
-			$seller_email   = $store_payment_info['seller_email'];
-			$security_code  = $store_payment_info['security_code'];
-			$trade_type     = $store_payment_info['trade_type'];
-			$partner        = $store_payment_info['partner'];
-			$owner          = $store_payment_info['owner'];
-			$order_status_id= $store_payment_info['order_status_id'];
-			$total = number_format($store_payment_info['total'],2,'.','');
+		if(!empty($order_id_arr)){
+		    foreach($order_id_arr as $order_id){
+				$store_payment_info = $this->model_checkout_order->getStoreInfoByOrderid($order_id);
 			
-            $this->session->data['trade_type']=$trade_type;
-			$this->session->data['security_code']=$security_code;
-			$this->session->data['partner']=$partner;
-			$this->session->data['seller_email']=$seller_email;
-			$this->session->data['order_status_id']=$order_status_id;
+				$seller_email   = $store_payment_info['seller_email'];
+				$security_code  = $store_payment_info['security_code'];
+				$trade_type     = $store_payment_info['trade_type'];
+				$partner        = $store_payment_info['partner'];
+				$owner          = $store_payment_info['owner'];
+				$order_status_id= $store_payment_info['order_status_id'];
+				$total = number_format($store_payment_info['total'],2,'.','');
+				
+				$this->session->data['trade_type']=$trade_type;
+				$this->session->data['security_code']=$security_code;
+				$this->session->data['partner']=$partner;
+				$this->session->data['seller_email']=$seller_email;
+				$this->session->data['order_status_id']=$order_status_id;
 
-			$_input_charset = "utf-8";
-			$sign_type      = "MD5";
-			$transport      = "http";
-			$notify_url     = HTTP_SERVER . 'index.php?route=payment/alipay/callback';
-			$return_url		=HTTP_SERVER . 'index.php?route=checkout/success';
-			$show_url       = "";
-            
-			$this->load->model('account/customer');
-			$customer_id=$this->customer->getId();
-			$customer_info=$this->model_account_customer->getCustomer($customer_id);
-			$receive_name=$customer_info['username'];
-			$receive_address=$customer_info['address'];
-			$receive_zip=$customer_info['postcode'];
-			$receive_mobile=$customer_info['mobile'];
-			$receive_phone=$customer_info['telphone'];
-		
-			$parameter = array(
-				"service"        => $trade_type,
-				"partner"        => $partner,
-				"return_url"     => $return_url,
-				"notify_url"     => $notify_url,
-				"_input_charset" => $_input_charset,
-				"subject"        => $partner.' Order：' . $order_id ,
-				"body"           => 'Owner： ' . $owner,
-				"out_trade_no"   => $order_id,
-				"price"          => $total,
-				"payment_type"   => "1",
-				"quantity"       => "1",
-				"logistics_fee"      =>'0.00',
-				"logistics_payment"  =>'BUYER_PAY',
-				"logistics_type"     =>'EXPRESS',
-				"receive_name"       =>$receive_name,
-				"receive_address"    =>$receive_address,
-				"receive_zip"        =>$receive_zip,
-				"receive_phone"      =>$receive_phone,
-				"receive_mobile" =>$receive_mobile,
-				"show_url"       => $show_url,
-				"seller_email"   => $seller_email
-			);
+				$_input_charset = "utf-8";
+				$sign_type      = "MD5";
+				$transport      = "http";
+				$notify_url     = HTTP_SERVER . 'index.php?route=payment/alipay/callback';
+				$return_url		=HTTP_SERVER . 'index.php?route=checkout/success';
+				$show_url       = "";
+				
+				$this->load->model('account/customer');
+				$customer_id=$this->customer->getId();
+				$customer_info=$this->model_account_customer->getCustomer($customer_id);
+				$receive_name=$customer_info['username'];
+				$receive_address=$customer_info['address'];
+				$receive_zip=$customer_info['postcode'];
+				$receive_mobile=$customer_info['mobile'];
+				$receive_phone=$customer_info['telphone'];
+			
+				$parameter = array(
+					"service"        => $trade_type,
+					"partner"        => $partner,
+					"return_url"     => $return_url,
+					"notify_url"     => $notify_url,
+					"_input_charset" => $_input_charset,
+					"subject"        => $partner.' Order：' . $order_id ,
+					"body"           => 'Owner： ' . $owner,
+					"out_trade_no"   => $order_id,
+					"price"          => $total,
+					"payment_type"   => "1",
+					"quantity"       => "1",
+					"logistics_fee"      =>'0.00',
+					"logistics_payment"  =>'BUYER_PAY',
+					"logistics_type"     =>'EXPRESS',
+					"receive_name"       =>$receive_name,
+					"receive_address"    =>$receive_address,
+					"receive_zip"        =>$receive_zip,
+					"receive_phone"      =>$receive_phone,
+					"receive_mobile" =>$receive_mobile,
+					"show_url"       => $show_url,
+					"seller_email"   => $seller_email
+				);
 
-			$alipay = new alipay_service($parameter,$security_code,$sign_type);
-			$action=$alipay->build_url();
-
-			//$this->data['payment_action'] = $action;
-			//$this->id = 'payment';
+				$alipay = new alipay_service($parameter,$security_code,$sign_type);
+				$action=$alipay->build_url();
+				
+				
+            }
+			
         }
+		
+		$this->response->setOutput(json_encode(array('action'=>$action))); 
+		
+		
+		
 		//$action='https://mapi.alipay.com/gateway.do?_input_charset=utf-8&body=%E8%A1%A3%E6%9C%8D&logistics_fee=0.00&logistics_payment=BUYER_PAY&logistics_type=EXPRESS¬ify_url=http%3A%2F%2Fwww.xxx.com%2Fcreate_direct_pay_by_user-PHP-UTF-8%2Fnotify_url.php&out_trade_no=1304231437232596&partner=2088801239967847&payment_type=1&price=0.01&quantity=1&receive_address=%E5%AE%89%E5%BE%BD%E7%9C%81+%E5%90%88%E8%82%A5%E5%B8%82+%E7%91%B6%E6%B5%B7%E5%8C%BA+%E7%91%B6%E6%B5%B7%E5%8C%BA%E6%96%B0%E6%B5%B7%E5%A4%A7%E9%81%93%E4%B8%8E%E5%BD%93%E6%B6%82%E5%8C%97%E8%B7%AF%E4%BA%A4%E5%8F%89%E5%8F%A3&receive_mobile=18905655866&receive_name=%E5%94%90%E5%86%9B&receive_phone=0551-64374866&receive_zip=230011&return_url=http%3A%2F%2Fwww.xxx.com%2Fcreate_direct_pay_by_user-PHP-UTF-8%2Freturn_url.php&seller_email=newcross2012%40126.com&service=trade_create_by_buyer&subject=%E6%B5%8B%E8%AF%95%E8%AE%A2%E5%8D%95&sign=49e9455011180ed4958f2304b3937189&sign_type=MD5&';
-		$this->response->setOutput(json_encode(array('action'=>$action)));
+		
 		/* if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/alipay.html')) {
 			$this->template = $this->config->get('config_template') . '/template/payment/alipay.html';
 		} else {

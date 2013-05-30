@@ -21,9 +21,9 @@
 							</p> -->
 							</div>
                             <p class="order_attention"><b>提醒：</b>
-                                <span>待付款（<a class="c_purple" href="index.php?route=account/order&statusid=1">{$total_1}</a>）</span>
+                                <span>待付款（<a class="c_purple" href="?route=account/order&statusid=1">{$total_1}</a>）</span>
                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							    <span>待确认收货（<a class="c_purple" href="index.php?route=account/order&statusid=4">{$total_4}</a>）</span>
+							    <span>待确认收货（<a class="c_purple" href="?route=account/order&statusid=4">{$total_4}</a>）</span>
                             </p>
                         </div>
                     </div>
@@ -42,8 +42,8 @@
                             <ul class="product_list clearfix">
 							    {loop $guessYouLike $g}
 									<li>
-										<a class="product_img" href="index.php?route=product/product&product_id={$g['product_id']}"><img src="{$g['image']}" class="productImg" title="{$g['name']}"></a>
-										<div class="product_n"><a href="index.php?route=product/product&product_id={$g['product_id']}" >{$g['shortname']}</a><p>{$g['price']}元</p></div>
+										<a class="product_img" href="?route=product/product&product_id={$g['product_id']}"><img src="{$g['image']}" class="productImg" title="{$g['name']}"></a>
+										<div class="product_n"><a href="?route=product/product&product_id={$g['product_id']}" >{$g['shortname']}</a><p>{$g['price']}元</p></div>
 									</li>
 								{/loop}     				
 							</ul>

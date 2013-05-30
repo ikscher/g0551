@@ -72,7 +72,7 @@
 			{loop $products $product_}
 			<tbody class="store_{$product_['store']['store_id']}">
 			<tr class="first"><td colspan="6"></td></tr>
-			<tr><td class="store" colspan="6">店铺：<a href="index.php?route=store/store&store_id={$product_['store']['store_id']}" target="_blank">{$product_['store']['name']}</a>，卖家：{$product_['store']['owner']}</td></tr>
+			<tr><td class="store" colspan="6">店铺：<a href="?route=store/store&store_id={$product_['store']['store_id']}" target="_blank">{$product_['store']['name']}</a>，卖家：{$product_['store']['owner']}</td></tr>
 			
 			{loop $product_['product'] $product}
 			<tr>
@@ -191,7 +191,7 @@
 			<!-- {if empty($dbuy)}<a href="{$cart}"><img src="catalog/view/theme/default/image/order/returnCart.jpg" width="161" height="33" /></a>{/if} -->
 			
 			<a class="submit"> <img src="catalog/view/theme/default/image/order/submitOrder.jpg" width="160" height="33" /></a>
-			{if $flag==false}<a class="backtocart" href="index.php?route=checkout/cart">返回购物车</a>{/if}
+			{if $flag==false}<a class="backtocart" href="?route=checkout/cart">返回购物车</a>{/if}
 		</div>
 		
 	</div>
@@ -279,17 +279,14 @@
 			return false;
 		}
 		
-		
-		
 	
-
         $.ajax({
 	        type:'POST',
-	        url:'index.php?route=checkout/confirm_order',
+	        url:'?route=checkout/confirm_order',
 			dataType:'json',
 			data:$('select[name="shipping_method"] ,select[name="payment_method"],input[type="hidden"]'),// ,input[name=\'dbuy\']
 			success:function(json){
-                //alert(json['redirect']);
+                console.log(json);
 			    if (json['redirect']){
 				    location.href=json['redirect'];
 					return false;
@@ -298,11 +295,11 @@
 					var payment_method_code=$('input[name=payment_method_code]').val();
 					//alert(payment_method_code);
 					$.ajax({
-					    url:'index.php?route=payment/'+payment_method_code,
+					    url:'?route=payment/'+payment_method_code,
 						type:'post',
 						dataType:'json',
 						success:function(json_){
-						    //console.log(json_);
+						    console.log(json_);
 						    location.href=json_['action'];
 						}
 					});
@@ -333,7 +330,7 @@
     $("select[name=payment_method]").change(function(){
 	    var payment_method=$(this).parents('.other').find('select[name="payment_method"]').val();
 		$.ajax({
-			url:'index.php?route=checkout/checkout/paymentMethod',
+			url:'?route=checkout/checkout/paymentMethod',
 			type:'post',
 			dataType:'json',
 			data:{payment_method:payment_method},
@@ -354,7 +351,7 @@
 		var shipping_method=that_.parents('.other').find('select[name="shipping_method"]').val();
 		var store_id=that_.parents('.other').find('input[type="hidden"]').val();
 		$.ajax({
-			url:'index.php?route=checkout/checkout/shippingMethod',
+			url:'?route=checkout/checkout/shippingMethod',
 			type:'post',
 			dataType:'json',
 			//data:$('.other select,.other input[type="hidden"]'),
@@ -401,7 +398,7 @@
 				$('.moneyinfo dl dd span').html(sum.toString());
 				
 				/*$.ajax({
-					url: 'index.php?route=checkout/checkout/refreshTotal',
+					url: '?route=checkout/checkout/refreshTotal',
 					dataType: 'html',
 					success: function(html) {
 						$('.moneyinfo dl dd span').html(html);
@@ -424,7 +421,7 @@
 	  if(!confirm('您要设置此项为默认收货地址吗?')) return false;
 	  var dataid=$.trim($(this).prop('id'));
 	  
-	  $.post('index.php?route=account/address/setDefault',{dataid:dataid},function(data){
+	  $.post('?route=account/address/setDefault',{dataid:dataid},function(data){
 	     if(data==1){
 		   //alert("设置成功！");
 		  
@@ -462,7 +459,7 @@
         var   mobile=$.trim($("input[name=mobile]").val());
 		var   self=$(this);
 		$.ajax({
-			  url:'index.php?route=account/register/ajaxMobile&mobile='+mobile,
+			  url:'?route=account/register/ajaxMobile&mobile='+mobile,
 			  dataType:'json',
 			  success:function(json){	
 				    if(json.mobile>=1){
@@ -535,7 +532,7 @@
 	   
 	    }
 	   
-	    $.post('index.php?route=account/address/insert',{username:username,mobile:mobile,telphone:telphone,address:address,postcode:postcode},function(data){
+	    $.post('?route=account/address/insert',{username:username,mobile:mobile,telphone:telphone,address:address,postcode:postcode},function(data){
 		    if (data){
 			    alert("新增成功!");
 				$('.sendAddress dl').removeClass('present');

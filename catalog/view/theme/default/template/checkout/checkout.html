@@ -61,7 +61,7 @@ $('.checkout-heading a').live('click', function() {
 {if !$logged} 
 $(document).ready(function() {
 	$.ajax({
-		url: 'index.php?route=checkout/login',
+		url: '?route=checkout/login',
 		dataType: 'html',
 		success: function(html) {
 			$('#checkout .checkout-content').html(html);
@@ -76,7 +76,7 @@ $(document).ready(function() {
  {else}
 $(document).ready(function() {
 	$.ajax({
-		url: 'index.php?route=checkout/payment_address',
+		url: '?route=checkout/payment_address',
 		dataType: 'html',
 		success: function(html) {
 			$('#payment-address .checkout-content').html(html);
@@ -93,7 +93,7 @@ $(document).ready(function() {
 // Checkout
 $('#button-account').live('click', function() {
 	$.ajax({
-		url: 'index.php?route=checkout/' + $('input[name=\'account\']:checked').attr('value'),
+		url: '?route=checkout/' + $('input[name=\'account\']:checked').attr('value'),
 		dataType: 'html',
 		beforeSend: function() {
 			$('#button-account').attr('disabled', true);
@@ -125,7 +125,7 @@ $('#button-account').live('click', function() {
 // Login
 $('#button-login').live('click', function() {
 	$.ajax({
-		url: 'index.php?route=checkout/login/validate',
+		url: '?route=checkout/login/validate',
 		type: 'post',
 		data: $('#checkout #login :input'),
 		dataType: 'json',
@@ -157,7 +157,7 @@ $('#button-login').live('click', function() {
 // Register
 $('#button-register').live('click', function() {
 	$.ajax({
-		url: 'index.php?route=checkout/register/validate',
+		url: '?route=checkout/register/validate',
 		type: 'post',
 		data: $('#payment-address input[type=\'text\'], #payment-address input[type=\'password\'], #payment-address input[type=\'checkbox\']:checked, #payment-address input[type=\'radio\']:checked, #payment-address input[type=\'hidden\'], #payment-address select'),
 		dataType: 'json',
@@ -238,7 +238,7 @@ $('#button-register').live('click', function() {
 				
 				if (shipping_address) {
 					$.ajax({
-						url: 'index.php?route=checkout/shipping_method',
+						url: '?route=checkout/shipping_method',
 						dataType: 'html',
 						success: function(html) {
 							$('#shipping-method .checkout-content').html(html);
@@ -257,7 +257,7 @@ $('#button-register').live('click', function() {
 							$('#payment-address .checkout-heading').append('<a>{$text_modify}</a>');	
 
 							$.ajax({
-								url: 'index.php?route=checkout/shipping_address',
+								url: '?route=checkout/shipping_address',
 								dataType: 'html',
 								success: function(html) {
 									$('#shipping-address .checkout-content').html(html);
@@ -273,7 +273,7 @@ $('#button-register').live('click', function() {
 					});	
 				} else {
 					$.ajax({
-						url: 'index.php?route=checkout/shipping_address',
+						url: '?route=checkout/shipping_address',
 						dataType: 'html',
 						success: function(html) {
 							$('#shipping-address .checkout-content').html(html);
@@ -297,7 +297,7 @@ $('#button-register').live('click', function() {
 				}
 				 {else}
 				$.ajax({
-					url: 'index.php?route=checkout/payment_method',
+					url: '?route=checkout/payment_method',
 					dataType: 'html',
 					success: function(html) {
 						$('#payment-method .checkout-content').html(html);
@@ -319,7 +319,7 @@ $('#button-register').live('click', function() {
 				{/if}
 				
 				$.ajax({
-					url: 'index.php?route=checkout/payment_address',
+					url: '?route=checkout/payment_address',
 					dataType: 'html',
 					success: function(html) {
 						$('#payment-address .checkout-content').html(html);
@@ -342,7 +342,7 @@ $('#button-register').live('click', function() {
 $('#button-payment-address').live('click', function() {
     //alert('ddd');
 	$.ajax({
-		url: 'index.php?route=checkout/payment_address/validate',
+		url: '?route=checkout/payment_address/validate',
 		type: 'post',
 		data: $('#payment-address input[type=\'text\'], #payment-address input[type=\'password\'], #payment-address input[type=\'checkbox\']:checked, #payment-address input[type=\'radio\']:checked, #payment-address input[type=\'hidden\'], #payment-address select'),
 		dataType: 'json',
@@ -406,7 +406,7 @@ $('#button-payment-address').live('click', function() {
 			} else {
 				{if $shipping_required}
 				$.ajax({
-					url: 'index.php?route=checkout/shipping_address',
+					url: '?route=checkout/shipping_address',
 					dataType: 'html',
 					success: function(html) {
 						$('#shipping-address .checkout-content').html(html);
@@ -428,7 +428,7 @@ $('#button-payment-address').live('click', function() {
 				});
 				 {else}
 				$.ajax({
-					url: 'index.php?route=checkout/payment_method',
+					url: '?route=checkout/payment_method',
 					dataType: 'html',
 					success: function(html) {
 						$('#payment-method .checkout-content').html(html);
@@ -449,7 +449,7 @@ $('#button-payment-address').live('click', function() {
 				{/if}
 				
 				$.ajax({
-					url: 'index.php?route=checkout/payment_address',
+					url: '?route=checkout/payment_address',
 					dataType: 'html',
 					success: function(html) {
 						$('#payment-address .checkout-content').html(html);
@@ -469,7 +469,7 @@ $('#button-payment-address').live('click', function() {
 // Shipping Address			
 $('#button-shipping-address').live('click', function() {
 	$.ajax({
-		url: 'index.php?route=checkout/shipping_address/validate',
+		url: '?route=checkout/shipping_address/validate',
 		type: 'post',
 		data: $('#shipping-address input[type=\'text\'], #shipping-address input[type=\'password\'], #shipping-address input[type=\'checkbox\']:checked, #shipping-address input[type=\'radio\']:checked, #shipping-address select'),
 		dataType: 'json',
@@ -531,7 +531,7 @@ $('#button-shipping-address').live('click', function() {
 				}
 			} else {
 				$.ajax({
-					url: 'index.php?route=checkout/shipping_method',
+					url: '?route=checkout/shipping_method',
 					dataType: 'html',
 					success: function(html) {
 						$('#shipping-method .checkout-content').html(html);
@@ -547,7 +547,7 @@ $('#button-shipping-address').live('click', function() {
 						$('#shipping-address .checkout-heading').append('<a>{$text_modify}</a>');							
 						
 						$.ajax({
-							url: 'index.php?route=checkout/shipping_address',
+							url: '?route=checkout/shipping_address',
 							dataType: 'html',
 							success: function(html) {
 								$('#shipping-address .checkout-content').html(html);
@@ -572,7 +572,7 @@ $('#button-shipping-address').live('click', function() {
 // Guest
 $('#button-guest').live('click', function() {
 	$.ajax({
-		url: 'index.php?route=checkout/guest/validate',
+		url: '?route=checkout/guest/validate',
 		type: 'post',
 		data: $('#payment-address input[type=\'text\'], #payment-address input[type=\'checkbox\']:checked, #payment-address select'),
 		dataType: 'json',
@@ -645,7 +645,7 @@ $('#button-guest').live('click', function() {
 				
 				if (shipping_address) {
 					$.ajax({
-						url: 'index.php?route=checkout/shipping_method',
+						url: '?route=checkout/shipping_method',
 						dataType: 'html',
 						success: function(html) {
 							$('#shipping-method .checkout-content').html(html);
@@ -663,7 +663,7 @@ $('#button-guest').live('click', function() {
 							$('#shipping-address .checkout-heading').append('<a>{$text_modify}</a>');									
 							
 							$.ajax({
-								url: 'index.php?route=checkout/guest_shipping',
+								url: '?route=checkout/guest_shipping',
 								dataType: 'html',
 								success: function(html) {
 									$('#shipping-address .checkout-content').html(html);
@@ -679,7 +679,7 @@ $('#button-guest').live('click', function() {
 					});					
 				} else {
 					$.ajax({
-						url: 'index.php?route=checkout/guest_shipping',
+						url: '?route=checkout/guest_shipping',
 						dataType: 'html',
 						success: function(html) {
 							$('#shipping-address .checkout-content').html(html);
@@ -702,7 +702,7 @@ $('#button-guest').live('click', function() {
 				}
 				 {else}				
 				$.ajax({
-					url: 'index.php?route=checkout/payment_method',
+					url: '?route=checkout/payment_method',
 					dataType: 'html',
 					success: function(html) {
 						$('#payment-method .checkout-content').html(html);
@@ -732,7 +732,7 @@ $('#button-guest').live('click', function() {
 // Guest Shipping
 $('#button-guest-shipping').live('click', function() {
 	$.ajax({
-		url: 'index.php?route=checkout/guest_shipping/validate',
+		url: '?route=checkout/guest_shipping/validate',
 		type: 'post',
 		data: $('#shipping-address input[type=\'text\'], #shipping-address select'),
 		dataType: 'json',
@@ -785,7 +785,7 @@ $('#button-guest-shipping').live('click', function() {
 				}
 			} else {
 				$.ajax({
-					url: 'index.php?route=checkout/shipping_method',
+					url: '?route=checkout/shipping_method',
 					dataType: 'html',
 					success: function(html) {
 						$('#shipping-method .checkout-content').html(html);
@@ -815,7 +815,7 @@ $('#button-guest-shipping').live('click', function() {
 //货运方式
 $('#button-shipping-method').live('click', function() {
 	$.ajax({
-		url: 'index.php?route=checkout/shipping_method/validate',
+		url: '?route=checkout/shipping_method/validate',
 		type: 'post',
 		data: $('#shipping-method input[type=\'radio\']:checked, #shipping-method textarea'),
 		dataType: 'json',
@@ -841,7 +841,7 @@ $('#button-shipping-method').live('click', function() {
 			} else {
 
 				$.ajax({
-					url: 'index.php?route=checkout/payment_method',
+					url: '?route=checkout/payment_method',
 					dataType: 'html',
 					success: function(html) {
                        
@@ -871,7 +871,7 @@ $('#button-shipping-method').live('click', function() {
 
 $('#button-payment-method').live('click', function() {
 	$.ajax({
-		url: 'index.php?route=checkout/payment_method/validate', 
+		url: '?route=checkout/payment_method/validate', 
 		type: 'post',
 		data: $('#payment-method input[type=\'radio\']:checked, #payment-method input[type=\'checkbox\']:checked, #payment-method textarea'),
 		dataType: 'json',
@@ -896,7 +896,7 @@ $('#button-payment-method').live('click', function() {
 				}			
 			} else {
 				$.ajax({
-					url: 'index.php?route=checkout/confirm',
+					url: '?route=checkout/confirm',
 					dataType: 'html',
 					success: function(html) {
 						$('#confirm .checkout-content').html(html);

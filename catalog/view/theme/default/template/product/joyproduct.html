@@ -134,7 +134,7 @@
 
 <script type="text/javascript">
 	function addFavoriate(){
-		$.post("index.php?route=product/joy/addFavoriate",{id:{$msg['content_id']}},function(str){
+		$.post("?route=product/joy/addFavoriate",{id:{$msg['content_id']}},function(str){
 		    alert('献爱成功！');
 		});
 	}
@@ -154,7 +154,7 @@
 			return false;
 		}
 		
-		$.post("index.php?route=product/joy/addComment",{id:content_id,comment:comment},function(str){
+		$.post("?route=product/joy/addComment",{id:content_id,comment:comment},function(str){
 		    if(str==1){
 				alert('评论成功！');
 				$("#remark").val('');

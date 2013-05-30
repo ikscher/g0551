@@ -72,7 +72,7 @@
 		maxnum:5,
 		loadMore:function(){
 		    $.ajax({
-				url : 'index.php?route=product/joy/getImageSrc&start='+loadLazy.num,
+				url : '?route=product/joy/getImageSrc&start='+loadLazy.num,
 				dataType : 'json',
 				success : function(show){
 					if(typeof show == 'object'){	
@@ -92,7 +92,7 @@
 									row = $(this);
 								}
 							});
-							item = $('<div class="item"><div class="itimg"><a href="index.php?route=product/joy/joyDetail&id='+oProduct.id+'"><img src="'+oProduct.imageUrl+'"/></a></div><div class="itintr cl">'+oProduct.present+'</div><div class="itshare cl"><div class="itsharebg"><a >'+oProduct.favoriate+'</a></div> <div><a>评论</a>（'+oProduct.comment+'）</div> <div><a>分享</a>（'+oProduct.share+'）</div></div><div class="itmember cl"><a href="#"><img src="catalog/view/theme/default/image/nousefulpic/members1.gif" width="30" height="30" alt="itmember" />赛车手</a></div></div>').hide();
+							item = $('<div class="item"><div class="itimg"><a href="?route=product/joy/joyDetail&id='+oProduct.id+'"><img src="'+oProduct.imageUrl+'"/></a></div><div class="itintr cl">'+oProduct.present+'</div><div class="itshare cl"><div class="itsharebg"><a >'+oProduct.favoriate+'</a></div> <div><a>评论</a>（'+oProduct.comment+'）</div> <div><a>分享</a>（'+oProduct.share+'）</div></div><div class="itmember cl"><a href="#"><img src="catalog/view/theme/default/image/nousefulpic/members1.gif" width="30" height="30" alt="itmember" />赛车手</a></div></div>').hide();
 							
 							row.append(item);
 							item.fadeIn();

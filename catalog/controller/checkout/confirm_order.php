@@ -216,8 +216,8 @@ class ControllerCheckoutConfirmOrder extends Controller {
 			$this->load->model('checkout/order');
 			
 			
-			
-			$this->session->data['order_id']=$this->model_checkout_order->addOrder($data);
+			unset($this->session->data['order_id_arr']);
+			$this->session->data['order_id_arr']=serialize($this->model_checkout_order->addOrder($data));
 			
            
 			$this->response->setOutput(json_encode($json));

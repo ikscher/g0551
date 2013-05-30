@@ -13,17 +13,17 @@
 <body>
 <div class="try_topbg">
 	<div class="try_width">
-		<div class="try_topleft"><a href="index.php?route=common/home"><img src="catalog/view/theme/default/image/try/home.jpg"/></a></div>
-		<div class="try_topright"><span><a href="index.php?route=module/general/faq">帮助中心 │</a><a href="index.php?route=module/general/company">关于我们</a></span><img src="catalog/view/theme/default/image/try/try_tel.jpg"/></div>
+		<div class="try_topleft"><a href="?route=common/home"><img src="catalog/view/theme/default/image/try/home.jpg"/></a></div>
+		<div class="try_topright"><span><a href="?route=module/general/faq">帮助中心 │</a><a href="?route=module/general/company">关于我们</a></span><img src="catalog/view/theme/default/image/try/try_tel.jpg"/></div>
 	</div>
 </div>
 <div class="try_logo">
 	<div class="try_logoleft"><img src="catalog/view/theme/default/image/try/try_logo.jpg"/></div>
 	<div class="try_logoright">
 	    {if !empty($username)}
-			<div class="rectangle">欢迎你！{$username} <a href="index.php?route=account/logout">【退出】</a> <br><a href="index.php?route=account/account">我的帐户</a></div>
+			<div class="rectangle">欢迎你！{$username} <a href="?route=account/logout">【退出】</a> <br><a href="?route=account/account">我的帐户</a></div>
 		{else}
-			<div class="welcome">欢迎您来到试中心！<span>【<a href="index.php?route=account/register">注册</a>│<a class="login" href="javascript:void(0);">登录</a>】</span></div>
+			<div class="welcome">欢迎您来到试中心！<span>【<a href="?route=account/register">注册</a>│<a class="login" href="javascript:void(0);">登录</a>】</span></div>
 	    {/if}
 	</div>
 </div>
@@ -72,16 +72,14 @@
 		</ul>
 	</div>
 </div>
-
 <!-------------------------产品列表begin------------------------->
-
 <div class="products">   
 	    {loop $products $k $product}
 		<div class="trylist {if $k%2==0}mr{/if}">
 			<div class="listleft">
 			<ul>
 				<!-- <li><img src="catalog/view/theme/default/image/try/logo03.png"/></li> -->
-				<li><a class="category" href="index.php?route=product/category&category_id={$product['category']['category_id']}">{$product['category']['name']}</a></li>
+				<li><a class="category" href="?route=product/category&category_id={$product['category']['category_id']}">{$product['category']['name']}</a></li>
 				<li><span class="discount">{$product['discount']}</span>折起</li>
 				<!-- <li class="pingpai"><a href="#"class="pingpai2">品牌介绍</a></li> -->
 				<li><img src="catalog/view/theme/default/image/try/time.png" width="14" height="14"> <span class="_time_" data-end="{$product['date_end']}"></span></li>
@@ -91,7 +89,7 @@
 			<div class="listright">
 				<ul>
 					<li class="s_mod">
-						<div class="s_pic"><a href="index.php?route=product/product&product_id={$product['product_id']}"><img src="{$product['image']}" title="{$product['name']}"/></a></div>
+						<div class="s_pic"><a href="?route=product/product&product_id={$product['product_id']}"><img src="{$product['image']}" title="{$product['name']}"/></a></div>
 						<div class="s_info"><span class="s_info_name">{$product['shortname']}</span><span class="s_info_price "><b class="s_info_price_">￥</b><span class="price">{$product['price']}</span></span><span class="s_info_price"><b class="s_info_price_">￥</b>{$product['special_price']}</span></div>
 					</li>
 				</ul>

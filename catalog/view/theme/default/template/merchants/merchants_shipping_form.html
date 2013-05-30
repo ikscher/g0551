@@ -40,7 +40,7 @@
 						<ul>
 							<li class="form-elem">
 								<label class="label-like" for="J_TemplateTitle">模板名称：</label>
-								<input type="text" name="t_x" {if isset($shipping_info['shipping_desc'])}value="{$shipping_info['shipping_desc']}"{else}value=""{/if} class="input-text input-address" autocomplete="off" id="J_TemplateTitle">
+								<input type="text" name="t_x" {if isset($shipping_info['shipping_desc'])}value="{$shipping_info['shipping_desc']}"{else}value=""{/if} class="input-xxlarge"  id="J_TemplateTitle">
 								
 							</li>
 						
@@ -53,7 +53,7 @@
 							<li class="form-elem">
 								<span class="label-like">发货时间：</span>
 								<span>
-									<select name="consignDate" id="J_prescription">
+									<select name="consignDate" id="J_prescription" width="100" style="width:100px;">
 										<option>请选择..</option> 
 										<option value="12" {if isset($shipping_info['consignDate']) && $shipping_info['consignDate']==12}selected="selected"{/if}>12小时内</option>
 										<option value="24" {if isset($shipping_info['consignDate']) && $shipping_info['consignDate']==24}selected="selected"{/if}>24小时内</option>
@@ -201,8 +201,10 @@
 							</li>
 						</ul>
 						<p class="btns">
-							<button type="submit" class="save">保存并返回</button>
-							<button type="button" class="cancel">取消</button>
+							<!-- <button type="submit" class="save">保存并返回</button>
+							<button type="button" class="cancel">取消</button> -->
+							<button type="submit"  id="save" class="btn btn-primary">保存并返回</button>
+						    <button type="button"  id="cancel" class="btn">取消</button>
 						</p>
 						<input type="hidden" name="deliveryJson" id="J_TPLPostData" value="">
 						<input type="hidden" name="deliveryAddress" id="J_address" value="">
@@ -231,7 +233,7 @@
 <script type="text/javascript">
 
 	//保存并返回
-	$('.btns .save').click(function(){
+	$('.btns #save').click(function(){
 	    $('p.msg').remove();
 		$('span.msg').remove();
 	    if(!$('input[name=t_x]').val()){
@@ -288,8 +290,8 @@
 	});
 	
 	//取消
-	$('.btns .cancel').click(function(){
-	    location.href='index.php?route=merchants/shipping';
+	$('.btns #cancel').click(function(){
+	    location.href='?route=merchants/shipping';
 	});
 	
 	var obj={

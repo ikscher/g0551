@@ -11,9 +11,9 @@
 				<ul>
 				<li>
                     {loop $categoryList $category}
-					    <p class="f2"><a {if $category['category_id']==$category_id}class="selected"{/if} href="index.php?route=product/category&category_id={$category['category_id']}">{$category['name']}</a></p>
+					    <p class="f2"><a {if $category['category_id']==$category_id}class="selected"{/if} href="?route=product/category&category_id={$category['category_id']}">{$category['name']}</a></p>
 						{loop $category['third_category_list'] $v}
-                             <span class="list_pro"><a   {if $v['category_id']==$category_id}class="selected"{/if} href="index.php?route=product/category&category_id={$v['category_id']}">{$v['name']}</a></span>
+                             <span class="list_pro"><a   {if $v['category_id']==$category_id}class="selected"{/if} href="?route=product/category&category_id={$v['category_id']}">{$v['name']}</a></span>
 						{/loop}
                     {/loop}					
 				</li>
@@ -27,8 +27,8 @@
 			    {loop $hot_products $k $hot}
 				<dl>
 					<dd class="cl h">
-						<div class="clist_week_ranking_con_z z h"><span class="clist_week_imgs h"><a href="index.php?route=product/product&product_id={$hot['product_id']}"><img src="{$hot['image']}"  title="{$hot['name']}"/></a></span><span class="clist_week_ranking_con_ts f_b">{php echo $k+1;}</span></div>
-						<div class="clist_week_ranking_con_y z"><span><a href="index.php?route=product/product&product_id={$hot['product_id']}">{$hot['shortname']}</a></span><span class="f3 f_dh">¥{$hot['price']}</span></div>
+						<div class="clist_week_ranking_con_z z h"><span class="clist_week_imgs h"><a href="?route=product/product&product_id={$hot['product_id']}"><img src="{$hot['image']}"  title="{$hot['name']}"/></a></span><span class="clist_week_ranking_con_ts f_b">{php echo $k+1;}</span></div>
+						<div class="clist_week_ranking_con_y z"><span><a href="?route=product/product&product_id={$hot['product_id']}">{$hot['shortname']}</a></span><span class="f3 f_dh">¥{$hot['price']}</span></div>
 					    <div class="cl_div"></div>
 					</dd>
 				</dl>
@@ -42,8 +42,8 @@
 				<ul>
 				    {loop $foryou_products $foryou}
 					<dd class="cl h">
-						<div class="clist_week_ranking_con_zw clist_week_imgs z h"><a href="index.php?route=product/product&product_id={$foryou['product_id']}"><img src="{$foryou['image']}" title="{$foryou['name']}" /></a></div>
-						<div class="clist_week_ranking_con_y z"><span><a href="index.php?route=product/product&product_id={$foryou['product_id']}">{$foryou['shortname']}</a></span><span class="f3 f_dh">¥{$foryou['price']}</span></div>
+						<div class="clist_week_ranking_con_zw clist_week_imgs z h"><a href="?route=product/product&product_id={$foryou['product_id']}"><img src="{$foryou['image']}" title="{$foryou['name']}" /></a></div>
+						<div class="clist_week_ranking_con_y z"><span><a href="?route=product/product&product_id={$foryou['product_id']}">{$foryou['shortname']}</a></span><span class="f3 f_dh">¥{$foryou['price']}</span></div>
 					<div class="cl_div"></div>
 					</dd>
 					{/loop}
@@ -103,10 +103,10 @@
 					<!-- <li>好评 ↓ </li> -->
 					<li  data-id="latest"  {if $sort=='latest'} class="selected"{/if}>最新{if $sort=='latest' && $order=='desc'}<img src="catalog/view/theme/default/image/down.png">{elseif $sort=='latest' && $order=='asc' }<img src="catalog/view/theme/default/image/up.png">{/if}</li>
 					<!-- <li>促销商品</li>	 -->
-					<!-- <a href="index.php?route=product/category&category_id={$category_id}&sort=sort_order&order=asc" ><li {php if($sort == 'sort_order') echo 'class="fist_tab"';} >默认 ↓ </li></a>
-					<a href="index.php?route=product/category&category_id={$category_id}&sort=price&order=asc" ><li {php if($sort == 'price' && $order == 'asc') echo 'class="fist_tab"';} >价格 ↑ </li></a>
-					<a href="index.php?route=product/category&category_id={$category_id}&sort=price&order=desc" ><li {php if($sort == 'price' && $order == 'desc') echo 'class="fist_tab"';} >价格 ↓ </li></a>
-					<a href="index.php?route=product/category&category_id={$category_id}&sort=points&order=asc" ><li {php if($sort == 'points') echo 'class="fist_tab"';} >销量 ↓ </li></a> -->
+					<!-- <a href="?route=product/category&category_id={$category_id}&sort=sort_order&order=asc" ><li {php if($sort == 'sort_order') echo 'class="fist_tab"';} >默认 ↓ </li></a>
+					<a href="?route=product/category&category_id={$category_id}&sort=price&order=asc" ><li {php if($sort == 'price' && $order == 'asc') echo 'class="fist_tab"';} >价格 ↑ </li></a>
+					<a href="?route=product/category&category_id={$category_id}&sort=price&order=desc" ><li {php if($sort == 'price' && $order == 'desc') echo 'class="fist_tab"';} >价格 ↓ </li></a>
+					<a href="?route=product/category&category_id={$category_id}&sort=points&order=asc" ><li {php if($sort == 'points') echo 'class="fist_tab"';} >销量 ↓ </li></a> -->
 					<!--
 					<li>好评 ↓ </li>
 					<li>最新 ↓ </li>
@@ -117,7 +117,7 @@
 			<dd class="clist_pro_box h z" >				
                 <ul>
                 {loop $products  $product}
-                    <li><p><a href="index.php?route=product/product&product_id={$product['product_id']}" target="_blank" title="{$product['name']}"><img src="{$product['image']}" width="180" height="180" alt="clothes_pro" /></a></p><p><a href="#" class="f3n">{$product['shortname']}</a></p><p><a href="index.php?route=product/product&product_id={$product['product_id']}" target="_blank" class="f2 f_h">¥{$product['price']}</a></p></li>
+                    <li><p><a href="?route=product/product&product_id={$product['product_id']}" target="_blank" title="{$product['name']}"><img src="{$product['image']}" width="180" height="180" alt="clothes_pro" /></a></p><p><a href="#" class="f3n">{$product['shortname']}</a></p><p><a href="?route=product/product&product_id={$product['product_id']}" target="_blank" class="f2 f_h">¥{$product['price']}</a></p></li>
                 {/loop}
                 </ul>
 			</dd>
@@ -130,6 +130,7 @@
 </div>
 
 <!--一周热销产品begin-->
+{if !empty($recommend_products)}
 <div id="list_box_hot" class="wp cl">
 	<div class="list_box_hot">
 		<dl>
@@ -137,13 +138,14 @@
 			<dd>
 				<ul>
 				    {loop $recommend_products $recommend}
-				        <li><p><a href="index.php?route=product/product&product_id={$recommend['product_id']}"><img src="{$recommend['image']}" width="180" height="180" title="{$recommend['name']}" /></a></p><p><a href="index.php?route=product/product&product_id={$recommend['product_id']}" class="f3n">{$recommend['shortname']}</a></p><p><span class="f2 f_h">¥{$recommend['price']}</span></p></li>
+				        <li><p><a href="?route=product/product&product_id={$recommend['product_id']}"><img src="{$recommend['image']}" width="180" height="180" title="{$recommend['name']}" /></a></p><p><a href="?route=product/product&product_id={$recommend['product_id']}" class="f3n">{$recommend['shortname']}</a></p><p><span class="f2 f_h">¥{$recommend['price']}</span></p></li>
 				    {/loop}
 				</ul>
 			</dd>
 		</dl>
 	</div>
 </div>
+{/if}
 <!--一周热销产品end-->
 
 <script type="text/javascript">
@@ -290,7 +292,7 @@
 			}else{
 				url=query+'&order=desc';
 			}
-			//url='index.php?route=store/list'+'&sort='+sort+'&order=desc';
+			//url='?route=store/list'+'&sort='+sort+'&order=desc';
 			$(this).append("<img src='catalog/view/theme/default/image/down.png' />");
 		}
 		location.href=url;

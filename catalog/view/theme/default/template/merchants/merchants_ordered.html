@@ -7,10 +7,10 @@
 	<div class="item-list">
 	<div class="item-list-hd">
    	<ul class="item-list-tabs item-list-tabs-flexible clearfix" data-spm="9">
-		<li ><a href="index.php?route=merchants/order_create" hidefocus="true">{$createorder}</a></li>
-		<li><a href="index.php?route=merchants/order" hidefocus="true" >{$waitingorder}</a></li>
-		<li><a href="index.php?route=merchants/ordering"  hidefocus="true">{$dealingorder}</a></li>
-		<li  class="current"><a href="index.php?route=merchants/ordered"  >{$dealedorder}</a></li>
+		<li ><a href="?route=merchants/order_create" hidefocus="true">{$createorder}</a></li>
+		<li><a href="?route=merchants/order" hidefocus="true" >{$waitingorder}</a></li>
+		<li><a href="?route=merchants/ordering"  hidefocus="true">{$dealingorder}</a></li>
+		<li  class="current"><a href="?route=merchants/ordered"  >{$dealedorder}</a></li>
 	</ul>	
     </div>
 		 		
@@ -69,10 +69,10 @@
             {loop $order['product_list'] $product}
             <table width="100%" border="0" cellspacing="0" cellpadding="0" class="nostyle">
 			  <tr>
-				<td width="60" align="center"><a href="index.php?route=product/product&product_id={$product['product_id']}" target="_blank"><img src="{$product['image']}" width="50" height="50" /></a></td>
+				<td width="60" align="center"><a href="?route=product/product&product_id={$product['product_id']}" target="_blank"><img src="{$product['image']}" width="50" height="50" /></a></td>
 				<td width="250">
 				<div class="props">
-				<a href="index.php?route=product/product&product_id={$product['product_id']}" target="_blank" class="txt_color">{$product['name']}</a> {if $product['attribute']}<br><span>{$product['attribute']}</span>{/if}
+				<a href="?route=product/product&product_id={$product['product_id']}" target="_blank" class="txt_color">{$product['name']}</a> {if $product['attribute']}<br><span>{$product['attribute']}</span>{/if}
                 </div>
 				</td>
 				<td width="100" align="center" class="price">{$product['price']}</td>
@@ -86,7 +86,7 @@
 			</td>
 			<td bgcolor="#FFFFFF" width="80" align="center">
 			  <a href="javascript:void(0);">{$order['order_status']['name']}</a><br>
-			  <a href="index.php?route=merchants/order/detail&id={$order['order_id']}" target="_blank" class="txt_color">详情</a>			</td>
+			  <a href="?route=merchants/order/detail&id={$order['order_id']}" target="_blank" class="txt_color">详情</a>			</td>
 			<td bgcolor="#FFFFFF" width="100" align="center">
 				<span class="price">{$order['total']}</span><p class="post-type">{if !empty($order['shipping'])}(含{$order['shipping']['title']}:{$order['shipping']['text']}){/if}</p>
 				<!--(含<span class="post-type"> 快递 </span>:<span class="J_PostFee">12.00</span>)-->				    						    			

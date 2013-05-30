@@ -32,11 +32,11 @@
                 	<ul class="input_ul">
                     	<li>
                         	<dl class="IU_title">用户名：</dl>
-                        	<dl class="IU_input"><input type="text" class="IUI_box_L" name="username" value="{if isset($username)}{$username}{else}手机号/邮箱{/if}" onclick="if(this.value=='手机号/邮箱'){this.value='';}" ></dl>
+                        	<dl class="IU_input"><input type="text" class="IUI_box_L" name="username" placeholder="手机号/邮箱" ></dl>
                         </li>
                         <li>
                         	<dl class="IU_title">密码：</dl>
-                            <dl class="IU_input"><input type="password" class="IUI_box_L pswt" name="password" value="请输入密码"  ></dl>
+                            <dl class="IU_input"><input type="password" class="IUI_box_L pswt" name="password" placeholder="请输入密码"  ></dl>
                         </li>
                         <li>
                        		<dl class="IU_title"></dl>
@@ -88,7 +88,7 @@ var login={
 	            /*
 				$.ajax({
 			        type:'post',
-				    url:'index.php?route=account/login/ajaxlogin',
+				    url:'?route=account/login/ajaxlogin',
 					dataType:'json',
 					async:false,
 					data:{username:username,password:password},

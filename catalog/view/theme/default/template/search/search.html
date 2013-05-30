@@ -96,7 +96,7 @@ $('.bor input[name=\'filter_name\']').keydown(function(e) {
 });
 
 $('.s_but').bind('click', function() {
-	url = 'index.php?route=search/search';
+	url = '?route=search/search';
 	
 	var filter_name = $('.bor input[name=\'filter_name\']').attr('value');
 
@@ -251,7 +251,7 @@ $(".cart a").live('click',function(){
     var product_id=$(this).attr('data-id');
     {if empty($customer_id)}
 	    var referer='{$referer}';
-	    location.href="index.php?route=account/login&referer="+encodeURIComponent(referer);
+	    location.href="?route=account/login&referer="+encodeURIComponent(referer);
 	{else}
         addToCart(product_id); 
 	{/if}
@@ -263,7 +263,7 @@ $(".wishlist a").live('click',function(){
     var product_id=$(this).attr('data-id');
     {if empty($customer_id)}
 	    var referer='{$referer}';
-	    location.href="index.php?route=account/login&referer="+encodeURIComponent(referer);
+	    location.href="?route=account/login&referer="+encodeURIComponent(referer);
 	{else}
 	    addToWishList(product_id);
     {/if}

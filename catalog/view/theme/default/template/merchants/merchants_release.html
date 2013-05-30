@@ -13,7 +13,7 @@
 				</ul>
 			</div>
 			<div class="blue_r">	
-                <form id="formfb" name="formfb" method="post" action="index.php?route=merchants/release/insert" onsubmit="return checkProduct(this)">
+                <form id="formfb" name="formfb" method="post" action="?route=merchants/release/insert" onsubmit="return checkProduct(this)">
                 	<input name="category_id" id="category_id" type="hidden" value="{$category_id}" />
                 	<input name="product_id" id="product_id" type="hidden" value="{$product_id}" />
                     <input name="product_image" id="product_image" type="hidden" value="" />
@@ -32,7 +32,7 @@
 						<tr class="sxtpy_attribute_Jxjx_0909">
 						    <td width="90" align="right"><label>宝贝标题：</label></td>
 						    <td><label>
-							<input name="name" type="text" class="input_txt" onfocus="textCounter(this,'leavings',50);" onblur="textCounter(this,'leavings',50);" onkeyup="textCounter(this,'leavings',50);" size="90" maxlength="60" id="name" value="{$info['name']}" /> <a href="javascript:void(0);" target="_blank" class="etao">etao</a>
+							<input name="name" type="text" class="input-xxlarge" onfocus="textCounter(this,'leavings',50);" onblur="textCounter(this,'leavings',50);" onkeyup="textCounter(this,'leavings',50);" size="90" maxlength="60" id="name" value="{$info['name']}" /> <a href="javascript:void(0);" target="_blank" class="etao">etao</a>
 							<span >还能输入<em id="leavings">50</em>字</span></label></td>
 						</tr>
 						<tr>
@@ -43,7 +43,7 @@
 						</tr>
 						
 						{if !empty($info['special'])}
-						     <tr><td width="90" align="right"><label>优惠价格：</label></td><td><input name="special_price" type="text" class="input_txt" size="20" maxlength="10" id="special_price"  value="{$info['special']['price']}" /><label> 元  开始：</label><input type="textbox" name="date_start"  class="input_txt" value="{$info['special']['date_start']}" /><label> 结束：</label><input type="textbox" name="date_end" class="input_txt" value="{$info['special']['date_end']}" /></td></tr>
+						     <tr><td width="90" align="right"><label>优惠价格：</label></td><td><input name="special_price" type="text" class="input-small"  maxlength="10" id="special_price"  value="{$info['special']['price']}" />元 <p> <div class="input-prepend"><span class="add-on">开始时间</span><input type="text" name="date_start"  class="input_mini" value="{$info['special']['date_start']}" /><span class="add-on">结束时间</span><input type="text" name="date_end" class="input_mini"  value="{$info['special']['date_end']}" /></div></p></td></tr>
 						{/if}
 						
 						<tr>
@@ -124,7 +124,7 @@
 		      </table>
                     <div class="submit">
 						<div class="float-submitbar">
-							<button type="submit" name="" class="J_Submit btn btn-main-primary btn-submit" value="发布" >
+							<button type="submit" name="release"  class="J_Submit btn btn-large btn-primary" value="发布" >
 							<span class="btn-txt">发布商品</span>  </button>
 						</div>
 				    </div>
@@ -171,8 +171,8 @@
 							<input type='hidden' name="product_option[{$option_value_row}][attribute{$row}]]" value="{$k}" />
 							{php $row++;}
 					    {/loop}
-					    <td><input type="text" name="product_option[{$option_value_row}][quantity]" value="{$product_option['quantity']}" size="3" /></td>
-					    <td><select name="product_option[{$option_value_row}][subtract]">
+					    <td><input type="text" name="product_option[{$option_value_row}][quantity]" value="{$product_option['quantity']}" class="input-mini" /></td>
+					    <td><select name="product_option[{$option_value_row}][subtract]" width="60" style="width:60px;">
 						  {if isset($product_option['subtract'])}
 						  <option value="1" selected="selected">是</option>
 						  <option value="0">否</option>
@@ -182,7 +182,7 @@
 						  {/if}
 						</select></td>
 					    <td>
-						<input type="text" name="product_option[{$option_value_row}][price]" value="{$product_option['price']}" size="5" />
+						<input type="text" name="product_option[{$option_value_row}][price]" value="{$product_option['price']}" class="input-mini" />
 						</td>
 					  
 					    <td><a href="javascript:void(0);"  class="deleteOptionRow">删除</a></td>

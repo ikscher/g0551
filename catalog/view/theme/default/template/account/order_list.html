@@ -73,16 +73,16 @@ tr.over td {
 										        <td colspan="7">
 												<span class="no">订单编号：{$order['order_id']}</span>
 												<span class="deal-time">成交时间：{$order['date_added']}</span>
-												<span class="seller">店铺：<a target="_blank" href="index.php?route=store/store&store_id={$order['store_id']}">{if isset($order['store_name'])}{$order['store_name']}{else}{$order['store_id']}{/if}</a></span></td>
+												<span class="seller">店铺：<a target="_blank" href="?route=store/store&store_id={$order['store_id']}">{if isset($order['store_name'])}{$order['store_name']}{else}{$order['store_id']}{/if}</a></span></td>
 										    </tr>
 											{if !empty($order['products'])}
 											{php $cn=count($order['products']);}
 											{loop $order['products'] $k $product}
 												<tr class="order-bd">
 													<td class="baobei" colspan="2">
-													    <a target="_blank" hidefouce="true" title="查看宝贝详情" href="index.php?route=product/product&product_id={$product['product_id']}" class="pic"><img src="{$product['image']}" alt="查看宝贝详情" /></a>
+													    <a target="_blank" hidefouce="true" title="查看宝贝详情" href="?route=product/product&product_id={$product['product_id']}" class="pic"><img src="{$product['image']}" alt="查看宝贝详情" /></a>
 													    <div class="desc">
-														    <a class="baibei-name" target="_blank" href="index.php?route=product/product&product_id={$product['product_id']}">{$product['name']}</a>
+														    <a class="baibei-name" target="_blank" href="?route=product/product&product_id={$product['product_id']}">{$product['name']}</a>
 														    <div class="spec">{$product['attribute']}</div>
 														</div>
 													</td>
@@ -148,7 +148,7 @@ tr.over td {
   
 <!--begin提交订单支付数据到alipay-->
 <div style="display:none">
-    <form id="alipay" name="alipay" action="index.php?route=payment/alipay" method="post">
+    <form id="alipay" name="alipay" action="?route=payment/alipay" method="post">
 	    <input type="hidden" name="WIDseller_email" value="" />
 		<input type="hidden" name="WIDout_trade_no" value="" />
 		<input type="hidden" name="WIDsubject" value="" />
@@ -175,7 +175,7 @@ tr.over td {
 	//付款
 	$("#payOrder").click(function(){
 	    var order_id=$.trim($(this).parent().parent().children('td:eq(0)').text());
-		$.post('index.php?route=account/order/pay',{order_id:order_id},function(json){
+		$.post('?route=account/order/pay',{order_id:order_id},function(json){
 		    //alert(json.WIDseller_email);
 			$("#alipay").submit();
 		},'json');
@@ -187,8 +187,8 @@ tr.over td {
 	    if(confirm("您确认取消订单吗？")){
 		    var order_id=$.trim($(this).attr('data-id'));
 	        //window.location.href=url;
-			$.post('index.php?route=account/order/cancel',{order_id:order_id},function(){
-			    location.href='index.php?route=account/order';
+			$.post('?route=account/order/cancel',{order_id:order_id},function(){
+			    location.href='?route=account/order';
 			});
 	    }
 	});
@@ -198,9 +198,9 @@ tr.over td {
 	$(".deleteOrder").click(function(){
 	    if(confirm("您确认删除订单吗？")){
 		    var order_id=$.trim($(this).attr('data-id'));
-			$.post('index.php?route=account/order/delete',{order_id:order_id},function(str){
+			$.post('?route=account/order/delete',{order_id:order_id},function(str){
 			    if(str=='yes'){
-					location.href='index.php?route=account/order';
+					location.href='?route=account/order';
 				}else{
 				    alert('删除失败！');
 				}
@@ -212,9 +212,9 @@ tr.over td {
 	$("select[name='orderstatus']").change(function(){
         var statusid=$(this).val();
 		if(isNaN(parseInt(statusid))) {
-		    window.location.href='index.php?route=account/order';
+		    window.location.href='?route=account/order';
 	    }else{
-		    window.location.href='index.php?route=account/order&statusid='+statusid;
+		    window.location.href='?route=account/order&statusid='+statusid;
 		}
 	});
 	
@@ -222,7 +222,7 @@ tr.over td {
 	//设置订单状态
 	function setOrderStatus(action,strMsg,intId){
 		if(confirm(strMsg)){
-			$.post("index.php?route=account/order/"+action,{id:intId},function(str){
+			$.post("?route=account/order/"+action,{id:intId},function(str){
 				if(str=="ok"){
 					location.reload();
 				}else{

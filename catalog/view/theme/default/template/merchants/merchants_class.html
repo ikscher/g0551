@@ -31,10 +31,12 @@
                     </div>
                     <div class="submit">
 						<div class="float-submitbar">
-							<button type="submit" name="release" class="J_Submit btn btn-main-primary btn-submit" value="发布" >
-							<span class="btn-txt">发布商品</span>  </button>
+							 <button type="submit" name="release" class="J_Submit btn btn-main-primary btn-submit" value="发布" >
+							<span class="btn-txt">发布商品</span>  </button> 
+							
 						</div>
-				    </div>
+				    </div> 
+					 
 				
 			</div>
 		</div>
@@ -48,12 +50,12 @@ $(document).ready(function(){
 	selectClass();
 });
 
-$(".btn-txt").click(function(){
+$("button[name='release']").click(function(){
     var payment_method=$('input[name=payment_method]').val();
 	
 	if(payment_method=='[]' || payment_method.length==0){
 	    alert('请至少安装一种支付方式,并启用它！');
-		location.href='index.php?route=merchants/payment';
+		location.href='?route=merchants/payment';
 		return false;
 	}
 	if($("#class_id").val()==""){
@@ -61,6 +63,6 @@ $(".btn-txt").click(function(){
 		return false;
 	}
 
-	location.href="index.php?route=merchants/release/detail&cid="+$("#class_id").val();
+	location.href="?route=merchants/release/detail&cid="+$("#class_id").val();
 });
 </script>
