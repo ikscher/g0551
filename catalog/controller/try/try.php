@@ -52,7 +52,7 @@ class ControllerTryTry extends Controller {
 		
 		
 		$this->data['products']=$products_;
-       
+        
 		
 		if ($this->customer->isLogged()){
 			if(isset($this->request->cookie['oc_customer'])){
@@ -76,6 +76,9 @@ class ControllerTryTry extends Controller {
 		
 				
 		$this->response->setOutput($this->render());
-  	}
+ 
+	
+    }
+
 }
 ?>
