@@ -120,6 +120,7 @@ $(function(){
 	    $(this).removeClass('borderR');
 	});
 	
+	var ttt;
 	$('.right_get_p_x ul li').click(function(){
 	    var product_id=$(this).attr('data-id');
 	    $.ajax({
@@ -153,12 +154,11 @@ $(function(){
 			    
 
 				
+				if(ttt) clearInterval(ttt);
 				//倒计时
 				function _remainderTimer_(){
-				    var ttt;
-					clearTimeout(ttt);
-					
-				    /*
+				  
+				    
 					var current_timestamp=Math.ceil(new Date().getTime()/1000);
 					
 					var day='';
@@ -183,17 +183,17 @@ $(function(){
 					
 					var _time_='剩余';
 					_time_ +='<span class="time">'+day+'</span> 天<span class="time">'+hour+'</span> 时<span class="time">'+minute+'</span> 分<span class="time">'+second+'</span> 秒';
-					*/
-					var _time_=0;
-					_time_++;
-					$('.productsr dl dt span.remainder').html(_time_);
-					console.log(_time_);
 					
-					 ttt=setTimeout(_remainderTimer_,1000);
+					
+					$('.productsr dl dt span.remainder').html(_time_);
+				
+					
+					 //ttt=setTimeout(_remainderTimer_,1000);
 					
 				}
+				ttt=setInterval(_remainderTimer_,1000);
 				
-				_remainderTimer_();
+				//_remainderTimer_();
 				
 				//属性
 				var html_attribute='';
