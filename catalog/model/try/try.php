@@ -52,6 +52,22 @@ class ModelTryTry extends Model {
 
 		return $product_category_data;
 	}
+	
+	//是否试用过产品
+	public function getTryProduct($product_id,$customer_id){
+	    $sql="select try_id from ".DB_PREFIX."try where product_id={$product_id} and customer_id={$customer_id}";
+				
+		$query=$this->db->query($sql);
+		
+		return $query->num_rows;
+	
+	}
+	
+	//试用产品
+	public function addTryProduct($customer_id,$product_id,$store_id,$time){
+	    $sql="insert into ".DB_PREFIX."try (`customer_id`,`product_id`,`store_id`,`trytime`) values('{$customer_id}','{$product_id}','{$store_id}','{$time}')";
+	    return $this->db->query($sql);
+	}
 
 }
 ?>

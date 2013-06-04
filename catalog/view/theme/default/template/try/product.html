@@ -61,28 +61,40 @@
 <div class="products">
 	<div class="productsl">
 		<dl>
-			<dt> </dt>
+			<dt> {$productInfo['product']['name']}</dt>
 		</dl>
 	</div>
 	<div class="productsr">
 		<dl>
-			<dt><span class="font18">伊莎贝拉ISBL女装专场</span><img src="catalog/view/theme/default/image/try/time.png"/> <span class="remainder">还有03天17时31分21秒结束</span></dt>
+			<dt><span class="font18"></span><img src="catalog/view/theme/default/image/try/time.png"/> <span class="remainder">正在加载...</span></dt>
 		</dl>
 	</div>
     <div class="clear"></div>
     
     <div class="left_get_p_b">
     	<div class="productinfo">
-			<div class="_large_img_thumb_"><img src="catalog/view/theme/default/image/try/p1/b_p1.jpg" width="459" height="459" data-id="" /></div>
+			<div class="_large_img_thumb_">
+			    {loop $productInfo['images'] $k $image}
+			     <span   data-id="{$image['product_image_id']}" {if $k<=0}{else}class="tSbox"{/if}><img src="{$image['large_image']}"  width="459" height="459" /></span>
+				{/loop}
+			</div>
 			<div class="b_p_img_thumb">
-				<span data-id="" class="sleb"><img src="catalog/view/theme/default/image/try/p1/small_p1.jpg" width="58" height="58" /></span>
+			    {loop $productInfo['images'] $k $image}
+				<span data-id="{$image['product_image_id']}" {if $k==0}class="sleb"{/if}><img src="{$image['small_image']}" width="58" height="58" /></span>
+				{/loop}
 			</div>
 			<ul>
-				<!-- <li><span class="title">颜色：</span><a class="color_sel black" ></a><a class="color_sel red" ></a><a class="color_sel blue" ></a></li>
-				<li><span class="title">尺寸：</span><a class="size_sel" >S</a><a class="size_sel" >M</a><a class="size_sel" >L</a></li> -->
+				{loop $productInfo['attribute'] $attribute_}
+				    <li class="attribute"><span class="title">{$attribute_['attribute_group_name']}：</span>
+					    {loop $attribute_['product_option_value'] $option}
+						<a class="size_sel">{$option['name']}</a>
+						{/loop}
+					</li>
+				{/loop}
+				<li><span>原价：</span><span class="price__">{$productInfo['product']['price']}</span>　<span >现价：</span><span class="price">{$productInfo['product']['special']['price']}</span>　</li>
 				
-				<li><span>原价：</span><span class="price__">$156.00</span>　<span >现价：</span><span class="price">$157.00</span>　</li>
-				<li>试用商家地址：合肥市。。。</li>
+				
+				<li class="address">试用商家地址：{$store['address']}</li>
 				
 			</ul>
         </div>
@@ -91,11 +103,11 @@
     <div class="right_get_p_x">
     	<ul class="small_p_b">
         	{loop $products $product}
-				<li class="pSelect" data-id="{$product['product_id']}"><img src="{$product['image']}"  width="110" height="110" title="{$product['name']}"></a><span>{$product['shortname']}"</span><i class="checkP"></i></li>
+				<li class="pSelect" data-id="{$product['product_id']}" data-name="{$product['name']}"><img src="{$product['image']}"  width="110" height="110" title="{$product['name']}"></a><span>{$product['shortname']}"</span><i class="checkP"></i></li>
             {/loop}
 		
 		</ul>
-        <div class="p_x_button"><a href="#" class="a1" title="我要试用"></a><a href="?route=store/store&store_id={$store_id}" class="a2" title="进入店铺"></a></div>
+        <div class="p_x_button"><a href="javascript:void(0);" class="a1" title="我要试用"></a><a href="?route=store/store&store_id={$store_id}" class="a2" title="进入店铺"></a></div>
         <div class="p_x_tig">
         	<strong>您已选择 <span class="selected">0</span> 件产品</strong><br />每个会员帐号一次可以选择 <span>1-9</span> 件产品        </div>
     </div>
@@ -107,20 +119,107 @@
 <script type="text/javascript">
 $(function(){
 	//初始
-	$(".tSbox:eq(0)").show();
+	//$(".tSbox:eq(0)").show();
 	
 	
-	$(".abs_b").live("click",function(){
-		$(".checkP:eq("+($(this).attr("lang")-1)+")").addClass("checkPN");
+	//$(".abs_b").live("click",function(){
+	//	$(".checkP:eq("+($(this).attr("lang")-1)+")").addClass("checkPN");
+	//});
+	
+	$('.p_x_button a.a1').click(function(){
+	    var _sl_=$('.right_get_p_x ul li i.checkPN').length;
+		if (_sl_<=0) { 
+		    alert("请选择要试用的产品！");
+			return false;
+		}
+		
+		var product_id_list={};
+		$('.right_get_p_x ul li').each(function(i,w){
+		    
+			var product_id;
+			if($(w).children('i').hasClass('checkPN')){
+				product_id=$(w).attr('data-id');
+				product_name=$(w).attr('data-name');
+				product_id_list[product_id]=product_name;
+			}
+			
+		});
+		
+		var store_id={$productInfo['product']['store_id']};
+			
+		$.ajax({
+			url:'?route=try/product/ConfirmSelectProduct',
+			type:'post',
+			data:{product_id_list:product_id_list,store_id:store_id},
+			dataType:'json',
+			success:function(json){
+			    //console.log(json);
+			    if(json.length>0){
+				    var _Y_=[];
+					for(var k in json){
+					    _Y_.push(json[k]);
+						
+					}
+					
+					if(_Y_.length>0) {
+					    alert(_Y_+'已经添加到试用空间，请不要重复添加!');
+					    return false;
+					}
+				}else{
+				    alert('已添加到试用空间！');
+				}
+			}
+		});
+		
+		//console.log({$productInfo['product']['store_id']});
+		//console.log(product_id_list);
+		
 	});
-	//
+	
 	$('.right_get_p_x ul li').hover(function(){
 	    $(this).addClass('borderR');
 	},function(){
 	    $(this).removeClass('borderR');
 	});
 	
+	
+	
+	//倒计时
 	var ttt;
+	if(ttt) clearInterval(ttt);
+	
+	function _remainderTimer_(end_timestamp){ 
+		var current_timestamp=Math.ceil(new Date().getTime()/1000);
+		
+		var day='';
+		var hour='';
+		var minute='';
+		var second='';
+		
+		var remainder=end_timestamp-current_timestamp;
+		
+		day=Math.floor(remainder/86400);
+		
+		hour=Math.floor((remainder-day*86400)/3600);
+		
+		minute=Math.floor((remainder - day*86400 -hour*3600)/60);
+		
+		second=remainder - day*86400 - hour*3600 - minute*60;
+		
+		
+		var _time_='剩余';
+		_time_ +='<span class="time">'+day+'</span> 天<span class="time">'+hour+'</span> 时<span class="time">'+minute+'</span> 分<span class="time">'+second+'</span> 秒';
+		
+		
+		$('.productsr dl dt span.remainder').html(_time_);
+
+		
+	}
+	ttt=setInterval(function(){_remainderTimer_($productInfo['product']['special']['date_end'])},1000);
+	
+	
+	
+	
 	$('.right_get_p_x ul li').click(function(){
 	    var product_id=$(this).attr('data-id');
 	    $.ajax({
@@ -129,7 +228,7 @@ $(function(){
 			data:{product_id:product_id},
 			dataType:'json',
 			success:function(json){
-			    console.log(json);
+			    //console.log(json);
 				
 				var html_small_image='', html_large_image='';
 				
@@ -149,58 +248,17 @@ $(function(){
 				}
 				
 				$('.products .productsl dl dt').html(json[product_id]['product']['name']);
-				$('ul li span.price__').html(json[product_id]['product']['price']);
-				$('ul li span.price').html(json[product_id]['product']['special']['price']);
-			    
-
 				
+  
 				if(ttt) clearInterval(ttt);
-				//倒计时
-				function _remainderTimer_(){
-				  
-				    
-					var current_timestamp=Math.ceil(new Date().getTime()/1000);
-					
-					var day='';
-					var hour='';
-					var minute='';
-					var second='';
-					
-					var end_timestamp='';
-					end_timestamp=json[product_id]['product']['special']['date_end'];
-				   // console.log(json[product_id]['product']['special']);
-					
-					var remainder=end_timestamp-current_timestamp;
-					
-					day=Math.floor(remainder/86400);
-					
-					hour=Math.floor((remainder-day*86400)/3600);
-					
-					minute=Math.floor((remainder - day*86400 -hour*3600)/60);
-					
-					second=remainder - day*86400 - hour*3600 - minute*60;
-					
-					
-					var _time_='剩余';
-					_time_ +='<span class="time">'+day+'</span> 天<span class="time">'+hour+'</span> 时<span class="time">'+minute+'</span> 分<span class="time">'+second+'</span> 秒';
-					
-					
-					$('.productsr dl dt span.remainder').html(_time_);
-				
-					
-					 //ttt=setTimeout(_remainderTimer_,1000);
-					
-				}
-				ttt=setInterval(_remainderTimer_,1000);
-				
-				//_remainderTimer_();
+				ttt=setInterval(function(){_remainderTimer_(json[product_id]['product']['special']['date_end']);},1000);
 				
 				//属性
 				var html_attribute='';
 				$('a.size_sel').parents('li').remove();
 				for(var i=0;i<json[product_id]['attribute'].length;i++){
 				    
-				    html_attribute +='<li><span class="title">'+json[product_id]['attribute'][i]['attribute_group_name']+'：</span>';
+				    html_attribute +='<li class="attribute"><span class="title">'+json[product_id]['attribute'][i]['attribute_group_name']+'：</span>';
 					
 					var fk=json[product_id]['attribute'][i]['product_option_value'];
 					for(var j=0;j<fk.length;j++){
@@ -210,7 +268,24 @@ $(function(){
 					html_attribute+='</li>';
 					
 				}
+				
+				var html_address='<li>'+$('.productinfo>ul li:last').html()+'</li>';
+				
+				
+			    $('.productinfo>ul li').remove();
 				$('.productinfo>ul').prepend(html_attribute);
+				
+				//价格
+				//$('ul li span.price__').html(json[product_id]['product']['price']);
+				//$('ul li span.price').html(json[product_id]['product']['special']['price']);
+			    var html_price='<li><span>原价：</span><span class="price__">'+json[product_id]['product']['price']+'</span>　<span >现价：</span><span class="price">'+json[product_id]['product']['special']['price']+'</span>　</li>';
+				
+				$('.productinfo>ul').append(html_price);
+				
+				//var html_address='<li>试用商家地址：'+json[product_id]['product']['store']['address']+'</li>';
+				
+				$('.productinfo>ul').append(html_address);
+				
 			}
 		});
 	});
@@ -228,6 +303,7 @@ $(function(){
 	});
 	
 	$('i.checkP').click(function(){
+        var that=$(this);
 	    var _AM_95668o=0;
 	    $(this).parents('ul').children('li').each(function(i,w){
 		    if($(w).children('i').hasClass('checkPN')){
@@ -235,13 +311,28 @@ $(function(){
 			}
 		});
 		if($(this).hasClass('checkPN')){
-		    console.log(_AM_95668o+'w');
+		    //console.log(_AM_95668o+'w');
 		    $(this).removeClass("checkPN");
 		    --_AM_95668o;
 		}else{
-		    console.log(_AM_95668o);
-		    $(this).addClass("checkPN");
-		    ++_AM_95668o;
+		    var product_id=$(this).parent('li').attr('data-id');
+		    $.ajax({
+			    url:'?route=try/product/isTry',
+				dataType:'html',
+				type:'post',
+				data:{product_id:product_id},
+				success:function(str){
+				    if(str>0){
+					   alert('此产品已添加到您的试用空间了，请不要重复添加！');
+					   return false;
+					}else{
+					    that.addClass("checkPN");
+		                ++_AM_95668o;
+					}
+				}
+			});
+		   
+		  
 		}
 		
 		$('.p_x_tig span.selected').html(_AM_95668o);

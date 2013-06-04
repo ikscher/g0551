@@ -4,7 +4,19 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>试中心</title>
 <link href="catalog/view/theme/default/stylesheet/try.css" type="text/css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="catalog/view/theme/default/stylesheet/5icool.org.css" />
 <script type="text/javascript" src="catalog/view/javascript/jquery/jquery-1.7.1.min.js"></script>
+<script defer src="catalog/view/javascript/5icool.org.js"></script> 
+<script type="text/javascript">
+	$(function(){
+	  $('.flexslider').flexslider({
+		animation: "slide",
+		start: function(slider){
+		  $('body').removeClass('loading');
+		}
+	  });
+	});
+</script>
 </head>
 
 <body>
@@ -35,12 +47,28 @@
 		</ul>
 		<!-- <div class="sort">在售商品分类></div> -->
 	</div>
-
+    
+	<!------------右边悬浮窗 begin-------------->
+	<div class="Fwindow"id="hrr" style="position:fixed;width:93px;height:393px;top:120px;right:50px;border:1px solid white;">
+		<ul>
+			<li><img src="catalog/view/theme/default/image/try/windowtop.jpg"/></li>
+			{if !empty($username)}
+			<li class="wind1"><a href="?route=check/cart" class="wind_cur"></a></li>
+			<li class="wind2"><a href="" class="wind_cur"></a></li>
+			<li class="wind3"><a href="?route=account/wishlist" class="wind_cur"></a></li>
+			{/if}
+			<li><a href="#top"><img src="catalog/view/theme/default/image/try/windowbot.jpg"/></a></li>
+		</ul>
+	</div>
+	<!------------右边悬浮窗 end-------------->
+	
 <!--banner广告-->
 <div class="banner">
-	<div class="bannerl">
-		<ul>
+	<div class="bannerl flexslider">
+		<ul class="slides">
 			<li><img src="catalog/view/theme/default/image/try/banner01.jpg"/></li>
+			<li><img src="catalog/view/theme/default/image/try/banner02.jpg"/></li>
+			<li><img src="catalog/view/theme/default/image/try/banner03.jpg"/></li>
 		</ul>
 	</div>
 	<div class="bannerr">

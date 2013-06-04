@@ -156,3 +156,21 @@ a.size_sel:hover{ text-decoration:none;}
 .details dt{height:34px; border-bottom:#ebebeb solid 1px; background:#f2f2f2; margin-bottom:10px; text-align:left;}
 /* .details dt img{margin-left:-1px;margin-top:-1px;} */
 .details dd{margin-bottom:10px;}
+
+
+
+/* 右边悬浮窗*/
+.Fwindow{width:93px; height:393px;}
+.wind1{ background:url(../image/try/window1.jpg) no-repeat top center;width:93px; height:80px;}
+.wind1:hover{background:url(../image/try/window1-1.jpg) no-repeat;}
+.wind2{ background:url(../image/try/window2.jpg) no-repeat top center;width:93px; height:80px;}
+.wind2:hover{background:url(../image/try/window2-2.jpg) no-repeat;}
+.wind3{ background:url(../image/try/window3.jpg) no-repeat top center;width:93px; height:80px;}
+.wind3:hover{background:url(../image/try/window3-3.jpg) no-repeat;}
+a.wind_cur{ display:block; float:left; width:93px; height:80px;cursor:pointer;}
+
+/* banner广告*/
+.banner{width:960px;height:300px; margin:0 auto; margin-top:10px;clear:both;}
+.bannerl{width:702px; border:#e4e4e4 solid 1px; float:left;}
+.bannerr{width:244px; border:#e4e4e4 solid 1px; float:right;}
+.bannerr li{float:left;width:122px;height:149px;}

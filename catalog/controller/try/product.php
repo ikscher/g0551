@@ -45,18 +45,51 @@ class ControllerTryProduct extends Controller {
 		$this->load->model('store/store');
 		
 		$product=$this->model_catalog_product->getProduct($product_id);
-		//$this->data['store']  =$this->model_store_store->getStore($product['store_id']);
+		$this->data['store']  =$this->model_store_store->getStore($product['store_id']);
 		
 		$this->data['product_id']=$product_id;
 		$this->data['store_id']=$product['store_id'];
 		
-		$products=array();
+		
+		//初始化显示产品信息
+		$productInfo=array();
+		$attributes_price=array();
+		$attributes=$this->model_catalog_product->getProductAttributes($product_id,false);
+		
+		foreach ($attributes as $key => $value) {
+			if($value['gtype']==2){
+				$attributes_price[]=$value;
+			}
+		}
+		
+		$images=array();
+		$productImages=$this->model_catalog_product->getProductImages($product_id);
+		foreach($productImages as $v){
+		    $v['small_image']=$this->model_tool_image->resize($v['image'],59,59);
+			$v['large_image']=$this->model_tool_image->resize($v['image'],460,460);
+			$images[]=$v;
+		}
+		
+		$_product=array();
+		$_product=$this->model_catalog_product->getProduct($product_id);
+
+		$_product['special']['date_start']=strtotime($_product['special']['date_start']);
+		$_product['special']['date_end']  =strtotime($_product['special']['date_end']);
+	
+	    $productInfo['product']=$_product;
+		$productInfo['images']=$images;
+		$productInfo['attribute']=$attributes_price;
+		$this->data['productInfo']=$productInfo;
+		
+		
+		
 		//单店铺所有的相关试用产品
+		$products=array();
 		$results=$this->model_try_try->getProducts($product['store_id']);
 		
 		foreach($results as $k=>$v){
 		    $v['image']=$this->model_tool_image->resize($v['image'],108,108);
-			$v['shortname']=OcCutstr($product['name'],13);
+			$v['shortname']=OcCutstr($v['name'],13);
 			
 			$products[]=$v;
 		}
@@ -90,12 +123,14 @@ class ControllerTryProduct extends Controller {
 	
     }
 	
+	//change product by click
 	public function selectProduct(){
 	    $json=array();
 	    $product_id=$this->request->post['product_id'];
 		
 		$this->load->model('catalog/product');
 		$this->load->model('tool/image');
+		//$this->load->model('store/store');
 		
 		
 		//价格属性
@@ -122,6 +157,7 @@ class ControllerTryProduct extends Controller {
 		
 		$product['special']['date_start']=strtotime($product['special']['date_start']);
 		$product['special']['date_end']  =strtotime($product['special']['date_end']);
+		//$product['store']=$this->model_store_store->getStore($product['store_id']);
 	
 		
 		
@@ -130,6 +166,40 @@ class ControllerTryProduct extends Controller {
 		$json[$product_id]['attribute']=$attributes_price;
 		
 		$this->response->setOutput(json_encode($json));
+	
+	}
+	
+	public function ConfirmSelectProduct(){
+	    $json=array();
+		$time=time();
+	    $product_id_list=$this->request->post['product_id_list'];
+		$store_id  =$this->request->post['store_id'];
+		$customer_id=$this->customer->getId();
+		
+		if(empty($customer_id)) return ;
+		$this->load->model('try/try');
+		
+		foreach($product_id_list as $k=>$v){
+			$numRows=$this->model_try_try->getTryProduct($k,$customer_id);
+			if($numRows>0){
+				$json[$k]=$v;
+			}else{
+				$this->model_try_try->addTryProduct($customer_id,$k,$store_id,$time);
+			} 
+		} 
+		
+		$this->response->setOutput(json_encode($json));
+	}
+	
+	public function isTry(){
+	    $this->load->model('try/try');
+		$product_id=$this->request->post['product_id'];
+		$customer_id=$this->customer->getId();
+		
+		$numRows=0;
+		$numRows=$this->model_try_try->getTryProduct($product_id,$customer_id);
+		
+		$this->response->setOutput($numRows);
 	
 	}
 
