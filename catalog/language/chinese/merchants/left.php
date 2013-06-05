@@ -22,5 +22,7 @@ $_['text_dealedorder']  = '已发货订单';
 $_['text_coupons']  = '优惠券管理';
 $_['text_coupon_adds']  = '优惠券添加';
 $_['text_shipping']='配送方式管理';
+$_['text_try']     ='试用中心';
+$_['text_customer_try']='会员试用';
 
 ?>

@@ -392,3 +392,7 @@ table{ border-collapse:collapse; border-spacing:0; }
 .msg .error {background-position: 3px 3px;border-color: #ff8080;background-color: #fff2f2;}
 #postage-tpl .setting span.error, #postage-tpl .setting span.stop {float: none;display: inline-block;}
 #postage-tpl .setting span.msg {margin-right: 3px;}
+
+.condition{padding:5px;}
+.condition input[type='submit']{margin-top:-10px;}
+.trytable td{text-align:center;}

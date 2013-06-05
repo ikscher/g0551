@@ -23,7 +23,7 @@
 	    {if !empty($username)}
 			<div class="rectangle">欢迎你！{$username} <a href="?route=account/logout">【退出】</a> <br><a href="?route=account/account">我的帐户</a></div>
 		{else}
-			<div class="welcome">欢迎您来到试中心！<span>【<a href="?route=account/register">注册</a>│<a class="login" href="javascript:void(0);">登录</a>】</span></div>
+			<div class="welcome">欢迎您来到试中心！<span>【<a href="?route=account/register">注册</a>│<a class="login" href="?route=account/login">登录</a>】</span></div>
 	    {/if}
 	</div>
 </div>
@@ -322,6 +322,7 @@ $(function(){
 				type:'post',
 				data:{product_id:product_id},
 				success:function(str){
+				    console.log(str);
 				    if(str>0){
 					   alert('此产品已添加到您的试用空间了，请不要重复添加！');
 					   return false;

@@ -32,6 +32,9 @@ class ControllerMerchantsLeft extends Controller {
 		$this->data['text_coupon_adds']=$this->language->get('text_coupon_adds');
 		$this->data['text_shipping']=$this->language->get('text_shipping');
 		
+		$this->data['text_try'] = $this->language->get('text_try');
+		$this->data['text_customer_try'] =$this->language->get('text_customer_try');
+		
 		
 		
 	   
@@ -83,6 +86,8 @@ class ControllerMerchantsLeft extends Controller {
 		$this->data['voucher'] = $this->url->link('merchants/voucher');
 		$this->data['warehouse'] = $this->url->link('merchants/warehouse');
 		$this->data['shipping'] = $this->url->link('merchants/shipping');
+		$this->data['try'] = $this->url->link('merchants/try');
+		
 		
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/merchants/left.html')) {
 			$this->template = $this->config->get('config_template') . '/template/merchants/left.html';

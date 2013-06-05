@@ -192,6 +192,7 @@ class ControllerTryProduct extends Controller {
 	}
 	
 	public function isTry(){
+	    //if(empty($raw_post_data))  $raw_post_data = file_get_contents("php://input");
 	    $this->load->model('try/try');
 		$product_id=$this->request->post['product_id'];
 		$customer_id=$this->customer->getId();

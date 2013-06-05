@@ -50,7 +50,7 @@ address,caption,cite,code,dfn,em,th,var {font-style:normal;font-weight:500;}
 
 .left{float:left;width:190px;padding-bottom:10px;}
 .leftClass{border:1px solid #E4E4E4;width:178px;}
-.leftClass dl{margin-bottom:20px;}
+.leftClass dl{margin-bottom:5px;}
 .leftClass dt{height:26px;line-height:26px;font-weight:bold;background:url(../image/member/memberClassLeft.jpg) repeat-x;color:#E92658;margin-bottom:10px;text-indent:20px;}
 .leftClass dd{height:28px;line-height:28px;}
 .leftClass dd.current{background:#39F9F9;line-height:28px;cursor:pointer;}

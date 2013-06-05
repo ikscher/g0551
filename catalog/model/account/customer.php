@@ -150,7 +150,7 @@ class ModelAccountCustomer extends Model {
 	    if(!empty($store_id)){
 			$sql="SELECT * FROM " . DB_PREFIX . "customer WHERE customer_id = '" . (int)$customer_id . "' and store_id='{$store_id}'";
 		}else{
-		    $sql="SELECT a.* FROM `" . DB_PREFIX . "customer` c left join `".DB_PREFIX."address` a on c.customer_id=a.customer_id WHERE a.status=1 and c.customer_id = '" . (int)$customer_id . "'";
+		    $sql="SELECT a.*,c.* FROM `" . DB_PREFIX . "customer` c left join `".DB_PREFIX."address` a on c.customer_id=a.customer_id WHERE a.status=1 and c.customer_id = '" . (int)$customer_id . "'";
 		}
 		
 		$query = $this->db->query($sql);

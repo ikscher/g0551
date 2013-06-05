@@ -1,0 +1,141 @@
+{$header}
+    <!--左侧begin-->
+    {$left}
+ 	<!--左侧end-->
+	
+    <!--右侧begin-->
+	<div class="right">
+		<div id="main-content">
+		 <form method="post" action="?route=merchants/try">		
+			
+			    <div class="condition">
+                    <label>会员ID：</label><input type="text" name="customer_id" class="input-small"    maxlength="30" value="{$info['customer_id']}"/>
+ 
+                    <label>产品ID：</label><input type="text"   class="input-small"   name="product_id" value="{$info['product_id']}" />
+
+                    <label>试用时间：</label><input type="text" class="date input-small"   name="trytime" value="{$info['trytime']}" />
+                    
+                    
+                        <label>是否试用：</label>
+                        <select  name="is_try" height="100" style="width:100px;" >
+						<option value=null {if $info['is_try']===null}selected="selected"{/if}>全部</option>
+				        <option value="0" {if $info['is_try']===0}selected="selected"{/if}>未试用</option>
+						<option value="1" {if $info['is_try']===1}selected="selected"{/if}>已试用</option>
+					
+				        </select>
+					
+                    
+                    <input  class="btn" type="submit" onclick="changePage(0)" value="&nbsp;搜索&nbsp;"></button>
+                       
+                                   
+                </div>
+				
+		   
+		 </form>
+		</div>
+
+	<div class="item-list-hd">
+		<ul class="item-list-tabs item-list-tabs-flexible clearfix" data-spm="9" id="order_state">
+			<li class="current" rel=""><a>试用中心</a></li>
+		</ul>	
+    </div>
+		<div class="item-list-bd">
+		<table class="trytable">
+			<thead>
+				<tr>
+				    <th width="5%"><input type="checkbox" name="tryall"  /></th>
+					<th width="10%" > </th>
+					<th width="10%">试用产品ID</th>
+					<th >产品名称</th>
+					<th width="20%">属性</th>
+				  	<th width="10%">试用时间</th>
+					<th width="10%">是否试用</th>
+					
+				</tr>
+			</thead>
+         <tbody>
+         {loop $tryList $k $t}
+		  
+		  <tr>
+			<td height="28" colspan="7" bgcolor="#f3f3f3">
+				<span>【试用会员】{if !empty($t['customer']['email'])}<a data-id="{$t['customer']['customer_id']}">Email：{$t['customer']['email']}</a>{/if} {if !empty($t['customer']['username'])}，用户名：{$t['customer']['username']}{/if} {if !empty($t['customer']['mobile'])}，手机：{$t['customer']['mobile']}{/if}</span>
+			</td>
+		  </tr>
+		  
+		  {loop $t['products'] $p}
+		  <tr>
+		    <td bgcolor="#FFFFFF"><input type="checkbox" name="try_id[]" value="{$p['try_id']}" {if $p['is_try']==1}checked="checked"{/if}/></td>
+			<td bgcolor="#FFFFFF"><img src="{$p['product']['image']}" /></td>
+			<td bgcolor="#FFFFFF">{$p['product']['product_id']}</td>
+			<td bgcolor="#FFFFFF"><a href="?route=try/product&product_id={$p['product']['product_id']}&store_id={$p['product']['store_id']}" target="_blank" class="txt_color">{$p['product']['name']}</a>	</td>
+			<td bgcolor="#FFFFFF"></td>
+			<td bgcolor="#FFFFFF">{$p['trytime']}</td>
+			<td bgcolor="#FFFFFF">{$p['is_try_cn']}</td>
+			
+		  </tr>
+		  {/loop}
+	
+        {/loop}
+		   </tbody>
+		</table>
+		</div>
+ 	
+      <!--begin  页脚批量操作和列表翻页 begin-->
+	    <div class="page">
+		<span style="float:left;margin-top:-5px;"><button name="try" class="btn" type="button">试用</button></span>
+		<table>
+    		<tr>
+    			<td>{$page}</td>
+    		</tr>		
+		</table>
+		</div>
+ 	<!--页脚翻页end-->
+    </div>
+ 	<!--右侧end-->
+
+{$footer}
+
+<script type="text/javascript" src="catalog/view/javascript/jquery/ui/jquery-ui-1.8.16.custom.min.js"></script> 
+<link rel="stylesheet" type="text/css" href="catalog/view/javascript/jquery/ui/themes/ui-lightness/jquery-ui-1.8.16.custom.css" /> 
+<script type="text/javascript" src="catalog/view/javascript/jquery/ui/jquery-ui-timepicker-addon.js"></script> 
+<script type="text/javascript" src="catalog/view/javascript/jquery/ui/i18n/jquery.ui.datepicker-zh-CN.js"></script> 
+<script type="text/javascript"><!--
+$(".date").datepicker({
+    dateFormat: 'yy-mm-dd',
+	beforeShow: function() {
+        setTimeout(function(){
+            $('.ui-datepicker').css('z-index', 9999);
+        }, 0);
+    }
+});
+//--></script> 
+<script type="text/javascript" src="catalog/view/javascript/merchants.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#order_state>li").removeClass("current");
+	$("#order_state>li[rel='{$info['state']}']").addClass("current");
+	$("#state_list>option[value='{$info['state']}']").attr("selected","selected");
+});
+
+$('input[name=tryall]').click(function(){
+    if($(this).prop('checked')==true){
+        $('input[name=try_id]').attr('checked',true);
+	}else{
+	    $('input[name=try_id]').attr('checked',false);
+    }
+});
+
+$('button[name=try]').click(function(){
+    if(confirm("您确认试用吗？")){
+        $.ajax({
+		    url:'?route=merchants/try/confirm',
+			type:'post',
+			dataType:'json',
+			data:$('input[name^=try_id]'),
+			success:function(json){
+			   console.log(json);
+			}
+		});
+    }
+});
+</script>
