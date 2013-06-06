@@ -1155,15 +1155,6 @@ class ModelCatalogProduct extends Model {
 		return $query->row['type'];
 	}
 	
-	/* public function getOptionType($option_id){
-	    $data=array();
-	    $sql="select * from `".DB_PREFIX."option` where option_id='{$option_id}'";
-		$query=$this->db->query($sql);
-		
-	    $data=$query->row;
-		
-		return $data;
-	} */
 	
     public function getAttributeNameById($attribute_id){
 	    $data='';
