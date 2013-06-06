@@ -56,8 +56,8 @@ MyCYAutoTabCon=setInterval("cnckMyAutoTabCon('#ranking_list_ta','#ranking_list_c
 					<li class="dn">
 					    {loop $hot_products $hot}
 						<dl>
-							<dd class="ddimg"><a href="index.php?route=product/product&product_id={$hot['product_id']}"><img src="{$hot['image']}"  title="{$hot['name']}" /></a></dd>
-						    <dt class="f_dh tc"><a href="index.php?route=product/product&product_id={$hot['product_id']}"><span>{$hot['shortname']}</span></a></dt>
+							<dd class="ddimg"><a href="?route=product/product&product_id={$hot['product_id']}"><img src="{$hot['image']}"  title="{$hot['name']}" /></a></dd>
+						    <dt class="f_dh tc"><a href="?route=product/product&product_id={$hot['product_id']}"><span>{$hot['shortname']}</span></a></dt>
 							<dd class="dds tc"><span class="f2 f_h">¥{$hot['price']}</span></dd>
 						</dl>
 						{/loop}
@@ -65,8 +65,8 @@ MyCYAutoTabCon=setInterval("cnckMyAutoTabCon('#ranking_list_ta','#ranking_list_c
 					<li class="dn">
 					    {loop $new_products $new}
 						<dl>
-							<dd class="ddimg"><a href="index.php?route=product/product&product_id={$new['product_id']}"><img src="{$new['image']}"  title="{$new['name']}" /></a></dd>
-						    <dt class="f_dh tc"><a href="index.php?route=product/product&product_id={$new['product_id']}"><span>{$new['shortname']}</span></a></dt>
+							<dd class="ddimg"><a href="?route=product/product&product_id={$new['product_id']}"><img src="{$new['image']}"  title="{$new['name']}" /></a></dd>
+						    <dt class="f_dh tc"><a href="?route=product/product&product_id={$new['product_id']}"><span>{$new['shortname']}</span></a></dt>
 							<dd class="dds  tc"><span class="f2 f_h">¥{$new['price']}</span></dd>
 						</dl>
 						{/loop}
@@ -74,8 +74,8 @@ MyCYAutoTabCon=setInterval("cnckMyAutoTabCon('#ranking_list_ta','#ranking_list_c
 					<li class="dn">
 					    {loop $view_products $view}
 						<dl>
-							<dd class="ddimg"><a href="index.php?route=product/product&product_id={$view['product_id']}"><img src="{$view['image']}"  title="{$view['name']}" /></a></dd>
-						    <dt class="f_dh tc"><a href="index.php?route=product/product&product_id={$view['product_id']}"><span>{$view['shortname']}</span></a></dt>
+							<dd class="ddimg"><a href="?route=product/product&product_id={$view['product_id']}"><img src="{$view['image']}"  title="{$view['name']}" /></a></dd>
+						    <dt class="f_dh tc"><a href="?route=product/product&product_id={$view['product_id']}"><span>{$view['shortname']}</span></a></dt>
 							<dd class="dds  tc"><span class="f2 f_h">¥{$view['price']}</span></dd>
 						</dl>
 						{/loop}
@@ -97,7 +97,7 @@ MyCYAutoTabCon=setInterval("cnckMyAutoTabCon('#ranking_list_ta','#ranking_list_c
 				<dd class="clothes_pro_box cl h">
 				    {if !empty($female_clothes)}
 						{loop $female_clothes $c}
-							<div class="clothes_pro"><p><a href="index.php?route=product/product&product_id={$c['product_id']}"><img src="{$c['image']}" width="180" height="180" title="{$c['name']}" /></a></p><p><a href="index.php?route=product/product&product_id={$c['product_id']}" class="f3n">{$c['shortname']}</a></p><p class="f2 f_h">¥{$c['price']}</p></div>
+							<div class="clothes_pro"><p><a href="?route=product/product&product_id={$c['product_id']}"><img src="{$c['image']}" width="180" height="180" title="{$c['name']}" /></a></p><p><a href="?route=product/product&product_id={$c['product_id']}" class="f3n">{$c['shortname']}</a></p><p class="f2 f_h">¥{$c['price']}</p></div>
 						{/loop}
 					{/if}
 				</dd>
@@ -113,7 +113,7 @@ MyCYAutoTabCon=setInterval("cnckMyAutoTabCon('#ranking_list_ta','#ranking_list_c
 				<dd class="clothes_pro_box cl h" id="list_clothes_b">
 					{if !empty($male_clothes)}
 						{loop $male_clothes $c}
-							<div class="clothes_pro"><p><a href="index.php?route=product/product&product_id={$c['product_id']}"><img src="{$c['image']}" width="180" height="180" title="{$c['name']}" /></a></p><p><a href="index.php?route=product/product&product_id={$c['product_id']}" class="f3n">{$c['shortname']}</a></p><p class="f2 f_h">¥{$c['price']}</p></div>
+							<div class="clothes_pro"><p><a href="?route=product/product&product_id={$c['product_id']}"><img src="{$c['image']}" width="180" height="180" title="{$c['name']}" /></a></p><p><a href="?route=product/product&product_id={$c['product_id']}" class="f3n">{$c['shortname']}</a></p><p class="f2 f_h">¥{$c['price']}</p></div>
 						{/loop}
 					{/if}
 			</dl>
@@ -128,7 +128,7 @@ MyCYAutoTabCon=setInterval("cnckMyAutoTabCon('#ranking_list_ta','#ranking_list_c
 				<dd class="clothes_pro_box cl h" id="list_clothes_c">
 					{if !empty($sports_clothes)}
 						{loop $sports_clothes $c}
-							<div class="clothes_pro"><p><a href="index.php?route=product/product&product_id={$c['product_id']}"><img src="{$c['image']}" width="180" height="180" title="{$c['name']}" /></a></p><p><a href="index.php?route=product/product&product_id={$c['product_id']}" class="f3n">{$c['shortname']}</a></p><p class="f2 f_h">¥{$c['price']}</p></div>
+							<div class="clothes_pro"><p><a href="?route=product/product&product_id={$c['product_id']}"><img src="{$c['image']}" width="180" height="180" title="{$c['name']}" /></a></p><p><a href="?route=product/product&product_id={$c['product_id']}" class="f3n">{$c['shortname']}</a></p><p class="f2 f_h">¥{$c['price']}</p></div>
 						{/loop}
 					{/if}
                 </dd>

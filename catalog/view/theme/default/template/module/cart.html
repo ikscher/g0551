@@ -15,7 +15,7 @@
 	  <td class="quantity">x&nbsp;{$product['quantity']}</td>
 	  <td class="total">{$product['total']}</td>
 	  <td class="remove"><img src="catalog/view/theme/default/image/remove-small.png" alt="{$button_remove}" title="{$button_remove}" data-id="{$product['key']}" /></td>
-	   <!-- onclick="(getURLVar('route') == 'checkout/cart' || getURLVar('route') == 'checkout/checkout') ? location = 'index.php?route=checkout/cart&remove={$product['key']}' : $('.car-content').load('index.php?route=module/cart&remove={$product['key']}' + ' .car-content > *');" /> -->
+	   <!-- onclick="(getURLVar('route') == 'checkout/cart' || getURLVar('route') == 'checkout/checkout') ? location = '?route=checkout/cart&remove={$product['key']}' : $('.car-content').load('?route=module/cart&remove={$product['key']}' + ' .car-content > *');" /> -->
 	</tr>
 	{/loop}
 	{loop $vouchers   $voucher}
@@ -24,7 +24,7 @@
 	  <td class="name">{$voucher['description']}</td>
 	  <td class="quantity">x&nbsp;1</td>
 	  <td class="total">{$voucher['amount']}</td>
-	  <td class="remove"><img src="catalog/view/theme/default/image/remove-small.png" alt="{$button_remove}" title="{$button_remove}" onclick="(getURLVar('route') == 'checkout/cart' || getURLVar('route') == 'checkout/checkout') ? location = 'index.php?route=checkout/cart&remove={$voucher['key']}' : $('.car-content').load('index.php?route=module/cart&remove={$voucher['key']}' + ' .car-content > *');" /></td>
+	  <td class="remove"><img src="catalog/view/theme/default/image/remove-small.png" alt="{$button_remove}" title="{$button_remove}" onclick="(getURLVar('route') == 'checkout/cart' || getURLVar('route') == 'checkout/checkout') ? location = '?route=checkout/cart&remove={$voucher['key']}' : $('.car-content').load('?route=module/cart&remove={$voucher['key']}' + ' .car-content > *');" /></td>
 	</tr>
 	{/loop}
   </table>
@@ -49,9 +49,9 @@
 	    $(this).parent().parent().remove();
 		var product_id=$(this).attr('data-id');
 		if(getURLVar('route') == 'checkout/cart' || getURLVar('route') == 'checkout/checkout') {
-		    location.href = 'index.php?route=checkout/cart&remove='+product_id;
+		    location.href = '?route=checkout/cart&remove='+product_id;
 		}else{
-		    $.get('index.php?route=module/cart&remove='+product_id,function(){
+		    $.get('?route=module/cart&remove='+product_id,function(){
 			    var quantity=$.trim(self.parent().parent().find('.quantity').text()).match(/\d+/g);
 				var total=$.trim($('#cart-total a').text()).match(/\d+/g);
 				total=total - quantity;

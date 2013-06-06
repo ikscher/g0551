@@ -12,10 +12,10 @@
 		{loop $list_category $key1 $list}
             {loop $list $key2 $list2}
 			    <dl class="all">
-				   <dt class="f_dh"><a href="index.php?route=product/category&category_id={$list2['category_id']}">{php echo $list2['name']}</a></dt>
+				   <dt class="f_dh"><a href="?route=product/category&category_id={$list2['category_id']}">{php echo $list2['name']}</a></dt>
 				   <dd class="f_dh">
 				   {loop $list2['third_category_list'] $list3}
-					   <a href="index.php?route=product/category&category_id={$list3['category_id']}">{$list3['name']}</a>
+					   <a href="?route=product/category&category_id={$list3['category_id']}">{$list3['name']}</a>
 				   {/loop}
 				   </dd>
 				</dl>
@@ -29,10 +29,10 @@
 		<li class="classify_y_lo{$k} {if $key1==$list_channel_title}{else}dn{/if}"  >
 		    {loop $list $key2 $list2}
 			<dl>
-			   <dt class="f_b"><a href="index.php?route=product/category&category_id={$list2['category_id']}" class="f_b">{php echo $list2['name']}</a></dt>
+			   <dt class="f_b"><a href="?route=product/category&category_id={$list2['category_id']}" class="f_b">{php echo $list2['name']}</a></dt>
 			   <dd class="f_b">
 			   {loop $list2['third_category_list'] $list3}
-			       <a href="index.php?route=product/category&category_id={$list3['category_id']}" class="f_b">{$list3['name']}</a>
+			       <a href="?route=product/category&category_id={$list3['category_id']}" class="f_b">{$list3['name']}</a>
 			   {/loop}
 			   </dd>
 			</dl>	

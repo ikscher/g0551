@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>试中心</title>
+<link href="catalog/view/theme/default/stylesheet/try.css" type="text/css" rel="stylesheet">
+<script type="text/javascript" src="catalog/view/javascript/jquery/jquery-1.7.1.min.js"></script>
+
+</head>
+</head>
+
+<body>
+
+<div class="try_topbg">
+	<div class="try_width">
+		<div class="try_topleft"><a href="?route=common/home"><img src="catalog/view/theme/default/image/try/home.jpg"/></a></div>
+		<div class="try_topright"><span><a href="?route=module/general/faq">帮助中心 │</a><a href="?route=module/general/company">关于我们</a></span><img src="catalog/view/theme/default/image/try/try_tel.jpg"/></div>
+	</div>
+</div>
+<div class="try_logo">
+	<div class="try_logoleft"><img src="catalog/view/theme/default/image/try/try_logo.jpg"/></div>
+	<div class="try_logoright">
+	    {if !empty($username)}
+			<div class="rectangle">欢迎你！{$username} <a href="?route=account/logout">【退出】</a> <br><a href="?route=account/account">我的帐户</a></div>
+		{else}
+			<div class="welcome">欢迎您来到试中心！<span>【<a href="?route=account/register">注册</a>│<a class="login" href="?route=account/login">登录</a>】</span></div>
+	    {/if}
+	</div>
+</div>
+	<div class="try_menu">
+		<ul>
+			<li><a href="javascript:void(0);">所有品牌</a></li>
+			<li><a href="{$clothes}">服装配饰</a></li>
+			<li><a href="{$foods}">美食特产</a></li>
+			<li><a href="{$house}">家居建材</a></li>
+			<li><a href="{$travel}">运动户外</a></li>
+			<li><a href="{$joy}">文化娱乐</a></li>
+		</ul>
+		<!-- <div class="sort">在售商品分类></div> -->
+	</div>
+<!------------试中心head end-------------->
+
+<!--在售品牌-->
+<div class="salebrand">
+	<div class="brandbg">
+		<ul>
+			<li><img src="catalog/view/theme/default/image/try/brand1.jpg"/></li>
+			<li><img src="catalog/view/theme/default/image/try/brand2.jpg"/></li>
+			<li><img src="catalog/view/theme/default/image/try/brand3.jpg"/></li>
+			<li><img src="catalog/view/theme/default/image/try/brand4.jpg"/></li>
+			<li><img src="catalog/view/theme/default/image/try/brand5.jpg"/></li>
+			<li><img src="catalog/view/theme/default/image/try/brand6.jpg"/></li>
+			<li><img src="catalog/view/theme/default/image/try/brand7.jpg"/></li>
+			<li><img src="catalog/view/theme/default/image/try/brand8.jpg"/></li>
+			<li><img src="catalog/view/theme/default/image/try/brand9.jpg"/></li>
+		</ul>
+	</div>
+</div>
+
+<!------------产品展示 begin-------------->
+<div class="products">
+	<div class="productsl">
+		<dl>
+			<dt> {$productInfo['product']['name']}</dt>
+		</dl>
+	</div>
+	<div class="productsr">
+		<dl>
+			<dt><span class="font18"></span><img src="catalog/view/theme/default/image/try/time.png"/> <span class="remainder">正在加载...</span></dt>
+		</dl>
+	</div>
+    <div class="clear"></div>
+    
+    <div class="left_get_p_b">
+    	<div class="productinfo">
+			<div class="_large_img_thumb_">
+			    {loop $productInfo['images'] $k $image}
+			     <span   data-id="{$image['product_image_id']}" {if $k<=0}{else}class="tSbox"{/if}><img src="{$image['large_image']}"  width="459" height="459" /></span>
+				{/loop}
+			</div>
+			<div class="b_p_img_thumb">
+			    {loop $productInfo['images'] $k $image}
+				<span data-id="{$image['product_image_id']}" {if $k==0}class="sleb"{/if}><img src="{$image['small_image']}" width="58" height="58" /></span>
+				{/loop}
+			</div>
+			<ul>
+				{loop $productInfo['attribute'] $attribute_}
+				    <li class="attribute"><span class="title">{$attribute_['attribute_group_name']}：</span>
+					    {loop $attribute_['product_option_value'] $option}
+						<a class="size_sel">{$option['name']}</a>
+						{/loop}
+					</li>
+				{/loop}
+				<li><span>原价：</span><span class="price__">{$productInfo['product']['price']}</span>　<span >现价：</span><span class="price">{$productInfo['product']['special']['price']}</span>　</li>
+				
+				
+				<li class="address">试用商家地址：{$store['address']}</li>
+				
+			</ul>
+        </div>
+    </div>
+    
+    <div class="right_get_p_x">
+    	<ul class="small_p_b">
+        	{loop $products $product}
+				<li class="pSelect" data-id="{$product['product_id']}" data-name="{$product['name']}"><img src="{$product['image']}"  width="110" height="110" title="{$product['name']}"></a><span>{$product['shortname']}"</span><i class="checkP"></i></li>
+            {/loop}
+		
+		</ul>
+        <div class="p_x_button"><a href="javascript:void(0);" class="a1" title="我要试用"></a><a href="?route=store/store&store_id={$store_id}" class="a2" title="进入店铺"></a></div>
+        <div class="p_x_tig">
+        	<strong>您已选择 <span class="selected">0</span> 件产品</strong><br />每个会员帐号一次可以选择 <span>1-9</span> 件产品        </div>
+    </div>
+    
+    
+    <div class="clear"></div>
+</div>
+
+<script type="text/javascript">
+$(function(){
+	//初始
+	//$(".tSbox:eq(0)").show();
+	
+	
+	//$(".abs_b").live("click",function(){
+	//	$(".checkP:eq("+($(this).attr("lang")-1)+")").addClass("checkPN");
+	//});
+	
+	$('.p_x_button a.a1').click(function(){
+	    var _sl_=$('.right_get_p_x ul li i.checkPN').length;
+		if (_sl_<=0) { 
+		    alert("请选择要试用的产品！");
+			return false;
+		}
+		
+		var product_id_list={};
+		$('.right_get_p_x ul li').each(function(i,w){
+		    
+			var product_id;
+			if($(w).children('i').hasClass('checkPN')){
+				product_id=$(w).attr('data-id');
+				product_name=$(w).attr('data-name');
+				product_id_list[product_id]=product_name;
+			}
+			
+		});
+		
+		var store_id={$productInfo['product']['store_id']};
+			
+		$.ajax({
+			url:'?route=try/product/ConfirmSelectProduct',
+			type:'post',
+			data:{product_id_list:product_id_list,store_id:store_id},
+			dataType:'json',
+			success:function(json){
+			    //console.log(json);
+			    if(json.length>0){
+				    var _Y_=[];
+					for(var k in json){
+					    _Y_.push(json[k]);
+						
+					}
+					
+					if(_Y_.length>0) {
+					    alert(_Y_+'已经添加到试用空间，请不要重复添加!');
+					    return false;
+					}
+				}else{
+				    alert('已添加到试用空间！');
+				}
+			}
+		});
+		
+		//console.log({$productInfo['product']['store_id']});
+		//console.log(product_id_list);
+		
+	});
+	
+	$('.right_get_p_x ul li').hover(function(){
+	    $(this).addClass('borderR');
+	},function(){
+	    $(this).removeClass('borderR');
+	});
+	
+	
+	
+	//倒计时
+	var ttt;
+	if(ttt) clearInterval(ttt);
+	
+	function _remainderTimer_(end_timestamp){ 
+		var current_timestamp=Math.ceil(new Date().getTime()/1000);
+		
+		var day='';
+		var hour='';
+		var minute='';
+		var second='';
+		
+		var remainder=end_timestamp-current_timestamp;
+		
+		day=Math.floor(remainder/86400);
+		
+		hour=Math.floor((remainder-day*86400)/3600);
+		
+		minute=Math.floor((remainder - day*86400 -hour*3600)/60);
+		
+		second=remainder - day*86400 - hour*3600 - minute*60;
+		
+		
+		var _time_='剩余';
+		_time_ +='<span class="time">'+day+'</span> 天<span class="time">'+hour+'</span> 时<span class="time">'+minute+'</span> 分<span class="time">'+second+'</span> 秒';
+		
+		
+		$('.productsr dl dt span.remainder').html(_time_);
+
+		
+	}
+	ttt=setInterval(function(){_remainderTimer_($productInfo['product']['special']['date_end'])},1000);
+	
+	
+	
+	
+	$('.right_get_p_x ul li').click(function(){
+	    var product_id=$(this).attr('data-id');
+	    $.ajax({
+		    url:'?route=try/product/selectProduct',
+			type:'post',
+			data:{product_id:product_id},
+			dataType:'json',
+			success:function(json){
+			    //console.log(json);
+				
+				var html_small_image='', html_large_image='';
+				
+				for(var i=0;i<json[product_id]['images'].length;i++){
+				    var sleb='"',tSbox='';
+				    if (i==0){
+					   sleb='" class="sleb"';
+					}else if(i>0){
+					   tSbox='class="tSbox"';
+					}
+					html_small_image+='<span data-id="'+json[product_id]['images'][i]['product_image_id']+sleb+'><img src="'+json[product_id]['images'][i]['small_image']+'" width="58" height="58" /></span>';
+				    $('.b_p_img_thumb').html(html_small_image);
+					
+					html_large_image +='<span '+tSbox+' data-id='+json[product_id]['images'][i]['product_image_id']+'><img src="'+json[product_id]['images'][i]['large_image']+'" width="459" height="459"  /></span>';
+					
+					$('._large_img_thumb_').html(html_large_image);
+				}
+				
+				$('.products .productsl dl dt').html(json[product_id]['product']['name']);
+				
+  
+				if(ttt) clearInterval(ttt);
+				ttt=setInterval(function(){_remainderTimer_(json[product_id]['product']['special']['date_end']);},1000);
+				
+				//属性
+				var html_attribute='';
+				$('a.size_sel').parents('li').remove();
+				for(var i=0;i<json[product_id]['attribute'].length;i++){
+				    
+				    html_attribute +='<li class="attribute"><span class="title">'+json[product_id]['attribute'][i]['attribute_group_name']+'：</span>';
+					
+					var fk=json[product_id]['attribute'][i]['product_option_value'];
+					for(var j=0;j<fk.length;j++){
+					    html_attribute+='<a class="size_sel" >'+fk[j]['name']+'</a>';
+						
+					}
+					html_attribute+='</li>';
+					
+				}
+				
+				var html_address='<li>'+$('.productinfo>ul li:last').html()+'</li>';
+				
+				
+			    $('.productinfo>ul li').remove();
+				$('.productinfo>ul').prepend(html_attribute);
+				
+				//价格
+				//$('ul li span.price__').html(json[product_id]['product']['price']);
+				//$('ul li span.price').html(json[product_id]['product']['special']['price']);
+			    var html_price='<li><span>原价：</span><span class="price__">'+json[product_id]['product']['price']+'</span>　<span >现价：</span><span class="price">'+json[product_id]['product']['special']['price']+'</span>　</li>';
+				
+				$('.productinfo>ul').append(html_price);
+				
+				//var html_address='<li>试用商家地址：'+json[product_id]['product']['store']['address']+'</li>';
+				
+				$('.productinfo>ul').append(html_address);
+				
+			}
+		});
+	});
+	
+	
+	$('.b_p_img_thumb').on('click','span',function(){
+	    var image_id=$(this).attr('data-id');
+	    if(!($(this).hasClass('sleb'))){
+		   $(this).siblings().removeClass('sleb');
+		   $(this).addClass('sleb');
+		   
+		   $('._large_img_thumb_ span').addClass('tSbox');
+		   $('._large_img_thumb_ span[data-id='+image_id +']').removeClass('tSbox');
+		}
+	});
+	
+	$('i.checkP').click(function(){
+        var that=$(this);
+	    var _AM_95668o=0;
+	    $(this).parents('ul').children('li').each(function(i,w){
+		    if($(w).children('i').hasClass('checkPN')){
+			   ++_AM_95668o;
+			}
+		});
+		if($(this).hasClass('checkPN')){
+		    //console.log(_AM_95668o+'w');
+		    $(this).removeClass("checkPN");
+		    --_AM_95668o;
+		}else{
+		    var product_id=$(this).parent('li').attr('data-id');
+			var store_id = {$productInfo['product']['store_id']};
+		    $.ajax({
+			    url:'?route=try/product/isTry',
+				dataType:'html',
+				type:'post',
+				data:{product_id:product_id,store_id:store_id},
+				success:function(str){
+				    //console.log(str);
+				    if(str>0){
+					   alert('此产品已添加到您的试用空间了，请不要重复添加！');
+					   return false;
+					}else if(str==-1){
+					    alert('不能添加自己店铺的产品到您的试用空间！');
+					    return false;
+					}else{
+					    that.addClass("checkPN");
+		                ++_AM_95668o;
+					}
+				}
+			});
+		   
+		  
+		}
+		
+		$('.p_x_tig span.selected').html(_AM_95668o);
+	});
+	
+})
+</script>
+<!------------产品展示 end-------------->
+
+<!--试用详情-->
+<div class="details">
+	<dl>
+		<dt><img src="catalog/view/theme/default/image/try/details.jpg"/></dt>
+			<dd><img src="catalog/view/theme/default/image/try/try_details.jpg"/></dd>
+	</dl>
+</div>
+
+<!-------------------------底部版权begin------------------------->
+<div class="bothua"></div>
+
+<!--帮助中心-->
+<div class="bothelp">
+	<ul>
+		<li>
+			<dl>
+				<dt>购物指南</dt>
+				<dd>购物流程</dd>
+				<dd>配送方式</dd>
+			</dl>
+		</li>
+		<li>
+			<dl>
+				<dt>支付方式</dt>
+				<dd>如何付款</dd>
+				<dd>发票制度</dd>
+			</dl>
+		</li>
+		<li>
+			<dl>
+				<dt>商品说明</dt>
+				<dd>商品迟码</dd>
+				<dd>商品包装</dd>
+			</dl>
+		</li>
+		<li>
+			<dl>
+				<dt>客服中心</dt>
+				<dd>七天退换</dd>
+				<dd>常见问题</dd>
+			</dl>
+		</li>
+		<li><img src="catalog/view/theme/default/image/try/zhaoshang.jpg"/></li>
+	</ul>
+</div>
+
+<!--备案图片-->
+<div class="botlink">
+	<ul>
+		<li><img src="catalog/view/theme/default/image/try/botlink1.jpg" width="112" height="40"/></li>
+		<li><img src="catalog/view/theme/default/image/try/botlink2.jpg" width="112" height="40"/></li>
+		<li><img src="catalog/view/theme/default/image/try/botlink3.jpg" width="112" height="40"/></li>
+		<li><img src="catalog/view/theme/default/image/try/botlink4.jpg" width="112" height="40"/></li>
+		<li><img src="catalog/view/theme/default/image/try/botlink5.jpg" width="112" height="40"/></li>
+		<li><img src="catalog/view/theme/default/image/try/botlink6.jpg" width="112" height="40"/></li>
+		<li><img src="catalog/view/theme/default/image/try/botlink7.jpg" width="112" height="40"/></li>
+	</ul>
+</div>
+
+<!--版权-->
+<div class="botcopy">
+{$bottom}<p>{$address} {$telphone} {$icp}</p>
+</div>
+
+<!-------------------------底部版权end------------------------->
+
+</body>
+</html>

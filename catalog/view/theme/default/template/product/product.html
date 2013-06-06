@@ -292,7 +292,7 @@
         <dd><font class="discuss z"></font><a class="z" href="#">查看评论</a></dd>
         -->
 		<dd><font class="favrate z"></font><a class="favoriate">收藏此产品</a></dd>
-		<dd><a class="seller_gotoshop" href="index.php?route=store/store&store_id={$store['store_id']}"></a></dd>
+		<dd><a class="seller_gotoshop" href="?route=store/store&store_id={$store['store_id']}"></a></dd>
 	</dl>
 	</div>
 	
@@ -372,7 +372,7 @@
 						</dd>
 						<dd class="cl"><p>店铺地址：{$store['address']}</p><p>联系电话：{$store['tel']}</p></dd>
 					</dl>
-					<dl ><a class="seller_gotoshop" href="index.php?route=store/store&store_id={$store['store_id']}"></a></dl>
+					<dl ><a class="seller_gotoshop" href="?route=store/store&store_id={$store['store_id']}"></a></dl>
 				</div>
 			</dd>
 			<dd class="cl_div"></dd>
@@ -454,7 +454,7 @@ $(".jian").click(function(){
 $(".favoriate").click(function(){
     {if empty($customer_id)}
 	    var referer='{$referer}';
-	    location.href="index.php?route=account/login&referer="+encodeURIComponent(referer);
+	    location.href="?route=account/login&referer="+encodeURIComponent(referer);
 	{else}
 	    addToWishList('{$product['product_id']}');
     {/if}
@@ -465,7 +465,7 @@ $(".goodsbuy").click(function(){
     
     {if empty($customer_id)}
 	    var referer='{$referer}';
-	    location.href="index.php?route=account/login&referer="+encodeURIComponent(referer);
+	    location.href="?route=account/login&referer="+encodeURIComponent(referer);
 	{else}
         dBuy();
 	{/if}
@@ -475,7 +475,7 @@ $(".goodsbuy").click(function(){
 $(".goodscar").click(function(){
     {if empty($customer_id)}
 	    var referer='{$referer}';
-	    location.href="index.php?route=account/login&referer="+encodeURIComponent(referer);
+	    location.href="?route=account/login&referer="+encodeURIComponent(referer);
 	{else}
 	
         addToCart('{$product['product_id']}'); 
@@ -612,7 +612,7 @@ $(".dt5 ul li").click(function(){
 		    var attribute1='|'+attribute.join('|')+'|';
 			var attribute2='|'+attribute.reverse().join('|')+'|';
            
-			$.post('index.php?route=product/product/getProductPriceByAttribute',{product_id:{$product['product_id']},attribute1:attribute1,attribute2:attribute2},function(str){
+			$.post('?route=product/product/getProductPriceByAttribute',{product_id:{$product['product_id']},attribute1:attribute1,attribute2:attribute2},function(str){
 				if(str){
 					$('#price_').html(str);
 				}else{

@@ -143,7 +143,7 @@ $("input[name^=attribute]").live('click',function(){
 	
 	var that=$(this);
 	//判断属性组类型：一般属性还是价格属性
-	$.getJSON('index.php?route=merchants/release/getAttributeGroupType',{attribute_group_id:attribute_group_id},function(json){
+	$.getJSON('?route=merchants/release/getAttributeGroupType',{attribute_group_id:attribute_group_id},function(json){
 	    if(json['type']==1){
 		    return false;
 		}else if (json['type']==2 ){
@@ -300,12 +300,12 @@ function addOptionValue(attribute_id1,attribute_name1,attribute_id2,attribute_na
 		<!-- html += '   <input type="hidden" name="product_option[' + option_value_row + '][attribute2]" value="'+attribute_id2+'" />'; -->
 	}
 	
-	html += '    <td><input type="text" name="product_option[' + option_value_row + '][quantity]" value="" size="10" /></td>'; 
-	html += '    <td><select name="product_option[' + option_value_row + '][subtract]">';
+	html += '    <td><input type="text" name="product_option[' + option_value_row + '][quantity]" value="" class="input-mini" /></td>'; 
+	html += '    <td><select name="product_option[' + option_value_row + '][subtract]" width="60" style="width:60px;"> ';
 	html += '      <option value="1">是</option>';
 	html += '      <option value="0">否</option>';
 	html += '    </select></td>';
-	html += '    <td><input type="text" name="product_option[' + option_value_row + '][price]" value="" size="12" /></td>';
+	html += '    <td><input type="text" name="product_option[' + option_value_row + '][price]" value="" class="input-mini" /></td>';
 	html += '    <td><a href="javascript:void(0);" class="deleteOptionRow">删除</a></td>';
 	html += '  </tr>';
 	//<!-- html += '</tbody>'; 
@@ -371,7 +371,7 @@ $(".deleteOptionRow").live('click',function(){
 });
 
 $("#special").click(function(){
-    var x='<tr><td width="90" align="right"><label>优惠价格：</label></td><td><input name="special_price" type="text" class="input_txt" size="20" maxlength="10" id="special_price" value="" /> <label>元  开始：</label><input type="textbox" name="date_start"  class="input_txt"/><label> 结束：</label><input type="textbox" name="date_end" class="input_txt" /></td></tr>';
+    var x='<tr><td width="90" align="right"><label>优惠价格：</label></td><td><input name="special_price" type="text" class="input_small" maxlength="10" id="special_price" value="" /> 元 <p><input type="text" name="date_start"  class="input_mini" placeholder="开始时间"/><input type="text" name="date_end" class="input_mini" placeholder="结束时间"/></p></td></tr>';
  
 	if($(this).prop('checked')==true){
 	    if($("#special_price").length<=0){
@@ -395,8 +395,9 @@ $("input[name=try]").click(function(){
 
 
 $("input[name^=date]").live("click", function(){
-    $(this).datepicker({
+    $(this).datetimepicker({
     	dateFormat: 'yy-mm-dd',
+		timeFormat: 'hh:mm:ss',
 		numberOfMonths: 2 //显示两个月
 	});
 });

@@ -6,6 +6,7 @@ class ModelCheckoutOrder extends Model {
 	*/
 	public function addOrder($data) {
 	    $time=time();
+		$order_id_arr=array();
 		//$invoice_prefix=$this->db->escape($data['invoice_prefix']);
 		// $store_id=(int)$data['store_id'];
 		// $store_name=$this->db->escape($data['store_name']);
@@ -26,11 +27,12 @@ class ModelCheckoutOrder extends Model {
 		$shipping_email=$this->db->escape($data['shipping_email']);
 		$payment_method=$this->db->escape($data['payment_method']);
 		
-		//存在一张订单下 产品 分属于不同 的店铺 情况
+		//存在一张订单下 产品 分属于不同 的店铺 情况 ,split a few of orders by store.
 		$this->load->model('store/store');
 
 		foreach ($data['products'] as $k=>$ps) { 
-
+            
+			//random generate order number;
 		    $order_id=$this->getOrderid();
 			
 			
@@ -41,7 +43,7 @@ class ModelCheckoutOrder extends Model {
             
 			$this->db->query($sql);
 	        
-			//$order_id = $this->db->getLastId();
+			array_push($order_id_arr,$order_id);
 	
 			
 		    foreach($ps as $product){
@@ -96,7 +98,7 @@ class ModelCheckoutOrder extends Model {
 		}
 		*/
         
-		return $order_id;
+		return $order_id_arr;
 	}
     
 	/**

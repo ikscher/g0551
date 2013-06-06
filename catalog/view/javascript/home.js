@@ -657,9 +657,9 @@ $('#search_box input[name=\'search\']').keydown(function(e) {
 });
 $('#search_btn').bind('click', function() {
 	if (obj.searchType=='item'){
-		obj.url = 'index.php?route=search/search';
+		obj.url = '?route=search/search';
 	}else if(obj.searchType=='shop'){
-		obj.url = 'index.php?route=store/list';
+		obj.url = '?route=store/list';
 	}
 	
 	var filter_name = $('#search_box input[name=\'search\']').attr('value');

@@ -93,7 +93,7 @@ this.make_select = function(sel_value) {
     }
     
     //省
-    var html = "<select name=\""+name1+"\" id=\""+con_id+"_ya_prov\" class=\"text\" onchange=\"ylmf_area.remake_city('"+con_id+"', this.options[this.selectedIndex].value);\">\n";
+    var html = "<select width=\"100\" style=\"width:100px;\" name=\""+name1+"\" id=\""+con_id+"_ya_prov\" class=\"text\" onchange=\"ylmf_area.remake_city('"+con_id+"', this.options[this.selectedIndex].value);\">\n";
     html += sel_prov==0 ? "<option value='0'>选择省份</option>\n" :
                           "<option value='0' selected='selected'>选择省份</option>\n";
     var provs = this.get_provs( sel_prov );
@@ -107,7 +107,7 @@ this.make_select = function(sel_value) {
 	
     //城市
     if( step > 1 ) {
-        html += "<select name=\""+name2+"\" id=\""+con_id+"_ya_city\" class=\"text\" onchange=\"ylmf_area.remake_town('"+con_id+"', this.options[this.selectedIndex].value);\">\n";
+        html += "<select width=\"100\" style=\"width:100px;\" name=\""+name2+"\" id=\""+con_id+"_ya_city\" class=\"text\" onchange=\"ylmf_area.remake_town('"+con_id+"', this.options[this.selectedIndex].value);\">\n";
         html += sel_city==0 ? "<option value='0'>选择城市</option>\n" :
                               "<option value='0' selected='selected'>选择城市</option>\n";
         if( sel_prov > 0 ) {
@@ -123,7 +123,7 @@ this.make_select = function(sel_value) {
     //县区
     var towns = ylmf_area.get_towns( sel_city, sel_town );
     if( step > 2 ) {
-        html += "<select name=\""+name3+"\" class=\"text\" id=\""+con_id+"_ya_town\">\n";
+        html += "<select width=\"100\" style=\"width:100px;\" name=\""+name3+"\" class=\"text\" id=\""+con_id+"_ya_town\">\n";
         html += sel_town==0 ? "<option value='0'>选择地区</option>\n" :
                               "<option value='0' selected='selected'>选择地区</option>\n";
         if( sel_city > 0 ) {

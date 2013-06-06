@@ -57,7 +57,7 @@
     $('.delete').click(function(){
 	    if(confirm('卸载后使用此支付方式的订单将不可,您确定卸载此支付方式吗?')){
 		    var id_=$(this).parent().attr('data-id');
-			$.post('index.php?route=merchants/payment/deleteStorePayment',{id:id_},function(str){
+			$.post('?route=merchants/payment/deleteStorePayment',{id:id_},function(str){
 			    
 			    if(str=='no'){
 				    alert('卸载失败！');
@@ -65,7 +65,7 @@
 				}
 				
 			});
-		   location.href='index.php?route=merchants/payment';
+		   location.href='?route=merchants/payment';
 		}
 	});
 	
@@ -78,20 +78,20 @@
 		$("#dialog-form-e" ).dialog({
 			bgiframe:true, //兼容IE6
 			autoOpen: false,
-			height: 380,
-			width: 600,
+			height: 460,
+			width: 670,
 			modal: true,
 			position:['top','left'],
 			buttons: {
 				"确定": function() {
 				    $.ajax({
-					    url:"index.php?route=merchants/payment/update",
+					    url:"?route=merchants/payment/update",
 						type: 'post',
 						data: $('.payment_form input[type=\'text\'], .payment_form input[type=\'radio\']:checked, .payment_form select, .payment_form input[type=\'hidden\'], .payment_form textarea'),
 						dataType: 'text',
 						success: function(str) {
 							if (str=='yes'){
-								window.location.href="index.php?route=merchants/payment";
+								window.location.href="?route=merchants/payment";
 							}else{
 								alert("配置失败！");
 							}
@@ -114,7 +114,7 @@
 		//console.log(id);
 		//console.log(code);
 		$.ajax({
-				url:'index.php?route=merchants/payment/update',
+				url:'?route=merchants/payment/update',
 				dataType:'html',
 				data:'id='+id+'&code='+code,
 				success:function(str){
@@ -134,22 +134,24 @@
 		$("#dialog-form-i" ).dialog({
 			bgiframe:true, //兼容IE6
 			autoOpen: false,
-			height: 380,
-			width: 600,
+			height: 460,
+			width: 670,
 			modal: true,
 			position:['top','left'],
 			buttons: {
 				 "确定": function() {
+				    
 					$.ajax({
-					    url:"index.php?route=merchants/payment/insert",
+					    url:"?route=merchants/payment/insert",
 						type: 'post',
 						data: $('.payment_form input[type=\'text\'], .payment_form input[type=\'radio\']:checked, .payment_form select, .payment_form input[type=\'hidden\'], .payment_form textarea'),
 						dataType: 'text',
 						success: function(str) {
+						    //console.log(str);
 							if (str=='yes'){
-								window.location.href="index.php?route=merchants/payment";
+								window.location.href="?route=merchants/payment";
 							}else{
-								alert("安装失败！");
+								alert("安装失败，请填入必需的选项！");
 							}
                         }
 					});
@@ -167,7 +169,7 @@
 	//新增
 	$('td a.setup').click(function(){
 	    var code=$(this).parent().attr('data-code');
-		$.get('index.php?route=merchants/payment/insert&code='+code,function(str){
+		$.get('?route=merchants/payment/insert&code='+code,function(str){
 			$("#dialog-form-i").html(str);
 		},'html');
 		$("#dialog-form-e").html('');

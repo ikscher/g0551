@@ -119,8 +119,8 @@
 				    {loop $routinMaintain $r}
 						<dd>
 							<div class="dd1 f3 f_b">￥<font class="f1 f_b">{$r['price']}</font>元</div>
-							<div class="dd2"><a href="index.php?route=product/product&product_id={$r['product_id']}"><img src="{$r['image']}" width="230" height="140" alt="{$r['name']}" /></a></div>
-							<div class="dd3"><div class="wtxt"><a href="index.php?route=product/product&product_id={$r['product_id']}">{$r['name']}</a></div></div>
+							<div class="dd2"><a href="?route=product/product&product_id={$r['product_id']}"><img src="{$r['image']}" width="230" height="140" alt="{$r['name']}" /></a></div>
+							<div class="dd3"><div class="wtxt"><a href="?route=product/product&product_id={$r['product_id']}">{$r['name']}</a></div></div>
 						</dd>
 					{/loop}
 				{/if}

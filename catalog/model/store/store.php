@@ -124,6 +124,51 @@ Class ModelStoreStore extends Model {
 		return $data;
 	
 	}
+	
+	/**
+	*获取店铺的货运方式
+	*/
+	public function getStoreShippingMethod($store_id){
+	    $result =array();
+		$result_=array();
+	    $sql="select shipping_fee from ".DB_PREFIX."shipping where store_id='{$store_id}' and enabled=1 order by shipping_id asc limit 1";
+	
+		$query=$this->db->query($sql);
+		
+		$result=$query->row;
+		
+		if (empty($result)) return;
+		$s__=unserialize($result['shipping_fee']);
+		
+		unset($result['shipping_fee']);
+		
+		$result_['express']['start']=isset($s__['express']['express_start'])?$s__['express']['express_start']:'';
+		$result_['ems']['start']=isset($s__['ems']['ems_start'])?$s__['ems']['ems_start']:'';
+		$result_['post']['start']=isset($s__['post']['post_start'])?$s__['post']['post_start']:'';
+		
+			
+		$result_['express']['postage']=isset($s__['express']['express_postage'])?$s__['express']['express_postage']:'';
+		$result_['ems']['postage']=isset($s__['ems']['ems_postage'])?$s__['ems']['ems_postage']:'';
+		$result_['post']['postage']=isset($s__['post']['post_postage'])?$s__['post']['post_postage']:'';
+		
+		
+		$result_['express']['plus']=isset($s__['express']['express_plus'])?$s__['express']['express_plus']:'';
+		$result_['ems']['plus']=isset($s__['ems']['ems_plus'])?$s__['ems']['ems_plus']:'';
+		$result_['post']['plus']=isset($s__['post']['post_plus'])?$s__['post']['post_plus']:'';
+		
+		
+		$result_['express']['postageplus']=isset($s__['express']['express_postageplus'])?$s__['express']['express_postageplus']:'';
+		$result_['ems']['postageplus']=isset($s__['ems']['ems_postageplus'])?$s__['ems']['ems_postageplus']:'';
+		$result_['post']['postageplus']=isset($s__['post']['post_postageplus'])?$s__['post']['post_postageplus']:'';
+	    
+		$result_['express']['name']='快递';
+		$result_['ems']['name']='EMS';
+		$result_['post']['name']='平邮';
+		
+		
+		return $result_;
+	
+	}
 
 	public function getProductTotalByStoreCategory($data=array()){
 	 

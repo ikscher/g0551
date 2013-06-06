@@ -66,7 +66,7 @@
 											  <td class="center">{$content['favoriate']}</td>
 											  <td class="center">{$content['share']}</td>
 											  <td class="center">{$content['createtime']}</td>
-											  <td class="center"><a href="index.php?route=product/joy/joyDetail&id={$content['content_id']}" target="_blank"> {$content['title']}</a></td>
+											  <td class="center"><a href="?route=product/joy/joyDetail&id={$content['content_id']}" target="_blank"> {$content['title']}</a></td>
 											  <td  class="center">{if $content['isShow']==1}显示{elseif $content['isShow']==2}删除{else}不显示{/if}</td>
 											  <td class="center">{loop $content['action']  $action}
 												<a  class="{$action['class']}" href="{$action['href']}">{$action['text']}</a>

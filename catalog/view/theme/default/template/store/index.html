@@ -18,9 +18,9 @@
 <div class="store">
 
 <div class="store_top90">
-	<div class="topl"><a href="index.php?route=common/home" ><img src="catalog/view/theme/default/image/store/store_logo.jpg"/></a></div>
+	<div class="topl"><a href="?route=common/home" ><img src="catalog/view/theme/default/image/store/store_logo.jpg"/></a></div>
 	<div class="topr">
-	<form id="form___&&*as203" name="frmStore" method="post" action="index.php?route=store/store&store_id={$store_id}">
+	<form id="form___&&*as203" name="frmStore" method="post" action="?route=store/store&store_id={$store_id}">
 	<ul>
 		<li class="searcht">宝贝</li>
 		<li class="searchb"><input name="keyword1" type="text" {if !empty($keyword1)}value="{$keyword1}"{else}value="搜索关键词"{/if} size="50" class="formbor" onFocus="this.value=''"/></li>
@@ -76,20 +76,20 @@
 		<ul class="treeview" id="tree">
 		    
 				{loop $storeCategories $a}
-				    <li><a href="index.php?route=store/store&store_id={$store_id}&category_id={$a['cid']}" class="cid" data-value="{$a['cid']}">{$a['cname']}</a>
+				    <li><a href="?route=store/store&store_id={$store_id}&category_id={$a['cid']}" class="cid" data-value="{$a['cid']}">{$a['cname']}</a>
 						<ul>
 						{if isset($a['sub'])}
 						{loop $a['sub'] $b}
-							<li><a href="index.php?route=store/store&store_id={$store_id}&category_id={$b['cid']}" class="cid" data-value="{$b['cid']}">{$b['cname']}</a>
+							<li><a href="?route=store/store&store_id={$store_id}&category_id={$b['cid']}" class="cid" data-value="{$b['cid']}">{$b['cname']}</a>
 							    {if isset($b['sub'])}
 							    <ul>
 							    {loop $b['sub'] $c}
-								    <li><a href="index.php?route=store/store&store_id={$store_id}&category_id={$c['cid']}" class="cid" data-value="{$c['cid']}">{$c['cname']}</a>
+								    <li><a href="?route=store/store&store_id={$store_id}&category_id={$c['cid']}" class="cid" data-value="{$c['cid']}">{$c['cname']}</a>
 									    {if isset($c['sub'])}
  									    <ul> 
 										     
 										     {loop $c['sub'] $k $d}
-											    <li><a href="index.php?route=store/store&store_id={$store_id}&category_id={$d['cid']}" class="cid" data-value="{$d['cid']}">{$d['cname']}</a></li>	
+											    <li><a href="?route=store/store&store_id={$store_id}&category_id={$d['cid']}" class="cid" data-value="{$d['cid']}">{$d['cname']}</a></li>	
 											 {/loop}
 											 
 										</ul>

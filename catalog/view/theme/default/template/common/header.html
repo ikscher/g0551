@@ -91,8 +91,8 @@
 	<div class="search y">
 	    <div class="search-triggers">
 		    <ul class="ks-switchable-nav">
-			    <li data-searchtype="item" data-defaultpage="index.php?route=search/search" class="selected"><a href="javascript:void(0);">宝贝</a><!--[if lt IE 9]><s class="search-fix search-fix-triggerlt"></s><s class="search-fix search-fix-triggerrt"></s><![endif]--></li>
-			    <li data-searchtype="shop" data-action="index.php?route=store/list"><a href="javascript:void(0);">店铺</a><!--[if lt IE 9]><s class="search-fix search-fix-triggerlt"></s><s class="search-fix search-fix-triggerrt"></s><![endif]--></li>
+			    <li data-searchtype="item" data-defaultpage="?route=search/search" class="selected"><a href="javascript:void(0);">宝贝</a><!--[if lt IE 9]><s class="search-fix search-fix-triggerlt"></s><s class="search-fix search-fix-triggerrt"></s><![endif]--></li>
+			    <li data-searchtype="shop" data-action="?route=store/list"><a href="javascript:void(0);">店铺</a><!--[if lt IE 9]><s class="search-fix search-fix-triggerlt"></s><s class="search-fix search-fix-triggerrt"></s><![endif]--></li>
 			</ul>
 		</div>
 		<div class="search_box h" id="search_box">
@@ -118,7 +118,7 @@
 	<div class="wp cl h" >
 		<ul>
 			{loop $subCategoryList $scl}
-			   <li><a href="index.php?route=product/category&category_id=$scl['category_id']">{$scl['name']}</a></li>
+			   <li><a href="?route=product/category&category_id=$scl['category_id']">{$scl['name']}</a></li>
 			{/loop}
 		</ul>
 	</div>
@@ -149,9 +149,9 @@
 	});
 	$('#search_btn').bind('click', function() {
 	    if (obj.searchType=='item'){
-		    obj.url = 'index.php?route=search/search';
+		    obj.url = '?route=search/search';
 		}else if(obj.searchType=='shop'){
-		    obj.url = 'index.php?route=store/list';
+		    obj.url = '?route=store/list';
 		}
 		
 		var filter_name = $('#search_box input[name=\'search\']').attr('value');

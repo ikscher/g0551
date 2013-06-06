@@ -39,7 +39,6 @@ body{ background:#fff url(../images/head_top_bg.jpg) repeat-x;}
 /* body>:last-child{display:none;} */ /*清除底部多余的空白*/
 
 
-
 /*-----------------------base_css------------------------*/
 * { font-family:Arial, Helvetica, sans-serif; font-size:13px; line-height:21px; text-decoration:none;  list-style-type:none; padding:0px 0px 0px 0px; margin:0px 0px 0px 0px; color:#666666; }
 input,textarea{border:1px solid #e1e1e1;}
@@ -353,15 +352,16 @@ em{font-size:9px; line-height:26px; float:left; margin:0 5px 0 5px;font-style:no
 			.clist_week_ranking_con_t{width:25px; height:25px; display:block; background:url(../image/index.png) no-repeat -418px -486px; line-height:14px; text-indent:2px; position:relative; top:-180px;}
 			.clist_pro dt{height:24px; margin-bottom:10px;}
 			.clist_pro .dt_clothes{ border-bottom:1px solid #da2061;}
+			
 			.clist_pro .dt_clothes  li.selected {background:url(../image/index.png) repeat-x left -545px; border-left:1px solid #da2061; border-top:1px solid #da2061; border-right:1px solid #da2061;position:relative;}			
 			.clist_pro  dt ul  li.selected  img{ position:absolute; top:0px;right:10px;}
 			
 			.clist_pro .dt_foods{ border-bottom:1px solid #598700;}
-			.clist_pro .dt_foods  li.selected{background:url(../image/index.png) repeat-x left -568px; border-left:1px solid #598700; border-top:1px solid #598700; border-right:1px solid #598700; }	
+			.clist_pro .dt_foods  li.selected{background:url(../image/index.png) repeat-x left -568px; border-left:1px solid #598700; border-top:1px solid #598700; border-right:1px solid #598700; position:relative;}	
 			.clist_pro .dt_house{ border-bottom:1px solid #09a8a9;}
-			.clist_pro .dt_house  li.selected{background:url(../image/index.png) repeat-x left -591px; border-left:1px solid #09a8a9; border-top:1px solid #09a8a9; border-right:1px solid #09a8a9;}	
+			.clist_pro .dt_house  li.selected{background:url(../image/index.png) repeat-x left -591px; border-left:1px solid #09a8a9; border-top:1px solid #09a8a9; border-right:1px solid #09a8a9;position:relative;}	
 			.clist_pro .dt_travel{ border-bottom:1px solid #ffa317;}
-			.clist_pro .dt_travel  li.selected{background:url(../image/index.png) repeat-x left -614px; border-left:1px solid #ffa317; border-top:1px solid #ffa317; border-right:1px solid #ffa317;}	
+			.clist_pro .dt_travel  li.selected{background:url(../image/index.png) repeat-x left -614px; border-left:1px solid #ffa317; border-top:1px solid #ffa317; border-right:1px solid #ffa317;position:relative;}	
 			
 			.clist_pro dt ul li{height:23px; width:80px; display:block; float:left; margin-right:5px; text-align:center; line-height:23px; border-left:1px solid #cfcfcf; border-top:1px solid #cfcfcf; border-right:1px solid #cfcfcf; background:url(../image/index.png) repeat-x left -522px; cursor:pointer; color:#000000;}
 			

@@ -134,7 +134,7 @@ $(function(){
 $(".remove").click(function(){ 
     if(confirm("您确认删除吗?")){
 		var pid=$(this).attr('data-id');
-		var url='index.php?route=account/wishlist&remove='+pid;
+		var url='?route=account/wishlist&remove='+pid;
 		location.href=url;
     }
 });

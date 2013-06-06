@@ -72,7 +72,7 @@
 			{loop $products $product_}
 			<tbody class="store_{$product_['store']['store_id']}">
 			<tr class="first"><td colspan="6"></td></tr>
-			<tr><td class="store" colspan="6">店铺：<a href="index.php?route=store/store&store_id={$product_['store']['store_id']}" target="_blank">{$product_['store']['name']}</a>，卖家：{$product_['store']['owner']}</td></tr>
+			<tr><td class="store" colspan="6">店铺：<a href="?route=store/store&store_id={$product_['store']['store_id']}" target="_blank">{$product_['store']['name']}</a>，卖家：{$product_['store']['owner']}</td></tr>
 			
 			{loop $product_['product'] $product}
 			<tr>
@@ -100,7 +100,7 @@
 				<!-- <span class="operator"><a href="#">删除商品</a></span> -->
 			</tr>
 			{/loop}
-			<tr class="other">
+			<tr class="other ps_info">
 			    <td colspan="6">
 				    <ul>
 					    <li class="dib">
@@ -110,9 +110,11 @@
 							</div>
 						</li>
 					    <li class="dib extra-info">
+						    {if $product_['payment_methods']}
 						    <div class="gbook">
+							    
 							    <ul>
-									{if $product_['payment_methods']}
+									
 									<li class="dib title">支付方式：</li>
 									<li class="dib sel"><select name="payment_method" >
 										{loop $product_['payment_methods'] $payment_method}
@@ -120,27 +122,38 @@
 										{/loop}
 										</select>
 									</li>
-									{/if}
+									
 									
 								</ul>
+								
 							</div>
+							{/if}
+							
+							{if $product_['shipping_methods']}
 							<div class="farearea">
 							    <ul>
 								    <li class="dib title">配送方式：</li>
 								    <li class="dib sel">
 									    <select name="shipping_method" class="shippingMethod" data-id="{$product_['store']['store_id']}">
-										    <option  value="express,快递公司"  {if isset($shipping_method['code']) && $shipping_method['code']=='express'}selected="selected"{/if} />快递公司</option>
+										    {loop $product_['shipping_methods'] $k $sm}
+											    <option value="{$k},{$sm['name']}" />{$sm['name']}</option>
+											
+											{/loop}
+										   <!--  <option  value="express,快递公司"  {if isset($shipping_method['code']) && $shipping_method['code']=='express'}selected="selected"{/if} />快递公司</option>
 										    <option  value="ems,EMS邮政专递" {if isset($shipping_method['code']) && $shipping_method['code']=='ems'}selected="selected"{/if} />EMS邮政专递</option>
-										    <option  value="diy,上门自提" {if isset($shipping_method['code']) && $shipping_method['code']=='diy'}selected="selected"{/if} />上门自提</option>
-								        </select>
+										    <option  value="diy,上门自提" {if isset($shipping_method['code']) && $shipping_method['code']=='diy'}selected="selected"{/if} />上门自提</option> -->
+								            
+										</select>
 									</li>
 									<li class="dib shipping_fee"><span></span></li>
 								</ul>
 								
 							</div>
+							{/if}
 						</li>
 					</ul>
 				</td>
+				<input type='hidden' name="s_s_s" value="{$product_['store']['store_id']}" />
 			</tr>
 			<tr class="other">
 			    <td class="subtotal" colspan="6">店铺合计(含运费)：<span></span></td>
@@ -178,7 +191,7 @@
 			<!-- {if empty($dbuy)}<a href="{$cart}"><img src="catalog/view/theme/default/image/order/returnCart.jpg" width="161" height="33" /></a>{/if} -->
 			
 			<a class="submit"> <img src="catalog/view/theme/default/image/order/submitOrder.jpg" width="160" height="33" /></a>
-			{if $flag==false}<a class="backtocart" href="index.php?route=checkout/cart">返回购物车</a>{/if}
+			{if $flag==false}<a class="backtocart" href="?route=checkout/cart">返回购物车</a>{/if}
 		</div>
 		
 	</div>
@@ -210,6 +223,7 @@
  
     //提交订单
     $(".paybutton .submit").click(function(){
+	   
 	    var flag_=false;
 		if((".sendAddress dl").length<=0){
 		    flag_=true;
@@ -228,76 +242,64 @@
 			return false;
 		}
 		
-		var storename=[];
-		$('select[name=shipping_method]').each(function(i,w){
-		    if($(w).parents('.farearea').siblings('.gbook').children('ul').children('li').length<=0){
-				var x=$(w).parents('.other').siblings('.first').next().children('td').children('a').html();
-				storename.push(x);
+		var __info__=[];
+		$('td.store').each(function(i,w){
+		    var storename=$(w).children('a').html();
+			
+			var x=$(w).parent().siblings('.ps_info').find('select[name=payment_method]');
+			var y=$(w).parent().siblings('.ps_info').find('select[name=shipping_method]');
+			
+			
+			
+			if(x.length<=0){
+			    __info__.push(storename);
+			    if(y.length<=0){
+			        __info__.push(' 店铺没有提供有效的收款方式和配送方式！');
+				}else{
+				    __info__.push(' 店铺没有提供有效的收款方式！');
+				}
+				
+				
+		    }else{
+			    if(y.length<=0){
+				    __info__.push(storename);
+				    __info__.push(' 店铺没有提供有效的配送方式！');
+			    }else if(!y.val()){
+				    __info__.push(storename);
+					__info__.push(' 店铺没有选择配送！');
+				}
 			}
 			
+			if(__info__.toString().indexOf('方式')>=0)  __info__.push('\n');
+
 		});
-
-
-		if(storename.length>0){
-		    alert(storename+'  没有提供收款的方式！');
+	
+		if(__info__.toString().indexOf('方式')>=0){
+			alert(__info__.toString().replace(/\,/g,''));
 			return false;
 		}
-        /*
-        {if $shipping_required}
-			var flag=false;
-			$(".shippingContent dl dd input").each(function(i,w){
-				if($(this).attr("checked")=='checked'){
-				   flag=true;
-				   return false;//退出循环
-				}
-			});
-			
-			if(flag===false) {
-				alert('请选择配送方式！');
-				location.hash="#shipping_";
-				return false;
-			}
-			
-			//================================
-			
-			
-			//================================
-			var flag__=false;
-			$(".paymentContent dl dd input").each(function(i,w){
-				if($(this).attr("checked")=='checked'){
-				   flag__=true;
-				   return false;//退出循环
-				}
-			});
-			
-			if(flag__===false) {
-				alert('请选择支付方式！');
-				location.hash="#payment_";
-				return false;
-			}
-		{/if}
-		*/
-
+		
+	
         $.ajax({
 	        type:'POST',
-	        url:'index.php?route=checkout/confirm_order',
+	        url:'?route=checkout/confirm_order',
 			dataType:'json',
-			data:$('select[name=\'shipping_method\'] ,select[name=\'payment_method\'],input[type=\'hidden\']'),// ,input[name=\'dbuy\']
+			data:$('select[name="shipping_method"] ,select[name="payment_method"],input[type="hidden"]'),// ,input[name=\'dbuy\']
 			success:function(json){
-                console.log(json['redirect']);
+                console.log(json);
 			    if (json['redirect']){
 				    location.href=json['redirect'];
 					return false;
 				}else if (typeof json['redirect']=='undefined'){
 				    //window.location.href='{$payment_action}';
 					var payment_method_code=$('input[name=payment_method_code]').val();
-					console.log(payment_method_code);
+					//alert(payment_method_code);
 					$.ajax({
-					    url:'index.php?route=payment/'+payment_method_code,
+					    url:'?route=payment/'+payment_method_code,
 						type:'post',
 						dataType:'json',
 						success:function(json_){
-						    //console.log(json_);
+						    console.log(json_);
 						    location.href=json_['action'];
 						}
 					});
@@ -326,11 +328,12 @@
    
    //支付方式
     $("select[name=payment_method]").change(function(){
+	    var payment_method=$(this).parents('.other').find('select[name="payment_method"]').val();
 		$.ajax({
-			url:'index.php?route=checkout/checkout/paymentMethod',
+			url:'?route=checkout/checkout/paymentMethod',
 			type:'post',
 			dataType:'json',
-			data:$('.other select'),
+			data:{payment_method:payment_method},
 			success:function(json){
 			    //console.log(json);
 				if(json['code']){
@@ -344,12 +347,15 @@
    $(".shippingMethod").change(function(){
         var that_=$(this);
 		var store_id=$(this).attr('data-id');
-
+        
+		var shipping_method=that_.parents('.other').find('select[name="shipping_method"]').val();
+		var store_id=that_.parents('.other').find('input[type="hidden"]').val();
 		$.ajax({
-			url:'index.php?route=checkout/checkout/shippingMethod',
+			url:'?route=checkout/checkout/shippingMethod',
 			type:'post',
 			dataType:'json',
-			data:$('.other select'),
+			//data:$('.other select,.other input[type="hidden"]'),
+			data:{shipping_method:shipping_method,s_s_s:store_id},
 			beforeSend: function() {
 				$('.moneyinfo dl dd span').html('<img src="catalog/view/theme/default/image/loading.gif" alt="" />');
 			},
@@ -357,7 +363,8 @@
 				$('.moneyinfo dl dd span img').remove();
 			},	
 			success:function(json){ 
-				//console.log(json['cost']);
+			    console.log(json);
+				console.log(json['cost']);
 				//运费
 				var shipping_fee=parseFloat(json['cost']).toFixed(2);
 				that_.parent().next().children('span').html(shipping_fee);
@@ -391,7 +398,7 @@
 				$('.moneyinfo dl dd span').html(sum.toString());
 				
 				/*$.ajax({
-					url: 'index.php?route=checkout/checkout/refreshTotal',
+					url: '?route=checkout/checkout/refreshTotal',
 					dataType: 'html',
 					success: function(html) {
 						$('.moneyinfo dl dd span').html(html);
@@ -414,7 +421,7 @@
 	  if(!confirm('您要设置此项为默认收货地址吗?')) return false;
 	  var dataid=$.trim($(this).prop('id'));
 	  
-	  $.post('index.php?route=account/address/setDefault',{dataid:dataid},function(data){
+	  $.post('?route=account/address/setDefault',{dataid:dataid},function(data){
 	     if(data==1){
 		   //alert("设置成功！");
 		  
@@ -452,7 +459,7 @@
         var   mobile=$.trim($("input[name=mobile]").val());
 		var   self=$(this);
 		$.ajax({
-			  url:'index.php?route=account/register/ajaxMobile&mobile='+mobile,
+			  url:'?route=account/register/ajaxMobile&mobile='+mobile,
 			  dataType:'json',
 			  success:function(json){	
 				    if(json.mobile>=1){
@@ -525,7 +532,7 @@
 	   
 	    }
 	   
-	    $.post('index.php?route=account/address/insert',{username:username,mobile:mobile,telphone:telphone,address:address,postcode:postcode},function(data){
+	    $.post('?route=account/address/insert',{username:username,mobile:mobile,telphone:telphone,address:address,postcode:postcode},function(data){
 		    if (data){
 			    alert("新增成功!");
 				$('.sendAddress dl').removeClass('present');

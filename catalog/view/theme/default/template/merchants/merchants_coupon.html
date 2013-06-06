@@ -15,7 +15,7 @@
 				<table id="J_ListTable">
 				<thead>
 					<tr>
-						<th align="right"><a href="#" class="fa" onclick="SetSelectProduct('index.php?route=merchants/coupon/del','删除','优惠券','info_id')">删除所选优惠券</a></th>
+						<th align="right"><a href="#" class="fa" onclick="SetSelectProduct('?route=merchants/coupon/del','删除','优惠券','info_id')">删除所选优惠券</a></th>
 					</tr>
 				</thead>
 				</table> 
@@ -44,7 +44,7 @@
 					<td>{$coupon['date_end']}</td>
 					<td>{$coupon['status']}</td>
 					<td>{$coupon['customer_name']}</td>
-					<td><a href="index.php?route=merchants/coupon/add&id={$coupon['coupon_id']}" class="fa">编辑</a></td>
+					<td><a href="?route=merchants/coupon/add&id={$coupon['coupon_id']}" class="fa">编辑</a></td>
                 </tr>
                 {/loop}
 			</table> 

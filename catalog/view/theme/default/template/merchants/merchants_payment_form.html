@@ -1,10 +1,10 @@
  <div class="payment_form">
     <form action="{$action}" method="post" enctype="multipart/form-data" id="form">
-      <table class="form" border="1" cellpadding="2">
+      <table class="form" border="1" cellpadding="0" cellspacing="0">
 	   
 		{if $code=='alipay'}
 			<tr>
-				<td style="text-align:right;padding-right:10px;"><span class="required">*</span> {$entry_code}</td>
+				<td ><span class="required">*</span> {$entry_code}</td>
 				<td>
 					<select name="payment_code_" disabled="disabled" >
 						{loop $payment_bank $key $pb}
@@ -15,7 +15,7 @@
 				</td>
 			</tr>
 			<tr>
-			<td style="text-align:right;padding-right:10px;"><span class="required">*</span> {$entry_trade_type}<br>(请根据对应的接口填入正确的参数)</td>
+			<td ><span class="required">*</span> {$entry_trade_type}(请根据对应的接口填入正确的参数)</td>
 			  <td>
 				{if $trade_type=='trade_create_by_buyer'}
 					<input type="radio" name="trade_type" id="trade_create_by_buyer" value="trade_create_by_buyer"  checked="true"/><label for="trade_create_by_buyer">双接口</label>
@@ -37,23 +37,23 @@
 			</td>
 			</tr>
 			<tr>
-			  <td style="text-align:right;padding-right:10px;"><span class="required">*</span> {$entry_partner}</td>
-			  <td><input type="text" name="partner" value="{$partner}" size="50" />
+			  <td ><span class="required">*</span> {$entry_partner}</td>
+			  <td><input type="text" name="partner" value="{$partner}" class="input-xlarge" />
 		  {if $error_partner}
 				<span class="error">{$error_partner}</span>
 				{/if}</td>
 			</tr>
 
 			<tr>
-			  <td style="text-align:right;padding-right:10px;"><span class="required">*</span> {$entry_security_code}</td>
-			  <td><input type="text" name="security_code" value="{$security_code}" size="50" />
+			  <td ><span class="required">*</span> {$entry_security_code}</td>
+			  <td><input type="text" name="security_code" value="{$security_code}" class="input-xlarge" />
 		  {if $error_secrity_code}
 				<span class="error">{$error_secrity_code}</span>
 			   {/if}</td>
 			</tr>
 		   <tr>
-			  <td style="text-align:right;padding-right:10px;"><span class="required">*</span> {$entry_seller_email}</td>
-			  <td><input type="text" name="seller_email" value="{$seller_email}" size="50" />
+			  <td><span class="required">*</span> {$entry_seller_email}</td>
+			  <td><input type="text" name="seller_email" value="{$seller_email}" class="input-xlarge" />
 				{if $error_email}
 				<span class="error">{$error_email}</span>
 				{/if}</td>
@@ -74,7 +74,7 @@
 				</tr>
 			-->
 			<tr>
-			  <td style="text-align:right;padding-right:10px;">{$entry_order_status}</td>
+			  <td >{$entry_order_status}</td>
 			  <td><select name="order_status_id">
 				  {loop $order_statuses  $order_status}
 					 {if $order_status['order_status_id'] == $order_status_id}
@@ -86,7 +86,7 @@
 				</select></td>
 			</tr>
 			<tr>
-			  <td style="text-align:right;padding-right:10px;">{$entry_status}</td>
+			  <td>{$entry_status}</td>
 			  <td><select name="status">
 				  {if $status}
 				  <option value="1" selected="selected">{$text_enabled}</option>
@@ -98,8 +98,8 @@
 				</select></td>
 			</tr>
 			<tr>
-			  <td style="text-align:right;padding-right:10px;">{$entry_sort_order}</td>
-			  <td><input type="text" name="sort_order" value="{$sort_order}" size="10" /></td>
+			  <td>{$entry_sort_order}</td>
+			  <td><input type="text" name="sort_order" value="{$sort_order}" class="input-mini" /></td>
 			</tr>
 			<!--  <tr>
 			  <td style="text-align:right">&nbsp;</td>
@@ -107,7 +107,7 @@
 			</tr> -->
 		{elseif $code=='cod' || $code=='bank' || $code=='post'}
 		    <tr>
-				<td style="text-align:right;padding-right:10px;"><span class="required">*</span> {$entry_code}</td>
+				<td ><span class="required">*</span> {$entry_code}</td>
 				<td>
 					<select name="payment_code_" disabled="disabled" >
 						{loop $payment_bank $key $pb}
@@ -119,10 +119,12 @@
 			</tr>
 			<tr>
 			    <td ><span class="required">*</span> {$entry_description}</td>
-				<td><textarea name="description" style="width:373px;height:96px" >{$description}</textarea></td>
+				<td><textarea name="description" style="width:373px;height:96px" >{$description}</textarea> {if $error_description}
+				<span class="error">{$error_description}</span>
+			   {/if}</td>
 			</tr>
 		    <tr>
-			  <td style="text-align:right;padding-right:10px;">{$entry_order_status}</td>
+			  <td >{$entry_order_status}</td>
 			  <td><select name="order_status_id">
 				  {loop $order_statuses  $order_status}
 					 {if $order_status['order_status_id'] == $order_status_id}
@@ -134,7 +136,7 @@
 				</select></td>
 			</tr>
 			<tr>
-			  <td style="text-align:right;padding-right:10px;">{$entry_status}</td>
+			  <td>{$entry_status}</td>
 			  <td><select name="status">
 				  {if $status}
 				  <option value="1" selected="selected">{$text_enabled}</option>
@@ -146,7 +148,7 @@
 				</select></td>
 			</tr>
 			<tr>
-			  <td style="text-align:right;padding-right:10px;">{$entry_sort_order}</td>
+			  <td >{$entry_sort_order}</td>
 			  <td><input type="text" name="sort_order" value="{$sort_order}" size="10" /></td>
 			</tr>
 		{/if}

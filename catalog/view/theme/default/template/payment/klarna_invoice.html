@@ -38,7 +38,7 @@
 <script type="text/javascript"><!--
 $('#button-confirm').bind('click', function() {
 	$.ajax({
-		url: 'index.php?route=payment/klarna_invoice/send',
+		url: '?route=payment/klarna_invoice/send',
 		type: 'post',
 		data: $('#payment input[type=\'text\'], #payment input[type=\'password\'], #payment input[type=\'checkbox\']:checked, #payment input[type=\'radio\']:checked, #payment input[type=\'hidden\'], #payment select'),
 		dataType: 'json',		

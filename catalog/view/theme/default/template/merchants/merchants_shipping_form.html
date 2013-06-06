@@ -40,7 +40,7 @@
 						<ul>
 							<li class="form-elem">
 								<label class="label-like" for="J_TemplateTitle">模板名称：</label>
-								<input type="text" name="t_x" {if isset($shipping_info['shipping_desc'])}value="{$shipping_info['shipping_desc']}"{else}value=""{/if} class="input-text input-address" autocomplete="off" id="J_TemplateTitle">
+								<input type="text" name="t_x" {if isset($shipping_info['shipping_desc'])}value="{$shipping_info['shipping_desc']}"{else}value=""{/if} class="input-xxlarge"  id="J_TemplateTitle">
 								
 							</li>
 						
@@ -53,7 +53,7 @@
 							<li class="form-elem">
 								<span class="label-like">发货时间：</span>
 								<span>
-									<select name="consignDate" id="J_prescription">
+									<select name="consignDate" id="J_prescription" width="100" style="width:100px;">
 										<option>请选择..</option> 
 										<option value="12" {if isset($shipping_info['consignDate']) && $shipping_info['consignDate']==12}selected="selected"{/if}>12小时内</option>
 										<option value="24" {if isset($shipping_info['consignDate']) && $shipping_info['consignDate']==24}selected="selected"{/if}>24小时内</option>
@@ -66,7 +66,7 @@
 										<option value="1080" {if isset($shipping_info['consignDate']) && $shipping_info['consignDate']==1080}selected="selected"{/if}>45天内</option>
 									</select>
 								</span>
-								<span>承诺买家付款后该时间内录入物流信息并发货，以物流公司收单信息为准。
+								<span>承诺买家付款后该时间内录入物流信息并发货，以物流公司收单信息为准。</span>
 							</li>
 						   
 							<li class="form-elem">
@@ -135,8 +135,8 @@
 								<div class="section J_Section">
 								     {if !empty($shipping_info['ems_start']) && !empty($shipping_info['ems_postage'])}
 										<p>
-											<input type="checkbox" name="tplType" value="1" id="J_DeliveryEXPRESS" class="J_Delivery" checked="checked">
-											<label for="J_DeliveryEXPRESS">EMS</label>
+											<input type="checkbox" name="tplType" value="1" id="J_DeliveryEMS" class="J_Delivery" checked="checked">
+											<label for="J_DeliveryEMS">EMS</label>
 										</p>
 									
 									
@@ -157,8 +157,8 @@
 								<div class="section J_Section">
 								    {if !empty($shipping_info['post_start']) && !empty($shipping_info['post_postage'])}
 										<p>
-											<input type="checkbox" name="tplType" value="1" id="J_DeliveryEXPRESS" class="J_Delivery" checked="checked">
-											<label for="J_DeliveryEXPRESS">平邮</label>
+											<input type="checkbox" name="tplType" value="1" id="J_DeliveryPOST" class="J_Delivery" checked="checked">
+											<label for="J_DeliveryPOST">平邮</label>
 										</p>
 									
 									
@@ -177,10 +177,34 @@
 									{/if}
 								</div>
 							</li>
+							
+							<li class="form-elem">
+								<span class="label-like">是否启用：</span>
+								<span>  
+								    {if !empty($shipping_info['enabled']) &&  $shipping_info['enabled']==1}
+								        <input type="radio" name="enabled" checked="checked" value="1" id="J_enabled">
+										<label for="J_enabled">启用</label>
+										<input type="radio" name="enabled" value="0" id="J_disabled">
+										<label for="J_disabled">不启用</label>
+									{elseif  !empty($shipping_info['enabled']) && $shipping_info['enabled']==0}
+								        <input type="radio" name="enabled"value="1" id="J_enabled">
+										<label for="J_enabled">启用</label>
+										<input type="radio" name="enabled"  checked="checked"  value="0" id="J_disabled">
+										<label for="J_disabled">不启用</label>
+									{else}
+								        <input type="radio" name="enabled" value="1" id="J_enabled">
+										<label for="J_enabled">启用</label>
+										<input type="radio" name="enabled" value="0"  checked="checked" id="J_disabled">
+										<label for="J_disabled">不启用</label>
+									{/if}
+								</span>
+							</li>
 						</ul>
 						<p class="btns">
-							<button type="submit" class="save">保存并返回</button>
-							<button type="button" class="cancel">取消</button>
+							<!-- <button type="submit" class="save">保存并返回</button>
+							<button type="button" class="cancel">取消</button> -->
+							<button type="submit"  id="save" class="btn btn-primary">保存并返回</button>
+						    <button type="button"  id="cancel" class="btn">取消</button>
 						</p>
 						<input type="hidden" name="deliveryJson" id="J_TPLPostData" value="">
 						<input type="hidden" name="deliveryAddress" id="J_address" value="">
@@ -209,7 +233,7 @@
 <script type="text/javascript">
 
 	//保存并返回
-	$('.btns .save').click(function(){
+	$('.btns #save').click(function(){
 	    $('p.msg').remove();
 		$('span.msg').remove();
 	    if(!$('input[name=t_x]').val()){
@@ -266,8 +290,8 @@
 	});
 	
 	//取消
-	$('.btns .cancel').click(function(){
-	    location.href='index.php?route=merchants/shipping';
+	$('.btns #cancel').click(function(){
+	    location.href='?route=merchants/shipping';
 	});
 	
 	var obj={

@@ -2,9 +2,9 @@
 <link rel="stylesheet" type="text/css" href="catalog/view/theme/default/stylesheet/css.css" media="screen" />
 	<div class="nav">
 		<ul>
-		<li id="lin"><a href="index.php?route=store/index&store_id={$category['store_id']}">店 铺 首 页</a></li>
+		<li id="lin"><a href="?route=store/index&store_id={$category['store_id']}">店 铺 首 页</a></li>
 		{loop $categories $menu}
-		<li><a href="index.php?route=store/category&store_id={$menu['store_id']}&parent_id={$menu['parent_id']}&category_id={$menu['category_id']}">{$menu['name']}</a></li>
+		<li><a href="?route=store/category&store_id={$menu['store_id']}&parent_id={$menu['parent_id']}&category_id={$menu['category_id']}">{$menu['name']}</a></li>
 		{/loop}
 		</ul>
 	</div>
@@ -14,16 +14,16 @@
 			<dd class="clist_channel_content">
 				<ul>
 				<li>
-					<p class="f2"><em></em><a href="index.php?route=store/category&store_id={$category['store_id']}&parent_id={$category['parent_id']}&category_id={$category['category_id']}">{$category['name']}</a></p>
+					<p class="f2"><em></em><a href="?route=store/category&store_id={$category['store_id']}&parent_id={$category['parent_id']}&category_id={$category['category_id']}">{$category['name']}</a></p>
                     {loop $child_categories $category}
-                        <p class="list_pro"><a href="index.php?route=store/category&store_id={$category['store_id']}&parent_id={$category['parent_id']}&category_id={$category['category_id']}">{$category['name']}</a></p>
+                        <p class="list_pro"><a href="?route=store/category&store_id={$category['store_id']}&parent_id={$category['parent_id']}&category_id={$category['category_id']}">{$category['name']}</a></p>
                     {/loop}					
 				</li>
                 
                {loop $categories $category}
                     {php if($category['category_id'] == $category_id) continue;}
                 <li>
-    				<p class="f2"><em></em><a href="index.php?route=store/category&store_id={$category['store_id']}&parent_id={$category['parent_id']}&category_id={$category['category_id']}">{$category['name']}</a></p>
+    				<p class="f2"><em></em><a href="?route=store/category&store_id={$category['store_id']}&parent_id={$category['parent_id']}&category_id={$category['category_id']}">{$category['name']}</a></p>
     			</li>	
                {/loop}
 				</ul>

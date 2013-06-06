@@ -36,31 +36,31 @@
                 	<ul class="input_ul">
 		                <li>
 						    <dl class="IU_title">店铺名称：</dl>
-                            <dl class="IU_input"><input type="text" class="IUI_box_L" name="store" value="请输入您的店铺名称" onfocus="if(this.value=='请输入您的店铺名称'){this.value='';}" onblur="if(this.value==''){this.value='请输入您的店铺名称';}">
+                            <dl class="IU_input"><input type="text" class="IUI_box_L" name="store" placeholder="请输入您的店铺名称" >
                             </dl>
 						</li>
 						
 						<li>
 						    <dl class="IU_title">店主姓名：</dl>
-                            <dl class="IU_input"><input type="text" class="IUI_box_L" name="yourname" value="请输入您的姓名" onfocus="if(this.value=='请输入您的姓名'){this.value='';}" onblur="if(this.value==''){this.value='请输入您的姓名';}">
+                            <dl class="IU_input"><input type="text" class="IUI_box_L" name="yourname" placeholder="请输入您的姓名" >
                             </dl>
 						</li>
 						
 						<li>
 						    <dl class="IU_title">联系电话：</dl>
-                            <dl class="IU_input"><input type="text" class="IUI_box_L" name="telphone" value="请输入您的联系电话" onfocus="if(this.value=='请输入您的联系电话'){this.value='';}" onblur="if(this.value==''){this.value='请输入您的联系电话';}">
+                            <dl class="IU_input"><input type="text" class="IUI_box_L" name="telphone" placeholder="请输入您的联系电话" >
                             </dl>
 						</li>
 						
                     	<li>
                             <dl class="IU_title">邮箱：</dl>
-                            <dl class="IU_input"><input type="text" class="IUI_box_L" name="email" value="请输入您的邮箱" onfocus="if(this.value=='请输入您的邮箱'){this.value='';}" onblur="if(this.value==''){this.value='请输入您的邮箱';}">
+                            <dl class="IU_input"><input type="text" class="IUI_box_L" name="email" placeholder="请输入您的邮箱" >
                             </dl>
                         </li>
 						
 						<li>
                             <dl class="IU_title">手机号：</dl>
-                            <dl class="IU_input"><input type="text" class="IUI_box_L" name="mobile" value="请输入手机号" onfocus="if(this.value=='请输入手机号'){this.value='';}" onblur="if(this.value==''){this.value='请输入手机号';}">
+                            <dl class="IU_input"><input type="text" class="IUI_box_L" name="mobile" placeholder="请输入手机号" >
                             </dl>
                         </li>
 						
@@ -95,7 +95,7 @@
                            
                             <dl class="IU_changCode">
 				
-							    <img id="code"  style="cursor:pointer" src="index.php?route=account/register/captcha" border="0" onclick="javascript:this.src='index.php?route=account/register/captcha&update=' + Math.random();" />
+							    <img id="code"  style="cursor:pointer" src="?route=account/register/captcha" border="0" onclick="javascript:this.src='?route=account/register/captcha&update=' + Math.random();" />
                             </dl>
                             <dl class="IU_rtip jL_sprite"></dl>
                         </li>
@@ -289,7 +289,7 @@
 					var seccode = $.trim($('#captcha').val());
 					seccode=seccode.toUpperCase();
 					$.ajax({
-						   url:'index.php?route=account/register/ajaxCaptcha&update='+Math.random(),
+						   url:'?route=account/register/ajaxCaptcha&update='+Math.random(),
 						   dataType:'json',
 						   async:false,
 						   success: function(json){	
@@ -311,7 +311,7 @@
 			      
 				  var   email=$.trim($("input[name=email]").val());
 				  $.ajax({
-				          url:'index.php?route=account/register/ajaxEmail&email='+email,
+				          url:'?route=account/register/ajaxEmail&email='+email,
 						  dataType:'json',
 						  async:false,
 						  success:function(json){	
@@ -333,7 +333,7 @@
 				mobilefunc:function(z){
 				  var   mobile=$.trim($("input[name=mobile]").val());
 				  $.ajax({
-				          url:'index.php?route=account/register/ajaxMobile&mobile='+mobile,
+				          url:'?route=account/register/ajaxMobile&mobile='+mobile,
 						  dataType:'json',
 						  async:false,
 						  success:function(json){	

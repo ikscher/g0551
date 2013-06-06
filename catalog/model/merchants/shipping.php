@@ -108,6 +108,7 @@ class ModelMerchantsShipping extends Model {
 		$bearFreight=$this->db->escape(isset($data['bearFreight'])?$data['bearFreight']:'');
 		$calc_rule=$this->db->escape(isset($data['valuation'])?$data['valuation']:'');
 		$delivery_type=$this->db->escape(isset($data['tplType'])?$data['tplType']:'');
+		$enabled=$this->db->escape(isset($data['enabled'])?$data['enabled']:'0');
 		
 		$shipping_fee_arr=array();
 		$express_arr=array();
@@ -151,7 +152,7 @@ class ModelMerchantsShipping extends Model {
 		$shipping_fee=serialize($shipping_fee_arr);
 		
 		//$description=$this->db->escape(isset($data['description'])?$data['description']:'');
-		$sql="insert into ".DB_PREFIX."shipping set store_id='{$store_id}',delivery_type='{$delivery_type}',calc_rule='{$calc_rule}',shipping_desc='{$shipping_desc}',shipping_fee='{$shipping_fee}',province='{$province}',city='{$city}',zone='{$zone}',consignDate='{$consignDate}',is_freight='{$bearFreight}'";
+		$sql="insert into ".DB_PREFIX."shipping set store_id='{$store_id}',delivery_type='{$delivery_type}',calc_rule='{$calc_rule}',shipping_desc='{$shipping_desc}',shipping_fee='{$shipping_fee}',province='{$province}',city='{$city}',zone='{$zone}',enabled='{$enabled}',consignDate='{$consignDate}',is_freight='{$bearFreight}'";
 		return $this->db->query($sql);
 	}
 	
@@ -164,6 +165,7 @@ class ModelMerchantsShipping extends Model {
 		$consignDate=$this->db->escape(isset($data['consignDate'])?$data['consignDate']:'');
 		$bearFreight=$this->db->escape(isset($data['bearFreight'])?$data['bearFreight']:'');
 		//$calc_rule=$this->db->escape(isset($data['valuation'])?$data['valuation']:'');
+		$enabled=$this->db->escape(isset($data['enabled'])?$data['enabled']:'0');
 		$delivery_type=$this->db->escape(isset($data['tplType'])?$data['tplType']:'');
 		
 		$shipping_fee_arr=array();
@@ -207,7 +209,7 @@ class ModelMerchantsShipping extends Model {
 						 
 		$shipping_fee=serialize($shipping_fee_arr);
 		
-		$sql="update ".DB_PREFIX."shipping set delivery_type='{$delivery_type}',shipping_desc='{$shipping_desc}',shipping_fee='{$shipping_fee}',province='{$province}',city='{$city}',zone='{$zone}',consignDate='{$consignDate}',is_freight='{$bearFreight}'";
+		$sql="update ".DB_PREFIX."shipping set delivery_type='{$delivery_type}',shipping_desc='{$shipping_desc}',shipping_fee='{$shipping_fee}',province='{$province}',city='{$city}',zone='{$zone}',enabled='{$enabled}',consignDate='{$consignDate}',is_freight='{$bearFreight}'";
 		return $this->db->query($sql);
 	}
 	

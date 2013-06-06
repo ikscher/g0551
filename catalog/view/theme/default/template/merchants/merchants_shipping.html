@@ -38,7 +38,7 @@
                             <div class="section J_Section" data-id="{$shipping['shipping_id']}">
                                 <div class="tbl-prefix">
                                     <span class="meta">|<a href="javascript:void(0);" class="J_Modify"> 修改</a> | <a href="javascript:void(0);"  class="J_Delete">删除 </a></span>
-                                    <h3 class="J_Title">{$shipping['shipping_desc']}</h3>
+                                    <h3 class="J_Title">{$shipping['shipping_desc']}<span>{if $shipping['enabled']==1}已启用{elseif $shipping['enabled']==0}未启用{/if}</span></h3>
                                 </div>
 								<div class="tbl-head">
                                     <table border="0" cellpadding="0" cellspacing="0">
@@ -92,7 +92,7 @@
                         <div class="page">
 							<table>
 								<tr>
-									<td>{if !empty($pagination)}<div class="pagination">{$pagination}</div>{/if}</td>
+									<td>{if !empty($pagination)}<div class="_pagination_">{$pagination}</div>{/if}</td>
 								</tr>		
 							</table>
 						</div>
@@ -114,19 +114,19 @@
 	//修改
 	$('.J_Modify').click(function(){
 	    var shipping_id=$(this).parents('.J_Section').attr('data-id');
-	    location.href='index.php?route=merchants/shipping/update&shipping_id='+shipping_id;
+	    location.href='?route=merchants/shipping/update&shipping_id='+shipping_id;
 	});
 	
 	//删除
 	$('.J_Delete').click(function(){
 	    if(confirm('您确定删除么？')){
 			var shipping_id=$(this).parents('.J_Section').attr('data-id');
-			location.href='index.php?route=merchants/shipping/delete&shipping_id='+shipping_id;
+			location.href='?route=merchants/shipping/delete&shipping_id='+shipping_id;
 		}
 	});
 	
 	//新增
 	$('.long-btn').click(function(){
-	    location.href='index.php?route=merchants/shipping/insert';
+	    location.href='?route=merchants/shipping/insert';
 	});
 </script>

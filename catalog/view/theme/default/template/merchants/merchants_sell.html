@@ -7,23 +7,18 @@
 		<div class="item-list">
 			<div class="item-list-hd">
 			<ul class="item-list-tabs item-list-tabs-flexible clearfix" >
-				<li class="current"><a href="index.php?route=merchants/sell" hidefocus="true">出售中的宝贝</a></li>
-				<li><a href="index.php?route=merchants/warehouse" hidefocus="true">等待上架的宝贝</a></li>
+				<li class="current"><a href="?route=merchants/sell" hidefocus="true">出售中的宝贝</a></li>
+				<li><a href="?route=merchants/warehouse" hidefocus="true">等待上架的宝贝</a></li>
 			</ul>
 			</div>
 			<div class="item-list-bd">
 				<form name="" action="{$search_url}" method="post">
                 <table>
 					<tr>
-						<td width="60" id="alignright">宝贝名称：</td>
-						<td width="160" id="alignleft"><input name="name" type="text" size="20" class="input_txt" id="name" value="{$name}"/></td>
-						<td width="60" id="alignright">宝贝编号：</td>
-						<td width="160" id="alignleft"><input name="model" type="text" size="20" class="input_txt" id="model" value="{$model}"/></td>
-						<td width="60" id="alignright">宝贝价格：</td>
-					  <td width="150" id="alignleft"><input name="price1" type="text" class="input_txt" id="price1" size="7" maxlength="10" value="{$price1}"/>
-到
-  <input name="price2" type="text" class="input_txt" id="price2" size="7" maxlength="10" value="{$price2}"/></td>
-				      <td id="alignleft"><button onclick="searchItems()" class="search-btn" type="submit">搜索</button></td>
+						<td width="300"><input name="name" type="text"  class="input-xlarge" id="name" value="{$name}" placeholder="宝贝名称"/></td>
+						<td width="100"><input name="model" type="text"  class="input-small" id="model" value="{$model}" placeholder="宝贝编号"/></td>
+					    <td><input name="price1" type="text" class="input-mini" id="price1"  maxlength="10" value="{$price1}" placeholder="最小价" />到<input name="price2" type="text" class="input-mini" id="price2"  maxlength="10" value="{$price2}" placeholder="最大价"/></td>
+				        <td><button onclick="javascript:searchItems()" class="btn" type="submit">搜索</button></td>
 				  </tr>
 				</table>
                 </form>
@@ -46,8 +41,8 @@
 			<table width="100%">
 				<tr bgcolor="#f3f3f3" id="alignleft">
 					<td width="60"><input type="checkbox" name="checkbox" value="" onclick="SelectAll('info_id',this)" /> 全选</td>
-					<td width="200"><button class="trigger-btn" type="button" onclick="SetSelectProduct('index.php?route=merchants/sell/del','删除','宝贝','info_id')">删 除</button>
-									<button class="trigger-btn" type="button" onclick="SetSelectProduct('index.php?route=merchants/sell/down','下架','宝贝','info_id')">下 架</button><td>
+					<td width="200"><button class="btn" type="button" onclick="SetSelectProduct('?route=merchants/sell/del','删除','宝贝','info_id')">删 除</button>
+									<button class="btn" type="button" onclick="SetSelectProduct('?route=merchants/sell/down','下架','宝贝','info_id')">下 架</button><td>
 					<td></td>
 			</table>
             <div class="sell">
@@ -61,14 +56,14 @@
                   <tr>
                     <td height="72" colspan="7"><table width="96%" border="0" align="center" cellpadding="0" cellspacing="0">
                       <tr>
-                        <td width="60"><a href="index.php?route=product/product&product_id={$info['product_id']}"><img src="{$info['image']}" width="50" height="50" class="item-pic"/></a></td>
-                        <td width="220"><a href="index.php?route=product/product&product_id={$info['product_id']}">{$info['name']}</a></td>
+                        <td width="60"><a href="?route=product/product&product_id={$info['product_id']}"><img src="{$info['image']}" width="50" height="50" class="item-pic"/></a></td>
+                        <td width="220"><a href="?route=product/product&product_id={$info['product_id']}">{$info['name']}</a></td>
                         <td width="100" class="price-now">￥<span class="bf60">{$info['price']}</span></td>
                         <td width="100">{$info['quantity']}({$info['sku']})</td>
-                        <td width="60"><button class="trigger-btn" type="button" onclick="SetProduct('index.php?route=merchants/sell/down','下架','宝贝',{$info['product_id']})">下 架</button></td>
+                        <td width="60"><button class="btn" type="button" onclick="SetProduct('?route=merchants/sell/down','下架','宝贝',{$info['product_id']})">下架</button></td>
                         <td width="150" align="center">$info['date_added']</td>
                         <td width="60" align="center">
-                        <button class="trigger-btn" type="button" onclick="location.href='{$info['edit_url']}'" >编辑宝贝</button><!--<a href="{$info['edit_url']}">编辑宝贝</a><br/><button class="trigger-btn" type="button">预览宝贝</button>--></td>
+                        <button class="btn" type="button" onclick="location.href='{$info['edit_url']}'" >编辑宝贝</button><!--<a href="{$info['edit_url']}">编辑宝贝</a><br/><button class="trigger-btn" type="button">预览宝贝</button>--></td>
                       </tr>
                     </table></td>
                   </tr>

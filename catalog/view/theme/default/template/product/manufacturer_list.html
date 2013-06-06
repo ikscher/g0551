@@ -9,7 +9,7 @@
   {if $categories}
   <p><b>{$text_index}</b>
     {loop $categories   $category}
-    &nbsp;&nbsp;&nbsp;<a href="index.php?route=product/manufacturer#{$category['name']}"><b>{$category['name']}</b></a>
+    &nbsp;&nbsp;&nbsp;<a href="?route=product/manufacturer#{$category['name']}"><b>{$category['name']}</b></a>
     {/loop}
   </p>
   {loop $categories   $category}

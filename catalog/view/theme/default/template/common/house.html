@@ -49,8 +49,8 @@ MyCYAutoTabCon=setInterval("cnckMyAutoTabCon('#rankingl_list_ta','#rankingl_list
 					<!--楼盘大观begin-->
 					    {loop $house $h}
 						    <dl>
-								<dd><a href="index.php?route=product/product&product_id={$h['product_id']}"><img src="{$h['image']}" width="180" height="135" title="{$h['name']}" /></a></dd>
-								<dd class="txt"><a href="index.php?route=product/product&product_id={$h['product_id']}">{$h['shortname']}</a></dd><dd class="txt"><a class="f_h" href="index.php?route=product/product&product_id={$h['product_id']}">均价 ¥{$h['price']}</a></dd>
+								<dd><a href="?route=product/product&product_id={$h['product_id']}"><img src="{$h['image']}" width="180" height="135" title="{$h['name']}" /></a></dd>
+								<dd class="txt"><a href="?route=product/product&product_id={$h['product_id']}">{$h['shortname']}</a></dd><dd class="txt"><a class="f_h" href="?route=product/product&product_id={$h['product_id']}">均价 ¥{$h['price']}</a></dd>
 							</dl>
 						{/loop}
 					<!--楼盘大观end-->
@@ -63,8 +63,8 @@ MyCYAutoTabCon=setInterval("cnckMyAutoTabCon('#rankingl_list_ta','#rankingl_list
 				    <!--宾馆酒店-->
 				    {loop $hotel $v}
 					<dl>
-						<dd><a href="index.php?route=product/product&product_id={$v['product_id']}"><img src="{$v['image']}" width="180" height="135" title="{$v['name']}" /></a></dd>
-						<dd class="txt"><a href="index.php?route=product/product&product_id={$v['product_id']}">{$v['shortname']}</a></dd><dd class="txt"><span class="f_h">价格 ¥{$v['price']}</span></dd>
+						<dd><a href="?route=product/product&product_id={$v['product_id']}"><img src="{$v['image']}" width="180" height="135" title="{$v['name']}" /></a></dd>
+						<dd class="txt"><a href="?route=product/product&product_id={$v['product_id']}">{$v['shortname']}</a></dd><dd class="txt"><span class="f_h">价格 ¥{$v['price']}</span></dd>
 					</dl>
 					{/loop}
 					<!--宾馆酒店-->
@@ -76,8 +76,8 @@ MyCYAutoTabCon=setInterval("cnckMyAutoTabCon('#rankingl_list_ta','#rankingl_list
 				<dd class="live_pro_box h">
 				    {loop $furniture $f}
 					<dl>
-						<dd><a href="index.php?route=product/product&product_id={$f['product_id']}"><img src="{$f['image']}" width="180" height="135" title="{$f['name']}" /></a></dd>
-						<dd class="txt"><a href="index.php?route=product/product&product_id={$f['product_id']}">{$v['shortname']}</a></dd><dd class="txt"><span class="f_h">价格 ¥{$v['price']}</span></dd>
+						<dd><a href="?route=product/product&product_id={$f['product_id']}"><img src="{$f['image']}" width="180" height="135" title="{$f['name']}" /></a></dd>
+						<dd class="txt"><a href="?route=product/product&product_id={$f['product_id']}">{$v['shortname']}</a></dd><dd class="txt"><span class="f_h">价格 ¥{$v['price']}</span></dd>
 					</dl>
 					{/loop}
 				</dd>

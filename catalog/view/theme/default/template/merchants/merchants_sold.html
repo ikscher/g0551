@@ -6,42 +6,42 @@
     <!--右侧begin-->
 	<div class="right">
 		<div id="main-content">
-		 <form method="post" action="index.php?route=merchants/sold">		
+		 <form method="post" action="?route=merchants/sold">		
 			<div id="trade-search-box" data-spm="10">
 			<div class="bd" id="J_SearchBox">
 			<table>
 				<tbody>
                 <tr>
                     <td class="single-col">
-                    <label>订单编号：<input name="i" type="text" id="i" size="20" maxlength="30" value="{$info['order_id']}"/>
+                    <label>订单编号：<input type="text" name="i" class="input-medium"  id="i"  maxlength="30" value="{$info['order_id']}"/>
                     </label></td>
                     <td class="single-col">
-                    <label>买家邮箱：<input type="text" size="20" id="J_BuyNick" name="e" value="{$info['email']}" />
+                    <label>买家邮箱：<input type="text"   class="input-medium"  id="J_BuyNick" name="e" value="{$info['email']}" />
                     </label>                    </td>                    
                     <td class="single-col">
-                    <label>买家手机：<input type="text" size="20" id="m" name="m" value="{$info['mobile']}"/>
+                    <label>买家手机：<input type="text" class="input-medium"  id="m" name="m" value="{$info['mobile']}"/>
                     </label>                    </td>
                 </tr>
                 <tr>
                   <td class="single-col">
-                  <label>收件姓名：<input name="cn" type="text" id="i" value="{$info['cname']}" size="20" maxlength="30"/>
+                  <label>收件姓名：<input name="cn" type="text" id="i" value="{$info['cname']}" class="input-medium"  maxlength="30"/>
                   </label></td>
                   <td class="single-col">
-                  <label>收件手机：<input type="text" size="20" id="J_BuyNick2" name="cm" value="{$info['cmobile']}" />
+                  <label>收件手机：<input type="text" class="input-medium"  id="J_BuyNick2" name="cm" value="{$info['cmobile']}" />
                   </label>
                   </td>
                   <td class="single-col">
-                  <label>收件电话：<input type="ct" size="20" id="ct" name="ct" value="{$info['ctelphone']}"/>
+                  <label>收件电话：<input type="text" class="input-medium"  id="ct" name="ct" value="{$info['ctelphone']}"/>
                   </label>
                   </td>
                 </tr>
                 <tr>
                     <td class="single-col">
-                    <label>成交时间：<input type="text" class="date" size="20" id="bizOrderDateBegin" name="t" value="{$info['order_time']}" />
+                    <label>成交时间：<input type="text" class="date"  id="bizOrderDateBegin" name="t" value="{$info['order_time']}" />
                     </label></td>
                     <td class="single-col">
                         <label>订单状态：
-                        <select id="state_list" name="s" value="" >
+                        <select id="state_list" name="s" height="100" style="width:100px;" >
 				        <option value="">全部</option>
 						<option value="1">等待买家付款</option>
 						<option value="2">买家已付款</option>
@@ -51,10 +51,10 @@
 						<option value="6">交易关闭</option>
 				        </select></label></td>
 					<td class="single-col">
-                    <span class="skin-gray">
-                        <button id="J_SearchOrders" class="small-btn J_MakePoint" type="submit" onclick="changePage(0)">&nbsp;搜索订单&nbsp;</button>
+                    
+                        <button id="J_SearchOrders" class="btn" type="submit" onclick="changePage(0)">&nbsp;搜索订单&nbsp;</button>
                         <!--<button id="J_BatchExportBtn" class="small-long-btn" type="button">&nbsp;批量导出&nbsp;</button>-->
-                    </span>                    </td>
+                                     </td>
                 </tr>
                 </tbody>
 			</table>
@@ -77,13 +77,13 @@
 	<div class="item-list">
 	<div class="item-list-hd">
    	<ul class="item-list-tabs item-list-tabs-flexible clearfix" data-spm="9" id="order_state">
-		<li class="current" rel=""><a href="index.php?route=merchants/sold">查看全部订单</a></li>
-		<li rel="1"><a href="index.php?route=merchants/sold&s=1">等待买家付款的订单</a></li>
-		<li rel="2"><a href="index.php?route=merchants/sold&s=2">等待发货的订单</a></li>
-   		<li rel="3"><a href="index.php?route=merchants/sold&s=3">发送中的订单</a></li>
-		<li rel="4"><a href="index.php?route=merchants/sold&s=4">已发货的订单</a></li>
-		<li rel="5"><a href="index.php?route=merchants/sold&s=5">交易成功的订单</a></li>
-		<li rel="6"><a href="index.php?route=merchants/sold&s=6">已关闭的订单</a></li>
+		<li class="current" rel=""><a href="?route=merchants/sold">查看全部订单</a></li>
+		<li rel="1"><a href="?route=merchants/sold&s=1">等待买家付款的订单</a></li>
+		<li rel="2"><a href="?route=merchants/sold&s=2">等待发货的订单</a></li>
+   		<li rel="3"><a href="?route=merchants/sold&s=3">发送中的订单</a></li>
+		<li rel="4"><a href="?route=merchants/sold&s=4">已发货的订单</a></li>
+		<li rel="5"><a href="?route=merchants/sold&s=5">交易成功的订单</a></li>
+		<li rel="6"><a href="?route=merchants/sold&s=6">已关闭的订单</a></li>
 	</ul>	
     </div>
 		<div class="item-list-bd">
@@ -122,7 +122,7 @@
 				<td width="60" align="center"><img src="{$product['image']}" width="50" height="50" /></td>
 				<td width="250">
 				<div class="props">
-				<a href="index.php?route=product/product&product_id={$product['product_id']}" target="_blank" class="txt_color">{$product['name']}</a> ({$product['model']}){if $product['attribute']}<br><span>{$product['attribute']}</span>{/if}
+				<a href="?route=product/product&product_id={$product['product_id']}" target="_blank" class="txt_color">{$product['name']}</a> ({$product['model']}){if $product['attribute']}<br><span>{$product['attribute']}</span>{/if}
                 </div>
 				</td>
 				<td width="100" align="center" class="price">{$product['price']}</td>
@@ -136,7 +136,7 @@
 			</td>
 			<td bgcolor="#FFFFFF" width="80" align="center">
 			  {$order['order_state']}<br>
-			  <a href="index.php?route=merchants/order/detail&id={$order['order_id']}" target="_blank" class="txt_color">详情</a>			</td>
+			  <a href="?route=merchants/order/detail&id={$order['order_id']}" target="_blank" class="txt_color">详情</a>			</td>
 			<td bgcolor="#FFFFFF" width="100" align="center">
 				{if $state==1}
                 <input type="text" size="8" id="price_{$order['order_id']}" value="{$order['total']}" style="text-align:center;height:16px;line-height:16px;" /><br/>

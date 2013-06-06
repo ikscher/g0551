@@ -21,11 +21,11 @@ class ControllerCheckoutCheckout extends Controller {
 	    
 		
 		//货运方式
-		if(isset($this->session->data['shipping_method'])){
+		/* if(isset($this->session->data['shipping_method'])){
 		    $this->data['shipping_method']=$this->session->data['shipping_method'];
 		}else{
 		    $this->data['shipping_method']=array();
-		}
+		} */
 	   
 		foreach ($products as $product) {
 			$product_total = 0;
@@ -107,6 +107,7 @@ class ControllerCheckoutCheckout extends Controller {
 
             $this->data['products'][$product['store_id']]['store'] = $this->model_store_store->getStore($product['store_id']);//店铺信息
 			$this->data['products'][$product['store_id']]['payment_methods']= $this->controller_checkout_payment_method->index($product['store_id']);//店铺支付方式
+			$this->data['products'][$product['store_id']]['shipping_methods']= $this->model_store_store->getStoreShippingMethod($product['store_id']);//店铺的货运方式
 		}
        
 	    // var_dump($this->data['products']);
@@ -187,22 +188,24 @@ class ControllerCheckoutCheckout extends Controller {
 		$arr=array();
 	    $sm=strtolower($this->request->post['shipping_method']);
 		$arr=explode(',',$sm);
-	
-		//$this->session->data['shipping_method']=array();
-        if(in_array('express',$arr)){
-		    $this->session->data['shipping_method']['title']='快递公司';
-			$this->session->data['shipping_method']['cost']=5.00;
-			$this->session->data['shipping_method']['code']='express';
-		}elseif(in_array('ems',$arr)){
-		    $this->session->data['shipping_method']['title']='EMS邮政专递';
-			$this->session->data['shipping_method']['cost']=35.00;
-			$this->session->data['shipping_method']['code']='ems';
-		}elseif(in_array('diy',$arr)){
-		    $this->session->data['shipping_method']['title']='上门自提';
-			$this->session->data['shipping_method']['cost']=0.00;
-			$this->session->data['shipping_method']['code']='diy';
+	    
+		$s_s_s=$this->request->post['s_s_s'];
+		$this->load->model('store/store');
+		
+		$v_v_v = $this->model_store_store->getStoreShippingMethod($s_s_s);
+		
+		
+		//$this->response->setOutput(json_encode($s_s_s));
+		foreach($v_v_v as $k=>$v){
+		    if(in_array($k,$arr)){
+				$data['shipping_method']['title']=$v['name'];
+				$data['shipping_method']['cost']=floatval($v['postage'])+floatval($v['plus'])*floatval($v['postageplus']);
+				$data['shipping_method']['code']=$k;
+				break;
+			}
 		}
-		$this->response->setOutput(json_encode($this->session->data['shipping_method']));
+       
+		$this->response->setOutput(json_encode($data['shipping_method']));   
 	}
 	
 	/**设置支付方式**/

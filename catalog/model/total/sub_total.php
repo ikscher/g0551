@@ -54,8 +54,8 @@ class ModelTotalSubTotal extends Model {
 				);
 				
 				if(!isset($total[$k])) $total[$k]=0;
-				//$total[$k] += $v;
-				$total[$k]=0.01;
+				$total[$k] += $v;
+				//$total[$k]=0.01; //test by user
 			}
 		    
 		}

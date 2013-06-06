@@ -7,36 +7,37 @@
 		<div class="item_list">
 			<div class="tabs">
 				<ul class="tabs_list">
-					<li class="current"><h1><a href="">店铺设置</a></h1></li>
+					<li class="current"><h1><a href="javascript:void(0);">店铺设置</a></h1></li>
 				</ul>
 			</div>
-<form action="index.php?route=merchants/merchants/insert" method="post" id="" onsubmit="return checkStore(this)">
+<form action="?route=merchants/merchants/insert" method="post" id="" onsubmit="return checkStore(this)">
 <input name="map_x" type="hidden" value="{$info['map_x']}" />
 <input name="map_y" type="hidden" value="{$info['map_y']}" />
 <input name="logo_url" id="logo_url" type="hidden" value="{$info['logo']}" />
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td align="right"><em>*</em>店铺名称：</td>
+    <td align="right" width="10%"><em>*</em>店铺名称：</td>
     <td><input name="name" type="text" class="text4" id="name" maxlength="100" value="{if isset($info['name'])}{$info['name']}{/if}"/></td>
   </tr>
   <tr>
     <td align="right">店铺标志：</td>
     <td><img src="{$logo_url}" class="shop-pic"/>
-	<p><span class="upload-btn" id="upload_logo">上传图标</span><span class="info-tip img-erro"><i></i>文件格式GIF、JPG、JPEG、PNG文件大小80K以内，建议尺寸80PX*80PX</span></p>	</td>
+	<p><button class="btn" type="button" id="upload_logo">上传图标</button>
+	<span class="info-tip img-erro"><i></i>文件格式GIF、JPG、JPEG、PNG文件大小80K以内，建议尺寸80PX*80PX</span></p>	</td>
   </tr>
   <tr>
     <td align="right"><em>*</em>联系地址：</td>
     <td>
-	    <select name="province" id="province">
+	    <select name="province" id="province" WIDTH="100" STYLE="width: 100px">
 			<option value="">请选择省份</option>
 		</select>
-        <select name="city" id="city">
+        <select name="city" id="city" WIDTH="100" STYLE="width: 100px">
 			<option value="">请选择城市</option>
 		</select>
-		<select name="zone" id="zone">
+		<select name="zone" id="zone" WIDTH="100" STYLE="width: 100px">
 			<option value="">请选择区</option>
 		</select>
-        <input name="address" type="text" class="text1" id="address" maxlength="100" value="{if isset($info['address'])}{$info['address']}{/if}"/></td>
+        <input name="address" type="text" class="text1" id="address" maxlength="50" value="{if isset($info['address'])}{$info['address']}{/if}"/></td>
   </tr>
   <tr>
     <td align="right"><em>*</em>联系电话：</td>
@@ -49,7 +50,7 @@
   
   <tr>
     <td align="right"><em>*</em>Email：</td>
-    <td><input name="email" type="text" class="text4" id="email" maxlength="60" value="{if isset($info['email'])}{$info['email']}{/if}" disabled /></td>
+    <td><input name="email" type="text" class="input-xlarge" id="disabledInput" maxlength="60" value="{if isset($info['email'])}{$info['email']}{/if}" disabled /></td>
   </tr>
   
   <tr>
@@ -72,7 +73,10 @@
   </tr>
   <tr>
     <td>&nbsp;</td>
-    <td><input type="submit" class="form-save" value="保存"></td>
+    <td>
+	    <input type="submit" class="btn" value="保存">
+		
+	</td>
   </tr>
   <tr>
     <td>&nbsp;</td>

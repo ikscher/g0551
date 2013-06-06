@@ -174,7 +174,7 @@
  <script type="text/javascript">
     $("input[name=dataid]").live('click',function(){
 	    var dataid=$.trim($(this).val());
-	    $.post('index.php?route=account/address/setDefault',{dataid:dataid},function(data){
+	    $.post('?route=account/address/setDefault',{dataid:dataid},function(data){
 	        if(data==1){
 		       alert("设置成功！");
 		    }else{
@@ -200,7 +200,7 @@
 		$(".info tr ").attr('data-flag','');
 		$(this).parent().parent().attr('data-flag','1');
 		
-	    $.post('index.php?route=account/address/getAddress',{dataid:dataid},function(data){
+	    $.post('?route=account/address/getAddress',{dataid:dataid},function(data){
 		    if(data){
 				$("#editAddress input[name=username]").val(data.username);
 				$("#editAddress input[name=company]").val(data.company);
@@ -263,7 +263,7 @@
 	   
 	    }
 	   
-	    $.post('index.php?route=account/address/update',{username:username,mobile:mobile,telphone:telphone,company:company,address:address,postcode:postcode,address_id:address_id},function(data){
+	    $.post('?route=account/address/update',{username:username,mobile:mobile,telphone:telphone,company:company,address:address,postcode:postcode,address_id:address_id},function(data){
 		    if (data==1){
 			    $(".info tr").each(function(){
 				    if($(this).attr('data-flag')=='1'){
@@ -286,7 +286,7 @@
 	    var self=$(this);
 	    if(confirm("您确认删除这条记录么？")){
 			var dataid=$(this).parent().siblings().eq(0).children().val();
-			$.post('index.php?route=account/address/delete',{dataid:dataid},function(data){
+			$.post('?route=account/address/delete',{dataid:dataid},function(data){
 			   if(data==1){
 				 self.parent().parent().remove();
 			   }else if (data==2){
@@ -349,7 +349,7 @@
 	   
 	    }
 	    
-	    $.post('index.php?route=account/address/insert',{username:username,mobile:mobile,telphone:telphone,company:company,address:address,postcode:postcode},function(data){
+	    $.post('?route=account/address/insert',{username:username,mobile:mobile,telphone:telphone,company:company,address:address,postcode:postcode},function(data){
 		    if (data){
 				 //var address_id=json.address_id;
 				 //var customer_id=json.customer_id;
