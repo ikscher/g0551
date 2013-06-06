@@ -316,16 +316,20 @@ $(function(){
 		    --_AM_95668o;
 		}else{
 		    var product_id=$(this).parent('li').attr('data-id');
+			var store_id = {$productInfo['product']['store_id']};
 		    $.ajax({
 			    url:'?route=try/product/isTry',
 				dataType:'html',
 				type:'post',
-				data:{product_id:product_id},
+				data:{product_id:product_id,store_id:store_id},
 				success:function(str){
-				    console.log(str);
+				    //console.log(str);
 				    if(str>0){
 					   alert('此产品已添加到您的试用空间了，请不要重复添加！');
 					   return false;
+					}else if(str==-1){
+					    alert('不能添加自己店铺的产品到您的试用空间！');
+					    return false;
 					}else{
 					    that.addClass("checkPN");
 		                ++_AM_95668o;

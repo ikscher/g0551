@@ -101,16 +101,21 @@ class ControllerMerchantsTry extends Controller {
 	
 	public function confirm(){
 	    $try_id_list=array();
-		$json=array();
+		$json=array('m'=>'c');
 		
 	    $this->load->model('merchants/try');
 		$try_id_list=$this->request->post['try_id'];
 		
-		foreach($try_id_list as $v){
-		    //$this->model_merchants_try->confirm($v,1);
-		}
+		$is_try=isset($this->request->post['is_try'])?$this->request->post['is_try']:1;
 		
-		$this->response->setOutput(json_encode($try_id_list));
+		if(is_array($try_id_list)){
+			foreach($try_id_list as $v){
+				$this->model_merchants_try->confirm($v,$is_try);
+			}  
+		}else{
+		    $this->model_merchants_try->confirm($try_id_list,$is_try);
+		}
+		$this->response->setOutput(json_encode($json));
 		
 	}
 }

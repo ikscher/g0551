@@ -40,7 +40,7 @@
 		</ul>	
     </div>
 		<div class="item-list-bd">
-		<table class="trytable">
+		<table class=" trytable table-striped">
 			<thead>
 				<tr>
 				    <th width="5%"><input type="checkbox" name="tryall"  /></th>
@@ -70,7 +70,7 @@
 			<td bgcolor="#FFFFFF"><a href="?route=try/product&product_id={$p['product']['product_id']}&store_id={$p['product']['store_id']}" target="_blank" class="txt_color">{$p['product']['name']}</a>	</td>
 			<td bgcolor="#FFFFFF"></td>
 			<td bgcolor="#FFFFFF">{$p['trytime']}</td>
-			<td bgcolor="#FFFFFF">{$p['is_try_cn']}</td>
+			<td bgcolor="#FFFFFF" class="operation">{$p['is_try_cn']}{if $p['is_try']}<p><button class="btn btn-mini">取消</button></p>{/if}</td>
 			
 		  </tr>
 		  {/loop}
@@ -118,24 +118,46 @@ $(document).ready(function(){
 });
 
 $('input[name=tryall]').click(function(){
+    
     if($(this).prop('checked')==true){
-        $('input[name=try_id]').attr('checked',true);
+        $('input[name^=try_id]').attr('checked',true);
 	}else{
-	    $('input[name=try_id]').attr('checked',false);
+	    $('input[name^=try_id]').attr('checked',false);
     }
 });
 
 $('button[name=try]').click(function(){
-    if(confirm("您确认试用吗？")){
+    if(confirm("您确认已经试用过吗？")){
         $.ajax({
 		    url:'?route=merchants/try/confirm',
 			type:'post',
 			dataType:'json',
-			data:$('input[name^=try_id]'),
+			data:$('input[name^=try_id]:checked'),
 			success:function(json){
-			   console.log(json);
+			    $('input[name^=try_id]:checked').each(function(i,w){
+				    $(w).parent('td').siblings('td.operation').html('已试用<p><button class="btn btn-mini">取消</button></p>');
+				});
+				
 			}
 		});
     }
+});
+$('td.operation  ').on('click','p button',function(){
+    var _gfv=$(this).parents('tr').children('td').eq(0).children('input');
+    var try_id=_gfv.val();
+	
+    $.ajax({
+		url:'?route=merchants/try/confirm',
+		type:'post',
+		dataType:'json',
+		data:{try_id:try_id,is_try:0},
+		success:function(json){
+		    
+		    alert('取消成功！');
+			_gfv.removeAttr('checked');
+			_gfv.parent('td').siblings('td.operation').html('未试用');
+		}
+	});
+
 });
 </script>
