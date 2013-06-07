@@ -33,6 +33,11 @@
 				</tr>
 				
 				<tr>
+				  <td>密码</td>
+				  <td><input type="text" name="password" value="" size="40" /></td>
+				</tr>
+				
+				<tr>
 				  <td>logo</td>
 				  <td>
 				     <div class="image">
@@ -157,6 +162,6 @@ function image_upload(field, thumb) {
 };
 
 $('.simulate_login').click(function(){
-   alert('fff');
+   
 });
 //--></script> 

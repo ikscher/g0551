@@ -83,11 +83,12 @@
 				<span data-id="{$image['product_image_id']}" {if $k==0}class="sleb"{/if}><img src="{$image['small_image']}" width="58" height="58" /></span>
 				{/loop}
 			</div>
+
 			<ul>
 				{loop $productInfo['attribute'] $attribute_}
 				    <li class="attribute"><span class="title">{$attribute_['attribute_group_name']}：</span>
 					    {loop $attribute_['product_option_value'] $option}
-						<a class="size_sel">{$option['name']}</a>
+						<a class="size_sel">{$option['name']}<i></i></a>
 						{/loop}
 					</li>
 				{/loop}
@@ -118,18 +119,39 @@
 
 <script type="text/javascript">
 $(function(){
-	//初始
-	//$(".tSbox:eq(0)").show();
-	
-	
-	//$(".abs_b").live("click",function(){
-	//	$(".checkP:eq("+($(this).attr("lang")-1)+")").addClass("checkPN");
-	//});
+	$('ul').on('click','li a.size_sel',function(){
+	    $(this).siblings().removeClass('cy-selected');
+	    if($(this).hasClass('cy-selected')){
+	        $(this).removeClass('cy-selected');
+		}else{
+		    $(this).addClass('cy-selected');
+		}
+	});
 	
 	$('.p_x_button a.a1').click(function(){
 	    var _sl_=$('.right_get_p_x ul li i.checkPN').length;
 		if (_sl_<=0) { 
 		    alert("请选择要试用的产品！");
+			return false;
+		}
+		
+		var titles=[];
+	    $('li.attribute').each(function(i,w){
+		    var flag=true;
+		    var title=$(w).children('span').html().replace(/[:：]/gi,'');
+		    $(w).children('a').each(function(i,u){
+			    if($(u).hasClass('cy-selected')){
+				   flag=false;
+				}
+			});
+			
+			if(flag){
+			   titles.push(title);
+			}
+		});
+		
+		if(titles.length>0){
+		    alert('请选择属性：'+titles);
 			return false;
 		}
 		
@@ -153,21 +175,20 @@ $(function(){
 			data:{product_id_list:product_id_list,store_id:store_id},
 			dataType:'json',
 			success:function(json){
-			    //console.log(json);
-			    if(json.length>0){
+			    
+			    //if(json.length>0){
 				    var _Y_=[];
-					for(var k in json){
-					    _Y_.push(json[k]);
-						
-					}
+					for (var k in json){
+					    _Y_.push(k+'：'+json[k]+'\n');
+							
+				    }
 					
 					if(_Y_.length>0) {
-					    alert(_Y_+'已经添加到试用空间，请不要重复添加!');
+					    alert(_Y_.toString().replace(/,/gi,'')+'已经添加到试用空间，请不要重复添加!');
 					    return false;
-					}
-				}else{
-				    alert('已添加到试用空间！');
-				}
+					}else{
+				        alert('已添加到试用空间！');
+				    }
 			}
 		});
 		
@@ -262,7 +283,7 @@ $(function(){
 					
 					var fk=json[product_id]['attribute'][i]['product_option_value'];
 					for(var j=0;j<fk.length;j++){
-					    html_attribute+='<a class="size_sel" >'+fk[j]['name']+'</a>';
+					    html_attribute+='<a class="size_sel" >'+fk[j]['name']+'<i></i></a>';
 						
 					}
 					html_attribute+='</li>';
@@ -302,19 +323,24 @@ $(function(){
 		}
 	});
 	
+	
 	$('i.checkP').click(function(){
-        var that=$(this);
 	    var _AM_95668o=0;
+        var that=$(this);
+	    
 	    $(this).parents('ul').children('li').each(function(i,w){
 		    if($(w).children('i').hasClass('checkPN')){
 			   ++_AM_95668o;
 			}
 		});
+		
+		
 		if($(this).hasClass('checkPN')){
-		    //console.log(_AM_95668o+'w');
 		    $(this).removeClass("checkPN");
 		    --_AM_95668o;
+			$('.p_x_tig span.selected').html(_AM_95668o);
 		}else{
+		
 		    var product_id=$(this).parent('li').attr('data-id');
 			var store_id = {$productInfo['product']['store_id']};
 		    $.ajax({
@@ -323,16 +349,16 @@ $(function(){
 				type:'post',
 				data:{product_id:product_id,store_id:store_id},
 				success:function(str){
-				    //console.log(str);
 				    if(str>0){
 					   alert('此产品已添加到您的试用空间了，请不要重复添加！');
 					   return false;
 					}else if(str==-1){
 					    alert('不能添加自己店铺的产品到您的试用空间！');
 					    return false;
-					}else{
+					}else{ 
 					    that.addClass("checkPN");
 		                ++_AM_95668o;
+						$('.p_x_tig span.selected').html(_AM_95668o);
 					}
 				}
 			});
@@ -340,7 +366,6 @@ $(function(){
 		  
 		}
 		
-		$('.p_x_tig span.selected').html(_AM_95668o);
 	});
 	
 })

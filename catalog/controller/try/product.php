@@ -193,7 +193,8 @@ class ControllerTryProduct extends Controller {
 	
 	public function isTry(){
 	    //if(empty($raw_post_data))  $raw_post_data = file_get_contents("php://input");
-		$storeid=$this->cookie->OCAuthCode($this->request->cookie['storeid'],'DECODE');
+		//$storeid=$this->cookie->OCAuthCode($this->request->cookie['storeid'],'DECODE');
+		$storeid=$this->customer->getStoreId();
 		
 	    $this->load->model('try/try');
 		
@@ -204,7 +205,7 @@ class ControllerTryProduct extends Controller {
 		
 		$numRows=0;
 		
-		if($storeid==$store_id) {
+		if(!empty($storeid) && $storeid==$store_id) {
 		    $numRows=-1;
 		}else{
 		    $numRows=$this->model_try_try->getTryProduct($product_id,$customer_id);

@@ -40,10 +40,14 @@ table{ border-collapse:collapse; border-spacing:0; }
 .b_p_img_thumb span.sleb{ background:url(../image/try/sel_b.gif) no-repeat;}
 .left_get_p_b ul{ width:440px; position:relative; margin:10px auto; text-align:left; color:#333;}
 .left_get_p_b ul li{ width:100%; height:24px; line-height:24px; font-size:14px; overflow:hidden; margin-bottom:10px;}
-a.color_sel,a.size_sel{ display:block; float:left;  height:22px; border:1px solid #FFF; margin:0px 2px 0px 2px; cursor:pointer;}
+a.color_sel,a.size_sel{ display:inline-block; float:left;  height:22px; border:1px solid #FFF; margin:0px 2px 0px 2px; cursor:pointer;position: relative;}
 .title{ float:left; height:24px; line-height:24px;}
-a.size_sel{ border:1px solid #666; color:#666; text-align:center; line-height:22px; font-size:12px;padding-left:1px;padding-right:1px;}
-a.size_sel:hover{ text-decoration:none;}
+a.size_sel{ border:1px solid #666; color:#666; text-align:center; line-height:22px; font-size:12px;padding-left:1px;padding-right:1px;min-width:10px;margin-right:2px;}
+a.cy-selected ,a.size_sel:hover{ text-decoration:none;margin: -1px;border: 2px solid #FF6701;}
+
+a.cy-selected i{background: url(../image/index.png) no-repeat;}
+a.cy-selected i{display: block;position: absolute;right: 0;bottom: 0;width: 12px;height: 12px;overflow: hidden;text-indent: -9999em;background-position: -320px -222px;}
+
 .price{ font-size:22px; color:#d90200; font-weight:bold;}
 .abs_b{ width:76px; height:26px; background:url(../image/try/button.gif) -251px 0px no-repeat; position:absolute; right:0px; top:20px; cursor:pointer;}
 
