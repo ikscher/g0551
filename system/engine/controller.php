@@ -51,6 +51,10 @@ abstract class Controller {
 
 		if (file_exists($file)) {
 			require_once($file);
+			//$this->MyAutoload($file);
+            
+			// Next, register it with PHP.
+			//spl_autoload_register("MyAutoload");
 
 			$controller = new $class($this->registry);
 
@@ -64,6 +68,10 @@ abstract class Controller {
 	}
 	
 	
+	// First, define your auto-load function.
+	/* protected function MyAutoload($className){
+		include_once($className);
+	} */
 
 	protected function render() {
 	    if(!empty($this->children)){

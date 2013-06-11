@@ -19,9 +19,9 @@ class ModelTryTry extends Model {
         $sql="SELECT  p.*,ps.price as special_price ,ps.date_start,ps.date_end,pd.meta_keyword,pd.description,pd.meta_description, pd.name AS name, p.image, m.name AS manufacturer, (SELECT points FROM " . DB_PREFIX . "product_reward pr WHERE pr.product_id = p.product_id ) AS reward, (SELECT ss.name FROM " . DB_PREFIX . "stock_status ss WHERE ss.stock_status_id = p.stock_status_id ) AS stock_status,  (SELECT AVG(rating) AS total FROM " . DB_PREFIX . "review r1 WHERE r1.product_id = p.product_id AND r1.status = '1' GROUP BY r1.product_id) AS rating, (SELECT COUNT(*) AS total FROM " . DB_PREFIX . "review r2 WHERE r2.product_id = p.product_id AND r2.status = '1' GROUP BY r2.product_id) AS reviews, p.sort_order FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) LEFT JOIN " . DB_PREFIX . "product_to_store p2s ON (p.product_id = p2s.product_id) LEFT JOIN " . DB_PREFIX . "manufacturer m ON (p.manufacturer_id = m.manufacturer_id) LEFT JOIN " . DB_PREFIX . "product_special ps on p.product_id=ps.product_id where  p.date_available>={$time} AND p.status = '1'  AND ps.date_start <='$time' AND  ps.date_end >='$time'  ";		
 	    
 		if(!empty($store_id)){
-		    $sql.=" AND p2s.store_id={$store_id} limit 9";
+		    $sql.=" AND p2s.store_id={$store_id}";
 		}else{
-			$sql.=" limit 20";
+			$sql.=" limit 36";
 		}
 		
 		$query = $this->db->query($sql);
@@ -64,8 +64,8 @@ class ModelTryTry extends Model {
 	}
 	
 	//试用产品
-	public function addTryProduct($customer_id,$product_id,$store_id,$time){
-	    $sql="insert into ".DB_PREFIX."try (`customer_id`,`product_id`,`store_id`,`trytime`) values('{$customer_id}','{$product_id}','{$store_id}','{$time}')";
+	public function addTryProduct($customer_id,$product_id,$store_id,$time,$attribute){
+	    $sql="insert into ".DB_PREFIX."try (`customer_id`,`product_id`,`store_id`,`trytime`,`attribute`) values('{$customer_id}','{$product_id}','{$store_id}','{$time}','{$attribute}')";
 	    return $this->db->query($sql);
 	}
 

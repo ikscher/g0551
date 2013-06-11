@@ -27,12 +27,15 @@ class ControllerCatalogCategoryToAttributeGroup extends Controller {
 		$attribute_group_id=isset($this->request->post['attribute_group_id'])?$this->request->post['attribute_group_id']:0;
 	    
 		
-		
+		$json=array();
 		//更新类category表 的attribute_group字段 
 		if(!empty($category_id)){
 		    $categoryList=$this->model_catalog_category->getLowestLevelID($category_id);
 			
+			
 			foreach($categoryList as $v){
+			    $result_=array();
+				$res2=array();
 		        $res2=$this->model_catalog_category->getCategory($v);
 			    $attribute_group=isset($res2['attribute_group'])?$res2['attribute_group']:'';
 			
@@ -42,6 +45,7 @@ class ControllerCatalogCategoryToAttributeGroup extends Controller {
 				     );
 					 
 			    if(empty($attribute_group)){
+	
 					$this->model_catalog_category->updateCategory($data);
 			    }else{
 			        $x=explode(',',$attribute_group);
@@ -50,15 +54,18 @@ class ControllerCatalogCategoryToAttributeGroup extends Controller {
 					}
 				}
 				
+				
 				//增加到分类属性组对照表中
 				$result_=$this->model_catalog_category_to_attribute_group->getAttributeGroup($attribute_group_id,$v);
+			
 				if(empty($result_['category_id']) && empty($result_['attribute_group_id'])){
 					$this->model_catalog_category_to_attribute_group->addAttributeGroup($data);
 				}
 				
-			}
+			} 
 
-		}
+		} 
+		
 		
 		exit('ok');
 			

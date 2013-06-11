@@ -40,9 +40,9 @@ class ControllerAccountMyTry extends Controller {
 
 		$this->load->model('account/mytry');
 		
-		if (isset($this->request->get['content_id'])) {
+		if (isset($this->request->get['try_id'])) {
 			
-			$this->model_account_mytry->deleteContent($this->request->get['content_id']);
+			$this->model_account_mytry->deleteContent($this->request->get['try_id']);
 			
 
 			$this->redirect($this->url->link('account/mytry','','SSL'));
@@ -112,16 +112,18 @@ class ControllerAccountMyTry extends Controller {
 			'product_id' =>$product_id,
 			'store_id'  => $store_id,
 			'is_try'=>$is_try);
-	    
-		$results = $this->model_account_mytry->getContents($data);
-		
-		$this->data['try_id']=$try_id;
+			
+	    $this->data['try_id']=$try_id;
 		$this->data['starttime']=$starttime;
 		$this->data['endtime']=$endtime;
 		$this->data['product_id']=$product_id;
 		$this->data['store_id']=$store_id;
 		$this->data['is_try']=$is_try;
 		$this->data['text_delete']=$this->language->get('text_delete');
+		
+		$results = $this->model_account_mytry->getContents($data);
+		
+		
 		
 		if (isset($this->request->get['page'])) {
 		    $page = $this->request->get['page'];
@@ -150,6 +152,7 @@ class ControllerAccountMyTry extends Controller {
 				'product_id' => $result['product_id'],
 				'product'=>$this->model_catalog_product->getProduct($result['product_id']),
 				//'title'        => strip_tags(htmlspecialchars_decode($result['title'])),
+				'attribute'   => $result['attribute'],
 				'customer_id'     =>$result['customer_id'],
 				'trytime'   => date('Y-m-d H:i:s',$result['trytime']),
 				'store_id'    =>$result['store_id'],

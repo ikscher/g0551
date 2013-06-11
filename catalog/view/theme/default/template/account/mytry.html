@@ -64,7 +64,7 @@
 											 </td>
 											
 											  <td class="center">{$content['product_id']}</td>
-											  <td class="center"><a href="?route=try/product&product_id={$content['product_id']}&store_id={$content['store_id']}" target="_blank"> {$content['product']['name']}</a></td>
+											  <td class="center"><a href="?route=try/product&product_id={$content['product_id']}&store_id={$content['store_id']}" target="_blank"> {$content['product']['name']}{if !empty($content['attribute'])}({$content['attribute']}){/if}</a></td>
 											  <td class="center">{$content['store_id']}</td>
 											
 											  <td class="center">{$content['trytime']}</td>

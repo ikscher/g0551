@@ -46,7 +46,7 @@
 				    <th width="5%"><input type="checkbox" name="tryall"  /></th>
 					<th width="10%" > </th>
 					<th width="10%">试用产品ID</th>
-					<th >产品名称</th>
+					<th  width="35%">产品名称</th>
 					<th width="20%">属性</th>
 				  	<th width="10%">试用时间</th>
 					<th width="10%">是否试用</th>
@@ -67,7 +67,7 @@
 		    <td bgcolor="#FFFFFF"><input type="checkbox" name="try_id[]" value="{$p['try_id']}" {if $p['is_try']==1}checked="checked"{/if}/></td>
 			<td bgcolor="#FFFFFF"><img src="{$p['product']['image']}" /></td>
 			<td bgcolor="#FFFFFF">{$p['product']['product_id']}</td>
-			<td bgcolor="#FFFFFF"><a href="?route=try/product&product_id={$p['product']['product_id']}&store_id={$p['product']['store_id']}" target="_blank" class="txt_color">{$p['product']['name']}</a>	</td>
+			<td bgcolor="#FFFFFF"><a href="?route=try/product&product_id={$p['product']['product_id']}&store_id={$p['product']['store_id']}" target="_blank" class="txt_color">{$p['product']['name']}{if !empty($p['attribute'])}({$p['attribute']}){/if}</a>	</td>
 			<td bgcolor="#FFFFFF"></td>
 			<td bgcolor="#FFFFFF">{$p['trytime']}</td>
 			<td bgcolor="#FFFFFF" class="operation">{$p['is_try_cn']}{if $p['is_try']}<p><button class="btn btn-mini">取消</button></p>{/if}</td>

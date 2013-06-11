@@ -26,7 +26,8 @@ class ModelSettingStore extends Model {
 	    $storename=$this->db->escape($data['name']);
 		$shortname=$this->db->escape($data['shortname']);
 		$owner=$this->db->escape($data['owner']);
-		$password=md5($this->db->escape($data['password']));
+		$password=$this->db->escape($data['password']);
+		if(!empty($password)) $password=md5($password);
 		$telphone=$this->db->escape($data['telphone']);
 		$mobile=$this->db->escape($data['mobile']);
 		$fax=$this->db->escape($data['fax']);
@@ -43,7 +44,11 @@ class ModelSettingStore extends Model {
 	   
 		$this->db->query($sql);
 		
-		$sql="update `".DB_PREFIX."customer` set hasShop='{$hasShop}',password='{$password}' where store_id='{$store_id}'";
+		if(!empty($password)){
+		    $sql="update `".DB_PREFIX."customer` set hasShop='{$hasShop}',password='{$password}' where store_id='{$store_id}'";
+		}else{
+		    $sql="update `".DB_PREFIX."customer` set hasShop='{$hasShop}' where store_id='{$store_id}'";
+		}
 		$this->db->query($sql);
 						
 		$this->cache->delete('store');

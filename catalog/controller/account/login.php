@@ -51,7 +51,8 @@ class ControllerAccountLogin extends Controller {
 				}
 									
 				if(!empty($this->request->post['referer'])){
-					header("location:".html_entity_decode($this->request->post['referer']));exit;
+				    $referer=preg_replace('/amp;/i','',html_entity_decode($this->request->post['referer']));
+					header("location:".$referer);exit;
 				}else{
 					$this->redirect($this->url->link('common/home', '', 'SSL')); 
 				}

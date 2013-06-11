@@ -59,7 +59,7 @@
 		<?php } ?>
 		 <?php } else { ?>
 		<tr>
-		  <td style="text-align:center" colspan="5"><?php echo $text_no_results;?></td>
+		  <td style="text-align:center" colspan="7"><?php echo $text_no_results;?></td>
 		</tr>
 		<?php } ?>
 	  </tbody>
@@ -250,7 +250,7 @@ $('.operation a').click(function(){
     var id=$(this).attr('data-id');
 	var category_id=$(this).parent().prev().prev().attr('data-type');
 	var attribute_group_id=$.trim($(this).parent().prev().prev().prev().prev().text());
-
+   
 	var that=$(this);
 	if(confirm('确认删除吗?')){
 		$.ajax({
@@ -259,7 +259,7 @@ $('.operation a').click(function(){
 				type:'post',
 				data:{id:id,attribute_group_id:attribute_group_id,category_id:category_id},
 				success:function(str){
-				    console.log(str);
+				    //console.log(str);
 					if(str=='yes'){
 						//that.parent().parent().remove();
 						location.href="index.php?route=catalog/category_to_attribute_group&token=<?php echo $token;?>";
@@ -330,13 +330,17 @@ $(function() {
 					 beforeSend:function(){
 					    $("#dialog-form-i").append('<div style="margin-top:20px;margin-left:40px;">正在处理,请稍后...</div>');
 					 },
+					 dataType:'html',
 					 success:function(str){
+					    //console.log(str);
+					    
 					    if (str=='ok'){
 						    window.location.href="index.php?route=catalog/category_to_attribute_group&token=<?php echo $token;?>";
 						}else{
 						    alert("插入失败(可能已经存在分配的项)！");
 						}
 						$( this ).dialog( "close" );
+					    
 					 }
 				});
 					 

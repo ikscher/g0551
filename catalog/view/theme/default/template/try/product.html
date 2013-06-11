@@ -72,7 +72,8 @@
     <div class="clear"></div>
     
     <div class="left_get_p_b">
-    	<div class="productinfo">
+	    
+    	<!-- <div class="productinfo">
 			<div class="_large_img_thumb_">
 			    {loop $productInfo['images'] $k $image}
 			     <span   data-id="{$image['product_image_id']}" {if $k<=0}{else}class="tSbox"{/if}><img src="{$image['large_image']}"  width="459" height="459" /></span>
@@ -98,23 +99,59 @@
 				<li class="address">试用商家地址：{$store['address']}</li>
 				
 			</ul>
+        </div> -->
+		{loop $products $k $product}
+		<div class="productinfo {if $product['productInfo']['product_id']!=$product_id} tSbox{/if}" data-id="{$product['productInfo']['product_id']}">
+			<div class="_large_img_thumb_">
+			    {loop $product['images'] $k $image}
+			     <span   data-id="{$image['product_image_id']}" {if $k<=0}{else}class="tSbox"{/if}><img src="{$image['large_image']}"  width="459" height="459" /></span>
+				{/loop}
+			</div>
+			<div class="b_p_img_thumb">
+			    {loop $product['images'] $k $image}
+				<span data-id="{$image['product_image_id']}" {if $k==0}class="sleb"{/if}><img src="{$image['small_image']}" width="58" height="58" /></span>
+				{/loop}
+			</div>
+
+			<ul data-name="{$product['productInfo']['name']}">
+				{loop $product['attribute'] $attribute_}
+				    <li class="attribute" ><span class="title">{$attribute_['attribute_group_name']}：</span>
+					    {loop $attribute_['product_option_value'] $option}
+						<a class="size_sel">{$option['name']}<i></i></a>
+						{/loop}
+					</li>
+				{/loop}
+				<li><span>原价：</span><span class="price__">{$product['productInfo']['price']}</span>　<span >现价：</span><span class="price">{$product['productInfo']['special']['price']}</span>　</li>
+				
+				
+				<li class="address">试用商家地址：{$store['address']}</li>
+				
+				<span class="_m_b"><label >请选择是否试用：<i class="checkP"></i></label></span>
+			</ul>
+			
         </div>
+		{/loop}
     </div>
     
     <div class="right_get_p_x">
+	
     	<ul class="small_p_b">
+		    
         	{loop $products $product}
-				<li class="pSelect" data-id="{$product['product_id']}" data-name="{$product['name']}"><img src="{$product['image']}"  width="110" height="110" title="{$product['name']}"></a><span>{$product['shortname']}"</span><i class="checkP"></i></li>
+				<li class="pSelect" data-id="{$product['productInfo']['product_id']}" data-name="{$product['productInfo']['name']}"><img src="{$product['productInfo']['image']}"  width="110" height="110" title="{$product['productInfo']['name']}"></a><span>{$product['productInfo']['shortname']}"</span><!-- <i class="checkP"></i> --></li>
             {/loop}
-		
+		   
 		</ul>
+		
         <div class="p_x_button"><a href="javascript:void(0);" class="a1" title="我要试用"></a><a href="?route=store/store&store_id={$store_id}" class="a2" title="进入店铺"></a></div>
         <div class="p_x_tig">
-        	<strong>您已选择 <span class="selected">0</span> 件产品</strong><br />每个会员帐号一次可以选择 <span>1-9</span> 件产品        </div>
+        	<strong>您已选择 <span class="selected">0</span> 件产品</strong><br />每个会员帐号一次可以选择 <span>1-9</span> 件产品 
+		</div>
+		
     </div>
-    
-    
+
     <div class="clear"></div>
+	
 </div>
 
 <script type="text/javascript">
@@ -129,44 +166,103 @@ $(function(){
 	});
 	
 	$('.p_x_button a.a1').click(function(){
-	    var _sl_=$('.right_get_p_x ul li i.checkPN').length;
+	    var customer_id={$customer_id};
+		if(!customer_id){
+		    var referer='{$referer}';
+	        location.href="?route=account/login&referer="+encodeURIComponent(referer);
+			return false;
+		}
+	
+	    //var _sl_=$('.right_get_p_x ul li i.checkPN').length;
+		var _sl_=$('.left_get_p_b div ul span i.checkPN').length;
 		if (_sl_<=0) { 
 		    alert("请选择要试用的产品！");
 			return false;
 		}
 		
-		var titles=[];
-	    $('li.attribute').each(function(i,w){
-		    var flag=true;
-		    var title=$(w).children('span').html().replace(/[:：]/gi,'');
-		    $(w).children('a').each(function(i,u){
-			    if($(u).hasClass('cy-selected')){
-				   flag=false;
+		
+		var attributes_=[];
+		var flag;
+	    $('.productinfo>ul').each(function(i,w){
+		    var name=$(w).attr('data-name');
+			var id=$(w).parent().attr('data-id');
+			var cont=false;
+			
+			/*
+			$('.right_get_p_x ul li').each(function(i,v){//已选中的试用产品做是否选择了属性的判断
+			    if($(v).attr('data-id')==id){
+				    if($(v).children('i').hasClass('checkPN')){
+					    cont=true;
+					}
 				}
 			});
+			*/
 			
-			if(flag){
-			   titles.push(title);
+			if($(w).children('span').children('label').children('i').hasClass('checkPN')){
+				cont=true;
+			}
+			
+			
+			if (cont==false) return true;
+			
+		    var attributes=[];
+			$(w).children('li.attribute').each(function(i,x){
+			    flag=true;
+				var attribute=$(x).children('span').html().replace(/[:：]/gi,'');
+				$(x).children('a').each(function(i,u){
+				    
+					if($(u).hasClass('cy-selected')){
+					   flag=false;
+					}		
+					
+					
+				});
+			
+				if(flag){
+				   attributes.push(attribute);
+				}
+			})
+			
+			if(attributes.length>0){
+			   attributes.unshift(name);
+			   attributes_[id]=attributes;
 			}
 		});
 		
-		if(titles.length>0){
-		    alert('请选择属性：'+titles);
+		
+		if(attributes_.length>0){
+		    var strMsg='请选择属性：\n';
+		    for(var k in attributes_){
+			    for(var l in attributes_[k]){
+				    strMsg += attributes_[k][l];
+				}
+				strMsg +='\n';
+			}
+			    
+		    alert(strMsg);
 			return false;
 		}
 		
 		var product_id_list={};
-		$('.right_get_p_x ul li').each(function(i,w){
-		    
+		
+		$('.left_get_p_b ul').each(function(i,w){
+		    var product_attribute='';
 			var product_id;
-			if($(w).children('i').hasClass('checkPN')){
-				product_id=$(w).attr('data-id');
-				product_name=$(w).attr('data-name');
-				product_id_list[product_id]=product_name;
+			
+			if($(w).children('span').find('i').hasClass('checkPN')){
+				product_id=$(w).parent().attr('data-id');
+				
+				
+				$(w).find('li.attribute').each(function(i,z){
+					 product_attribute+=$(z).find('.cy-selected').html().replace(/<[^>].*?>/g,"");
+				})
+				
+				product_id_list[product_id]=product_attribute;
 			}
 			
 		});
 		
+		//console.log(product_id_list);return false;
 		var store_id={$productInfo['product']['store_id']};
 			
 		$.ajax({
@@ -175,8 +271,9 @@ $(function(){
 			data:{product_id_list:product_id_list,store_id:store_id},
 			dataType:'json',
 			success:function(json){
-			    
-			    //if(json.length>0){
+			    //console.log(json.length);
+			    if(json.length>0){
+				    
 				    var _Y_=[];
 					for (var k in json){
 					    _Y_.push(k+'：'+json[k]+'\n');
@@ -186,15 +283,14 @@ $(function(){
 					if(_Y_.length>0) {
 					    alert(_Y_.toString().replace(/,/gi,'')+'已经添加到试用空间，请不要重复添加!');
 					    return false;
-					}else{
-				        alert('已添加到试用空间！');
-				    }
+					}
+				}else{
+				    alert('已添加到试用空间！');
+				}
+					
 			}
 		});
-		
-		//console.log({$productInfo['product']['store_id']});
-		//console.log(product_id_list);
-		
+	
 	});
 	
 	$('.right_get_p_x ul li').hover(function(){
@@ -238,7 +334,20 @@ $(function(){
 	}
 	ttt=setInterval(function(){_remainderTimer_($productInfo['product']['special']['date_end'])},1000);
 	
-	
+	$('.right_get_p_x ul li').click(function(){
+	    var product_id=$(this).attr('data-id');
+		$('div.productinfo').each(function(i,w){
+		    if($(w).attr('data-id')==product_id){
+		        if($(w).hasClass('tSbox')) {
+				    $(w).removeClass('tSbox');
+				}
+			}else{
+			    if(!$(w).hasClass('tSbox')) {
+				    $(w).addClass('tSbox');
+				}
+			}
+		});
+	});
 	
 	
 	$('.right_get_p_x ul li').click(function(){
@@ -250,7 +359,13 @@ $(function(){
 			dataType:'json',
 			success:function(json){
 			    //console.log(json);
-				
+				$('.productinfo').each(function(i,w){
+				    if($(w).attr('data-id')==product_id){
+					    $(w).children('div').children('span').addClass('tSbox');
+					    $(w).children('div').children('span:eq(0)').removeClass('tSbox');
+					}
+				});
+				/*
 				var html_small_image='', html_large_image='';
 				
 				for(var i=0;i<json[product_id]['images'].length;i++){
@@ -267,7 +382,7 @@ $(function(){
 					
 					$('._large_img_thumb_').html(html_large_image);
 				}
-				
+				*/
 				$('.products .productsl dl dt').html(json[product_id]['product']['name']);
 				
   
@@ -275,6 +390,7 @@ $(function(){
 				ttt=setInterval(function(){_remainderTimer_(json[product_id]['product']['special']['date_end']);},1000);
 				
 				//属性
+				/*
 				var html_attribute='';
 				$('a.size_sel').parents('li').remove();
 				for(var i=0;i<json[product_id]['attribute'].length;i++){
@@ -296,17 +412,14 @@ $(function(){
 			    $('.productinfo>ul li').remove();
 				$('.productinfo>ul').prepend(html_attribute);
 				
-				//价格
-				//$('ul li span.price__').html(json[product_id]['product']['price']);
-				//$('ul li span.price').html(json[product_id]['product']['special']['price']);
+				
 			    var html_price='<li><span>原价：</span><span class="price__">'+json[product_id]['product']['price']+'</span>　<span >现价：</span><span class="price">'+json[product_id]['product']['special']['price']+'</span>　</li>';
 				
 				$('.productinfo>ul').append(html_price);
 				
-				//var html_address='<li>试用商家地址：'+json[product_id]['product']['store']['address']+'</li>';
 				
 				$('.productinfo>ul').append(html_address);
-				
+				*/
 			}
 		});
 	});
@@ -323,7 +436,7 @@ $(function(){
 		}
 	});
 	
-	
+	/*
 	$('i.checkP').click(function(){
 	    var _AM_95668o=0;
         var that=$(this);
@@ -367,7 +480,50 @@ $(function(){
 		}
 		
 	});
-	
+	*/
+	$('i.checkP').click(function(){
+	    var _AM_95668o=0;
+        var that=$(this);
+	    
+	    $('.productinfo').children('ul').children('span').children('label').each(function(i,w){
+		    if($(w).children('i').hasClass('checkPN')){
+			   ++_AM_95668o;
+			}
+		});
+		 
+		
+		if($(this).hasClass('checkPN')){
+		    $(this).removeClass("checkPN");
+		    --_AM_95668o;
+			$('.p_x_tig span.selected').html(_AM_95668o);
+		}else{
+		
+		    var product_id=$(this).parents('.productinfo').attr('data-id');
+			var store_id = {$productInfo['product']['store_id']};
+		    $.ajax({
+			    url:'?route=try/product/isTry',
+				dataType:'html',
+				type:'post',
+				data:{product_id:product_id,store_id:store_id},
+				success:function(str){
+				    if(str>0){
+					   alert('此产品已添加到您的试用空间了，请不要重复添加！');
+					   return false;
+					}else if(str==-1){
+					    alert('不能添加自己店铺的产品到您的试用空间！');
+					    return false;
+					}else{ 
+					    that.addClass("checkPN");
+		                ++_AM_95668o;
+						$('.p_x_tig span.selected').html(_AM_95668o);
+					}
+				}
+			});
+		   
+		  
+		}
+		
+	});
 })
 </script>
 <!------------产品展示 end-------------->

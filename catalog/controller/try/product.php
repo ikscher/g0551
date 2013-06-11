@@ -10,8 +10,15 @@ class ControllerTryProduct extends Controller {
 		//$this->language->load('try/try');
 
 		// $this->document->setTitle($this->language->get('heading_title'));
-        
-		$this->data['referer']='?route=try/product';
+		
+		$customer_id=$this->customer->isLogged();
+        if(!empty($customer_id)){
+		    $this->data['customer_id']=$customer_id;
+		}else{
+		    $this->data['customer_id']=0;
+		}
+		
+		$this->data['referer']=$this->request->server['REQUEST_URI'];
         
       	$this->data['login']="?route=account/login";
 		
@@ -87,15 +94,43 @@ class ControllerTryProduct extends Controller {
 		$products=array();
 		$results=$this->model_try_try->getProducts($product['store_id']);
 		
+		$this->data['products']=array();
+		
 		foreach($results as $k=>$v){
 		    $v['image']=$this->model_tool_image->resize($v['image'],108,108);
 			$v['shortname']=OcCutstr($v['name'],13);
 			
-			$products[]=$v;
+			$images=array();
+			$productImages=$this->model_catalog_product->getProductImages($v['product_id']);
+			foreach($productImages as $v_){
+				$v_['small_image']=$this->model_tool_image->resize($v_['image'],59,59);
+				$v_['large_image']=$this->model_tool_image->resize($v_['image'],460,460);
+				$images[]=$v_;
+			}
+			
+			$v['special']['date_start']= $v['date_start'];
+		    $v['special']['date_end']  = $v['date_end'];
+			$v['special']['price']     = $v['special_price'];
+			
+			
+			$productInfo['attribute']=$attributes_price;
+			
+			$attributes_=$this->model_catalog_product->getProductAttributes($v['product_id'],false);
+		    
+			$attributes__=array();
+			foreach ($attributes_ as $key_ => $value_) {
+				if($value_['gtype']==2){
+					$attributes__[]=$value_;
+				}
+			}
+			
+			$products['images']=$images;
+			$products['productInfo']=$v;
+			$products['attribute'] = $attributes__;
+			$this->data['products'][]=$products;
 		}
        
-		$this->data['products']=$products;
-		
+		//var_dump($this->data['products']);
 		
 		if ($this->customer->isLogged()){
 			if(isset($this->request->cookie['oc_customer'])){
@@ -184,8 +219,9 @@ class ControllerTryProduct extends Controller {
 			if($numRows>0){
 				$json[$k]=$v;
 			}else{
-				$this->model_try_try->addTryProduct($customer_id,$k,$store_id,$time);
-			} 
+				$this->model_try_try->addTryProduct($customer_id,$k,$store_id,$time,$v);
+			}
+			
 		} 
 		
 		$this->response->setOutput(json_encode($json));

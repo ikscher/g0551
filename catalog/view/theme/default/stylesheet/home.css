@@ -41,8 +41,8 @@ body{ background:#fff } /* url(../images/index_body_bg.gif) repeat-x; */
 .redsearch .formbox2{ border:#cbccce solid 1px;width:364px;height:32px; background-color:#fffee7;line-height:34px;margin:4px;padding-left:10px;color:#999999;}
 .redsearch .formbotton{float:left;width:90px;height:34px;line-height:33px;border:0;background:0 none;background:url(../image/home/redsearch.png) no-repeat 0 0;cursor:pointer;text-indent:-9999px;margin-top:4px;}
 
-.redmainmenu{padding-top:30px;}
-.redmainmenu li{float:left; margin-left:10px;}
+.redmainmenu{padding-top:6px;}
+.redmainmenu li{float:left; margin-left:8px;}
 
 .rednav{clear:both; background:url(../image/home/rednavbg.jpg) repeat-x; height:40px; line-height:40px;overflow:hidden;margin:0 auto;width:1210px;}
 .rednavmenu{}

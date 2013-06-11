@@ -88,8 +88,8 @@
 		<td><?php echo $entry_sort_order;?></td>
 		<td><input type="text" name="sort_order" value="<?php echo $sort_order;?>" size="5" /></td>
 	  </tr> -->
-	  <input type='hidden' name='category_id' value="<?php if(isset($category_id)) { ?><?php echo $category_id;?><?php } ?>" />
-	  <input type='hidden' name='attribute_group_id' value="<?php if(isset($attribute_group_id)) { ?><?php echo $attribute_group_id;?><?php } ?>" />
+	 <!--  <input type='hidden' name='category_id' value="<?php if(isset($category_id)) { ?><?php echo $category_id;?><?php } ?>" />
+	  <input type='hidden' name='attribute_group_id' value="<?php if(isset($attribute_group_id)) { ?><?php echo $attribute_group_id;?><?php } ?>" /> -->
 	</table>
 <!-- </form> -->
 <!--修改end-->

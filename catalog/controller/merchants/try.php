@@ -71,7 +71,7 @@ class ControllerMerchantsTry extends Controller {
 			
 			
 		}
-		//var_dump($items);
+		
 		$this->data['tryList']=$items;
 
 		$pagination = new Pagination('results','links');

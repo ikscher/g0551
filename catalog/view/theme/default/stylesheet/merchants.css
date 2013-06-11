@@ -29,7 +29,7 @@ label{font-size:12px;}
 .item-list-tabs-flexible .current a{background-position:right -75px;background-color:transparent;height:24px;margin-top:-3px;padding-top:3px;}
 
 .item-list-bd{position:relative;left:0;clear:both;z-index:8;border-top:1px solid #aed2ff;}
-.item-list-bd table{table-layout:fixed;border-collapse:collapse;*position:relative;}
+.item-list-bd table{table-layout:fixed;border-collapse:collapse;*position:relative;width:100%;}
 .item-list-bd th{height:29px;border-bottom:1px solid #aec7e5;background:url(../image/member/itemlist_bg.gif) repeat-x 0 0;text-align:center;color:#000;}
 .th_topbor{border-top:1px solid #aec7e5;}
 .item-list-bd th.order-price em{z-index:1;text-align:left;position:absolute;margin-top:22px;margin-left:-179px;padding:8px 0 0 3px;width:220px;height:27px;background:url(../image/member/price-editor-tip.png) no-repeat;}
