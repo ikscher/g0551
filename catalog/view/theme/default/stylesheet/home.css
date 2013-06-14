@@ -49,6 +49,7 @@ body{ background:#fff } /* url(../images/index_body_bg.gif) repeat-x; */
 .rednavmenu li{float:left; margin-right:36px;line-height:0px;}
 .rednavmenu li a{color:#FFFFFF;font-size:14px;text-decoration:none;display:block;width:80px;height:40px;line-height:40px;text-align:center;}
 .rednavmenu li a:hover{background:url(../image/home/nav_bg.png) repeat-x ; }
+.rednavmenu li.try a{background:url(../image/home/try_blink.gif) no-repeat; }
 .rednavmenu .right{margin-left:150px;}
 .rednavmenu .gowuche{background:url(../image/home/rednav03.jpg) no-repeat; width:180px; margin-top:10px;font-size:12px; line-height:20px; padding-left:40px;}
 .rednavmenu .jiesuan{padding-left:140px; padding-left:10px;display:block;border:0;float:right;width:60px;height:20px;background:url(../image/home/rednav04.png) no-repeat;position:relative;overflow:hidden;cursor:pointer;}

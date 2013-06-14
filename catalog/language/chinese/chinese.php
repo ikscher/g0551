@@ -1,5 +1,5 @@
 <?php
-$_['address']               ='合肥市新站区晨阳世纪城';
+$_['address']               ='合肥市亳州路33号天庆大厦1810室';
 $_['telphone']             =' 服务热线：0551-64374866';
 $_['icp']                   =' <a href="http://www.miitbeian.gov.cn/publish/query/indexFirst.action" target="_blank">皖ICP备12015326号-1</a>';
 $_['bottom']                ='Copyright 2010-'.date('Y').' 版权所有G0551.COM ';

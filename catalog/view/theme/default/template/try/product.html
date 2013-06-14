@@ -361,8 +361,10 @@ $(function(){
 			    //console.log(json);
 				$('.productinfo').each(function(i,w){
 				    if($(w).attr('data-id')==product_id){
-					    $(w).children('div').children('span').addClass('tSbox');
-					    $(w).children('div').children('span:eq(0)').removeClass('tSbox');
+					    if($(w).children('div._large_img_thumb_').children('span').length==$(w).children('div._large_img_thumb_').children('span.tSbox').length){
+							$(w).children('div._large_img_thumb_').children('span').addClass('tSbox');
+							$(w).children('div._large_img_thumb_').children('span:eq(0)').removeClass('tSbox');
+						}
 					}
 				});
 				/*
