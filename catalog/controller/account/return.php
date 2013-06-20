@@ -283,11 +283,7 @@ class ControllerAccountReturn extends Controller {
 
 		$this->load->model('account/return');
 
-    	if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_account_return->addReturn($this->request->post);
-	  		
-			$this->redirect($this->url->link('account/return/success', '', 'SSL'));
-    	} 
+    	
 							
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -336,66 +332,73 @@ class ControllerAccountReturn extends Controller {
 		$this->data['button_continue'] = $this->language->get('button_continue');
 		$this->data['button_back'] = $this->language->get('button_back');
         
+		if($this->request->server['REQUEST_METHOD'] == 'POST' && $this->validate()){
+			$this->model_account_return->addReturn($this->request->post);
+			
+			$this->redirect($this->url->link('account/return/success', '', 'SSL'));
+		}
 	    
-		
-		
-		// echo $this->request->server['REQUEST_METHOD'];
-		
-		if ($this->request->server['REQUEST_METHOD'] == 'POST'){
-		    
-		    $this->data['errorinfo']['error_warning'] = $this->language->get('error_warning');
-			
-		
-			if (isset($this->error['order_id'])) {
-				$this->data['errorinfo']['error_order_id'] = $this->error['order_id'];
-			} else {
-				$this->data['errorinfo']['error_order_id'] = '';
-			}
-					
-			if (isset($this->error['username'])) {
-				$this->data['errorinfo']['error_username'] = $this->error['username'];
-			} else {
-				$this->data['errorinfo']['error_username'] = '';
-			}	
+	
+		if (isset($this->error['order_id'])) {
+			$this->data['errorinfo']['error_order_id'] = $this->error['order_id'];
+		} else {
+			$this->data['errorinfo']['error_order_id'] = '';
+		}
+				
+		if (isset($this->error['username'])) {
+			$this->data['errorinfo']['error_username'] = $this->error['username'];
+		} else {
+			$this->data['errorinfo']['error_username'] = '';
+		}	
 
+	
+		if (isset($this->error['email'])) {
+			$this->data['errorinfo']['error_email'] = $this->error['email'];
+		} else {
+			$this->data['errorinfo']['error_email'] = '';
+		}
 		
-			if (isset($this->error['email'])) {
-				$this->data['errorinfo']['error_email'] = $this->error['email'];
-			} else {
-				$this->data['errorinfo']['error_email'] = '';
-			}
-			
-			if (isset($this->error['telphone'])) {
-				$this->data['errorinfo']['error_telphone'] = $this->error['telphone'];
-			} else {
-				$this->data['errorinfo']['error_telphone'] = '';
-			}
-					
-			if (isset($this->error['product'])) {
-				$this->data['errorinfo']['error_product'] = $this->error['product'];
-			} else {
-				$this->data['errorinfo']['error_product'] = '';
-			}
-			
-			if (isset($this->error['model'])) {
-				$this->data['errorinfo']['error_model'] = $this->error['model'];
-			} else {
-				$this->data['errorinfo']['error_model'] = '';
-			}
-							
-			if (isset($this->error['reason'])) {
-				$this->data['errorinfo']['error_reason'] = $this->error['reason'];
-			} else {
-				$this->data['errorinfo']['error_reason'] = '';
-			}
-			
-			if (isset($this->error['captcha'])) {
-				$this->data['errorinfo']['error_captcha'] = $this->error['captcha'];
-			} else {
-				$this->data['errorinfo']['error_captcha'] = '';
-			}	
-        }
+		if (isset($this->error['telphone'])) {
+			$this->data['errorinfo']['error_telphone'] = $this->error['telphone'];
+		} else {
+			$this->data['errorinfo']['error_telphone'] = '';
+		}
+				
+		if (isset($this->error['product'])) {
+			$this->data['errorinfo']['error_product'] = $this->error['product'];
+		} else {
+			$this->data['errorinfo']['error_product'] = '';
+		}
 		
+		if (isset($this->error['model'])) {
+			$this->data['errorinfo']['error_model'] = $this->error['model'];
+		} else {
+			$this->data['errorinfo']['error_model'] = '';
+		}
+						
+		if (isset($this->error['reason'])) {
+			$this->data['errorinfo']['error_reason'] = $this->error['reason'];
+		} else {
+			$this->data['errorinfo']['error_reason'] = '';
+		}
+		
+		if (isset($this->error['captcha'])) {
+			$this->data['errorinfo']['error_captcha'] = $this->error['captcha'];
+		} else {
+			$this->data['errorinfo']['error_captcha'] = '';
+		}	
+		
+		$this->data['flag']=false;
+		foreach($this->data['errorinfo'] as $v){
+		    if(!empty($v)){
+			    $this->data['flag']=true;
+				array_unshift($this->data['errorinfo'],$this->language->get('error_warning'));
+				break;
+			}
+		}
+    	
+		
+	
 		
 		$this->data['action'] = $this->url->link('account/return/insert', '', 'SSL');
 	
@@ -404,11 +407,19 @@ class ControllerAccountReturn extends Controller {
 		if (isset($this->request->get['order_id'])) {
 			$order_info = $this->model_account_order->getOrder($this->request->get['order_id']);
 		}
-		
+		//var_dump($order_info);
 		$this->load->model('catalog/product');
 		
 		if (isset($this->request->get['product_id'])) {
 			$product_info = $this->model_catalog_product->getProduct($this->request->get['product_id']);
+		}
+		
+		if (isset($this->request->post['product_id'])) {
+    		$this->data['product_id'] = $this->request->post['product_id'];
+		} elseif (!empty($product_info)) {
+			$this->data['product_id'] = $product_info['product_id'];				
+		} else {
+			$this->data['product_id'] = '';
 		}
 		
     	if (isset($this->request->post['order_id'])) {
@@ -422,9 +433,9 @@ class ControllerAccountReturn extends Controller {
     	if (isset($this->request->post['date_ordered'])) {
       		$this->data['date_ordered'] = $this->request->post['date_ordered']; 	
 		} elseif (!empty($order_info)) {
-			$this->data['date_ordered'] = date('Y-m-d', strtotime($order_info['date_added']));
+			$this->data['date_ordered'] = date('Y-m-d', $order_info['date_added']);
 		} else {
-      		$this->data['date_ordered'] = '';
+      		$this->data['date_ordered'] =  date('Y-m-d');
     	}
 				
 		if (isset($this->request->post['username'])) {
@@ -545,7 +556,7 @@ class ControllerAccountReturn extends Controller {
 
     	$this->data['button_continue'] = $this->language->get('button_continue');
 	
-    	$this->data['continue'] = $this->url->link('common/home');
+    	$this->data['continue'] = $this->url->link('account/account');
 
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/success.html')) {
 			$this->template = $this->config->get('config_template') . '/template/common/success.html';

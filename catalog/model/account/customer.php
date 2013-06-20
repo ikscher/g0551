@@ -133,10 +133,14 @@ class ModelAccountCustomer extends Model {
 		$this->db->query("UPDATE " . DB_PREFIX . "customer SET username='{$username}', nickname ='{$nickname}', mobile = '{$mobile}', email = '{$email}', telphone = '{$telphone}' WHERE customer_id = '{$uid}'");
 	}
 
-	public function editPassword($password) {
+	public function editPassword($password,$email='') {
 	    $uid=$this->cookie->OCAuthCode($this->request->cookie['memberid'],'DECODE');
 		$pwd=md5($password);
-      	$this->db->query("UPDATE " . DB_PREFIX . "customer SET   password ='{$pwd}'  WHERE customer_id = '{$uid}'");
+		if(!empty($uid) &&　empty($email)){
+			return $this->db->query("UPDATE " . DB_PREFIX . "customer SET   password ='{$pwd}'  WHERE customer_id = '{$uid}'");
+		}elseif(!empty($email)){
+		    return $this->db->query("UPDATE " . DB_PREFIX . "customer SET   password ='{$pwd}'  WHERE email = '{$email}'");
+		}
 	}
 
 	public function editNewsletter($newsletter) {
@@ -150,9 +154,9 @@ class ModelAccountCustomer extends Model {
 	    if(!empty($store_id)){
 			$sql="SELECT * FROM " . DB_PREFIX . "customer WHERE customer_id = '" . (int)$customer_id . "' and store_id='{$store_id}'";
 		}else{
-		    $sql="SELECT a.*,c.* FROM `" . DB_PREFIX . "customer` c left join `".DB_PREFIX."address` a on c.customer_id=a.customer_id WHERE a.status=1 and c.customer_id = '" . (int)$customer_id . "'";
+		    $sql="SELECT a.*,c.* FROM `" . DB_PREFIX . "customer` c left join `".DB_PREFIX."address` a on c.customer_id=a.customer_id WHERE  c.customer_id = '" . (int)$customer_id . "'";
 		}
-		
+
 		$query = $this->db->query($sql);
 
 		return $query->row;

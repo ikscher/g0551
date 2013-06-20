@@ -131,6 +131,8 @@ class ControllerAccountOrder extends Controller {
 			
 			$order_total = $this->model_account_order->getTotalOrders($data);
 			
+			$results=array();
+			
 			$results = $this->model_account_order->getOrders($data);
 			
 			$products=array();
@@ -140,7 +142,6 @@ class ControllerAccountOrder extends Controller {
 				
 				$ops=$this->model_account_order->getOrderProducts($result['order_id']);
 				
-				$products=array();
 				foreach($ops as $k=>$v){
 				    $p=$this->model_catalog_product->getProduct($v['product_id']);
 					if ($p['image']) {
@@ -186,7 +187,7 @@ class ControllerAccountOrder extends Controller {
 					'reorder'    => $this->url->link('account/order', 'order_id=' . $result['order_id'], 'SSL')
 				);
 			}
-            // var_dump($this->data['orders']);
+              // var_dump($this->data['orders']);
 			
 			$pagination = new Pagination('results','links');
 			$pagination->total = $order_total;
@@ -284,7 +285,7 @@ class ControllerAccountOrder extends Controller {
 			
 			$this->data['order_id'] = $this->request->get['order_id'];
 			$this->data['date_added'] = date('Y-m-d H:i:s', $order_info['date_added']);
-			$this->data['orderid'] = $order_info['orderid'];
+			//$this->data['orderid'] = $order_info['orderid'];
 			
 		   /* if (isset($order_info['payment_address_format'])) {
       			$format = $order_info['payment_address_format'];

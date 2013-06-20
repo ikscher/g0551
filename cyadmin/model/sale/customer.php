@@ -356,7 +356,7 @@ class ModelSaleCustomer extends Model {
 		$customer_info = $this->getCustomer($customer_id);
 		
 		if ($customer_info) { 
-			$this->db->query("INSERT INTO " . DB_PREFIX . "customer_transaction SET customer_id = '" . (int)$customer_id . "', order_id = '" . (int)$order_id . "', description = '" . $this->db->escape($description) . "', amount = '" . (float)$amount . "', date_added = NOW()");
+			$this->db->query("INSERT INTO " . DB_PREFIX . "customer_transaction SET customer_id = '" . (int)$customer_id . "', order_id =  '{$order_id}', description = '" . $this->db->escape($description) . "', amount = '" . (float)$amount . "', date_added = NOW()");
 
 			$this->language->load('mail/customer');
 			
@@ -395,7 +395,7 @@ class ModelSaleCustomer extends Model {
 	}
 	
 	public function deleteTransaction($order_id) {
-		$this->db->query("DELETE FROM " . DB_PREFIX . "customer_transaction WHERE order_id = '" . (int)$order_id . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "customer_transaction WHERE order_id =  '{$order_id}'");
 	}
 	
 	public function getTransactions($customer_id, $start = 0, $limit = 10) {
@@ -425,16 +425,17 @@ class ModelSaleCustomer extends Model {
 	}
 	
 	public function getTotalTransactionsByOrderId($order_id) {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "customer_transaction WHERE order_id = '" . (int)$order_id . "'");
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "customer_transaction WHERE order_id =  '{$order_id}'");
 	
 		return $query->row['total'];
 	}	
 				
 	public function addReward($customer_id, $description = '', $points = '', $order_id = 0) {
+	    $time=time();
 		$customer_info = $this->getCustomer($customer_id);
 			
 		if ($customer_info) { 
-			$this->db->query("INSERT INTO " . DB_PREFIX . "customer_reward SET customer_id = '" . (int)$customer_id . "', order_id = '" . (int)$order_id . "', points = '" . (int)$points . "', description = '" . $this->db->escape($description) . "', date_added = NOW()");
+			$this->db->query("INSERT INTO " . DB_PREFIX . "customer_reward SET customer_id = '" . (int)$customer_id . "', order_id =  '{$order_id}', points = '" . (int)$points . "', description = '" . $this->db->escape($description) . "', date_added ={$time}");
 
 			$this->language->load('mail/customer');
 			
@@ -473,7 +474,7 @@ class ModelSaleCustomer extends Model {
 	}
 
 	public function deleteReward($order_id) {
-		$this->db->query("DELETE FROM " . DB_PREFIX . "customer_reward WHERE order_id = '" . (int)$order_id . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "customer_reward WHERE order_id =  '{$order_id}'");
 	}
 	
 	public function getRewards($customer_id, $start = 0, $limit = 10) {
@@ -495,7 +496,7 @@ class ModelSaleCustomer extends Model {
 	}		
 	
 	public function getTotalCustomerRewardsByOrderId($order_id) {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "customer_reward WHERE order_id = '" . (int)$order_id . "'");
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "customer_reward WHERE order_id =  '{$order_id}'");
 	
 		return $query->row['total'];
 	}

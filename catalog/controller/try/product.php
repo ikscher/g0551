@@ -144,6 +144,9 @@ class ControllerTryProduct extends Controller {
 		}
 		
 		
+		$this->children = array(
+			'try/footer'
+		);
 	
 		
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/try/product.html')) {

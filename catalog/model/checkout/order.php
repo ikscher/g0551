@@ -39,7 +39,7 @@ class ModelCheckoutOrder extends Model {
 			
 			$store=$this->model_store_store->getStore($k);
 			$store_name=$store['name'];
-			$sql="INSERT INTO `" . DB_PREFIX . "order` SET  store_id='{$k}',store_name='{$store_name}',order_status_id=1,customer_id = '{$customer_id}',`order_id`='{$order_id}', username='{$username}',mobile='{$mobile}',telphone='{$telphone}',address='{$address}',postcode='{$postcode}', shipping_username = '{$shipping_username}', shipping_mobile='{$shipping_mobile}',shipping_telphone='{$shipping_telphone}',shipping_email='{$shipping_email}', shipping_address = '{$shipping_address}', shipping_postcode = '{$shipping_postcode}', shipping_method = '" . $this->db->escape($data['shipping_method']) . "', shipping_code = '" . $this->db->escape($data['shipping_code'])  . "',payment_method='{$payment_method}', affiliate_id = '" . (int)$data['affiliate_id'] . "', commission = '" . (float)$data['commission']. "', ip = '" . $this->db->escape($data['ip']) . "', forwarded_ip = '" .  $this->db->escape($data['forwarded_ip']) . "', user_agent = '" . $this->db->escape($data['user_agent']) . "', accept_language = '" . $this->db->escape($data['accept_language']) . "', date_added = '{$time}', date_modified = '{$time}'";
+			$sql="INSERT INTO `" . DB_PREFIX . "order` SET  store_id='{$k}',store_name='{$store_name}',order_status_id=1,customer_id = '{$customer_id}',`order_id`='{$order_id}', username='{$username}',mobile='{$mobile}','email'='{$email}',telphone='{$telphone}',address='{$address}',postcode='{$postcode}', shipping_username = '{$shipping_username}', shipping_mobile='{$shipping_mobile}',shipping_telphone='{$shipping_telphone}',shipping_email='{$shipping_email}', shipping_address = '{$shipping_address}', shipping_postcode = '{$shipping_postcode}', shipping_method = '" . $this->db->escape($data['shipping_method']) . "', shipping_code = '" . $this->db->escape($data['shipping_code'])  . "',payment_method='{$payment_method}', affiliate_id = '" . (int)$data['affiliate_id'] . "', commission = '" . (float)$data['commission']. "', ip = '" . $this->db->escape($data['ip']) . "', forwarded_ip = '" .  $this->db->escape($data['forwarded_ip']) . "', user_agent = '" . $this->db->escape($data['user_agent']) . "', accept_language = '" . $this->db->escape($data['accept_language']) . "', date_added = '{$time}', date_modified = '{$time}'";
             
 			$this->db->query($sql);
 	        
@@ -105,7 +105,7 @@ class ModelCheckoutOrder extends Model {
 	* 取订单信息
 	*/
 	public function getOrder($order_id) {
-	    $sql="SELECT *, (SELECT os.name FROM `" . DB_PREFIX . "order_status` os WHERE os.order_status_id = o.order_status_id ) AS order_status FROM `" . DB_PREFIX . "order` o WHERE o.order_id = '" . (int)$order_id . "'";
+	    $sql="SELECT *, (SELECT os.name FROM `" . DB_PREFIX . "order_status` os WHERE os.order_status_id = o.order_status_id ) AS order_status FROM `" . DB_PREFIX . "order` o WHERE o.order_id =  '{$order_id}'";
 		
 		
 		$order_query = $this->db->query($sql);
@@ -201,7 +201,7 @@ class ModelCheckoutOrder extends Model {
 				$order_status_id = $this->config->get('config_order_status_id');
 			}		
 				
-			$this->db->query("UPDATE `" . DB_PREFIX . "order` SET order_status_id = '" . (int)$order_status_id . "', date_modified = {$time} WHERE orderid = '" . (int)$order_id . "'");
+			$this->db->query("UPDATE `" . DB_PREFIX . "order` SET order_status_id = '" . (int)$order_status_id . "', date_modified = {$time} WHERE orderid =  '{$order_id}'");
 
 			$this->db->query("INSERT INTO " . DB_PREFIX . "order_history SET order_id = '{$order_id}', order_status_id = '" . (int)$order_status_id . "', notify = '1', comment = '" . $this->db->escape(($comment && $notify) ? $comment : '') . "', date_added = {$time}");
 
@@ -609,9 +609,9 @@ class ModelCheckoutOrder extends Model {
 				$order_status_id = $this->config->get('config_order_status_id');
 			}		
 						
-			$this->db->query("UPDATE `" . DB_PREFIX . "order` SET order_status_id = '" . (int)$order_status_id . "', date_modified = NOW() WHERE order_id = '" . (int)$order_id . "'");
+			$this->db->query("UPDATE `" . DB_PREFIX . "order` SET order_status_id = '" . (int)$order_status_id . "', date_modified = '{$time}' WHERE order_id =  '{$order_id}'");
 		
-			$this->db->query("INSERT INTO " . DB_PREFIX . "order_history SET order_id = '" . (int)$order_id . "', order_status_id = '" . (int)$order_status_id . "', notify = '" . (int)$notify . "', comment = '" . $this->db->escape($comment) . "', date_added = NOW()");
+			$this->db->query("INSERT INTO " . DB_PREFIX . "order_history SET order_id =  '{$order_id}', order_status_id = '" . (int)$order_status_id . "', notify = '" . (int)$notify . "', comment = '" . $this->db->escape($comment) . "', date_added = {$time}");
 	
 			// Send out any gift voucher mails
 			if ($this->config->get('config_complete_status_id') == $order_status_id) {

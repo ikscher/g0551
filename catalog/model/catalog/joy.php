@@ -19,7 +19,7 @@ class ModelCatalogJoy extends Model {
 		}
 
 		
-	    $query = $this->db->query("select content_id,`present`,imageUrl,favoriate,`share` from `". DB_PREFIX ."contents` limit {$start},{$limit}");
+	    $query = $this->db->query("select a.content_id,a.`present`,a.imageUrl,a.favoriate,a.`share`,c.nickname,c.avatar from `". DB_PREFIX ."contents` a left join ".DB_PREFIX."customer c on a.customer_id=c.customer_id limit {$start},{$limit}");
 		$result=$query->rows;
 		
 		return $result;

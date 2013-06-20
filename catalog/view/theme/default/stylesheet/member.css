@@ -275,7 +275,7 @@ a.logo img{border:none;}
 
 
 /*商品退换*/
-div.return-detail{clear:both;overflow:hidden;}
+div.return-detail{overflow:hidden;}
 ul.return-op{float:left;padding-left:25px;}
 div.return-detail ul.return-op  li{padding-top:10px;height:22px;}
 .return-opened{padding-left:25px;padding-top:40px;}
@@ -283,6 +283,7 @@ div.return-detail ul.return-op  li{padding-top:10px;height:22px;}
 .return-captcha ul{margin-top:10px;}
 .return-captcha ul li{float:left;padding-right:5px;}
 .return-captcha ul li input{height:31px;font-size:18px;width:105px;}
+.buttons .left a{width:79px;display:inline-block;background:url(../image/_btn_.png) no-repeat;text-align:center;font-size:14px;color:#fff;line-height:26px;}
 
 
 .errorinfo{margin-left:25px;border:1px solid #ffccdd;padding:5px;line-height:28px;}

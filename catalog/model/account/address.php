@@ -12,7 +12,7 @@ class ModelAccountAddress extends Model {
 	    //$str=array();
 		$username   =$this->db->escape($data['username']);
 		$mobile     =$this->db->escape($data['mobile']);
-		$telphone  =$this->db->escape($data['username']);
+		$telphone  =$this->db->escape($data['telphone']);
 		$address    =$this->db->escape($data['address']);
 		if(!empty($data['postcode'])){
 			$postcode   =$this->db->escape($data['postcode']);
@@ -46,10 +46,10 @@ class ModelAccountAddress extends Model {
 		$telphone  =$this->db->escape($data['telphone']);
 		$address    =$this->db->escape($data['address']);
 		$postcode   =$this->db->escape($data['postcode']);
-		$company    =$this->db->escape($data['company']);
+		//$company    =$this->db->escape($data['company']);
 		
 		
-		$query=$this->db->query("UPDATE " . DB_PREFIX . "address SET username = '{$username}',address='{$address}', company = '{$company}', postcode = '{$postcode}', mobile = '{$mobile}', telphone = '{$telphone}'  WHERE address_id  = '{$address_id}'");
+		$query=$this->db->query("UPDATE " . DB_PREFIX . "address SET username = '{$username}',address='{$address}',  postcode = '{$postcode}', mobile = '{$mobile}', telphone = '{$telphone}'  WHERE address_id  = '{$address_id}'");
 	    
 		if($query===true){
 		   return 1;

@@ -23,7 +23,7 @@ class ControllerAccountUpload extends Controller {
 		$watermark=1;      //是否附加水印(1为加水印,其他为不加水印);  
 		$watertype=1;      //水印类型(1为文字,2为图片)  
 		$waterposition=1;     //水印位置(1为左下角,2为右下角,3为左上角,4为右上角,5为居中);  
-		$waterstring="http://www.g0551.cn/";  //水印字符串  
+		$waterstring="http://www.g0551.com/";  //水印字符串  
 		$waterimg="xplore.gif";    //水印图片  
 		$imgpreview=1;      //是否生成预览图(1为生成,其他为不生成);  
 		$imgpreviewsize=1/2;    //缩略图比例  
@@ -69,8 +69,12 @@ class ControllerAccountUpload extends Controller {
 			$pinfo=pathinfo($file["name"]);  
 			$ftype=$pinfo['extension'];  
 			$destination = $save_path.$customer_id.".".$ftype;  
+			
 			$save_url .=$customer_id.".".$ftype;  
 			
+			if(file_exists($destination)){
+			    unlink($destination);
+			}
 			/* if (file_exists($destination) && $overwrite != true)  {  
 				$this->showMessage('同名文件已经存在了!','index.php?route=account/edit');		
 			} */  
@@ -79,6 +83,7 @@ class ControllerAccountUpload extends Controller {
 				$this->showMessage('移动文件出错!','index.php?route=account/edit');		
 			}  
 		    
+			if(empty($image_size)) $this->showMessage('错误');
 			/* $pinfo=pathinfo($destination);  
 			$fname=$pinfo[basename];  
 			echo " <font color=red>已经成功上传</font><br>文件名:  <font color=blue>".$destination_folder.$fname."</font><br>";  

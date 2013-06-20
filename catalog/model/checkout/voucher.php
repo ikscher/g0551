@@ -5,7 +5,7 @@ class ModelCheckoutVoucher extends Model {
 	*/
 	public function addVoucher($order_id, $data) {
 	    $time=time();
-      	$this->db->query("INSERT INTO " . DB_PREFIX . "voucher SET order_id = '" . (int)$order_id . "', code = '" . $this->db->escape($data['code']) . "', from_name = '" . $this->db->escape($data['from_name']) . "', from_email = '" . $this->db->escape($data['from_email']) . "', to_name = '" . $this->db->escape($data['to_name']) . "', to_email = '" . $this->db->escape($data['to_email']) . "', voucher_theme_id = '" . (int)$data['voucher_theme_id'] . "', message = '" . $this->db->escape($data['message']) . "', amount = '" . (float)$data['amount'] . "', status = '1', date_added = {$time}");
+      	$this->db->query("INSERT INTO " . DB_PREFIX . "voucher SET order_id =  '{$order_id}', code = '" . $this->db->escape($data['code']) . "', from_name = '" . $this->db->escape($data['from_name']) . "', from_email = '" . $this->db->escape($data['from_email']) . "', to_name = '" . $this->db->escape($data['to_name']) . "', to_email = '" . $this->db->escape($data['to_email']) . "', voucher_theme_id = '" . (int)$data['voucher_theme_id'] . "', message = '" . $this->db->escape($data['message']) . "', amount = '" . (float)$data['amount'] . "', status = '1', date_added = {$time}");
 	
 		return $this->db->getLastId();
 	}
@@ -78,7 +78,7 @@ class ModelCheckoutVoucher extends Model {
 			$language->load($order_info['language_filename']);	
 			$language->load('mail/voucher');
 			
-			$voucher_query = $this->db->query("SELECT *, vtd.name AS theme FROM `" . DB_PREFIX . "voucher` v LEFT JOIN " . DB_PREFIX . "voucher_theme vt ON (v.voucher_theme_id = vt.voucher_theme_id) LEFT JOIN " . DB_PREFIX . "voucher_theme_description vtd ON (vt.voucher_theme_id = vtd.voucher_theme_id)  WHERE v.order_id = '" . (int)$order_id . "'");
+			$voucher_query = $this->db->query("SELECT *, vtd.name AS theme FROM `" . DB_PREFIX . "voucher` v LEFT JOIN " . DB_PREFIX . "voucher_theme vt ON (v.voucher_theme_id = vt.voucher_theme_id) LEFT JOIN " . DB_PREFIX . "voucher_theme_description vtd ON (vt.voucher_theme_id = vtd.voucher_theme_id)  WHERE v.order_id =  '{$order_id}'");
 			
 			foreach ($voucher_query->rows as $voucher) {
 				// HTML Mail
@@ -128,7 +128,7 @@ class ModelCheckoutVoucher extends Model {
 	
 	public function redeem($voucher_id, $order_id, $amount) {
 	    $time=time();
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "voucher_history` SET voucher_id = '" . (int)$voucher_id . "', order_id = '" . (int)$order_id . "', amount = '" . (float)$amount . "', date_added ={$time}");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "voucher_history` SET voucher_id = '" . (int)$voucher_id . "', order_id =  '{$order_id}', amount = '" . (float)$amount . "', date_added ={$time}");
 	}
 }
 ?>

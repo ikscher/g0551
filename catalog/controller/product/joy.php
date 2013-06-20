@@ -19,10 +19,18 @@ class ControllerProductJoy extends Controller {
 		foreach($images as $image){
 			$id = $image['content_id'];
 			$present = $image['present'];
+			
 			$imageUrl = $this->model_tool_image->resize($image['imageUrl'],229,114);
 			$favoriate = $image['favoriate'];
 			$share = $image['share'];
-
+			$nickname= isset($image['nickname'])?$image['nickname']:'nomiojo';
+			
+			if(!empty($image['avatar'])){
+				$avatar = $this->model_tool_image->resize($image['avatar'],30,30);
+			}else{
+			    $avatar = $this->model_tool_image->resize('no_image.jpg',30,30);
+			}
+            
 			$comment = $this->model_catalog_joy->getTotalComments($image['content_id']);
 			
 		
@@ -32,7 +40,9 @@ class ControllerProductJoy extends Controller {
 			'present' => $present,
 			'comment' => $comment,
 			'favoriate' => $favoriate,
-			'share' => $share
+			'share' => $share,
+			'nickname' => $nickname,
+			'avatar' => $avatar
 			);
 			
 		}

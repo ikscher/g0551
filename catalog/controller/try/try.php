@@ -22,12 +22,7 @@ class ControllerTryTry extends Controller {
 		$this->data['home'] =$this->url->link('common/home','','SSL');
 		$this->data['logout'] =$this->url->link('account/logout','','SSL');
 
-	    	
-		$this->data['telphone']=$this->language->get('telphone');
-		$this->data['address']=$this->language->get('address');
-		$this->data['icp']=$this->language->get('icp');
-		$this->data['bottom']=$this->language->get('bottom');
-        
+	 
 		$this->load->model('catalog/category');
         $this->data['clothes'] = $this->url->link('product/category','category_id='.ModelCatalogCategory::$CATEGORY_CLOTHES,'SSL');
 		$this->data['foods']   = $this->url->link('product/category','category_id='.ModelCatalogCategory::$CATEGORY_FOODS,'SSL');
@@ -66,6 +61,10 @@ class ControllerTryTry extends Controller {
 		}
 		
 		
+		$this->children = array(
+			'try/footer'
+		);
+		
 		
 		
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/try/index.html')) {
@@ -73,6 +72,7 @@ class ControllerTryTry extends Controller {
 		} else {
 			$this->template = 'default/template/try/index.html';
 		}
+		
 		
 				
 		$this->response->setOutput($this->render());
@@ -82,21 +82,22 @@ class ControllerTryTry extends Controller {
 	
 	public function sendMail(){
 	    $this->load->library('class.phpmailer'); //载入PHPMailer类 
- 
+        
 		$mail = new PHPMailer(); //实例化 
 		$mail->IsSMTP(); // 启用SMTP 
-		$mail->Host = "127.0.0.1"; //SMTP服务器 以163邮箱为例子 
+		$mail->Host = "smtp.exmail.qq.com"; //SMTP服务器 以163邮箱为例子 
+		//$mail->Host="mail.g0551.com";
 		$mail->Port = 25;  //邮件发送端口 
 		$mail->SMTPAuth   = true;  //启用SMTP认证 
 		 
 		$mail->CharSet  = "UTF-8"; //字符集 
 		$mail->Encoding = "base64"; //编码方式 
 		 
-		$mail->Username = "ikscher@163.com";  //你的邮箱 
-		$mail->Password = "9669208888";  //你的密码 
+		$mail->Username = "ikscher@g0551.com";  //你的邮箱 
+		$mail->Password = "cy4374866";  //你的密码 
 		$mail->Subject = "你好"; //邮件标题 
 		 
-		$mail->From = "ikscher@163.com";  //发件人地址（也就是你的邮箱） 
+		$mail->From = "ikscher@g0551.com";  //发件人地址（也就是你的邮箱） 
 		$mail->FromName = "月光光";  //发件人姓名 
 		 
 		$address = "45397312@qq.com";//收件人email 

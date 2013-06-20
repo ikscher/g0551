@@ -27,10 +27,11 @@ class ControllerAccountEdit extends Controller {
 
 		if ($this->request->server['REQUEST_METHOD'] != 'POST') {
 			$customer_info = $this->model_account_customer->getCustomer($this->customer->getId());
+			
 			$this->data['avatar']=isset($customer_info['avatar'])?$customer_info['avatar']:'';
 		}else{
 		    $x= $this->model_account_customer->getCustomer($this->customer->getId());
-			$this->data['avatar']=$x['avatar'];
+			$this->data['avatar']=isset($x['avatar'])?$x['avatar']:'';
 		}
 
         if (isset($this->request->post['username'])) {

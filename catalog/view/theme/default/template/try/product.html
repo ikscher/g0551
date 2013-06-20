@@ -3,9 +3,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>试中心</title>
+<link href="catalog/view/theme/default/stylesheet/bootstrap.css" rel="stylesheet" type="text/css" /> 
 <link href="catalog/view/theme/default/stylesheet/try.css" type="text/css" rel="stylesheet">
 <script type="text/javascript" src="catalog/view/javascript/jquery/jquery-1.7.1.min.js"></script>
-
+<script type="text/javascript" src="catalog/view/javascript/bootstrap/bootstrap-modal.js"></script>
 </head>
 </head>
 
@@ -13,12 +14,12 @@
 
 <div class="try_topbg">
 	<div class="try_width">
-		<div class="try_topleft"><a href="?route=common/home"><img src="catalog/view/theme/default/image/try/home.jpg"/></a></div>
-		<div class="try_topright"><span><a href="?route=module/general/faq">帮助中心 │</a><a href="?route=module/general/company">关于我们</a></span><img src="catalog/view/theme/default/image/try/try_tel.jpg"/></div>
+		<div class="try_topleft"><a href="?route=common/home"><!-- <img src="catalog/view/theme/default/"/> --></a></div>
+		<div class="try_topright"><span><a href="?route=module/general/faq">帮助中心 │</a><a href="?route=module/general/company">关于我们</a></span><!-- <img src="catalog/view/theme/default/image/try/try_tel.jpg"/> --></div>
 	</div>
 </div>
 <div class="try_logo">
-	<div class="try_logoleft"><img src="catalog/view/theme/default/image/try/try_logo.jpg"/></div>
+	<div class="try_logoleft"><a href="?route=try/try"><img src="catalog/view/theme/default/image/try/try_logo.jpg"/></a></div>
 	<div class="try_logoright">
 	    {if !empty($username)}
 			<div class="rectangle">欢迎你！{$username} <a href="?route=account/logout">【退出】</a> <br><a href="?route=account/account">我的帐户</a></div>
@@ -243,53 +244,7 @@ $(function(){
 			return false;
 		}
 		
-		var product_id_list={};
-		
-		$('.left_get_p_b ul').each(function(i,w){
-		    var product_attribute='';
-			var product_id;
-			
-			if($(w).children('span').find('i').hasClass('checkPN')){
-				product_id=$(w).parent().attr('data-id');
-				
-				
-				$(w).find('li.attribute').each(function(i,z){
-					 product_attribute+=$(z).find('.cy-selected').html().replace(/<[^>].*?>/g,"");
-				})
-				
-				product_id_list[product_id]=product_attribute;
-			}
-			
-		});
-		
-		//console.log(product_id_list);return false;
-		var store_id={$productInfo['product']['store_id']};
-			
-		$.ajax({
-			url:'?route=try/product/ConfirmSelectProduct',
-			type:'post',
-			data:{product_id_list:product_id_list,store_id:store_id},
-			dataType:'json',
-			success:function(json){
-			    //console.log(json.length);
-			    if(json.length>0){
-				    
-				    var _Y_=[];
-					for (var k in json){
-					    _Y_.push(k+'：'+json[k]+'\n');
-							
-				    }
-					
-					if(_Y_.length>0) {
-					    alert(_Y_.toString().replace(/,/gi,'')+'已经添加到试用空间，请不要重复添加!');
-					    return false;
-					}
-				}else{
-				    alert('已添加到试用空间！');
-				}
-					
-			}
-		});
+		$('.modal').modal('show');
 	
 	});
 	
@@ -530,6 +485,7 @@ $(function(){
 </script>
 <!------------产品展示 end-------------->
 
+
 <!--试用详情-->
 <div class="details">
 	<dl>
@@ -538,61 +494,78 @@ $(function(){
 	</dl>
 </div>
 
+
+<div class="modal hide fade">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> 
+    <h3>试用中心</h3>
+  </div>
+  <div class="modal-body">
+    <p>您确定试用您选中的产品吗？</p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn confirm" data-dismiss="modal" aria-hidden="true">确定</button>
+    <button class="btn btn-primary inmytryspace">进入我的试用空间</button>
+  </div>
+</div>
+<script type="text/javascript">
+    $('.confirm').click(function(){
+	    var product_id_list={};
+		
+		$('.left_get_p_b ul').each(function(i,w){
+		    var product_attribute='';
+			var product_id;
+			
+			if($(w).children('span').find('i').hasClass('checkPN')){
+				product_id=$(w).parent().attr('data-id');
+				
+				
+				$(w).find('li.attribute').each(function(i,z){
+					 product_attribute+=$(z).find('.cy-selected').html().replace(/<[^>].*?>/g,"");
+				})
+				
+				product_id_list[product_id]=product_attribute;
+			}
+			
+		});
+		
+		//console.log(product_id_list);return false;
+		var store_id={$productInfo['product']['store_id']};
+			
+		$.ajax({
+			url:'?route=try/product/ConfirmSelectProduct',
+			type:'post',
+			data:{product_id_list:product_id_list,store_id:store_id},
+			dataType:'json',
+			success:function(json){
+			    //console.log(json.length);
+			    if(json.length>0){
+				    
+				    var _Y_=[];
+					for (var k in json){
+					    _Y_.push(k+'：'+json[k]+'\n');
+							
+				    }
+					
+					if(_Y_.length>0) {
+					    alert(_Y_.toString().replace(/,/gi,'')+'已经添加到试用空间，请不要重复添加!');
+					    return false;
+					}
+				}else{
+				    alert('已添加到试用空间！');
+					//$('.modal').modal('show');
+				}
+					
+			}
+		});
+	});
+
+    $('button.inmytryspace').click(function(){
+	    location.href='?route=account/mytry';
+	});
+</script>
 <!-------------------------底部版权begin------------------------->
-<div class="bothua"></div>
-
-<!--帮助中心-->
-<div class="bothelp">
-	<ul>
-		<li>
-			<dl>
-				<dt>购物指南</dt>
-				<dd>购物流程</dd>
-				<dd>配送方式</dd>
-			</dl>
-		</li>
-		<li>
-			<dl>
-				<dt>支付方式</dt>
-				<dd>如何付款</dd>
-				<dd>发票制度</dd>
-			</dl>
-		</li>
-		<li>
-			<dl>
-				<dt>商品说明</dt>
-				<dd>商品迟码</dd>
-				<dd>商品包装</dd>
-			</dl>
-		</li>
-		<li>
-			<dl>
-				<dt>客服中心</dt>
-				<dd>七天退换</dd>
-				<dd>常见问题</dd>
-			</dl>
-		</li>
-		<li><img src="catalog/view/theme/default/image/try/zhaoshang.jpg"/></li>
-	</ul>
-</div>
-
-<!--备案图片-->
-<div class="botlink">
-	<ul>
-		<li><img src="catalog/view/theme/default/image/try/botlink1.jpg" width="112" height="40"/></li>
-		<li><img src="catalog/view/theme/default/image/try/botlink2.jpg" width="112" height="40"/></li>
-		<li><img src="catalog/view/theme/default/image/try/botlink3.jpg" width="112" height="40"/></li>
-		<li><img src="catalog/view/theme/default/image/try/botlink4.jpg" width="112" height="40"/></li>
-		<li><img src="catalog/view/theme/default/image/try/botlink5.jpg" width="112" height="40"/></li>
-		<li><img src="catalog/view/theme/default/image/try/botlink6.jpg" width="112" height="40"/></li>
-		<li><img src="catalog/view/theme/default/image/try/botlink7.jpg" width="112" height="40"/></li>
-	</ul>
-</div>
-
-<!--版权-->
-<div class="botcopy">
-{$bottom}<p>{$address} {$telphone} {$icp}</p>
-</div>
+{$footer}
 
 <!-------------------------底部版权end------------------------->
 

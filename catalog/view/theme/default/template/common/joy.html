@@ -1,11 +1,16 @@
 {$header}
+<!-- <link href="catalog/view/theme/default/stylesheet/waterfall.css" type="text/css" rel="stylesheet">  -->
 <script type="text/javascript" src="catalog/view/javascript/jquery.masonry.min.js"></script>
 <!--content begin-->
 
 <div id="con">
 <div id="main">
 
-<div class=" it_box item">
+
+
+<div class="waterfall_container"></div>
+
+<div class=" it_box item " >
 	<div class="it_tag cl h">
 		<dl>
 			<dt>热门标签</dt>
@@ -59,9 +64,6 @@
 		</ul>		
 	</div>
 </div>
-
-
-
 </div>
 </div>
 
@@ -78,13 +80,17 @@
 					if(typeof show == 'object'){	
 						l = show.length;
 						var i=0;
+						var ul_1=[],ul_2=[],ul_3=[],ul_4=[];
 						var oProduct, row, iHeight, iTempHeight, item;
-						for(i; i<l; i++){
+						for(; i<l; i++){
+						    
+							
 							oProduct = show[i];
 			
 							// 找出当前高度最小的列, 新内容添加到该列
+							/*
 							iHeight = -1;
-							$('#main').each(function(){
+							$('#main .container').each(function(){
 								iTempHeight = Number( $(this).height() );
 								if(iHeight == -1 || iHeight > iTempHeight)
 								{
@@ -92,11 +98,42 @@
 									row = $(this);
 								}
 							});
-							item = $('<div class="item"><div class="itimg"><a href="?route=product/joy/joyDetail&id='+oProduct.id+'"><img src="'+oProduct.imageUrl+'"/></a></div><div class="itintr cl">'+oProduct.present+'</div><div class="itshare cl"><div class="itsharebg"><a >'+oProduct.favoriate+'</a></div> <div><a>评论</a>（'+oProduct.comment+'）</div> <div><a>分享</a>（'+oProduct.share+'）</div></div><div class="itmember cl"><a href="#"><img src="catalog/view/theme/default/image/nousefulpic/members1.gif" width="30" height="30" alt="itmember" />赛车手</a></div></div>').hide();
+							*/
 							
-							row.append(item);
-							item.fadeIn();
+							//item = $('<li class="item"><span class="itimg"><a href="?route=product/joy/joyDetail&id='+oProduct.id+'"><img src="'+oProduct.imageUrl+'"/></a></span><span class="itintr">'+oProduct.present+'</span><span class="itshare"><span class="itsharebg"><a >'+oProduct.favoriate+'</a></span> <span><a>评论</a>（'+oProduct.comment+'）</span> <span><a>分享</a>（'+oProduct.share+'）</span></span><span class="itmember"><a href="#"><img src="'+oProduct.avatar+'" width="30" height="30" alt="itmember" />'+oProduct.nickname+'</a></span></li>').hide();
+							
+							item ='<li class="item"><div class="itimg cl"><a href="?route=product/joy/joyDetail&id='+oProduct.id+'"><img src="'+oProduct.imageUrl+'"/></a></div><div class="itintr cl">'+oProduct.present+'</div><div class="itshare cl"><div class="itsharebg"><a >'+oProduct.favoriate+'</a></div> <div><a>评论</a>（'+oProduct.comment+'）</div> <div><a>分享</a>（'+oProduct.share+'）</div></div><div class="itmember cl"><a href="#"><img src="'+oProduct.avatar+'" width="30" height="30" alt="itmember" />'+oProduct.nickname+'</a></div></li>';
+							
+							
+							switch(i%4){
+							    case 1:
+							        ul_1.push(item);
+									break;
+								case 2:
+								    ul_2.push(item);
+									break
+								case 3:
+								    ul_3.push(item);
+									break;
+								case 0:
+								    ul_4.push(item);
+									break;
+								
+							}
+							
+							 
 						}
+						
+						ul_1=$('<ul>'+ul_1.toString().replace(/\,/gi,'')+'</ul>');
+						ul_2=$('<ul>'+ul_2.toString().replace(/\,/gi,'')+'</ul>');
+						ul_3=$('<ul>'+ul_3.toString().replace(/\,/gi,'')+'</ul>');
+						ul_4=$('<ul>'+ul_4.toString().replace(/\,/gi,'')+'</ul>');
+						$('#main .waterfall_container ').append(ul_1);
+						$('#main .waterfall_container ').append(ul_2);
+						$('#main .waterfall_container ').append(ul_3);
+						$('#main .waterfall_container ').append(ul_4);
+						
+						//item.fadeIn();
 					}
 				}		
 			});
@@ -127,5 +164,5 @@
 	gotoTop();//返回顶部
 </script>
 
-<div class="cl_div"></div>
+<!-- <div class="cl_div"></div> -->
 {$footer} 

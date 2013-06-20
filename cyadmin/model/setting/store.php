@@ -40,7 +40,7 @@ class ModelSettingStore extends Model {
 		$hasShop=$this->db->escape($data['hasShop']);
 		$logo=$this->db->escape($data['logo']);
 		
-	    $sql="UPDATE `" .DB_PREFIX. "store` SET name = '{$storename}',`logo`='{$logo}', `shortname` = '{$shortname}', `owner` = '{$owner}',`tel`='{$telphone}' ,mobile='{$mobile}',fax='{$fax}',address='{$address}',introduce='{$introduce}',quantity='{$quantity}',soldnum='{$soldnum}',status='{$status}' WHERE store_id = '" . (int)$store_id . "'";
+	    $sql="UPDATE `" .DB_PREFIX. "store` SET name = '{$storename}',`logo`='{$logo}', `status`='{$status}',`shortname` = '{$shortname}', `owner` = '{$owner}',`tel`='{$telphone}' ,mobile='{$mobile}',fax='{$fax}',address='{$address}',introduce='{$introduce}',quantity='{$quantity}',soldnum='{$soldnum}',status='{$status}' WHERE store_id = '" . (int)$store_id . "'";
 	   
 		$this->db->query($sql);
 		

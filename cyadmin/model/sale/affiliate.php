@@ -218,7 +218,7 @@ class ModelSaleAffiliate extends Model {
 	}
 	
 	public function deleteTransaction($order_id) {
-		$this->db->query("DELETE FROM " . DB_PREFIX . "affiliate_transaction WHERE order_id = '" . (int)$order_id . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "affiliate_transaction WHERE order_id =  '{$order_id}'");
 	}
 	
 	public function getTransactions($affiliate_id, $start = 0, $limit = 10) {
@@ -248,7 +248,7 @@ class ModelSaleAffiliate extends Model {
 	}	
 	
 	public function getTotalTransactionsByOrderId($order_id) {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "affiliate_transaction WHERE order_id = '" . (int)$order_id . "'");
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "affiliate_transaction WHERE order_id =  '{$order_id}'");
 	
 		return $query->row['total'];
 	}		

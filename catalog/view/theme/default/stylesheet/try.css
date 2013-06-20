@@ -73,8 +73,10 @@ a.cy-selected i{display: block;position: absolute;right: 0;bottom: 0;width: 12px
 .try_topbg{height:30px; background-color:#f7f7f7; border-bottom:#f0f0f0 solid 1px;width:100%; line-height:30px;}
 .try_width{width:960px; margin:0 auto;}
 .try_topleft{float:left; margin-top:4px;}
+.try_topleft a{background:url(../image/try/home.jpg) no-repeat;display:inline-block;height:22px;width:90px;}
 .try_topright{float:right;}
 .try_topright span a{line-height:30px;color:#999999; padding-right:10px; vertical-align:super;}
+.try_topright span {display:inline-block;width:330px;background:url(../image/try/try_tel.jpg)  right center no-repeat;}
 .try_logo{height:106px;width:960px; margin:0 auto; clear:both;}
 .try_logoleft{float:left; margin-top:14px;}
 .try_logoright{float:right;width:320px;}
@@ -83,8 +85,10 @@ a.cy-selected i{display: block;position: absolute;right: 0;bottom: 0;width: 12px
 .welcome span{ background:url(../image/try/redbg.png) no-repeat;width:90px;height:22px;padding:4px; color:#FFFFFF;}
 .welcome span a{color:#FFFFFF;line-height:30px;}
 .try_menu{width:960px; margin:0 auto; height:44px; background-color:#D80100; line-height:44px;}
+
 .try_menu li{color:#FFFFFF; font-size:14px; float:left;padding-left:30px;padding-right:10px;}
-.try_menu li a{color:#FFFFFF;}
+.try_menu li a{color:#FFFFFF;display: block;width: 80px;height: 44px;line-height: 44px;text-align:center;}
+.try_menu li a:hover{background: url(../image/home/nav_bg.png) repeat;}
 .try_menu .sort{float:right;color:#FFFFFF; margin-right:10px;}
 
 /* banner广告*/

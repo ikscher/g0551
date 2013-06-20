@@ -15,10 +15,10 @@
 				<form name="" action="{$search_url}" method="post">
                 <table>
 					<tr>
-						<td width="300"><input name="name" type="text"  class="input-xlarge" id="name" value="{$name}" placeholder="宝贝名称"/></td>
-						<td width="100"><input name="model" type="text"  class="input-small" id="model" value="{$model}" placeholder="宝贝编号"/></td>
-					    <td><input name="price1" type="text" class="input-mini" id="price1"  maxlength="10" value="{$price1}" placeholder="最小价" />到<input name="price2" type="text" class="input-mini" id="price2"  maxlength="10" value="{$price2}" placeholder="最大价"/></td>
-				        <td><button onclick="javascript:searchItems()" class="btn" type="submit">搜索</button></td>
+						<td width="208"><div class="input-prepend"><span class="add-on">宝贝名称</span><input name="name" type="text"  class="span2" id="name" value="{$name}" placeholder="宝贝名称"/></div></td>
+						<td width="208"><div class="input-prepend"><span class="add-on">宝贝编号</span><input name="model" type="text"  class="span2" id="model" value="{$model}" placeholder="宝贝编号"/></div></td>
+					    <td width="230"><div class="input-prepend"><span class="add-on">最小价</span><input name="price1" type="text" class="span1" id="price1"  maxlength="10" value="{$price1}" placeholder="最小价" />到<span class="add-on">最大价</span><input name="price2" type="text" class="span1" id="price2"  maxlength="10" value="{$price2}" placeholder="最大价"/></div></td>
+				        <td width="80"><button onclick="javascript:searchItems()" class="btn" type="submit">搜索</button></td>
 				  </tr>
 				</table>
                 </form>

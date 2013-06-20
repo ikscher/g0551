@@ -1,4 +1,6 @@
 <?php
+/*pulic load file公共加载文件
+*/
 // Error Reporting
 error_reporting(E_ALL);
 
@@ -74,10 +76,6 @@ if (!isset($_SERVER['REQUEST_URI'])) {
 require_once(DIR_SYSTEM. 'config/config.php');
 
 
-// Helper
-require_once(DIR_SYSTEM . 'helper/json.php'); 
-require_once(DIR_SYSTEM . 'helper/utf8.php'); 
-
 // Engine
 require_once(DIR_SYSTEM . 'engine/action.php'); 
 require_once(DIR_SYSTEM . 'engine/controller.php');
@@ -97,7 +95,10 @@ require_once(DIR_SYSTEM . 'library/encryption.php');
 require_once(DIR_SYSTEM . 'library/image.php');
 require_once(DIR_SYSTEM . 'library/language.php');
 require_once(DIR_SYSTEM . 'library/log.php');
-require_once(DIR_SYSTEM . 'library/mail.php');
+// require_once(DIR_SYSTEM . 'library/mail.php');
+require_once(DIR_SYSTEM . 'library/class.phpmailer.php');
+
+
 require_once(DIR_SYSTEM . 'library/pagination.php');
 require_once(DIR_SYSTEM . 'library/request.php');
 require_once(DIR_SYSTEM . 'library/response.php');
@@ -106,4 +107,8 @@ require_once(DIR_SYSTEM . 'library/template.php');
 require_once(DIR_SYSTEM . 'library/OCTemplate.php');
 require_once(DIR_SYSTEM . 'library/cookie.php');
 require_once(DIR_SYSTEM . 'library/OCSeccode.php');
+
+// Helper
+require_once(DIR_SYSTEM . 'helper/json.php'); 
+require_once(DIR_SYSTEM . 'helper/utf8.php'); 
 ?>

@@ -1,23 +1,54 @@
 {$header}
-<div id="content">
-  <h1>{$heading_title}</h1>
+<link href="" rel="stylesheet"  type="text/css" />
+<div class="content">
+  <span class="title">{$heading_title}</span>
   <form action="{$action}" method="post" enctype="multipart/form-data">
     <p>{$text_email}</p>
-    <h2>{$text_your_email}</h2>
-    <div class="content">
+    <!-- <h2>{$text_your_email}</h2> -->
+    <div class="content_">
       <table class="form">
         <tr>
-          <td>{$entry_email}</td>
+          <td>{$text_your_email}</td>
           <td><input type="text" name="email" value="" /></td>
         </tr>
       </table>
     </div>
     <div class="buttons">
-      <div class="left"><a href="{$back}" class="button">{$button_back}</a></div>
-      <div class="right">
-        <input type="submit" value="{$button_continue}" class="button" />
+      <div class="left">
+	     <a href="{$back}" >{$button_back}</a>
+      
+         <input type="submit" value="{$button_continue}" />
       </div>
     </div>
   </form>
 </div>
+<script type="text/javascript">
+    $('input[type=submit]').click(function(){
+        var email=$('input[name=email]').val();
+		if(!(/[_a-zA-Z\d\-\.]+@[_a-zA-Z\d\-]+(\.[_a-zA-Z\d\-]+)+$/.test(email))){ 
+		    alert("输入的邮箱格式不正确！");
+		    return false;	
+        }
+
+		$.ajax({
+			  url:'?route=account/register/ajaxEmail&email='+email,
+			  dataType:'json',
+			  async:true,
+			  success:function(json){	
+				  if(json.email<=0){
+					  alert("注册的邮箱不存在！");
+					  return false;
+				  }else{
+				     $('form').submit(); 
+					  return true;
+				   }
+			   }
+			   
+	    });
+		return false;
+		
+    });	
+    
+    
+</script>
 {$footer}

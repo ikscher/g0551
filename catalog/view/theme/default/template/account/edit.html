@@ -38,7 +38,7 @@
 									  </tr>
 									  <tr>
 										<td align="right">昵&nbsp;&nbsp;&nbsp;&nbsp;称：</td>
-										<td><input type="text" name="nickname" class="small" value="{$nickname}" />　<span class="pinkfont">*</span></td>
+										<td><input type="text" name="nickname" class="small" value="{$nickname}" />　</td>
 									  </tr>
 									  <tr>
 										<td align="right">手&nbsp;机&nbsp;号：</td>
@@ -46,7 +46,7 @@
 									  </tr>
 									  <tr>
 										<td align="right">固定电话：</td>
-										<td><input type="text" name="telphone" class="small" value="{$telphone}"  />　<span class="pinkfont">*</span></td>
+										<td><input type="text" name="telphone" class="small" value="{$telphone}"  />　</td>
 									  </tr>
 									  <tr>
 										<td align="right">邮箱地址：</td>
@@ -104,9 +104,8 @@
 				
 			    var nickname=$.trim($("input[name=nickname]").val());
 			    
-				if (!(/[^<>$]{2,}/.test(nickname))) {
+				if (nickname && !(/[^<>$]{2,}/.test(nickname))) {
 				   arr.push("输入的昵称有错误！");	
-				   //alert('ddd');
 				} 
 				
 					
@@ -116,7 +115,7 @@
 				}
 				
 				var telphone=$.trim($("input[name=telphone]").val());
-				if(!(/^\d{3,4}-\d{7,8}$/.test(telphone))){
+				if(telphone && !(/^\d{3,4}-\d{7,8}$/.test(telphone))){
 				   arr.push("输入的电话号码格式不正确！");
 				}
 				
