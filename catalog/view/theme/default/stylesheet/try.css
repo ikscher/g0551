@@ -187,3 +187,42 @@ a.wind_cur{ display:block; float:left; width:93px; height:80px;cursor:pointer;}
 .productinfo ul{position:relative;}
 span._m_b{position:absolute;left:300px;top:5px;}
 
+/************************ 手机短信验证**************************/
+.trylist_{width:960px; margin:10px auto 15px auto;}
+.trybuyTitle{border-bottom:1px dashed #CCCCCC;padding-top:5px;}
+.trybuyContent{color:#666;}
+.trybuyContent dl{padding-top:12px;}
+.trybuyContent dl span{float:left;text-align:center;}
+.trybuyContent dl span.photo{width:100px;}
+.trybuyContent dl span.productName{width:420px;}
+.trybuyContent dl span.model{width:260px;}
+/* .trybuyContent dl span.count{width:80px;} */
+.trybuyContent dl span.price1{width:80px;}
+.trybuyContent dl span.operator{width:80px;}
+.trybuyContent dt{height:28px;line-height:28px;background:#F0F0F0;font-weight:bold; padding-left:20px;text-align:center;}
+.trybuyContent dd{clear:both;padding-left:20px;padding-top:5px;padding-bottom:5px;line-height:60px;}
+.trybuyContent div.containue{text-align:right;border-top:1px dashed #E0E0E0;padding-top:10px;margin-top:10px;}
+.trypaybutton{text-align:right;width:960px;margin:auto;}
+.trypaybutton ul{width:240px;margin-left:705px;padding-top:10px;padding-bottom:10px;}
+.trypaybutton li{float:left;width:120px;text-align:left;line-height:180%;}
+.trybuyContent div.containue a{margin-right:15px;}
+
+.tryphone{width:960px; margin:0 auto; padding:10px;}
+.phonetxt{clear: both; height:36px; border-bottom:#CCCCCC dashed 1px; line-height:36px; font-size:14px; font-weight:700;color:#666666;}
+.phonetxt1{clear: both; height:36px; border-top:#CCCCCC dashed 1px; line-height:36px; font-size:12px;color:#666666;}
+.tinput{ border:#CCCCCC solid 1px; height:22px;}
+.pw_form {clear: both;margin: 0 auto;width: 476px;}
+.pw_form ul{float: left;list-style: none outside none;padding: 25px 0 10px 26px;width: 450px;}
+.pw_form ul li{float: left; margin-bottom: 10px;padding-left: 10px; width: 440px;}
+.pw_form ul.inp li{background: none repeat scroll 0 0 transparent;float: left;padding-left: 10px;width: 580px;}
+.pw_form ul.inp li.s_bt{float: left;line-height: normal; margin-bottom: 20px;padding-left: 80px;width: 300px;}
+.pw_form ul.inp span.tit{float: left;text-align: right;width: 150px;}
+.pw_form ul.inp span.inp {overflow:hidden;float: left;}
+.inp img{cursor:pointer;}
+/* .pw_form ul.inp span.inp a{float:left;} */
+input.btn{ height:20px; line-height:15px; border:1px solid #999; background:url(../image/try/imgs.gif) repeat-x left -483px; padding:0 5px; overflow:visible; width:auto; _width:0;cursor:pointer;}
+input.input{ border:#ccc solid 1px; height:13px; padding:3px 2px 2px 2px; width:200px; background:#ffffff;float:left;}
+
+label.error{ background:url(../image/try/error.gif) left center no-repeat; padding-left:20px; color:#900;}
+label.success{ background:url(../image/try/ok.gif) left center no-repeat; padding-left:20px; color:#390;}
+

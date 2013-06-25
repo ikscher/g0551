@@ -63,10 +63,29 @@ class ModelTryTry extends Model {
 	
 	}
 	
+	//选中的试用产品
+	public function getSelectedTryProduct($try_id){
+	    
+	    $sql="select t.try_id,t.product_id,p.image,pd.name,t.attribute,p.price,ps.price as special_price ,ps.date_start,ps.date_end from ".DB_PREFIX."try t left join ".DB_PREFIX."product p on t.product_id=p.product_id left join ".DB_PREFIX."product_description pd on t.product_id=pd.product_id left join ".DB_PREFIX."product_special ps on t.product_id=ps.product_id where t.try_id in({$try_id})";
+	   $query=$this->db->query($sql);
+		
+		return $query->rows;
+	}
+	
 	//试用产品
 	public function addTryProduct($customer_id,$product_id,$store_id,$time,$attribute){
 	    $sql="insert into ".DB_PREFIX."try (`customer_id`,`product_id`,`store_id`,`trytime`,`attribute`) values('{$customer_id}','{$product_id}','{$store_id}','{$time}','{$attribute}')";
-	    return $this->db->query($sql);
+	    //return $this->db->query($sql);
+	    if($this->db->query($sql)){
+		    return $this->db->getLastId();
+		} 
+	}
+	
+	//删除试用的产品
+	public function deleteTryProduct($try_id){
+	    $sql="delete from ".DB_PREFIX."try where try_id={$try_id}";
+		return $this->db->query($sql);
+		 
 	}
 
 }

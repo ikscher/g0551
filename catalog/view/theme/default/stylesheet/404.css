@@ -1,0 +1,9 @@
+body {
+	font-family: Verdana,"BitStream vera Sans",Arial,Helvetica,'Lucida Grande','Lucida Sans Unicode',Sans-serif;
+	color: #555;
+}
+
+.container {
+	margin: 10px auto;
+	width: 750px;
+}

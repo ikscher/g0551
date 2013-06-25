@@ -48,7 +48,6 @@ class ControllerTryTry extends Controller {
 		
 		$this->data['products']=$products_;
         
-		
 		if ($this->customer->isLogged()){
 			if(isset($this->request->cookie['oc_customer'])){
 				$customer=$this->cookie->OCAuthCode($this->request->cookie['customer'],'DECODE');
@@ -61,7 +60,9 @@ class ControllerTryTry extends Controller {
 		}
 		
 		
+		
 		$this->children = array(
+		    'try/header',
 			'try/footer'
 		);
 		
@@ -80,13 +81,16 @@ class ControllerTryTry extends Controller {
 	
     }
 	
+	
+	
+	
 	public function sendMail(){
 	    $this->load->library('class.phpmailer'); //载入PHPMailer类 
         
 		$mail = new PHPMailer(); //实例化 
 		$mail->IsSMTP(); // 启用SMTP 
-		$mail->Host = "smtp.exmail.qq.com"; //SMTP服务器 以163邮箱为例子 
-		//$mail->Host="mail.g0551.com";
+		//$mail->Host = "smtp.exmail.qq.com"; //SMTP服务器 以163邮箱为例子 
+		$mail->Host="127.0.0.1";
 		$mail->Port = 25;  //邮件发送端口 
 		$mail->SMTPAuth   = true;  //启用SMTP认证 
 		 
@@ -116,7 +120,44 @@ class ControllerTryTry extends Controller {
 		} else { 
 		  echo "Message sent!"; 
 		} 
-	}		
+	}
+    
+	
+    public function sendMessage(){
+
+		$time=time();
+		
+		
+        $this->redirect($this->url->link('try/try/sending',"time={$time}",'SSL'));
+    }	
+	
+	public function sending(){
+	    $results=array();
+		
+	    $json=array();
+		
+		$rand=$this->memcached->get('try_your_product');
+		
+		$message="亲，您正在试用穿悦商城的产品，验证码：".$rand." 。切勿将验证码泄露于他人，如非本人操作，建议及时修改账户。<br>【穿悦商城】";
+		
+		$sql="select mobile,sendtime from ".DB_PREFIX."try_tmp_message ";
+		$query=$this->db->query($sql);
+		
+		$results=$query->rows;
+		
+		if(empty($results)) return;
+		
+		foreach($results as $v){
+		    $time=$v['sendtime'];
+			$time=strval($time);
+			$mobile=$v['mobile'];
+			$json[]=array('tel'=>$mobile,'message'=>$message,'time'=>$time);
+		
+		}
+	
+		$this->response->setOutput(json_encode($json));
+	
+	}
 
 }
 ?>

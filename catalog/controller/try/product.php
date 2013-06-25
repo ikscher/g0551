@@ -1,47 +1,18 @@
 <?php 
 class ControllerTryProduct extends Controller { 
 	public function index() {
-		/* if (!$this->customer->isLogged()) {
-	  		//$this->session->data['redirect'] = $this->url->link('try/try', '', 'SSL');
-	  
-	  		$this->redirect($this->url->link('account/login', '', 'SSL'));
-    	}  */
-	
-		//$this->language->load('try/try');
 
-		// $this->document->setTitle($this->language->get('heading_title'));
 		
 		$customer_id=$this->customer->isLogged();
         if(!empty($customer_id)){
 		    $this->data['customer_id']=$customer_id;
 		}else{
 		    $this->data['customer_id']=0;
-		}
+		} 
 		
 		$this->data['referer']=$this->request->server['REQUEST_URI'];
         
-      	$this->data['login']="?route=account/login";
-		
-		
-    	$this->data['heading_title'] = $this->language->get('heading_title');
-
-    	
-		$this->data['home'] =$this->url->link('common/home','','SSL');
-		$this->data['logout'] =$this->url->link('account/logout','','SSL');
-
-	    	
-		$this->data['telphone']=$this->language->get('telphone');
-		$this->data['address']=$this->language->get('address');
-		$this->data['icp']=$this->language->get('icp');
-		$this->data['bottom']=$this->language->get('bottom');
-        
-		$this->load->model('catalog/category');
-        $this->data['clothes'] = $this->url->link('product/category','category_id='.ModelCatalogCategory::$CATEGORY_CLOTHES,'SSL');
-		$this->data['foods']   = $this->url->link('product/category','category_id='.ModelCatalogCategory::$CATEGORY_FOODS,'SSL');
-		$this->data['house']   = $this->url->link('product/category','category_id='.ModelCatalogCategory::$CATEGORY_HOUSE,'SSL');
-		$this->data['travel']   = $this->url->link('product/category','category_id='.ModelCatalogCategory::$CATEGORY_TRAVEL,'SSL');
-		$this->data['joy']    =  $this->url->link('common/home/joy','','SSL');
-       
+    
 		
 		$product_id=!empty($this->request->get['product_id'])?$this->request->get['product_id']:'';
         if(empty($product_id)) return ;
@@ -145,6 +116,7 @@ class ControllerTryProduct extends Controller {
 		
 		
 		$this->children = array(
+		    'try/header',
 			'try/footer'
 		);
 	
@@ -208,7 +180,7 @@ class ControllerTryProduct extends Controller {
 	}
 	
 	public function ConfirmSelectProduct(){
-	    $json=array();
+	    //$json=array();
 		$time=time();
 	    $product_id_list=$this->request->post['product_id_list'];
 		$store_id  =$this->request->post['store_id'];
@@ -220,9 +192,9 @@ class ControllerTryProduct extends Controller {
 		foreach($product_id_list as $k=>$v){
 			$numRows=$this->model_try_try->getTryProduct($k,$customer_id);
 			if($numRows>0){
-				$json[$k]=$v;
+				$json['exists'][$k]=$v;
 			}else{
-				$this->model_try_try->addTryProduct($customer_id,$k,$store_id,$time,$v);
+				$json['noexists'][$k]=$this->model_try_try->addTryProduct($customer_id,$k,$store_id,$time,$v);
 			}
 			
 		} 

@@ -29,6 +29,7 @@
 			<li class="z">您好，{if !empty($username)}{$username} ！欢迎来到穿悦商城<a href="{$text_logout}" class="f_h exit">退出</a>{else}欢迎来到穿悦商城！<a href="{$text_login}" class="f_h">登录</a>，<a href="{$text_register}" class="f_h">快速注册</a>{/if}</li>
 		</ul>
 		<ul class="y" id="menu">
+		    <!-- <li class="z"><script type="text/javascript" src="http://ext.weather.com.cn/34558.js"></script></li> -->
 		    {if !empty($username)}
 	
 		    <li class="z ">
@@ -86,7 +87,8 @@
 			<button id="search_btn" class="search_btn"></button>
 		</div>
 		<div class="search_hot f3n">
-            热门搜索：
+		    <script type="text/javascript" src="http://ext.weather.com.cn/34558.js"></script>
+            <!-- 热门搜索：
             <a href="">山核桃</a> 
             <a href="">鱿鱼 </a>
             <a href="">铁观音 </a>
@@ -95,7 +97,7 @@
             <a href="">鹿茸 </a>
             <a href="">阿胶 </a>
             <a href="">雪蛤 </a>
-            <a href="">婴幼保健</a>
+            <a href="">婴幼保健</a> -->
         </div>
 	</div>
 	<div class="redmainmenu">

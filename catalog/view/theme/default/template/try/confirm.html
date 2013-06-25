@@ -1,0 +1,217 @@
+{$header}
+<!-- <script type="text/javascript" src="http://j0.mbscss.com/?p=js/public/1.0.0/jquery.min.js,js/global/1.0.0/ml.validate.js"></script> -->
+
+
+<!--商品列表begin-->
+<div class="trylist_ clear">
+	<div class="trybuyTitle"><img src="catalog/view/theme/default/image/try/trybag.jpg" width="230" height="30" /></div>
+	<div class="trybuyContent">
+		<dl class="clearfix">
+			<dt>
+				<span class="photo">商品图片</span>
+				<span class="productName">商品名称</span>
+				<span class="model">属性</span>
+				<!-- <span class="count">数量</span> -->
+				<span class="price1">单价</span>
+				<span class="operator">操作</span>
+			</dt>
+			
+			{loop $products $p}
+			<dd>
+				<span class="photo"><img src="{$p['image']}" width="50" height="60" /></span>
+				<span class="productName"><a href="?route=try/product&product_id={$p['product_id']}">{$p['name']}</a></span>
+				<span class="model">{$p['attribute']}</span>
+				<!-- <span class="count">1</span> -->
+				<span class="price1">{$p['price']}</span>
+				<span class="operator" data-id="{$p['try_id']}"><a href="javascript:void(0);">删除</a></span>
+			</dd>
+			{/loop}
+		</dl>
+		<div class="containue"></div>
+	</div>
+	<div class="trypaybutton">
+		<!-- <ul class="clearfix">
+			<li>商品总额：1777.00</li>
+			<li>剩余：1777.00</li>
+		</ul> -->
+		<div>
+		     <!-- <a href="#"><img src="catalog/view/theme/default/image/try/containue1.jpg" border="0" /></a> -->
+			 <button class="btn" type="button">继续挑选</button>
+		</div>
+	</div>
+</div>
+<!--验证码-->
+<div class="tryphone">
+	<div class="trybuyTitle"><img src="catalog/view/theme/default/image/try/tryphone.jpg" width="230" height="30" /></div>
+	<!-- <form id="vForm" method="post"> -->
+		<div class="pw_form"><ul class="inp">
+			<li>
+				<span class="tit">请输入手机号码：</span> 
+				<span class="inp"><input type="text" name="mobile" id="mobile" class="tinput" value="{$mobile}" /></span>	
+				<label id="mobileinfo" style="margin-left:10px"></label>
+			</li>
+			
+			 <li>
+                <span class="tit">验证码：</span> 
+                <span class="inp" >
+                    <input type="text" name="captcha" maxlength="4" class="input-mini" value=""  />
+                    <img  src="?route=account/return/captcha" alt="验证码">
+                    <!-- <span><a href="javascrip:void(0);">换一张</a></span> -->
+                </span>    
+                <label id="verifyemailinfo" style="margin-left:10px"></label>                      
+            </li>
+			
+            <li style="width:700px">
+                <span class="tit">&nbsp;</span> 
+                <span class="inp">
+				    <button class="btn" type="button"  name="btnmobilevcode" >获取短信校验码</button>
+					<!-- <input type="button" id="btnmobilevcode" name="btnmobilevcode" class="btn" value="获取短信校验码" /> -->
+                    <span id="sResend" style="display:none;padding-top:5px;">
+                    <br />
+                    校验码已发出请注意查收短信，如果没有收到您可以在<span id="sMin" style="color:#AB0036;font-weight:bold;">60</span>秒后重新获取短信校验码
+					</span>
+                </span>
+            </li>
+            <li>
+                <span class="tit">请输入短信校验码：</span> 
+                <span class="inp">
+                    <input type="text" name="mobilevcode" id="mobilevcode" value="" maxlength="6" />
+                </span>
+                <label id="mobilevcodeinfo" style="margin-left:10px"></label>
+            </li>
+           
+            <li>
+                <span class="tit">&nbsp;</span> 
+                <span class="inp">
+				     <button class="btn btn-primary" type="button" name="tryspace">确定</button>
+                    <!-- <input  type="image" name="imageField" src="catalog/view/theme/default/image/try/payment_btn2.jpg" /> -->
+                </span>
+            </li>
+		</ul></div>
+	<!-- </form> -->
+	<div class="phonetxt1">若您的手机号无法接收验证短信，请您拨打客服电话0551-64374866申请更换验证手机号码。</div>
+</div>
+<script type="text/javascript">
+    $(function(){
+		$('button[name=tryspace]').addClass('disabled');
+		$('button[name=tryspace]').attr({'disabled':'disabled'});
+	});
+				
+    $('dd span.operator').click(function(){
+	    var try_id=$(this).attr('data-id');
+		var that=$(this);
+	    if(confirm('您确认删除吗?')){
+		    $.ajax({
+			    url:'?route=try/confirm/deleteTryProduct',
+				type:'post',
+				dataType:'text',
+				data:{try_id:try_id},
+				success:function(str){
+				    if(str==1){
+					    that.parent().remove();
+				    }
+				}
+			});
+		}
+	});
+	
+	$('input[name=mobile]').blur(function(){
+	    var mobile=$(this).val();
+		
+		if(!(/^1[3|4|5|8]\d{9,9}$/.test(mobile))){
+		    $('#mobileinfo').addClass('error');
+		    $('#mobileinfo').html('手机号格式不正确！');
+		}else{
+		    $('#mobileinfo').removeClass('error');
+		    $('#mobileinfo').html('');
+		}
+	});
+  
+    $('.inp img').click(function(){
+		$(this).attr({'src':"?route=account/return/captcha"});
+	});
+	
+	$('.inp span a').click(function(){
+	    $('.inp img').attr({'src':"?route=account/return/captcha"});
+	});
+    
+	var s=61;var t;
+	function countdown(){ 
+	    if(s>0){ --s;}
+
+	    $('button[name=btnmobilevcode]').html('倒计时：'+s);
+	   
+	    t=setTimeout("countdown()",1000);
+	    if(s==0) {
+	        clearTimeout(t);
+		    $('button[name=btnmobilevcode]').removeClass('disabled');
+			$('button[name=btnmobilevcode]').html('获取短信校验码');
+		    $('button[name=btnmobilevcode]').removeAttr('disabled');
+			//$('button[name=tryspace]').removeClass('disabled');
+			//$('button[name=tryspace]').removeAttr('disabled');
+			
+		}
+	}
+		
+	
+		
+	$('button[name=btnmobilevcode]').click(function(){
+	    var captcha=$('input[name=captcha]').val();
+		var that=$(this);
+		var mobile={$mobile};
+	    $.post('?route=try/confirm/validateCaptcha',{captcha:captcha},function(str){
+		    if(str=='no'){
+			    $('#verifyemailinfo').addClass('error');
+			    $('#verifyemailinfo').html('验证码不正确！');
+				return false;
+			}else{
+			    $('#verifyemailinfo').html('');
+				$('#verifyemailinfo').removeClass('error');
+				$.post('?route=try/confirm/sendMessage',{mobile:mobile},function(){
+		            
+				});
+				
+				that.addClass('disabled');
+				that.attr({'disabled':'disabled'});
+				
+				$('button[name=tryspace]').addClass('disabled');
+				$('button[name=tryspace]').attr({'disabled':'disabled'});
+				countdown();
+			}
+		});
+	
+	    
+		//setInterval('countdown()',1000);
+	});
+	
+	$('input[name=mobilevcode]').keydown(function(){
+	    $('button[name=tryspace]').removeClass('disabled');
+	    $('button[name=tryspace]').removeAttr('disabled');
+	});
+	
+	$('button[name=tryspace]').click(function(){
+
+	    var captcha_=$('#mobilevcode').val();
+		console.log(captcha_);
+	    $.post('?route=try/confirm/validateMessage',{captcha_:captcha_},function(str){
+		    console.log(str);
+		    if(str=='no'){
+			    $('#mobilevcodeinfo').html('验证码不正确！');
+				$('#mobilevcodeinfo').addClass('error');
+			}else{
+			    $('#mobilevcodeinfo').html('');
+				$('#mobilevcodeinfo').removeClass('error');
+				location.href='?route=account/mytry';
+			}
+		});
+	    
+	});
+</script>
+<!--商品列表end-->
+
+{$footer}
+
+<!-------------------------底部版权end------------------------->
+
+</body>
+</html>

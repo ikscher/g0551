@@ -1,46 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>试中心</title>
-<link href="catalog/view/theme/default/stylesheet/bootstrap.css" rel="stylesheet" type="text/css" /> 
-<link href="catalog/view/theme/default/stylesheet/try.css" type="text/css" rel="stylesheet">
-<script type="text/javascript" src="catalog/view/javascript/jquery/jquery-1.7.1.min.js"></script>
-<script type="text/javascript" src="catalog/view/javascript/bootstrap/bootstrap-modal.js"></script>
-</head>
-</head>
-
-<body>
-
-<div class="try_topbg">
-	<div class="try_width">
-		<div class="try_topleft"><a href="?route=common/home"><!-- <img src="catalog/view/theme/default/"/> --></a></div>
-		<div class="try_topright"><span><a href="?route=module/general/faq">帮助中心 │</a><a href="?route=module/general/company">关于我们</a></span><!-- <img src="catalog/view/theme/default/image/try/try_tel.jpg"/> --></div>
-	</div>
-</div>
-<div class="try_logo">
-	<div class="try_logoleft"><a href="?route=try/try"><img src="catalog/view/theme/default/image/try/try_logo.jpg"/></a></div>
-	<div class="try_logoright">
-	    {if !empty($username)}
-			<div class="rectangle">欢迎你！{$username} <a href="?route=account/logout">【退出】</a> <br><a href="?route=account/account">我的帐户</a></div>
-		{else}
-			<div class="welcome">欢迎您来到试中心！<span>【<a href="?route=account/register">注册</a>│<a class="login" href="?route=account/login">登录</a>】</span></div>
-	    {/if}
-	</div>
-</div>
-	<div class="try_menu">
-		<ul>
-			<li><a href="javascript:void(0);">所有品牌</a></li>
-			<li><a href="{$clothes}">服装配饰</a></li>
-			<li><a href="{$foods}">美食特产</a></li>
-			<li><a href="{$house}">家居建材</a></li>
-			<li><a href="{$travel}">运动户外</a></li>
-			<li><a href="{$joy}">文化娱乐</a></li>
-		</ul>
-		<!-- <div class="sort">在售商品分类></div> -->
-	</div>
+{$header}
 <!------------试中心head end-------------->
-
+<script type="text/javascript" src="catalog/view/javascript/bootstrap/bootstrap-modal.js"></script>
 <!--在售品牌-->
 <div class="salebrand">
 	<div class="brandbg">
@@ -538,12 +498,12 @@ $(function(){
 			data:{product_id_list:product_id_list,store_id:store_id},
 			dataType:'json',
 			success:function(json){
-			    //console.log(json.length);
-			    if(json.length>0){
+			    
+			    if(json['exists']){
 				    
 				    var _Y_=[];
-					for (var k in json){
-					    _Y_.push(k+'：'+json[k]+'\n');
+					for (var k in json['exists']){
+					    _Y_.push(k+'：'+json['exists'][k]+'\n');
 							
 				    }
 					
@@ -551,11 +511,19 @@ $(function(){
 					    alert(_Y_.toString().replace(/,/gi,'')+'已经添加到试用空间，请不要重复添加!');
 					    return false;
 					}
-				}else{
-				    alert('已添加到试用空间！');
+				}else if (json['noexists']){
+				    //alert('已添加到试用空间！');
 					//$('.modal').modal('show');
-				}
+					var _Y_=[];
 					
+					for (var k in json['noexists']){
+					    _Y_.push(json['noexists'][k]);
+					}
+					
+					///console.log(_Y_.toString());
+					location.href='?route=try/confirm&try_id='+encodeURIComponent(_Y_.toString());
+				}
+				
 			}
 		});
 	});
