@@ -38,7 +38,7 @@ class ControllerTryTry extends Controller {
 		foreach($products as $p){
 			$p['category']=$this->model_try_try->getProductLevelCategory($p['product_id']);
 			if(!empty($p['image'])) {
-			    $p['image']=$this->model_tool_image->resize($p['image'],250,154);
+			    $p['image']=$this->model_tool_image->resize($p['image'],250,250);
 			}
 			$p['shortname']=OcCutstr($p['name'],10);
 			$p['discount']=!empty($p['special_price'])?number_format($p['price']/$p['special_price'],2):1;
@@ -136,11 +136,10 @@ class ControllerTryTry extends Controller {
 		
 	    $json=array();
 		
-		$rand=$this->memcached->get('try_your_product');
+		//$rand=$this->memcached->get('try_your_product');
 		
-		$message="亲，您正在试用穿悦商城的产品，验证码：".$rand." 。切勿将验证码泄露于他人，如非本人操作，建议及时修改账户。<br>【穿悦商城】";
-		
-		$sql="select mobile,sendtime from ".DB_PREFIX."try_tmp_message ";
+
+		$sql="select mobile,sendtime,captcha from ".DB_PREFIX."try_tmp_message ";
 		$query=$this->db->query($sql);
 		
 		$results=$query->rows;
@@ -151,6 +150,7 @@ class ControllerTryTry extends Controller {
 		    $time=$v['sendtime'];
 			$time=strval($time);
 			$mobile=$v['mobile'];
+			$message="亲，您正在试用穿悦商城的产品，验证码：".$v['captcha']." 。切勿将验证码泄露于他人，如非本人操作，建议及时修改账户。\n【穿悦商城】";
 			$json[]=array('tel'=>$mobile,'message'=>$message,'time'=>$time);
 		
 		}

@@ -190,18 +190,18 @@
 	});
 	
 	$('button[name=tryspace]').click(function(){
-
+        var mobile=$('input[name=mobile]').val();
 	    var captcha_=$('#mobilevcode').val();
-		console.log(captcha_);
-	    $.post('?route=try/confirm/validateMessage',{captcha_:captcha_},function(str){
-		    console.log(str);
+		//console.log(captcha_);
+	    $.post('?route=try/confirm/validateMessage',{mobile:mobile,captcha_:captcha_},function(str){
+		    //console.log(str);
 		    if(str=='no'){
 			    $('#mobilevcodeinfo').html('验证码不正确！');
 				$('#mobilevcodeinfo').addClass('error');
 			}else{
 			    $('#mobilevcodeinfo').html('');
 				$('#mobilevcodeinfo').removeClass('error');
-				location.href='?route=account/mytry';
+				location.href='?route=try/try';
 			}
 		});
 	    

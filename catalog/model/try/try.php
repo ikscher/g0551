@@ -54,9 +54,12 @@ class ModelTryTry extends Model {
 	}
 	
 	//是否试用过产品
-	public function getTryProduct($product_id,$customer_id){
-	    $sql="select try_id from ".DB_PREFIX."try where product_id={$product_id} and customer_id={$customer_id}";
-				
+	public function getTryProduct($product_id,$customer_id,$flag=true){
+	    if($flag){
+			$sql="select try_id from ".DB_PREFIX."try where product_id={$product_id} and customer_id={$customer_id}";
+		}else{
+            $sql="select try_id from ".DB_PREFIX."try where product_id={$product_id} and mobile={$customer_id}";
+        }		
 		$query=$this->db->query($sql);
 		
 		return $query->num_rows;
@@ -73,8 +76,8 @@ class ModelTryTry extends Model {
 	}
 	
 	//试用产品
-	public function addTryProduct($customer_id,$product_id,$store_id,$time,$attribute){
-	    $sql="insert into ".DB_PREFIX."try (`customer_id`,`product_id`,`store_id`,`trytime`,`attribute`) values('{$customer_id}','{$product_id}','{$store_id}','{$time}','{$attribute}')";
+	public function addTryProduct($customer_id,$product_id,$store_id,$mobile,$time,$attribute){
+	    $sql="insert into ".DB_PREFIX."try (`customer_id`,`product_id`,`store_id`,`mobile`,`trytime`,`attribute`) values('{$customer_id}','{$product_id}','{$store_id}','{$mobile}','{$time}','{$attribute}')";
 	    //return $this->db->query($sql);
 	    if($this->db->query($sql)){
 		    return $this->db->getLastId();

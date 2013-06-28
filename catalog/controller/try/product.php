@@ -69,7 +69,7 @@ class ControllerTryProduct extends Controller {
 		
 		foreach($results as $k=>$v){
 		    $v['image']=$this->model_tool_image->resize($v['image'],108,108);
-			$v['shortname']=OcCutstr($v['name'],13);
+			$v['shortname']=OcCutstr($v['name'],26);
 			
 			$images=array();
 			$productImages=$this->model_catalog_product->getProductImages($v['product_id']);
@@ -94,7 +94,7 @@ class ControllerTryProduct extends Controller {
 					$attributes__[]=$value_;
 				}
 			}
-			
+		
 			$products['images']=$images;
 			$products['productInfo']=$v;
 			$products['attribute'] = $attributes__;
@@ -180,24 +180,40 @@ class ControllerTryProduct extends Controller {
 	}
 	
 	public function ConfirmSelectProduct(){
-	    //$json=array();
+	    $json=array();
 		$time=time();
-	    $product_id_list=$this->request->post['product_id_list'];
-		$store_id  =$this->request->post['store_id'];
-		$customer_id=$this->customer->getId();
+	    $product_id_list=isset($this->request->post['product_id_list'])?$this->request->post['product_id_list']:'';
+		$store_id  = isset($this->request->post['store_id'])?$this->request->post['store_id']:'';
+		$customer_id= $this->customer->getId();
 		
-		if(empty($customer_id)) return ;
+		
+		//if(empty($customer_id)) return ;
 		$this->load->model('try/try');
 		
-		foreach($product_id_list as $k=>$v){
-			$numRows=$this->model_try_try->getTryProduct($k,$customer_id);
-			if($numRows>0){
-				$json['exists'][$k]=$v;
-			}else{
-				$json['noexists'][$k]=$this->model_try_try->addTryProduct($customer_id,$k,$store_id,$time,$v);
-			}
+		if(!empty($customer_id)){//会员
+		    $mobile = $this->customer->getMobile();
+			foreach($product_id_list as $k=>$v){
+				$numRows=$this->model_try_try->getTryProduct($k,$customer_id);
+				if($numRows>0){
+					$json['exists'][$k]=$v;
+				}else{
+					$json['noexists'][$k]=$this->model_try_try->addTryProduct($customer_id,$k,$store_id,$mobile,$time,$v);
+				}
+				
+			} 
+		}else{//游客
+		    $mobile=$this->request->post['mobile'];
+		    foreach($product_id_list as $k=>$v){
 			
-		} 
+				$numRows=$this->model_try_try->getTryProduct($k,$mobile,false);
+				if($numRows>0){
+					$json['exists'][$k]=$v;
+				}else{
+					$json['noexists'][$k]=$this->model_try_try->addTryProduct($customer_id,$k,$store_id,$mobile,$time,$v);
+				}
+				
+			} 
+		}
 		
 		$this->response->setOutput(json_encode($json));
 	}

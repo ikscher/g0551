@@ -513,12 +513,15 @@ var imgUD={
 				cn_li ++;
 			});
 			
-			if(cn_li>4 && cn_li>imgUD.i+4){  
-                for(var k=0;k<cn_li-4;k++){			
-					$(".product_focus_img ul li").eq(imgUD.i).slideUp('slow');
+			//if(cn_li>4 && cn_li>imgUD.i+4){  
+			//if(cn_li>4 && cn_li>imgUD.i+4){  
+                //for(var k=0;k<cn_li-4;k++){	
+                if(cn_li>=imgUD.i+4){				
+					$(".product_focus_img ul li").eq(imgUD.i).addClass('dn');
 					imgUD.i++;
 				}
-			}
+				//}
+			//}
 			
 			
 		},
@@ -529,20 +532,22 @@ var imgUD={
 				cn_li ++;
 			});
 			
-			if(cn_li>4 && imgUD.i>0){    
-			    for(var k=0;k<cn_li - 4;k++){
+			//if(cn_li>4 && imgUD.i>0){    
+			    //for(var k=0;k<cn_li - 4;k++){
+				if(imgUD.i>=1){
 					imgUD.i--;
-					$(".product_focus_img ul li").eq(imgUD.i).slideDown('slow');
+					$(".product_focus_img ul li").eq(imgUD.i).removeClass('dn');
 				}
+				//}
 				
-			}
+			//}
 			
 			
 		}
 }
 
-$('.product_focus_down').bind('mouseenter',imgUD.imgDown);
-$('.product_focus_up').bind('mouseenter',imgUD.imgUp);
+$('.product_focus_down').bind('click',imgUD.imgDown);
+$('.product_focus_up').bind('click',imgUD.imgUp);
 //-->
 
 

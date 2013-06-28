@@ -6,12 +6,16 @@ class ControllerTryConfirm extends Controller {
 	
 	 
 	    $time=time();
-		$try_id=isset($this->request->get['try_id'])?$this->request->get['try_id']:'';
+		$try_id = isset($this->request->get['t'])?$this->request->get['t']:'';
+		$mobile = isset($this->request->get['m'])?$this->request->get['m']:'';
 		
 		if(empty($try_id)) return;
 		
+		if(empty($mobile)){
+		    $mobile=$this->customer->getMobile();
+		}
 		
-		$this->data['mobile']=$this->customer->getMobile();
+		$this->data['mobile']=$mobile;
 		
 		$try_id=urldecode($try_id);
 		
@@ -83,14 +87,23 @@ class ControllerTryConfirm extends Controller {
 	}
 	
 	public function validateMessage(){
-	    $message=$this->memcached->get('try_your_product');
+	    //$message=$this->memcached->get('try_your_product');
+		$mobile=$this->request->post['mobile'];
+		
+		$sql="select captcha from ".DB_PREFIX."try_tmp_message where mobile='{$mobile}' and flag=0 limit 1";
+		
+		$query=$this->db->query($sql);
+		
+		$result=$query->row;
+		$captcha= isset($result['captcha'])?$result['captcha']:'';
 		
 		$captcha_=$this->request->post['captcha_'];
 		
-		if(empty($captcha_) || empty($message)) echo 'no';exit;
 		
-		if($captcha_==$message){
-		    $this->memcached->set('try_your_product',null);
+		//if(empty($captcha_) || empty($captcha)) echo 'no';exit;
+		
+		if($captcha_==$captcha){
+		    //$this->memcached->set('try_your_product',null);
 		    echo 'yes';exit;
 		}else{
 		    echo 'no';exit;
@@ -102,20 +115,20 @@ class ControllerTryConfirm extends Controller {
 	public function sendMessage(){
 	    $rand=rand(100000,999999);
 		
-	    $this->memcached->set('try_your_product',$rand);
+	    //$this->memcached->set('try_your_product',$rand);
 		
 	    $mobile=$this->request->post['mobile'];
 		$time=time();
 		
-		$sql="insert into ".DB_PREFIX."try_tmp_message set mobile='{$mobile}',sendtime='{$time}'";
+		$sql="insert into ".DB_PREFIX."try_tmp_message set mobile='{$mobile}',sendtime='{$time}',captcha='{$rand}'";
 		
 		$this->db->query($sql);
 	
 	}
 	
-	public function test(){
-	    echo $this->memcached->get('try_your_product');
-	
+    public function test(){
+	   // echo $this->memcached->get('try_your_product');
+	   $mac = new GetMacAddr();    echo "<pre>";    print_r( $mac->mac_addr);    
 	}
 }
 	
