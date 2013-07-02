@@ -54,7 +54,7 @@ a.cy-selected i{background: url(../image/index.png) no-repeat;}
 a.cy-selected i{display: block;position: absolute;right: 0;bottom: 0;width: 12px;height: 12px;overflow: hidden;text-indent: -9999em;background-position: -320px -222px;}
 
 .price{ font-size:22px; color:#d90200; font-weight:bold;}
-.abs_b{ width:116px; height:26px; background:url(../image/try/button.gif) -251px 0px no-repeat; position:absolute; right:0px; top:20px; cursor:pointer;z-index:10000;}
+.abs_b{ width:116px; height:26px; background:url(../image/try/button.gif) -251px 0px no-repeat; position:absolute; right:0px; top:20px; cursor:pointer;}
 
 .right_get_p_x{ width:480px; float:right;margin:6px 0px; position:relative; overflow:hidden;}
 .small_p_b{ width:470px; height:527px;background:#fafafa; border-top:1px solid #ebebeb;border-left:1px solid #ebebeb;border-bottom:1px solid #ebebeb; padding-top:25px;padding-left:5px;padding-right:5px;overflow-y:auto;}
@@ -170,9 +170,14 @@ a.cy-selected i{display: block;position: absolute;right: 0;bottom: 0;width: 12px
 
 /* 试用详情*/
 .details{width:958px; margin:0 auto; margin-top:10px;margin-bottom:10px; border:#ebebeb solid 1px; text-align:center;}
+.details dt span.selected{background:url(../image/try/tab_selected.png) no-repeat;display:inline-block;width:150px;height:35px;}
+.details dt span{background:url(../image/try/tab_unselected.png) no-repeat;display:inline-block;width:150px;height:35px;padding-bottom:1px solid #f3f3f3;}
+.details dt span{margin-right:1px;cursor:pointer;line-height:36px;height:36px;text-align:center;}
 .details dt{height:34px; border-bottom:#ebebeb solid 1px; background:#f2f2f2; margin-bottom:10px; text-align:left;}
 /* .details dt img{margin-left:-1px;margin-top:-1px;} */
 .details dd{margin-bottom:10px;}
+
+
 
 
 
@@ -242,3 +247,21 @@ label.success{ background:url(../image/try/ok.gif) left center no-repeat; paddin
 .name{color:#f36;}
 .sy_infoDiv p .del{float:right;cursor:pointer;}
 
+
+/************************* 订单成功**************************/
+.tryok{width:960px; margin:0 auto; padding:10px;}
+.tryokTitle{border-bottom:1px dashed #CCCCCC;padding-top:5px;}
+.orderok{width:960px;border:#ddd solid 1px;float:left; margin:30px 0px 30px 0px;}
+.okleft{float:left;width:268px;border-right:#ddd solid 1px; background:#fbfbfb;}
+.okleft dt{ padding-left:20px;font:bold 12px/1.5 "宋体";color:#333;background:#f3f3f3; height:30px; line-height:30px;}
+.okleft dd{font:12px/1.5 "宋体";color:#949494; padding:10px 10px 10px 20px;line-height:20px; }
+.okleft dd span{color:#666;}
+.okleft .okbor{ border-bottom:#CCCCCC dashed 1px;}
+.okright{float:left;text-align:center;}
+.okright dl{margin-top:20px; margin-left:45px;}
+.okright .okico{height:36px;margin:0 6px 0 6px;line-height:30px;font:bold 14px/1.5 "宋体";}
+.okico img{ vertical-align:middle; padding-right:5px;}
+.okright dd{margin:0 6px 0 50px;}
+.tryok .failure{padding:100px 0 100px 0;border:#ddd solid 1px;text-align:center;}
+.tryok .failure span{font-size:14px;font-family:'微软雅黑';}
+.tryok .failure p{margin-top:18px;}

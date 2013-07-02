@@ -54,11 +54,11 @@ class ModelTryTry extends Model {
 	}
 	
 	//是否试用过产品
-	public function getTryProduct($product_id,$customer_id,$flag=true){
+	public function getTryProduct($product_id,$attribute_ids,$customer_id,$flag=true){
 	    if($flag){
-			$sql="select try_id from ".DB_PREFIX."try where product_id={$product_id} and customer_id={$customer_id}";
+			$sql="select try_id from ".DB_PREFIX."try where product_id={$product_id} and attribute_ids='{$attribute_ids}' and customer_id={$customer_id}";
 		}else{
-            $sql="select try_id from ".DB_PREFIX."try where product_id={$product_id} and mobile={$customer_id}";
+            $sql="select try_id from ".DB_PREFIX."try where product_id={$product_id} and attribute_ids='{$attribute_ids}' and mobile={$customer_id}";
         }		
 		$query=$this->db->query($sql);
 		
@@ -76,8 +76,8 @@ class ModelTryTry extends Model {
 	}
 	
 	//试用产品
-	public function addTryProduct($customer_id,$product_id,$store_id,$mobile,$time,$attribute){
-	    $sql="insert into ".DB_PREFIX."try (`customer_id`,`product_id`,`store_id`,`mobile`,`trytime`,`attribute`) values('{$customer_id}','{$product_id}','{$store_id}','{$mobile}','{$time}','{$attribute}')";
+	public function addTryProduct($try_order_id,$customer_id,$product_id,$attribute_ids,$store_id,$mobile,$time,$attribute){
+	    $sql="insert into ".DB_PREFIX."try (`try_order_id`,`customer_id`,`product_id`,`attribute_ids`,`store_id`,`mobile`,`trytime`,`attribute`) values('{$try_order_id}','{$customer_id}','{$product_id}','{$attribute_ids}','{$store_id}','{$mobile}','{$time}','{$attribute}')";
 	    //return $this->db->query($sql);
 	    if($this->db->query($sql)){
 		    return $this->db->getLastId();
@@ -90,6 +90,51 @@ class ModelTryTry extends Model {
 		return $this->db->query($sql);
 		 
 	}
-
+	
+	
+	/*取订单号*/
+	public function getTryOrderid(){
+	    $Orderid='';
+		$randNum=rand(1000,9999);
+	    $Orderid=date('ymdHis').$randNum;
+		
+		
+		$Orderid='T'.date('ymdHis').$randNum;
+		
+		
+		return $Orderid;
+	
+	}
+	
+	/**添加短信发送记录**/
+	public function addMessage($mobile,$message,$time,$rand=''){
+	    $sql="insert into ".DB_PREFIX."try_tmp_message set mobile='{$mobile}',message='{$message}',sendtime='{$time}',captcha='{$rand}'";
+		
+		return $this->db->query($sql);
+    }
+	
+	/**验证**/
+	public function validateCaptcha($tryid){
+	    $result=array();
+	    $sql="select captcha from ".DB_PREFIX."try_tmp_message where id='{$tryid}' limit 1";
+		
+		$query=$this->db->query($sql);
+		
+		$result=$query->row;
+		
+		return $result;
+	
+	}
+	
+	/**所有待发的信息**/
+    public function cacheMessages(){
+	    $results=array();
+	    $sql="select mobile,sendtime,captcha,message from ".DB_PREFIX."try_tmp_message ";
+		$query=$this->db->query($sql);
+		
+		$results=$query->rows;
+		
+		return $results;
+	}
 }
 ?>

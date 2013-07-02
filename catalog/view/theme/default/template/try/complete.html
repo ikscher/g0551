@@ -1,0 +1,50 @@
+{$header}
+<!------------试中心head end-------------->
+
+<!--订单成功-->
+<div class="tryok">
+	<!---<div class="tryokTitle"><img src="images/tryphone.jpg" width="230" height="30" /></div>-->
+	{if $try_order_id}
+	<div class="orderok">
+		<div class="okleft">
+			<dl>
+				<dt>订单信息</dt>
+				<dd>下单方式：<span>短信确认</span></dd>
+				<dd>订单编号：<span>{$try_order_id}</span></dd>
+				<dd>商家名称：<span><!-- a href="http://www.g0551.com"> -->穿悦商城</span></dd>
+				<dd>联系电话：<span>0551-64374866</span></dd>
+				<dd>腾讯ＱＱ：<span>12333822299</span></dd>
+			</dl>
+
+		</div>
+		<div class="okright">
+			<dl>
+				<dt class="okico"><img src="catalog/view/theme/default/image/try/32-32.png"></img> 订单状态：已成功预订</dt>
+				<dd>恭喜！您已成功下单!</dd>
+				<dd><b>您的订单号为：{$try_order_id}</b></dd>
+				<dd></br>我们的客服人员将很快与您联系。</br>每日18:00前下单，15分钟内与您联系并配送；</br>18:00之后下单将于次日与您联系配送。</dd>
+				<dd><button class="btn" type="button">返回首页</button></dd>
+			</dl>
+		</div>
+	
+	{else}
+	    <div class="failure">
+	        <img src="catalog/view/theme/default/image/try/32-32X.png" /><span> 失败！（可能您的机器不支持cookie但已经下了订单 或者下单不成功！）</span>
+			<p><button class="btn" type="button">返回首页</button></p>
+		</div>
+	{/if}
+	</div>
+</div>
+
+<script type="text/javascript">
+    $('.btn').click(function(){
+	    location.href='?route=try/try';
+	
+	});
+</script>
+<!-------------------------底部版权begin------------------------->
+{$footer}
+
+<!-------------------------底部版权end------------------------->
+
+

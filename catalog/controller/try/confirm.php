@@ -11,6 +11,8 @@ class ControllerTryConfirm extends Controller {
 		
 		if(empty($try_id)) return;
 		
+		$this->data['customer_id']=$this->customer->getId();
+		
 		if(empty($mobile)){
 		    $mobile=$this->customer->getMobile();
 		}
@@ -88,13 +90,17 @@ class ControllerTryConfirm extends Controller {
 	
 	public function validateMessage(){
 	    //$message=$this->memcached->get('try_your_product');
-		$mobile=$this->request->post['mobile'];
+		$tryid=$this->request->post['tryid'];
 		
-		$sql="select captcha from ".DB_PREFIX."try_tmp_message where mobile='{$mobile}' and flag=0 limit 1";
+		/* $sql="select captcha from ".DB_PREFIX."try_tmp_message where id='{$tryid}' limit 1";
 		
 		$query=$this->db->query($sql);
 		
-		$result=$query->row;
+		$result=$query->row; */
+		$this->load->model('try/try');
+		
+		$result=$this->model_try_try->validateCaptcha($tryid);
+		
 		$captcha= isset($result['captcha'])?$result['captcha']:'';
 		
 		$captcha_=$this->request->post['captcha_'];
@@ -120,9 +126,17 @@ class ControllerTryConfirm extends Controller {
 	    $mobile=$this->request->post['mobile'];
 		$time=time();
 		
-		$sql="insert into ".DB_PREFIX."try_tmp_message set mobile='{$mobile}',sendtime='{$time}',captcha='{$rand}'";
+		$this->load->model('try/try');
 		
-		$this->db->query($sql);
+		$message="亲，您正在试用穿悦商城的产品，验证码：".$rand." 。切勿将验证码泄露于他人，如非本人操作，建议及时修改账户。\n【穿悦商城】";
+		$message=nl2br($message);
+		$this->model_try_try->addMessage($mobile,$message,$time,$rand);
+		/* $sql="insert into ".DB_PREFIX."try_tmp_message set mobile='{$mobile}',sendtime='{$time}',captcha='{$rand}'";
+		
+		$this->db->query($sql); */
+		
+		$id=$this->db->getLastId();
+		$this->response->setOutput($id);
 	
 	}
 	

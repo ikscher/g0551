@@ -40,6 +40,9 @@
 			     <span   data-id="{$image['product_image_id']}" {if $k<=0}{else}class="tSbox"{/if}><img src="{$image['large_image']}"  width="459" height="459" /></span>
 				{/loop}
 			</div>
+			<div class="productDesc tSbox">
+			    {$product['productInfo']['description']}
+			</div>
 			<div class="b_p_img_thumb">
 			    <!-- <a class="leftArrow"></a> -->
 				<div class="proThumb-wrap">
@@ -102,8 +105,38 @@
 	
 </div>
 
+<!------------产品展示 end-------------->
+
+
+<!--试用详情-->
+<div class="details">
+	<dl >
+		<dt><span class="selected">产品详情</span><span >试用详情</span> </dt>
+			<dd >{$productInfo['product']['description']}</dd>
+		
+			<dd class="tSbox"><img src="catalog/view/theme/default/image/try/try_details.jpg"/></dd>
+	</dl>
+</div>
+
+
+<div class="modal hide fade">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> 
+    <h3>试用中心</h3>
+  </div>
+  <div class="modal-body">
+    {if !empty($customer_id)}<p>您确定试用您选中的产品吗？</p>{else}<div class="input-prepend input-append"><span class="add-on">请输入您的手机号码：</span><input name="mobile" class="input-xlarge" type="text" placeholder="手机号码"></div>{/if}
+  </div>
+  <div class="modal-footer">
+    <button class="btn confirm" data-dismiss="modal" aria-hidden="true">确定</button>
+    {if !empty($customer_id)}<button class="btn btn-primary inmytryspace">进入我的试用空间</button>{/if}
+  </div>
+</div>
+
 <script type="text/javascript">
 $(function(){
+    
+
 	$('ul').on('click','li a.size_sel',function(){
 	    $(this).siblings().removeClass('cy-selected');
 	    if($(this).hasClass('cy-selected')){
@@ -237,6 +270,8 @@ $(function(){
 		        if($(w).hasClass('tSbox')) {
 				    $(w).removeClass('tSbox');
 				}
+				
+				$('.details dl dd:eq(0)').html($(w).children('.productDesc.').html());
 			}else{
 			    if(!$(w).hasClass('tSbox')) {
 				    $(w).addClass('tSbox');
@@ -275,6 +310,7 @@ $(function(){
 	});
 	
 	var t;
+	
 	$('.b_p_img_thumb').on('mouseover','span',function(){
 	    var image_id=$(this).attr('data-id');
 		var that=$(this);
@@ -284,8 +320,8 @@ $(function(){
 			   that.siblings().removeClass('sleb');
 			   that.addClass('sleb');
 			   
-			   $('._large_img_thumb_ span').addClass('tSbox');
-			   $('._large_img_thumb_ span[data-id='+image_id +']').removeClass('tSbox');
+			   that.parents('.b_p_img_thumb').siblings('._large_img_thumb_').children('span').addClass('tSbox');
+			   that.parents('.b_p_img_thumb').siblings('._large_img_thumb_').children('span[data-id='+image_id +']').removeClass('tSbox');
 		    },300);
 		}
 	}).mouseout(function(){
@@ -342,31 +378,20 @@ $(function(){
 
 
 </script>
-<!------------产品展示 end-------------->
 
-
-<!--试用详情-->
-<div class="details">
-	<dl>
-		<dt><img src="catalog/view/theme/default/image/try/details.jpg"/></dt>
-			<dd><img src="catalog/view/theme/default/image/try/try_details.jpg"/></dd>
-	</dl>
-</div>
-
-
-<div class="modal hide fade">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> 
-    <h3>试用中心</h3>
-  </div>
-  <div class="modal-body">
-    {if !empty($customer_id)}<p>您确定试用您选中的产品吗？</p>{else}<div class="input-prepend input-append"><span class="add-on">请输入您的手机号码：</span><input name="mobile" class="input-xlarge" type="text" placeholder="手机号码"></div>{/if}
-  </div>
-  <div class="modal-footer">
-    <button class="btn confirm" data-dismiss="modal" aria-hidden="true">确定</button>
-    {if !empty($customer_id)}<button class="btn btn-primary inmytryspace">进入我的试用空间</button>{/if}
-  </div>
-</div>
+<script type="text/javascript">
+    $('.details dl dt span').mouseover(function(){
+	    if(!$(this).hasClass('selected')){
+		    $(this).siblings().removeClass('selected');
+			$(this).addClass('selected');
+		}
+	    var order_=$(this).index();
+	
+		$(this).parent().siblings('dd').addClass('tSbox');
+		$(this).parent().siblings('dd:eq('+order_+')').removeClass('tSbox');
+	
+	});
+</script>
 <script type="text/javascript">
     $('.confirm').click(function(){
 	    var mobile='';
@@ -376,12 +401,13 @@ $(function(){
 			    alert('输入的手机号码格式不正确！');
 				return false;
 			}
-			
+		{else}
+		    mobile={$mobile};
 		{/if}
 	
 	
 	    var product_id_list={};
-		
+		/*
 		$('.left_get_p_b ul').each(function(i,w){
 		    var product_attribute='';
 			var product_id;
@@ -398,6 +424,23 @@ $(function(){
 			}
 			
 		});
+		*/
+		
+		var product_id;
+		var product_attribute;
+		var attribute_id;
+		
+		if(('.showHTML .sy_infoDiv').length>0){
+			$('.showHTML .sy_infoDiv').each(function(i,w){
+				
+				product_id=$(w).attr('data-id');
+				attribute_id=$(w).children('span').attr('data-aid');
+				product_attribute=$(w).children('span').html();
+				
+				product_id_list[product_id+'|'+attribute_id]=product_attribute;
+			
+			});
+		}
 		
 		//console.log(product_id_list);return false;
 		var store_id={$productInfo['product']['store_id']};
@@ -445,11 +488,39 @@ $(function(){
 	
 	$('.showHTML').on('click','.del',function(){
 	    
+		var _zzz_=0;
+		var product_id=$(this).parents('.sy_infoDiv').attr('data-id');
+		$('.sy_infoDiv').each(function(i,y){
+		    if($(y).attr('data-id')==product_id){
+			    ++_zzz_;
+			}
+		});
+		
+		if(_zzz_==1) {
+		    $('.right_get_p_x ul li').each(function(i,c){
+			    if($(c).attr('data-id')==product_id){
+				    $(c).children('i').removeClass('checkPN');
+				}
+			});
+		}
+		
 	    $(this).parents('.sy_infoDiv').remove();
+		
+		var _AM_7009;
+		_AM_7009=$('.sy_infoDiv').length;
+		$('.p_x_tig span.selected').html(_AM_7009);
+		
+		
 	    
 	});
 	
 	$(".abs_b").click(function(){
+	    var _AM_95668o=0;
+        
+		_AM_95668o=$('.sy_infoDiv').length;
+		
+		if(_AM_95668o>=9) return false;
+	    
 	    var product_id=$(this).attr('data-id');
 		
 	    var that=$(this);
@@ -477,25 +548,33 @@ $(function(){
 		   return false;
 		}
 		
+		var aids='';
+		var aid;
+		var comma='';
+		$(this).siblings('.attribute').each(function(i,z){
+		    aid=$(z).find('.cy-selected').attr('data-aid');
+			aids+=comma;
+		    aids+=aid;
+			comma=',';
+		
+		});
 		
 		
 		
-		
-		var _AM_95668o=0;
-        
+		/*
 	    $('.right_get_p_x ul li').each(function(i,w){
 		    if($(w).children('i').hasClass('checkPN')){
 			   ++_AM_95668o;
 			}
 		});
-		 
+		*/
 		
 		var store_id = {$productInfo['product']['store_id']};
 		$.ajax({
 			url:'?route=try/product/isTry',
 			dataType:'html',
 			type:'post',
-			data:{product_id:product_id,store_id:store_id},
+			data:{product_id:product_id,attribute_ids:aids,store_id:store_id},
 			success:function(str){
 				if(str>0){
 				   alert('此产品已添加到您的试用空间了，请不要重复添加！');
@@ -509,7 +588,7 @@ $(function(){
 						var product_id_=$(w).attr('data-id');
 						if(product_id===product_id_ && !$(w).children('i').hasClass('checkPN')){
 							$(w).children('i').addClass("checkPN");
-							++_AM_95668o;
+							
 						}
 					});
 					
@@ -543,7 +622,8 @@ $(function(){
 
 					if($('.sy_infoDiv').length<=0){
 						$(".showHTML").append('<div class="sy_infoDiv" data-id="' + product_id + '"><p><span class="name">'+name+'</span><span class="del" >【删除】</span></p><span data-aid='+attribute_ids.toString()+'>'+attributes__+'</span></div>');
-			        }else{
+			            _AM_95668o++;
+				    }else{
 			
 						var _flag_=true;
 					    $('.sy_infoDiv').each(function(i,y){
@@ -555,10 +635,11 @@ $(function(){
 						
 						if(_flag_){
 							$(".showHTML").append('<div class="sy_infoDiv" data-id="' + product_id + '"><p><span class="name">'+name+'</span><span class="del" data-aid=>【删除】</span></p><span data-aid='+attribute_ids.toString()+'>'+attributes__+'</span></div>');
+						    _AM_95668o++;
 						}
 					
 					}
-					 
+					
 					$('.p_x_tig span.selected').html(_AM_95668o);
 				}
 			}
@@ -575,5 +656,3 @@ $(function(){
 
 <!-------------------------底部版权end------------------------->
 
-</body>
-</html>

@@ -139,10 +139,13 @@ class ControllerTryTry extends Controller {
 		//$rand=$this->memcached->get('try_your_product');
 		
 
-		$sql="select mobile,sendtime,captcha from ".DB_PREFIX."try_tmp_message ";
+		/* $sql="select mobile,sendtime,captcha from ".DB_PREFIX."try_tmp_message ";
 		$query=$this->db->query($sql);
 		
-		$results=$query->rows;
+		$results=$query->rows; */
+		
+		$this->load->model('try/try');
+		$results=$this->model_try_try->cacheMessages();
 		
 		if(empty($results)) return;
 		
@@ -150,7 +153,7 @@ class ControllerTryTry extends Controller {
 		    $time=$v['sendtime'];
 			$time=strval($time);
 			$mobile=$v['mobile'];
-			$message="亲，您正在试用穿悦商城的产品，验证码：".$v['captcha']." 。切勿将验证码泄露于他人，如非本人操作，建议及时修改账户。\n【穿悦商城】";
+			$message=$v['message'];
 			$json[]=array('tel'=>$mobile,'message'=>$message,'time'=>$time);
 		
 		}

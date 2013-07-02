@@ -36,7 +36,7 @@
 		</ul> -->
 		<div>
 		     <!-- <a href="#"><img src="catalog/view/theme/default/image/try/containue1.jpg" border="0" /></a> -->
-			 <button class="btn" type="button">继续挑选</button>
+			 <!-- <button class="btn" type="button">继续挑选</button> -->
 		</div>
 	</div>
 </div>
@@ -47,7 +47,7 @@
 		<div class="pw_form"><ul class="inp">
 			<li>
 				<span class="tit">请输入手机号码：</span> 
-				<span class="inp"><input type="text" name="mobile" id="mobile" class="tinput" value="{$mobile}" /></span>	
+				<span class="inp"><input type="text" name="mobile" id="mobile" class="tinput" value="{$mobile}"  /></span>	
 				<label id="mobileinfo" style="margin-left:10px"></label>
 			</li>
 			
@@ -90,6 +90,7 @@
 		</ul></div>
 	<!-- </form> -->
 	<div class="phonetxt1">若您的手机号无法接收验证短信，请您拨打客服电话0551-64374866申请更换验证手机号码。</div>
+	<input type="hidden" name="tryid_h" value="" />
 </div>
 <script type="text/javascript">
     $(function(){
@@ -156,6 +157,11 @@
 	
 		
 	$('button[name=btnmobilevcode]').click(function(){
+	    if($('.trybuyContent dl dd').length<=0){
+		    alert('没有需要的试用产品!');
+			return false;
+		}
+		
 	    var captcha=$('input[name=captcha]').val();
 		var that=$(this);
 		var mobile={$mobile};
@@ -167,8 +173,8 @@
 			}else{
 			    $('#verifyemailinfo').html('');
 				$('#verifyemailinfo').removeClass('error');
-				$.post('?route=try/confirm/sendMessage',{mobile:mobile},function(){
-		            
+				$.post('?route=try/confirm/sendMessage',{mobile:mobile},function(str){
+		            $('input[name=tryid_h]').val(str);
 				});
 				
 				that.addClass('disabled');
@@ -189,11 +195,13 @@
 	    $('button[name=tryspace]').removeAttr('disabled');
 	});
 	
+	//短信校验码
 	$('button[name=tryspace]').click(function(){
-        var mobile=$('input[name=mobile]').val();
+        //var mobile=$('input[name=mobile]').val();
+		var tryid=$('input[name=tryid_h]').val();
 	    var captcha_=$('#mobilevcode').val();
 		//console.log(captcha_);
-	    $.post('?route=try/confirm/validateMessage',{mobile:mobile,captcha_:captcha_},function(str){
+	    $.post('?route=try/confirm/validateMessage',{tryid:tryid,captcha_:captcha_},function(str){
 		    //console.log(str);
 		    if(str=='no'){
 			    $('#mobilevcodeinfo').html('验证码不正确！');
@@ -201,7 +209,7 @@
 			}else{
 			    $('#mobilevcodeinfo').html('');
 				$('#mobilevcodeinfo').removeClass('error');
-				location.href='?route=try/try';
+				location.href='?route=try/complete';
 			}
 		});
 	    
@@ -212,6 +220,3 @@
 {$footer}
 
 <!-------------------------底部版权end------------------------->
-
-</body>
-</html>

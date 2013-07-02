@@ -6,14 +6,13 @@ class ControllerTryProduct extends Controller {
 		$customer_id=$this->customer->isLogged();
         if(!empty($customer_id)){
 		    $this->data['customer_id']=$customer_id;
+			$this->data['mobile']=$this->customer->getMobile();
 		}else{
 		    $this->data['customer_id']=0;
 		} 
 		
 		$this->data['referer']=$this->request->server['REQUEST_URI'];
         
-    
-		
 		$product_id=!empty($this->request->get['product_id'])?$this->request->get['product_id']:'';
         if(empty($product_id)) return ;
 		
@@ -29,7 +28,7 @@ class ControllerTryProduct extends Controller {
 		$this->data['store_id']=$product['store_id'];
 		
 		
-		//³õÊ¼»¯ÏÔÊ¾²úÆ·ÐÅÏ¢
+		//åˆå§‹åŒ–æ˜¾ç¤ºäº§å“ä¿¡æ¯
 		$productInfo=array();
 		$attributes_price=array();
 		$attributes=$this->model_catalog_product->getProductAttributes($product_id,false);
@@ -61,7 +60,7 @@ class ControllerTryProduct extends Controller {
 		
 		
 		
-		//µ¥µêÆÌËùÓÐµÄÏà¹ØÊÔÓÃ²úÆ·
+		//å•åº—é“ºæ‰€æœ‰çš„ç›¸å…³è¯•ç”¨äº§å“
 		$products=array();
 		$results=$this->model_try_try->getProducts($product['store_id']);
 		
@@ -82,7 +81,7 @@ class ControllerTryProduct extends Controller {
 			$v['special']['date_start']= $v['date_start'];
 		    $v['special']['date_end']  = $v['date_end'];
 			$v['special']['price']     = $v['special_price'];
-			
+			$v['description']= html_entity_decode($v['description'], ENT_QUOTES, 'UTF-8');
 			
 			$productInfo['attribute']=$attributes_price;
 			
@@ -143,7 +142,7 @@ class ControllerTryProduct extends Controller {
 		//$this->load->model('store/store');
 		
 		
-		//¼Û¸ñÊôÐÔ
+		//ä»·æ ¼å±žæ€§
 		$attributes=$attributes_price=array();
 		$attributes=$this->model_catalog_product->getProductAttributes($product_id,false);
 		
@@ -189,28 +188,41 @@ class ControllerTryProduct extends Controller {
 		
 		//if(empty($customer_id)) return ;
 		$this->load->model('try/try');
+		$try_order_id= $this->model_try_try->getTryOrderid();
+		//$this->cookie->OCSetCookie("try_order_id",$this->cookie->OCAuthCode($try_order_id,'ENCODE'),24*3600);
+        $this->session->data['try_order_id']=$try_order_id;
 		
-		if(!empty($customer_id)){//»áÔ±
+		if(!empty($customer_id)){//ä¼šå‘˜
 		    $mobile = $this->customer->getMobile();
+			
 			foreach($product_id_list as $k=>$v){
-				$numRows=$this->model_try_try->getTryProduct($k,$customer_id);
-				if($numRows>0){
-					$json['exists'][$k]=$v;
-				}else{
-					$json['noexists'][$k]=$this->model_try_try->addTryProduct($customer_id,$k,$store_id,$mobile,$time,$v);
-				}
+			    $x=explode('|',$k);
+				$product_id=$x[0];
+				$attribute_ids=$x[1];
+				
+				//$numRows=$this->model_try_try->getTryProduct($product_id,$attribute_ids,$customer_id);
+				//if($numRows>0){
+				//	$json['exists'][$k]=$v;
+				//}else{
+					$json['noexists'][$k]=$this->model_try_try->addTryProduct($try_order_id,$customer_id,$product_id,$attribute_ids,$store_id,$mobile,$time,$v);
+				//}
 				
 			} 
-		}else{//ÓÎ¿Í
+		}else{//æ¸¸å®¢
 		    $mobile=$this->request->post['mobile'];
+			//$this->cookie->OCSetCookie("try_anonymous_mobile",$this->cookie->OCAuthCode($mobile,'ENCODE'),24*3600);
+			$this->session->data['try_annoymous_mobile']=$mobile;
 		    foreach($product_id_list as $k=>$v){
-			
-				$numRows=$this->model_try_try->getTryProduct($k,$mobile,false);
-				if($numRows>0){
-					$json['exists'][$k]=$v;
-				}else{
-					$json['noexists'][$k]=$this->model_try_try->addTryProduct($customer_id,$k,$store_id,$mobile,$time,$v);
-				}
+			    $x=explode('|',$k);
+				$product_id=$x[0];
+				$attribute_ids=$x[1];
+				
+				//$numRows=$this->model_try_try->getTryProduct($product_id,$attribute_ids,$mobile,false);
+				//if($numRows>0){
+				//	$json['exists'][$k]=$v;
+				//}else{
+					$json['noexists'][$k]=$this->model_try_try->addTryProduct($try_order_id,$customer_id,$product_id,$attribute_ids,$store_id,$mobile,$time,$v);
+				//}
 				
 			} 
 		}
@@ -226,6 +238,7 @@ class ControllerTryProduct extends Controller {
 	    $this->load->model('try/try');
 		
 		$product_id=$this->request->post['product_id'];
+		$attribute_ids=$this->request->post['attribute_ids'];
 		$store_id  =$this->request->post['store_id'];
 		
 		$customer_id=$this->customer->getId();
@@ -235,7 +248,13 @@ class ControllerTryProduct extends Controller {
 		if(!empty($storeid) && $storeid==$store_id) {
 		    $numRows=-1;
 		}else{
-		    $numRows=$this->model_try_try->getTryProduct($product_id,$customer_id);
+		    if(!empty($customer_id)){
+		        $numRows=$this->model_try_try->getTryProduct($product_id,$attribute_ids,$customer_id);
+			}else{
+			    //$mobile=$this->cookie->OCAuthCode($this->request->cookie['oc_try_anonymous_mobile'],'DECODE');
+				$mobile=$this->session->data['try_annoymous_mobile'];
+			    $numRows=$this->model_try_try->getTryProduct($product_id,$attribute_ids,$mobile,false);
+			}
 		}
 		
 		$this->response->setOutput($numRows);
