@@ -9,31 +9,41 @@
 </head>
 
 <body>
+<!------------网页顶部页头-------------->
+<div class="try_topbg333">
+<div class="try_top w1000">
+	<ul>
+		<li>
+		    <img src="catalog/view/theme/default/image/try/header01.jpg" usemap="#Map"/> 
+			<map name="Map" id="Map">
+			<area shape="rect" coords="4,3,61,30" href="?route=try/try" />
+			<area shape="rect" coords="60,4,140,28" href="?route=common/home" /></map>
+			<!-- <a href="?route=try/try" class="on" />试中心</a>
+			<a href="?route=common/home" />本地购</a> -->
+		</li>
+		<li class="r_side">
+		联系电话：<span>0551-64374866</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;客服QQ：232139336
+		</li>
+	</ul>
+</div>
+</div>
 
-<div class="try_topbg">
-	<div class="try_width">
-		<div class="try_topleft"><a href="?route=common/home"><!-- <img src="catalog/view/theme/default/"/> --></a></div>
-		<div class="try_topright"><span><a href="?route=module/general/faq">帮助中心 │</a><a href="?route=module/general/company">关于我们</a></span><!-- <img src="catalog/view/theme/default/image/try/try_tel.jpg"/> --></div>
-	</div>
+<!------------头部LOGO部分-------------->
+<div class="try_head w1000">
+	<div class="try_head_logo"><img src="catalog/view/theme/default/image/try/logo.png"/></div>
+    <div class="try_head_zheng"><img src="catalog/view/theme/default/image/try/header_btn.png"/></div>
+    <div class="try_head_login">
+	{if empty($username)}
+		<form  method="post" action="{$login}">
+			<ul>
+				<li><span>帐户</span><input class="login_input" maxlength="30" type="text" name="username" /></li>
+				<li><span>密码</span><input class="login_input" maxlength="30" type="password" name="password" /></li>
+				<li><input type="submit" value="" class="login_but"><span class="login_wel">欢迎您来到试用中心！</span></li>
+			</ul>
+			<input type="hidden" name="referer" value="?route=try/try" />
+		</form>
+	{else}
+		<div class="login login_wel">欢迎您！{$username}<p><a class="logout" href="javascript:void(0)">【退出】</a> <a href="?route=account/account">【我的帐户】</a></p></div>
+	{/if}
+    </div>
 </div>
-<div class="try_logo">
-	<div class="try_logoleft"><a href="?route=try/try"><img src="catalog/view/theme/default/image/try/try_logo.jpg"/></a></div>
-	<div class="try_logoright">
-	    {if !empty($username)}
-			<div class="rectangle">欢迎你！{$username} <a href="?route=account/logout">【退出】</a> <br><a href="?route=account/account">我的帐户</a></div>
-		{else}
-			<div class="welcome">欢迎您来到试中心！<span>【<a href="?route=account/register">注册</a>│<a class="login" href="?route=account/login">登录</a>】</span></div>
-	    {/if}
-	</div>
-</div>
-	<div class="try_menu">
-		<ul>
-			<li><a href="javascript:void(0);">所有品牌</a></li>
-			<li><a href="{$clothes}">服装配饰</a></li>
-			<li><a href="{$foods}">美食特产</a></li>
-			<li><a href="{$house}">家居建材</a></li>
-			<li><a href="{$travel}">运动户外</a></li>
-			<li><a href="{$joy}">文化娱乐</a></li>
-		</ul>
-		<!-- <div class="sort">在售商品分类></div> -->
-	</div>

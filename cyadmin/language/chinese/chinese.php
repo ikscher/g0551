@@ -71,6 +71,7 @@ $_['button_add_link']         = '添加链接';
 $_['button_update_total']     = '更新总计';
 $_['button_approve']          = '允许';
 $_['button_reset']            = '重设';
+$_['button_import']=            '导入';
 
 // Tab
 $_['tab_address']             = '地址';

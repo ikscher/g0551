@@ -108,7 +108,7 @@ class ControllerProductJoy extends Controller {
 			foreach($cc as $k=>$v){
 			    $v['comment']=strip_tags(htmlspecialchars_decode($v['comment']));
 				$y=$this->model_account_customer->getCustomer($v['userid']);
-				$v['avatar']=$this->model_tool_image->resize($y['avatar'],'50','50');
+				if(isset($y['avatar'])) $v['avatar']=$this->model_tool_image->resize($y['avatar'],'50','50');
 				$comments[]=$v;
 			}
 			

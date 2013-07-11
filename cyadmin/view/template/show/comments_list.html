@@ -1,17 +1,11 @@
-<link rel="stylesheet" type="text/css" href="view/stylesheet/general.css">
 <link rel="stylesheet" type="text/css" href="view/stylesheet/main.css">
+<link rel="stylesheet" type="text/css" href="view/stylesheet/general.css">
+
 <script type="text/javascript" src="view/javascript/jquery/jquery-1.7.1.min.js"></script>
 <script type="text/javascript" src="view/javascript/jquery/ui/jquery-ui-1.8.16.custom.min.js"></script>
 <link type="text/css" href="view/javascript/jquery/ui/themes/ui-lightness/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
 
-<style type="text/css">
-tr.over td {
-	background:#cfeefe;
-} 
-.list tr td{
-    text-align:center;
-}
-</style>
+
 
 {if $error_warning}
 <div class="warning">{$error_warning}</div>
@@ -22,13 +16,20 @@ tr.over td {
 
 <h1>
   <img src="view/image/category.png" alt="" /> {$heading_title}
-  <span class="action-span">
-	  <a href="javascript:void(0);"  >{$button_delete}</a>
-	  <a href="{$refresh}">{$button_refresh}</a>
-  </span>
+   
+    <span class="action-span">
+       
+	   <a href="javascript:void(0);"  >{$button_delete}</a>
+	   <a href="{$refresh}">{$button_refresh}</a>
+	   
+    </span>
 </h1>
 
 <div class="list-div" style="margin-bottom:10px;padding:5px;">
+    <form enctype="multipart/form-data" method="post"  action="{$import}" >  
+        <input type="file"  name="import"  />
+		<input  type="submit" value="{$button_import}" /> 
+    </form>
     <form action="{$refresh}" method="post" >
 		{$column_comment_id}<input type="text" name="comment_id" value="{$comment_id}" />
 		{$column_starttime}<input type="text" name="starttime" value="{$starttime}" class="date"/>

@@ -44,7 +44,7 @@ class User {
 	    $username=$this->db->escape($username);
 		$password=$this->db->escape(md5($password));
 		$sql="SELECT user_id,username,user_group_id FROM " . DB_PREFIX . "user WHERE username ='{$username}'  AND  password = '{$password}' AND status = '1' limit 1";
- 
+    	
 		$user_query = $this->db->query($sql);
       
     	if ($user_query->num_rows) {

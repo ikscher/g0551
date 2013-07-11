@@ -15,6 +15,7 @@ $_['column_createtime']      = '时间';
 
 $_['column_comment_id']      = 'ID';
 $_['column_content_id']      = '内容ID';
+$_['text_import'] = '导入';
 
 $_['column_isShow']      = '状态';
 $_['column_action']    = '操作';

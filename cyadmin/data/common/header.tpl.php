@@ -223,6 +223,12 @@ $(document).ready(function(){
 				<p><a data-role="<?php echo $show_comments;?>"><?php echo $text_show_comments;?></a></p>
 			</div>
 			
+			<div title="<?php echo $text_try;?>" style="padding:10px;">
+			    <p><a data-role="<?php echo $try;?>"><?php echo $text_all_try;?></a></p>
+			</div>
+			
+			
+			
 			<div title="<?php echo $text_help;?>"  style="padding:10px">
 			        <p><a onClick="window.open('http://www.opencart.com');"><?php echo $text_opencart;?></a></p>
 					  <p><a onClick="window.open('http://www.opencart.com/index.php?route=documentation/introduction');"><?php echo $text_documentation;?></a></p>

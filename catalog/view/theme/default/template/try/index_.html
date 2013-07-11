@@ -1,0 +1,136 @@
+{$header}
+<link rel="stylesheet" type="text/css" href="catalog/view/theme/default/stylesheet/5icool.org.css" />
+
+<script defer src="catalog/view/javascript/5icool.org.js"></script> 
+
+<script type="text/javascript">
+	$(function(){
+	  $('.flexslider').flexslider({
+		animation: "slide",
+		start: function(slider){
+		  $('body').removeClass('loading');
+		}
+	  });
+	});
+</script>
+
+    
+	<!------------右边悬浮窗 begin-------------->
+	<div class="Fwindow"id="hrr" style="position:fixed;width:93px;height:393px;top:120px;right:50px;border:1px solid white;">
+		<ul>
+			<li><img src="catalog/view/theme/default/image/try/windowtop.jpg"/></li>
+			{if !empty($username)}
+			<li class="wind1"><a href="?route=account/mytry" class="wind_cur"></a></li>
+			<!-- <li class="wind2"><a href="" class="wind_cur"></a></li> -->
+			<li class="wind3"><a href="?route=account/wishlist" class="wind_cur"></a></li>
+			{/if}
+			<li><a href="#top"><img src="catalog/view/theme/default/image/try/windowbot.jpg"/></a></li>
+		</ul>
+	</div>
+	<!------------右边悬浮窗 end-------------->
+	
+<!--banner广告-->
+<div class="banner">
+	<div class="bannerl flexslider">
+		<ul class="slides">
+			<li><img src="catalog/view/theme/default/image/try/banner01.jpg"/></li>
+			<li><img src="catalog/view/theme/default/image/try/banner02.jpg"/></li>
+			<li><img src="catalog/view/theme/default/image/try/banner03.jpg"/></li>
+		</ul>
+	</div>
+	<div class="bannerr">
+		<ul>
+			<li><img src="catalog/view/theme/default/image/try/try01.jpg"/></li>
+			<li><img src="catalog/view/theme/default/image/try/try02.jpg"/></li>
+			<li><img src="catalog/view/theme/default/image/try/try03.jpg"/></li>
+			<li><img src="catalog/view/theme/default/image/try/try04.jpg"/></li>
+		</ul>
+	</div>
+</div>
+
+<!--在售品牌-->
+<div class="salebrand">
+	<div class="brandbg">
+		<ul>
+			<li><img src="catalog/view/theme/default/image/try/brand1.jpg"/></li>
+			<li><img src="catalog/view/theme/default/image/try/brand2.jpg"/></li>
+			<li><img src="catalog/view/theme/default/image/try/brand3.jpg"/></li>
+			<li><img src="catalog/view/theme/default/image/try/brand4.jpg"/></li>
+			<li><img src="catalog/view/theme/default/image/try/brand5.jpg"/></li>
+			<li><img src="catalog/view/theme/default/image/try/brand6.jpg"/></li>
+			<li><img src="catalog/view/theme/default/image/try/brand7.jpg"/></li>
+			<li><img src="catalog/view/theme/default/image/try/brand8.jpg"/></li>
+			<li><img src="catalog/view/theme/default/image/try/brand9.jpg"/></li>
+		</ul>
+	</div>
+</div>
+<!-------------------------产品列表begin------------------------->
+<div class="products">   
+	    {loop $products $k $product}
+		<div class="trylist {if $k%2==0}mr{/if}">
+			<div class="listleft">
+			<ul>
+				<!-- <li><img src="catalog/view/theme/default/image/try/logo03.png"/></li> -->
+				<li><a class="category" href="?route=product/category&category_id={$product['category']['category_id']}" target="_blank">{$product['category']['name']}</a></li>
+				<li><span class="discount">{$product['discount']}</span>折起</li>
+				<!-- <li class="pingpai"><a href="#"class="pingpai2">品牌介绍</a></li> -->
+				<li><img src="catalog/view/theme/default/image/try/time.png" width="14" height="14"> <span class="_time_" data-end="{$product['date_end']}"></span></li>
+				<li>派送：<span class="distance">二环</span> 以内</li>
+			</ul>
+			</div>
+			<div class="listright">
+				<ul>
+					<li class="s_mod">
+						<div class="s_pic"><a href="?route=try/product&product_id={$product['product_id']}&store_id={$product['store_id']}"><img src="{$product['image']}" title="{$product['name']}"/></a></div>
+						<div class="s_info"><span class="s_info_name">{$product['shortname']}</span><span class="s_info_price "><b class="s_info_price_">￥</b><span class="price_">{$product['price']}</span></span><span class="s_info_price"><b class="s_info_price_">￥</b>{$product['special_price']}</span></div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		{/loop}
+</div>
+
+<!-------------------------底部版权begin------------------------->
+{$footer}
+<!-------------------------底部版权end------------------------->
+
+<script type="text/javascript">
+    $('.login').click(function(){
+	    var login="{$login}";
+		var referer=encodeURIComponent('{$referer}');
+	    location.href=login+'&referer='+referer;
+	});
+	
+	//$(function(){
+	    function _remainderTimer(){
+			var current_timestamp=Math.ceil(new Date().getTime()/1000);
+			$('li ._time_').each(function(i,w){
+				var day;
+				var hour;
+				var minute;
+				var second;
+				
+				var end_timestamp=$(w).attr('data-end');
+				
+				var remainder=end_timestamp-current_timestamp;
+				
+				day=Math.floor(remainder/86400);
+				
+				hour=Math.floor((remainder-day*86400)/3600);
+				
+				minute=Math.floor((remainder - day*86400 -hour*3600)/60);
+				
+				second=remainder - day*86400 - hour*3600 - minute*60;
+				
+				var _time_='剩余';
+				_time_ +='<span class="time">'+day+'</span> 天<span class="time">'+hour+'</span> 时<span class="time">'+minute+'</span> 分<span class="time">'+second+'</span> 秒';
+				$(this).html(_time_);
+			});
+			
+			setTimeout(_remainderTimer,1000);
+		}
+		
+		_remainderTimer();
+	//});
+</script>
+

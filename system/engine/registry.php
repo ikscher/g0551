@@ -1,4 +1,5 @@
 <?php
+/*注册类*/
 final class Registry {
 	private $data = array();
 

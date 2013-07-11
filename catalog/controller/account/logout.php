@@ -37,40 +37,50 @@ class ControllerAccountLogout extends Controller {
 			$this->newsletter = '';
 			$this->customer_group_id = '';
 			$this->address_id = ''; */
-			$this->cookie->OCSetCookie("customer",'');
-			$this->cookie->OCSetCookie("memberid",'');
-			$this->cookie->OCSetCookie("storeid",'');
+			//$this->cookie->OCSetCookie("customer",'');
+			//$this->cookie->OCSetCookie("memberid",'');
+			//$this->cookie->OCSetCookie("storeid",'');
+			//$this->cookie->OCSetCookie("dbuyproduct",'');
 			
-      		$this->redirect($this->url->link('account/logout', '', 'SSL'));
+      		//$this->redirect($this->url->link('account/logout', '', 'SSL'));
     	}
- 
-    	$this->language->load('account/logout');
-		
-		$this->document->setTitle($this->language->get('heading_title'));
-      	
-		
-		
-    	$this->data['heading_title'] = $this->language->get('heading_title');
+        
+		if(isset($this->request->get['referer'])){
+		    $referer=urldecode($this->request->get['referer']);
+			$this->redirect($this->url->link($referer,'','SSL'));
+		}else{
+		    
+			$this->language->load('account/logout');
+			
+			$this->document->setTitle($this->language->get('heading_title'));
+			
+			
+			
+			$this->data['heading_title'] = $this->language->get('heading_title');
 
-    	$this->data['text_message'] = $this->language->get('text_message');
+			$this->data['text_message'] = $this->language->get('text_message');
 
-    	$this->data['button_continue'] = $this->language->get('button_continue');
+			$this->data['button_continue'] = $this->language->get('button_continue');
 
-    	$this->data['continue'] = $this->url->link('common/home');
+			$this->data['continue'] = $this->url->link('common/home');
+			
+			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/success.html')) {
+				$this->template = $this->config->get('config_template') . '/template/common/success.html';
+			} else {
+				$this->template = 'default/template/common/success.html';
+			}
+			
+			$this->children = array(
+				'account/left',
+				'account/footer',
+				'account/header'	
+			);
+			
+			$this->response->setOutput($this->render());	
 		
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/success.html')) {
-			$this->template = $this->config->get('config_template') . '/template/common/success.html';
-		} else {
-			$this->template = 'default/template/common/success.html';
 		}
 		
-		$this->children = array(
-			'account/left',
-			'account/footer',
-			'account/header'	
-		);
-						
-		$this->response->setOutput($this->render());	
+		
   	}
 }
 ?>

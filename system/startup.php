@@ -97,6 +97,7 @@ require_once(DIR_SYSTEM . 'library/language.php');
 require_once(DIR_SYSTEM . 'library/log.php');
 // require_once(DIR_SYSTEM . 'library/mail.php');
 require_once(DIR_SYSTEM . 'library/class.phpmailer.php');
+// require_once(DIR_SYSTEM . 'library/macaddr.php');
 
 
 require_once(DIR_SYSTEM . 'library/pagination.php');
@@ -111,4 +112,5 @@ require_once(DIR_SYSTEM . 'library/OCSeccode.php');
 // Helper
 require_once(DIR_SYSTEM . 'helper/json.php'); 
 require_once(DIR_SYSTEM . 'helper/utf8.php'); 
+
 ?>

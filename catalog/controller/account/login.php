@@ -12,7 +12,8 @@ class ControllerAccountLogin extends Controller {
       		$this->redirect($this->url->link('common/home', '', 'SSL'));
     	}
 		
-		$this->data['referer']=isset($this->request->get['referer'])?$this->request->get['referer']:'';
+        $referer=isset($this->request->get['referer'])?$this->request->get['referer']:'';
+		$this->data['referer']=$referer;
 		
 	
     	$this->language->load('account/login');

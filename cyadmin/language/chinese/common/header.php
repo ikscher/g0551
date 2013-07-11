@@ -93,4 +93,7 @@ $_['text_show_contents']='秀的主题';
 $_['text_show_comments']='秀的评论';
 $_['text_user_action'] = '所有操作';
 $_['text_enviorment'] = '环境变量';
+
+$_['text_all_try']='试用信息';
+$_['text_try'] = '试用中心';
 ?>

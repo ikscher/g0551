@@ -1,17 +1,11 @@
-<link rel="stylesheet" type="text/css" href="view/stylesheet/general.css">
 <link rel="stylesheet" type="text/css" href="view/stylesheet/main.css">
+<link rel="stylesheet" type="text/css" href="view/stylesheet/general.css">
+
 <script type="text/javascript" src="view/javascript/jquery/jquery-1.7.1.min.js"></script>
 <script type="text/javascript" src="view/javascript/jquery/ui/jquery-ui-1.8.16.custom.min.js"></script>
 <link type="text/css" href="view/javascript/jquery/ui/themes/ui-lightness/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
 
-<style type="text/css">
-tr.over td {
-	background:#cfeefe;
-} 
-.list tr td{
-    text-align:center;
-}
-</style>
+
 
 <?php if($error_warning) { ?>
 <div class="warning"><?php echo $error_warning;?></div>
@@ -22,13 +16,20 @@ tr.over td {
 
 <h1>
   <img src="view/image/category.png" alt="" /> <?php echo $heading_title;?>
-  <span class="action-span">
-	  <a href="javascript:void(0);"  ><?php echo $button_delete;?></a>
-	  <a href="<?php echo $refresh;?>"><?php echo $button_refresh;?></a>
-  </span>
+   
+    <span class="action-span">
+       
+	   <a href="javascript:void(0);"  ><?php echo $button_delete;?></a>
+	   <a href="<?php echo $refresh;?>"><?php echo $button_refresh;?></a>
+	   
+    </span>
 </h1>
 
 <div class="list-div" style="margin-bottom:10px;padding:5px;">
+    <form enctype="multipart/form-data" method="post"  action="<?php echo $import;?>" >  
+        <input type="file"  name="import"  />
+		<input  type="submit" value="<?php echo $button_import;?>" /> 
+    </form>
     <form action="<?php echo $refresh;?>" method="post" >
 		<?php echo $column_comment_id;?><input type="text" name="comment_id" value="<?php echo $comment_id;?>" />
 		<?php echo $column_starttime;?><input type="text" name="starttime" value="<?php echo $starttime;?>" class="date"/>

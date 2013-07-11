@@ -15,6 +15,7 @@ class Customer {
 	private $store_id;
 	
   	public function __construct($registry) {
+	    $time=time();
 		$this->config = $registry->get('config');
 		$this->db = $registry->get('db');
 		$this->request = $registry->get('request');
@@ -56,7 +57,7 @@ class Customer {
 				$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer_ip WHERE customer_id = '" . (int)$this->customer_id. "' AND ip = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "'");
 				
 				if (!$query->num_rows) {
-					$this->db->query("INSERT INTO " . DB_PREFIX . "customer_ip SET customer_id = '" . (int)$this->customer_id . "', ip = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "', date_added = '".time()."'");
+					$this->db->query("INSERT INTO " . DB_PREFIX . "customer_ip SET customer_id = '" . (int)$this->customer_id . "', ip = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "', date_added = {$time}");
 				}
 			} else {
 				$this->logout();

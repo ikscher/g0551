@@ -1,136 +1,146 @@
 {$header}
-<link rel="stylesheet" type="text/css" href="catalog/view/theme/default/stylesheet/5icool.org.css" />
-
-<script defer src="catalog/view/javascript/5icool.org.js"></script> 
-
-<script type="text/javascript">
-	$(function(){
-	  $('.flexslider').flexslider({
-		animation: "slide",
-		start: function(slider){
-		  $('body').removeClass('loading');
-		}
-	  });
-	});
-</script>
-
-    
-	<!------------右边悬浮窗 begin-------------->
-	<div class="Fwindow"id="hrr" style="position:fixed;width:93px;height:393px;top:120px;right:50px;border:1px solid white;">
-		<ul>
-			<li><img src="catalog/view/theme/default/image/try/windowtop.jpg"/></li>
-			{if !empty($username)}
-			<li class="wind1"><a href="?route=account/mytry" class="wind_cur"></a></li>
-			<!-- <li class="wind2"><a href="" class="wind_cur"></a></li> -->
-			<li class="wind3"><a href="?route=account/wishlist" class="wind_cur"></a></li>
-			{/if}
-			<li><a href="#top"><img src="catalog/view/theme/default/image/try/windowbot.jpg"/></a></li>
-		</ul>
-	</div>
-	<!------------右边悬浮窗 end-------------->
-	
-<!--banner广告-->
-<div class="banner">
-	<div class="bannerl flexslider">
-		<ul class="slides">
-			<li><img src="catalog/view/theme/default/image/try/banner01.jpg"/></li>
-			<li><img src="catalog/view/theme/default/image/try/banner02.jpg"/></li>
-			<li><img src="catalog/view/theme/default/image/try/banner03.jpg"/></li>
-		</ul>
-	</div>
-	<div class="bannerr">
-		<ul>
-			<li><img src="catalog/view/theme/default/image/try/try01.jpg"/></li>
-			<li><img src="catalog/view/theme/default/image/try/try02.jpg"/></li>
-			<li><img src="catalog/view/theme/default/image/try/try03.jpg"/></li>
-			<li><img src="catalog/view/theme/default/image/try/try04.jpg"/></li>
-		</ul>
-	</div>
-</div>
-
-<!--在售品牌-->
-<div class="salebrand">
-	<div class="brandbg">
-		<ul>
-			<li><img src="catalog/view/theme/default/image/try/brand1.jpg"/></li>
-			<li><img src="catalog/view/theme/default/image/try/brand2.jpg"/></li>
-			<li><img src="catalog/view/theme/default/image/try/brand3.jpg"/></li>
-			<li><img src="catalog/view/theme/default/image/try/brand4.jpg"/></li>
-			<li><img src="catalog/view/theme/default/image/try/brand5.jpg"/></li>
-			<li><img src="catalog/view/theme/default/image/try/brand6.jpg"/></li>
-			<li><img src="catalog/view/theme/default/image/try/brand7.jpg"/></li>
-			<li><img src="catalog/view/theme/default/image/try/brand8.jpg"/></li>
-			<li><img src="catalog/view/theme/default/image/try/brand9.jpg"/></li>
-		</ul>
-	</div>
-</div>
-<!-------------------------产品列表begin------------------------->
-<div class="products">   
-	    {loop $products $k $product}
-		<div class="trylist {if $k%2==0}mr{/if}">
-			<div class="listleft">
+<!------------关键字搜索-------------->
+<div class="try_search w1000">
+	<b class="b1"><img src="catalog/view/theme/default/image/try/search01.jpg"/></b>
+	<div class="try_search_body">
+		<div class="try_search_key">
 			<ul>
-				<!-- <li><img src="catalog/view/theme/default/image/try/logo03.png"/></li> -->
-				<li><a class="category" href="?route=product/category&category_id={$product['category']['category_id']}" target="_blank">{$product['category']['name']}</a></li>
-				<li><span class="discount">{$product['discount']}</span>折起</li>
-				<!-- <li class="pingpai"><a href="#"class="pingpai2">品牌介绍</a></li> -->
-				<li><img src="catalog/view/theme/default/image/try/time.png" width="14" height="14"> <span class="_time_" data-end="{$product['date_end']}"></span></li>
-				<li>派送：<span class="distance">二环</span> 以内</li>
+				<!-- <li><a href="">穿悦商城自营店</a></li>
+				<li><a href="">最新韩版连衣裙</a></li>
+				<li><a href="">超实惠幼儿套装</a></li> -->
 			</ul>
-			</div>
-			<div class="listright">
-				<ul>
-					<li class="s_mod">
-						<div class="s_pic"><a href="?route=try/product&product_id={$product['product_id']}&store_id={$product['store_id']}"><img src="{$product['image']}" title="{$product['name']}"/></a></div>
-						<div class="s_info"><span class="s_info_name">{$product['shortname']}</span><span class="s_info_price "><b class="s_info_price_">￥</b><span class="price_">{$product['price']}</span></span><span class="s_info_price"><b class="s_info_price_">￥</b>{$product['special_price']}</span></div>
-					</li>
-				</ul>
+		</div>
+		<div class="try_search_box">
+		<!-- <form   method="post" action=""> -->
+			<ul>
+				<li><input type="text" value="{$searchp}" name="searchp" class="sear_input" ></li>
+				<li><input type="submit" value="搜&nbsp;索"  class="sear_imgbut"/></li>
+				<!-- <input type="hidden" name="search" value="1" /> -->
+			</ul>
+		<!-- </form> -->
+		</div>
+	</div>
+	<b class="b2"><img src="catalog/view/theme/default/image/try/search02.jpg"/></b>
+</div>
+<!------------免费试用规则-------------->
+<div class="try_rules w1000">
+	<div class="try_rules_l">
+		<ul>
+			<li class="bg1">试中心所有商品均支持免费送货上门试用，不满意无需付款。</li>
+			<li class="bg2">每日16：00前下单当时送达，16：00之后下单次日送达。</li>
+			<li class="bg3">试中心所有商品均由本地实体商家提供，便利售后、退换货。</li>
+		</ul>
+	</div>
+	<div class="try_rules_r">
+		<ul>
+			<li><img src="catalog/view/theme/default/image/try/guize.jpg"/></li>
+			<li>1、请选择试中心的商品并留下联系方式</li>
+			<li>2、下单后15分钟内，客服会致电确定送货地址和时间</li>
+			<li>3、请等待快递人员送货上门</li>
+			<li>4、不满意无需付款</li>
+		</ul>
+	</div>
+</div>
+<div class="blank10"></div>
+<div class="blank10"></div>
+<!------------广告横幅-------------->
+<div class="try_adv_banner"><img src="catalog/view/theme/default/image/try/6253_0.jpg"/></div>
+
+
+<div class="blank10"></div>
+<!------------产品列表-------------->
+<div class="try_pro_list w1020">
+    {if !empty($products)}
+    {loop $products $k $product}
+		<div class="try_pro320">
+			<img src="{$product['image']}" class="try_pro_img" title="{$product['name']}"/>
+			<strong>{$product['shortname']}</strong>
+			<b class="try_pro_details">新品上线，赶快来试试！</b>
+			<b class="try_pro_time" data-end="{$product['date_end']}"></b>
+			<div class="try_pro_price" >
+			    <img src="catalog/view/theme/default/image/try/pro_btn.png" width="318" height="38" usemap="Map_{$k}" />
+				<map name="Map_{$k}" id="Map_{$k}"><area shape="rect" coords="243,7,304,31" href="?route=try/product&product_id={$product['product_id']}&store_id={$product['store_id']}" /></map>
+			    <span class="price">{$product['special_price']}</span><label>市场价：<span class="marketprice">￥{$product['price']}</span></label>
 			</div>
 		</div>
-		{/loop}
+	{/loop}
+	{/if}
 </div>
-
-<!-------------------------底部版权begin------------------------->
-{$footer}
-<!-------------------------底部版权end------------------------->
-
+<div class="blank10"></div>
+<!------------广告横幅-------------->
+<div class="try_adv_banner01"><img src="catalog/view/theme/default/image/try/6253_1.jpg"/></div>
+<div class="blank10"></div>
 <script type="text/javascript">
-    $('.login').click(function(){
-	    var login="{$login}";
-		var referer=encodeURIComponent('{$referer}');
-	    location.href=login+'&referer='+referer;
+	var login={ 
+		    check:function(){
+			   var username=$.trim($("input[name=username]").val());
+		       var   password=$.trim($("input[name=password]").val());
+		
+		       if(!(/^1[3|4|5|8][0-9]\d{4,8}$/.test(username)) && !(/[_a-zA-Z\d\-\.]+@[_a-zA-Z\d\-]+(\.[_a-zA-Z\d\-]+)+$/.test(username))){ 
+			       alert("输入的用户名格式不正确！");
+				   //$(".form_content ul li:eq(4)>dl:eq(0)").html("输入的用户名格式不正确！");
+				   return false;
+				}
+				
+				if(!password){  
+				   alert('密码不能为空！');
+				   //$(".form_content ul li:eq(4)>dl:eq(0)").html("密码不能为空！");
+				   return false;
+				}
+		
+	           
+			}
+			
+			
+	};
+	
+	$(".login_but").click(login.check);
+	
+	
+	$('.logout').click(function(){
+	   referer='try/try';
+	   location.href="?route=account/logout&referer="+encodeURIComponent(referer);
+	
 	});
 	
-	//$(function(){
-	    function _remainderTimer(){
-			var current_timestamp=Math.ceil(new Date().getTime()/1000);
-			$('li ._time_').each(function(i,w){
-				var day;
-				var hour;
-				var minute;
-				var second;
-				
-				var end_timestamp=$(w).attr('data-end');
-				
-				var remainder=end_timestamp-current_timestamp;
-				
-				day=Math.floor(remainder/86400);
-				
-				hour=Math.floor((remainder-day*86400)/3600);
-				
-				minute=Math.floor((remainder - day*86400 -hour*3600)/60);
-				
-				second=remainder - day*86400 - hour*3600 - minute*60;
-				
-				var _time_='剩余';
-				_time_ +='<span class="time">'+day+'</span> 天<span class="time">'+hour+'</span> 时<span class="time">'+minute+'</span> 分<span class="time">'+second+'</span> 秒';
-				$(this).html(_time_);
-			});
+	
+	function _remainderTimer(){
+		var current_timestamp=Math.ceil(new Date().getTime()/1000);
+		$('.try_pro_time').each(function(i,w){
+			var day;
+			var hour;
+			var minute;
+			var second;
 			
-			setTimeout(_remainderTimer,1000);
-		}
+			var end_timestamp=$(w).attr('data-end');
+			
+			var remainder=end_timestamp-current_timestamp;
+			
+			day=Math.floor(remainder/86400);
+			
+			hour=Math.floor((remainder-day*86400)/3600);
+			
+			minute=Math.floor((remainder - day*86400 -hour*3600)/60);
+			
+			second=remainder - day*86400 - hour*3600 - minute*60;
+			
+			var _time_='剩余';
+			_time_ +='<span class="time">'+day+'</span> 天<span class="time">'+hour+'</span> 时<span class="time">'+minute+'</span> 分<span class="time">'+second+'</span> 秒';
+			$(this).html(_time_);
+		});
 		
-		_remainderTimer();
-	//});
-</script>
+		setTimeout(_remainderTimer,1000);
+	}
+		
+	_remainderTimer();
+	
+	$('.sear_imgbut').click(function(){
+	    var s=$('input[name=searchp]').val();
+		if(!(s.replace(/\s*/gi,''))) return;
+		location.href='?route=try/try&s='+encodeURIComponent(encodeURIComponent(s));
+	
+	});
 
+</script>
+<!------------网页底部页脚-------------->
+{$footer}

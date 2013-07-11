@@ -1,4 +1,5 @@
 <?php
+/*action动作*/
 final class Action {
 	protected $file;
 	protected $class;
@@ -37,7 +38,7 @@ final class Action {
 		}
 
 		$method = array_shift($parts);
-
+  
 		if ($method) {
 			$this->method = $method;
 		} else {
@@ -60,7 +61,5 @@ final class Action {
 	public function getArgs() {
 		return $this->args;
 	}
-	
-	
 }
 ?>

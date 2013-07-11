@@ -13,6 +13,44 @@ class ControllerShowComments extends Controller {
 		$this->getList();
 	}
 	
+	public function import(){
+	    if($this->request->server['REQUEST_METHOD']=='POST'){
+		    $filename=$_FILES["import"]['tmp_name'];
+			//if (is_uploaded_file($filename)){  
+			    $contents=file_get_contents($filename);
+				$json=json_decode($contents,true);
+				   // var_dump($json);exit;
+				$posts=$json['posts'];
+				$threads=$json['threads'];
+			    
+				foreach($posts as $v){
+					$message=$v['message'];
+					$created_at=strtotime($v['created_at']);
+					$ip=$v['ip'];
+					$author_id=$v['author_id'];
+					$author_name=$v['author_name'];
+					$author_email=$v['author_email'];
+					
+					$v_=array();
+					$content_id='';
+					foreach($threads as $v_){
+					    if($v['thread_id']===$v_['thread_id']){
+						    $url=$v_['url'];
+							$content_id=preg_replace('/(.*)id=/i','',$url);
+						    break;
+						}
+					}
+					$ip=ip2long($ip);
+					$sql="replace into ".DB_PREFIX."comments set comment='{$message}',createtime='{$created_at}',userid='{$author_id}',email='{$author_email}',username='{$author_name}',content_id='{$content_id}',ip='{$ip}'";
+					$this->db->query($sql);
+				
+				}
+			//}
+			$this->redirect($this->url->link('show/comments', 'token=' . $this->session->data['token'], 'SSL'));
+		
+		}
+	
+	}
 	
 	public function update() {
 		$this->load->language('show/comments');
@@ -31,6 +69,8 @@ class ControllerShowComments extends Controller {
 
 		$this->getForm();
 	}
+	
+	
 
 	public function delete() {
 		$this->load->language('show/comments');
@@ -61,6 +101,8 @@ class ControllerShowComments extends Controller {
 	private function getList() {
    	  					
 		$this->data['token']=$this->session->data['token'];
+		
+		$this->data['import'] = $this->url->link('show/comments/import','token=' . $this->session->data['token'], 'SSL');
 		$this->data['delete'] = $this->url->link('show/comments/delete', 'token=' . $this->session->data['token'], 'SSL');
 	    $this->data['refresh'] = $this->url->link('show/comments', 'token=' . $this->session->data['token'], 'SSL');
 		
@@ -162,7 +204,9 @@ class ControllerShowComments extends Controller {
 		$this->data['column_username'] = $this->language->get('column_username');
 		$this->data['column_action'] = $this->language->get('column_action');
 		$this->data['text_show_contents']=$this->language->get('text_show_contents');
+		$this->data['text_import']=$this->language->get('text_import');
 
+		$this->data['button_import']=$this->language->get('button_import');
 		$this->data['button_delete'] = $this->language->get('button_delete');
 		$this->data['button_refresh'] = $this->language->get('button_refresh');
  

@@ -1,4 +1,5 @@
 {$header}
+<style type="text/css">.ds-powered-by {display:none;}</style>
 <div id="show_main">
 	<div class="blank10"></div>
 	<div class="bg980">
@@ -22,7 +23,7 @@
 			<!---------->
 			</div>
 			
-			<div class="tools cls">
+			<!-- <div class="tools cls">
 				<span>分享<b class="c-count">(5)</b></span>
 				<span><a class="digg like-btn" ><em><strong>{$msg['favoriate']}</strong></em></a></span>
 			</div>
@@ -47,10 +48,23 @@
 						{/loop}
 					</ul>
 				</div>
-			</div>	
-			<!---------->
-		<!--{start: 超多人喜欢 -->
-		<div class="post-liked-hd">
+			</div> -->	
+			
+			<!-- Duoshuo Comment BEGIN -->
+			<div class="ds-thread"></div>
+			<script type="text/javascript">
+			var duoshuoQuery = {short_name:"g0551"};
+				(function() {
+					var ds = document.createElement('script');
+					ds.type = 'text/javascript';ds.async = true;
+					ds.src = 'http://static.duoshuo.com/embed.js';
+					ds.charset = 'UTF-8';
+					(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+				})();
+			</script>
+			<!-- Duoshuo Comment END -->
+ 
+		<!-- <div class="post-liked-hd">
 			<h2>你可能喜欢</h2>
 		</div>
 		<div class="post-liked-bd">
@@ -80,8 +94,8 @@
 					<div class="share-liked-bt"><a><img src="catalog/view/theme/default/image/s_detail/30-1.jpg" />夜之谜猫</a></div>
 				</li>
 			</ul>
-		</div>
-		<!--}end: 超多人喜欢 -->
+		</div> -->
+		
 		</div>
 	<!--左边end-->
 	<!--右边-->
@@ -118,8 +132,8 @@
 			<div class="adpic-220-136">
 			<a href=""><img src="catalog/view/theme/default/image/s_detail/ad1.jpg"/></a><br></br>
 			<a href=""><img src="catalog/view/theme/default/image/s_detail/ad2.jpg"/></a><br></br>
-			<a href=""><img src="catalog/view/theme/default/image/s_detail/ad3.jpg"/></a><br></br>
-			<a href=""><img src="catalog/view/theme/default/image/s_detail/ad4.jpg"/></a><br></br>
+			<!-- <a href=""><img src="catalog/view/theme/default/image/s_detail/ad3.jpg"/></a><br></br>
+			<a href=""><img src="catalog/view/theme/default/image/s_detail/ad4.jpg"/></a><br></br> -->
 			</div>	
 		</div>
 	<!--右边end-->
@@ -212,6 +226,7 @@
 		
 		return(clock); 
 	} 
+	
 </script>
 
 {$footer} 

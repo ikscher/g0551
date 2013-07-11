@@ -14,6 +14,13 @@ class ControllerAccountUpload extends Controller {
 			'image/bmp',  
 			'image/x-png'  
 		);  
+		
+		if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
+			$server = HTTPS_IMAGE;
+		} else {
+			$server = HTTP_IMAGE;
+		}
+		
 		$min_file_size=20480;
 		$max_file_size=1024000;     //上传文件大小限制, 单位BYTE 1M 
 		$save_path = DIR_IMAGE."/data/avatar/";//上传文件路径  
@@ -21,10 +28,10 @@ class ControllerAccountUpload extends Controller {
 		
 		//$destination_folder="uploadimg/"; 
 		$watermark=1;      //是否附加水印(1为加水印,其他为不加水印);  
-		$watertype=1;      //水印类型(1为文字,2为图片)  
+		$watertype=2;      //水印类型(1为文字,2为图片)  
 		$waterposition=1;     //水印位置(1为左下角,2为右下角,3为左上角,4为右上角,5为居中);  
 		$waterstring="http://www.g0551.com/";  //水印字符串  
-		$waterimg="xplore.gif";    //水印图片  
+		$waterimg=$server."catalog/view/theme/default/image/watermark.png";    //水印图片  
 		$imgpreview=1;      //是否生成预览图(1为生成,其他为不生成);  
 		$imgpreviewsize=1/2;    //缩略图比例  
 		
@@ -124,22 +131,22 @@ class ControllerAccountUpload extends Controller {
 					imagestring($nimage,2,3,$image_size[1]-15,$waterstring,$black);  
 					break;  
 					case 2:   //加水印图片  
-					$simage1 =imagecreatefromgif("xplore.gif");  
-					imagecopy($nimage,$simage1,0,0,0,0,85,15);  
+					$simage1 =imagecreatefrompng($waterimg);  
+					imagecopy($nimage,$simage1,0,0,0,0,200,50);  
 					imagedestroy($simage1);  
 					break;  
 				}  
 		  
 				switch ($iinfo[2])  {  
 					case 1:  
-					//imagegif($nimage, $destination);  
-					imagejpeg($nimage, $destination);  
+					imagegif($nimage);  
+					//imagejpeg($nimage, $destination);  
 					break;  
 					case 2:  
-					imagejpeg($nimage, $destination);  
+					imagejpeg($nimage);  
 					break;  
 					case 3:  
-					imagepng($nimage, $destination);  
+					imagepng($nimage);  
 					break;  
 					case 6:  
 					imagewbmp($nimage, $destination);  
@@ -154,7 +161,7 @@ class ControllerAccountUpload extends Controller {
 			
 			$sql="update ".DB_PREFIX."customer set avatar='{$save_url}' where customer_id='{$customer_id}'";
 			$this->db->query($sql);
-            
+       
 			header("Location:index.php?route=account/edit");
 			/* if($imgpreview==1)  
 			{  
@@ -168,4 +175,3 @@ class ControllerAccountUpload extends Controller {
 	}
 }
 
-?>

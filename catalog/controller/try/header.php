@@ -6,20 +6,23 @@ class ControllerTryHeader extends Controller {
         
       	$this->data['login']="index.php?route=account/login";
 		
-		
     	$this->data['heading_title'] = $this->language->get('heading_title');
 
-    	
 		$this->data['home'] =$this->url->link('common/home','','SSL');
 		$this->data['logout'] =$this->url->link('account/logout','','SSL');
+        
+		   
+		$this->data['referer']='index.php?route=try/try';
+        
 
+		/*
 	    $this->load->model('catalog/category');
         $this->data['clothes'] = $this->url->link('product/category','category_id='.ModelCatalogCategory::$CATEGORY_CLOTHES,'SSL');
 		$this->data['foods']   = $this->url->link('product/category','category_id='.ModelCatalogCategory::$CATEGORY_FOODS,'SSL');
 		$this->data['house']   = $this->url->link('product/category','category_id='.ModelCatalogCategory::$CATEGORY_HOUSE,'SSL');
 		$this->data['travel']   = $this->url->link('product/category','category_id='.ModelCatalogCategory::$CATEGORY_TRAVEL,'SSL');
 		$this->data['joy']    =  $this->url->link('common/home/joy','','SSL');
-        
+        */
 		
       
 		

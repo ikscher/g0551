@@ -307,7 +307,9 @@ input.button {
   padding: 2px 8px 0px;
   margin: 2px 2px;
   border: 1px solid #2D5082;
-  background: url(../images/button_bg.gif) repeat-x;
+  /* background: url(../image/button_bg.gif) repeat-x; */
+  background-color:#e0ecff;
+  cursor:pointer;
 }
 
 input.capital {
@@ -796,3 +798,4 @@ em, cite, th {
 	overflow-y: scroll;
 }
 
+h1 input.import{margin-left:160px;}

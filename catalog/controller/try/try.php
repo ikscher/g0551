@@ -11,16 +11,7 @@ class ControllerTryTry extends Controller {
 
 		// $this->document->setTitle($this->language->get('heading_title'));
         
-		$this->data['referer']='index.php?route=try/try';
-        
-      	$this->data['login']="index.php?route=account/login";
-		
-		
-    	$this->data['heading_title'] = $this->language->get('heading_title');
-
-    	
-		$this->data['home'] =$this->url->link('common/home','','SSL');
-		$this->data['logout'] =$this->url->link('account/logout','','SSL');
+		$this->data['heading_title'] = $this->language->get('heading_title');
 
 	 
 		$this->load->model('catalog/category');
@@ -32,32 +23,39 @@ class ControllerTryTry extends Controller {
         
 		$this->load->model('tool/image');
 		$this->load->model('try/try');
-		$products=$this->model_try_try->getProducts();
-		 
-		$products_=array();
-		foreach($products as $p){
-			$p['category']=$this->model_try_try->getProductLevelCategory($p['product_id']);
-			if(!empty($p['image'])) {
-			    $p['image']=$this->model_tool_image->resize($p['image'],250,250);
-			}
-			$p['shortname']=OcCutstr($p['name'],10);
-			$p['discount']=!empty($p['special_price'])?number_format($p['price']/$p['special_price'],2):1;
-			$products_[]=$p;
-		}
 		
 		
-		$this->data['products']=$products_;
-        
-		if ($this->customer->isLogged()){
-			if(isset($this->request->cookie['oc_customer'])){
-				$customer=$this->cookie->OCAuthCode($this->request->cookie['customer'],'DECODE');
-				$customer=unserialize($customer);
-				
-				$this->data['username']=$customer['email'];
-			}
+		if(isset($this->request->get['s'])){
+		    $search= urldecode($this->request->get['s']);
 		}else{
-		    $this->data['username']='';
+		    $search='';
 		}
+		$this->data['searchp']=$search;
+		
+		$data=array(
+		        'search'=>$search
+		);
+		
+		
+		$products=$this->model_try_try->getProducts($data);
+		
+	    
+		$products_=array();
+		if(!empty($products)){
+			foreach($products as $p){
+				$p['category']=$this->model_try_try->getProductLevelCategory($p['product_id']);
+				if(!empty($p['image'])) {
+					$p['image']=$this->model_tool_image->resize($p['image'],300,210);
+				}
+				$p['shortname']=OcCutstr($p['name'],30);
+				$p['discount']=!empty($p['special_price'])?number_format($p['price']/$p['special_price'],2):1;
+				$products_[]=$p;
+			}
+			
+			
+			$this->data['products']=$products_;
+        }
+		
 		
 		
 		

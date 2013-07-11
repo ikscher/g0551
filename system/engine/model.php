@@ -1,4 +1,5 @@
 <?php
+/*逻辑类*/
 abstract class Model {
 	protected $registry;
 	

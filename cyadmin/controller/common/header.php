@@ -104,6 +104,10 @@ class ControllerCommonHeader extends Controller {
 		$this->data['text_category_to_attribute_group'] = $this->language->get('text_category_to_attribute_group');
 		$this->data['text_store_payment']=$this->language->get('text_store_payment');
 		
+		$this->data['text_try']=$this->language->get('text_try');
+		$this->data['text_all_try'] = $this->language->get('text_all_try');
+		
+		
 		//$this->data['text_tax'] = $this->language->get('text_tax');
 		//$this->data['text_tax_class'] = $this->language->get('text_tax_class');
 		//$this->data['text_tax_rate'] = $this->language->get('text_tax_rate');
@@ -191,7 +195,7 @@ class ControllerCommonHeader extends Controller {
 			$this->data['order_status'] = $this->url->link('localisation/order_status', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['weight_class'] = $this->url->link('localisation/weight_class', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['length_class'] = $this->url->link('localisation/length_class', 'token=' . $this->session->data['token'], 'SSL');
-			//$this->data['backup'] = $this->url->link('tool/backup', 'token=' . $this->session->data['token'], 'SSL');
+			#$this->data['backup'] = $this->url->link('tool/backup', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['error_log'] = $this->url->link('tool/error_log', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['update'] = $this->url->link('setting/update', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['enviorment']=$this->url->link('setting/enviorment','token=' . $this->session->data['token'], 'SSL');
@@ -200,6 +204,7 @@ class ControllerCommonHeader extends Controller {
 			$this->data['user_group'] = $this->url->link('user/user_group', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['user_action'] = $this->url->link('user/user_action', 'token=' . $this->session->data['token'], 'SSL');
 			
+			$this->data['try']= $this->url->link('try/try','token=' . $this->session->data['token'], 'SSL');
 			
 			
 			
