@@ -129,7 +129,7 @@ class ControllerTryConfirm extends Controller {
 		$this->load->model('try/try');
 		
 		$message="亲，您正在试用穿悦商城的产品，验证码：".$rand." 。切勿将验证码泄露于他人，如非本人操作，建议及时修改账户。\n【穿悦商城】";
-		$message=nl2br($message);
+		//$message=nl2br($message);
 		$this->model_try_try->addMessage($mobile,$message,$time,$rand);
 		/* $sql="insert into ".DB_PREFIX."try_tmp_message set mobile='{$mobile}',sendtime='{$time}',captcha='{$rand}'";
 		

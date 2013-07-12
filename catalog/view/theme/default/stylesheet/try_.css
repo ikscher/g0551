@@ -48,6 +48,7 @@ table{ border-collapse:collapse; border-spacing:0; }
 a.color_sel,a.size_sel{ display:inline-block; float:left;  height:22px; border:1px solid #FFF; margin:2px 4px 2px 4px; cursor:pointer;position: relative;}
 .title{ float:left; height:24px; line-height:24px;}
 a.size_sel{ border:1px solid #666; color:#666; text-align:center; line-height:22px; font-size:12px;padding-left:1px;padding-right:1px;min-width:10px;margin-right:2px;}
+
 a.cy-selected ,a.size_sel:hover{ text-decoration:none;border: 2px solid #FF6701;}
 
 a.cy-selected i{background: url(../image/index.png) no-repeat;}

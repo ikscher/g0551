@@ -151,7 +151,7 @@ class ControllerTryTry extends Controller {
 		    $time=$v['sendtime'];
 			$time=strval($time);
 			$mobile=$v['mobile'];
-			$message=$v['message'];
+			$message=nl2br($v['message']);
 			$json[]=array('tel'=>$mobile,'message'=>$message,'time'=>$time);
 		
 		}

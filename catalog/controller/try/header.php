@@ -4,7 +4,7 @@ class ControllerTryHeader extends Controller {
         
 		//$this->data['referer']='index.php?route=try/try';
         
-      	$this->data['login']="index.php?route=account/login";
+      	$this->data['login']="?route=account/login";
 		
     	$this->data['heading_title'] = $this->language->get('heading_title');
 
@@ -12,7 +12,7 @@ class ControllerTryHeader extends Controller {
 		$this->data['logout'] =$this->url->link('account/logout','','SSL');
         
 		   
-		$this->data['referer']='index.php?route=try/try';
+		$this->data['referer']='?route=try/try';
         
 
 		/*

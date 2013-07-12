@@ -62,7 +62,12 @@ class ControllerTryProduct extends Controller {
 		
 		//单店铺所有的相关试用产品
 		$products=array();
-		$results=$this->model_try_try->getProducts($product['store_id']);
+		
+		$data=array(
+		        'store_id'=>$product['store_id']
+			);
+		
+		$results=$this->model_try_try->getProducts($data);
 		
 		$this->data['products']=array();
 		

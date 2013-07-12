@@ -2,7 +2,7 @@
 <!------------试中心head end-------------->
 <script type="text/javascript" src="catalog/view/javascript/bootstrap/bootstrap-modal.js"></script>
 <!--在售品牌-->
-<!-- <div class="salebrand">
+<div class="salebrand">
 	<div class="brandbg">
 		<ul>
 			<li><img src="catalog/view/theme/default/image/try/brand1.jpg"/></li>
@@ -17,7 +17,7 @@
 		</ul>
 	</div>
 </div>
- -->
+
 <!------------产品展示 begin-------------->
 <div class="products">
 	<div class="productsl">
@@ -79,12 +79,7 @@
     	<ul class="small_p_b">
 		    
         	{loop $products $product}
-				<li class="pSelect" data-id="{$product['productInfo']['product_id']}" data-name="{$product['productInfo']['name']}">
-				<img src="{$product['productInfo']['image']}" class="lazy" data-original="{$product['productInfo']['image']}" width="110" height="110" title="{$product['productInfo']['name']}" />
-				<noscript><img src="{$product['productInfo']['image']}" width="110" height="110"></noscript>
-				<span>{$product['productInfo']['shortname']}</span>
-				<i class="checkP"></i>
-				</li>
+				<li class="pSelect" data-id="{$product['productInfo']['product_id']}" data-name="{$product['productInfo']['name']}"><img src="{$product['productInfo']['image']}"  width="110" height="110" title="{$product['productInfo']['name']}"></a><span>{$product['productInfo']['shortname']}</span><i class="checkP"></i></li>
             {/loop}
 		   
 		</ul>
@@ -138,7 +133,6 @@
   </div>
 </div>
 
-<script src="catalog/view/javascript/jquery/jquery.lazyload.js" type="text/javascript"></script>
 <script type="text/javascript">
 $(function(){
     
@@ -627,7 +621,7 @@ $(function(){
 					}
 
 					if($('.sy_infoDiv').length<=0){
-						$(".showHTML").prepend('<div class="sy_infoDiv" data-id="' + product_id + '"><p><span class="name">'+name+'</span><span class="del" >【删除】</span></p><span data-aid='+attribute_ids.toString()+'>'+attributes__+'</span></div>');
+						$(".showHTML").append('<div class="sy_infoDiv" data-id="' + product_id + '"><p><span class="name">'+name+'</span><span class="del" >【删除】</span></p><span data-aid='+attribute_ids.toString()+'>'+attributes__+'</span></div>');
 			            _AM_95668o++;
 				    }else{
 			
@@ -640,13 +634,11 @@ $(function(){
 						});
 						
 						if(_flag_){
-							$(".showHTML").prepend('<div class="sy_infoDiv" data-id="' + product_id + '"><p><span class="name">'+name+'</span><span class="del" data-aid=>【删除】</span></p><span data-aid='+attribute_ids.toString()+'>'+attributes__+'</span></div>');
+							$(".showHTML").append('<div class="sy_infoDiv" data-id="' + product_id + '"><p><span class="name">'+name+'</span><span class="del" data-aid=>【删除】</span></p><span data-aid='+attribute_ids.toString()+'>'+attributes__+'</span></div>');
 						    _AM_95668o++;
 						}
 					
 					}
-					
-					$('.showHTML').children('div:first').fadeIn('slow');
 					
 					$('.p_x_tig span.selected').html(_AM_95668o);
 				}
@@ -658,8 +650,6 @@ $(function(){
 		
 		
 	});
-	
-	$("img.lazy").show().lazyload({ effect:"fadeIn",failure_limit:9});
 </script>
 <!-------------------------底部版权begin------------------------->
 {$footer}
