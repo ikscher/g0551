@@ -1,3 +1,4 @@
+<link href="catalog/view/theme/default/stylesheet/gototop.css?v=20130624" type="text/css" rel="stylesheet">
 <div class="try_footer">
 	<div class="w1000">
 		<div class="try_footer_pic"><img src="catalog/view/theme/default/image/try/footz.jpg"/></div>
@@ -62,7 +63,19 @@
 			</ul>
 		</div>
 	</div>
+	
+	<div id="backtotop" class="showme">
+	    <div class="bttbg"></div>
+	</div>
 </div>
 
 </body>
+<script type="text/javascript">
+    function initGoToTop(){
+    var b=jQuery(".try_footer").position().top - jQuery(window).height()-200;
+	jQuery(function(){jQuery(window).scroll(function(){if(jQuery(this).scrollTop()>100){jQuery("#backtotop ").addClass("showme ")}else{jQuery("#backtotop ").removeClass("showme ")}});
+	jQuery("#backtotop ").click(function(){jQuery("body,html ").animate({scrollTop:0},400);return false})});if(jQuery(window).scrollTop()==0){jQuery("#backtotop ").removeClass("showme ")}else{jQuery("#backtotop ").addClass("showme ")}}
+
+	initGoToTop();
+</script>
 </html>

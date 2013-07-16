@@ -1,4 +1,5 @@
 <?php 
+
 class ControllerTryTry extends Controller { 
 	public function index() {
 		/* if (!$this->customer->isLogged()) {
@@ -24,9 +25,10 @@ class ControllerTryTry extends Controller {
 		$this->load->model('tool/image');
 		$this->load->model('try/try');
 		
-		
+		$url="";
 		if(isset($this->request->get['s'])){
 		    $search= urldecode($this->request->get['s']);
+			$url .= "&s={$search}";
 		}else{
 		    $search='';
 		}
@@ -41,11 +43,30 @@ class ControllerTryTry extends Controller {
 		
 	    
 		$products_=array();
-		if(!empty($products)){
-			foreach($products as $p){
-				$p['category']=$this->model_try_try->getProductLevelCategory($p['product_id']);
+		
+		
+		if (isset($this->request->get['page'])) {
+		    $page = $this->request->get['page'];
+		} else {
+			$page = 1;
+		}
+		$offset=15;
+		$total=count($products);
+		
+		if(!empty($products)) $slicedata=array_slice($products,($page-1)*$offset,$offset);
+     
+	    
+		
+		
+		if(!empty($slicedata)){
+			foreach($slicedata as $p){
+				//$p['category']=$this->model_try_try->getProductLevelCategory($p['product_id']);
+				
 				if(!empty($p['image'])) {
-					$p['image']=$this->model_tool_image->resize($p['image'],300,210);
+				    
+				    $p['image']=$this->model_tool_image->generate($p['image'],300,210,'scale');
+					//$p['image']=$this->model_tool_image->resize($p['image'],300,210,'yes');
+					
 				}
 				$p['shortname']=OcCutstr($p['name'],30);
 				$p['discount']=!empty($p['special_price'])?number_format($p['price']/$p['special_price'],2):1;
@@ -56,6 +77,16 @@ class ControllerTryTry extends Controller {
 			$this->data['products']=$products_;
         }
 		
+		
+		
+		$pagination = new Pagination('results','links');
+		$pagination->total = $total;
+		$pagination->page = $page;
+		$pagination->limit = $offset;
+		$pagination->text = $this->language->get('text_pagination');
+		$pagination->url = $this->url->link('try/try','page={page}'.$url, 'SSL');
+		
+		$this->data['pagination'] = $pagination->render();
 		
 		
 		
@@ -151,14 +182,27 @@ class ControllerTryTry extends Controller {
 		    $time=$v['sendtime'];
 			$time=strval($time);
 			$mobile=$v['mobile'];
-			$message=nl2br($v['message']);
+			$message=$v['message'];
 			$json[]=array('tel'=>$mobile,'message'=>$message,'time'=>$time);
 		
 		}
-	
+	    
 		$this->response->setOutput(json_encode($json));
 	
 	}
+	
+	/*测试生成图片的*/
+	public function generateImage_(){
+
+
+		$image = new lib_image_imagick();
+
+		$image->open('image\data\2013\05\31\153147_12963.jpg');
+		$image->resize_to(200, 200, 'scale_fill');
+		$image->add_text('1024i.com', 10, 20);
+		//$image->add_watermark('images/watermark.png', 10, 50);
+		$image->save_to('image\data\2013\05\31\1_.jpg');
+	}	 
 
 }
 ?>

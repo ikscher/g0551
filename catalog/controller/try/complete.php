@@ -9,11 +9,16 @@
 			
 			$this->data['try_order_id']='';
 			
+			/*
 			if(isset($this->request->cookie['oc_try_order_id'])){
 			    $try_order_id=$this->cookie->OCAuthCode($this->request->cookie['oc_try_order_id'],'DECODE');
 			}else{
 			    $try_order_id='';
 			}
+			*/
+			
+			$try_order_id=$this->session->data['try_order_id'];
+			
 			if(!empty($try_order_id)) $this->data['try_order_id']=$try_order_id;
 			
 			

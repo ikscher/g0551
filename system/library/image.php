@@ -76,7 +76,7 @@ class Image {
 		}
 		
 		if(!empty($original)){//不改变图片大小
-			$new_width = (int)($this->info['width'] );
+			$new_width = (int)($this->info['width']);
 			$new_height = (int)($this->info['height']);
 			$xpos = (int)(($width - $new_width) / 2);
 			$ypos = (int)(($height - $new_height) / 2);

@@ -75,7 +75,7 @@
     </div>
     
     <div class="right_get_p_x">
-	
+	    <div class="_list_">
     	<ul class="small_p_b">
 		    
         	{loop $products $product}
@@ -88,13 +88,13 @@
             {/loop}
 		   
 		</ul>
-		
-		<div class="sy_info">
+		</div>
+		<div class="sy_info clear">
             <h4>我的试用包</h4>
             <div class="showHTML"></div>
             
 		    <div class="p_x_tig">
-        	    <strong>您已选择 <span class="selected">0</span> 件产品</strong><br />每个会员帐号一次可以选择 <span>1-9</span> 件产品 
+        	    <strong>您已选择 <span class="selected">0</span> 件产品</strong><br />每个会员帐号一次可以选择 <span>1-5</span> 件产品 
 		    </div>
 		</div>
         <div class="p_x_button">
@@ -525,7 +525,7 @@ $(function(){
         
 		_AM_95668o=$('.sy_infoDiv').length;
 		
-		if(_AM_95668o>=9) return false;
+		if(_AM_95668o>=5) return false;
 	    
 	    var product_id=$(this).attr('data-id');
 		
