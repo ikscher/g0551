@@ -58,7 +58,8 @@
 		  
 		  <tr>
 			<td height="28" colspan="7" bgcolor="#f3f3f3">
-				<span>【试用会员】{if !empty($t['customer']['email'])}<a data-id="{$t['customer']['customer_id']}">Email：{$t['customer']['email']}</a>{/if} {if !empty($t['customer']['username'])}，用户名：{$t['customer']['username']}{/if} {if !empty($t['customer']['mobile'])}，手机：{$t['customer']['mobile']}{/if}</span>
+				<!-- <span>【试用会员】{if !empty($t['customer']['email'])}<a data-id="{$t['customer']['customer_id']}">Email：{$t['customer']['email']}</a>{/if} {if !empty($t['customer']['username'])}，用户名：{$t['customer']['username']}{/if} {if !empty($t['customer']['mobile'])}，手机：{$t['customer']['mobile']}{/if}</span> -->
+				<span>【试用会员】{if !empty($t['customer']['email'])}<a data-id="{$t['customer']['customer_id']}">Email：{$t['customer']['email']}</a> {if !empty($t['customer']['username'])}，用户名：{$t['customer']['username']}{/if} {if !empty($t['customer']['mobile'])}，手机：{$t['customer']['mobile']}{/if}{else}手机：{$k}{/if}</span>
 			</td>
 		  </tr>
 		  

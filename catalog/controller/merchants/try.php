@@ -65,11 +65,18 @@ class ControllerMerchantsTry extends Controller {
 			$v['trytime']=date('Y-m-d H:i:s',$v['trytime']);
 			$v['is_try_cn']=($v['is_try']==0)?'未试用':'已试用';
 			$v['product']['image']=$this->model_tool_image->resize($v['product']['image'],50,50);
-			$items[$v['customer_id']]['customer']=$this->model_account_customer->getCustomer($v['customer_id']);
+			//$items[$v['customer_id']]['customer']=$this->model_account_customer->getCustomer($v['customer_id']);
 			
-			$items[$v['customer_id']]['products'][]=$v;
+			//$items[$v['customer_id']]['products'][]=$v;
 			
+			if(!empty($v['customer_id'])){//注册会员
+			    $items[$v['customer_id']]['customer']=$this->model_merchants_try->getCustomer($v['customer_id']);
 			
+			    $items[$v['customer_id']]['products'][]=$v;
+			}else{ //未注册会员
+			    $items[$v['mobile']]['products'][]=$v;
+			
+			}
 		}
 		
 		$this->data['tryList']=$items;

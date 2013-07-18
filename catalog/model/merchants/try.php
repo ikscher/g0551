@@ -76,6 +76,19 @@ class ModelMerchantsTry extends Model {
     }	
 	
 	
+	public function getCustomer($customer_id,$store_id=0) {
+	    if(!empty($store_id)){
+			$sql="SELECT * FROM " . DB_PREFIX . "customer WHERE customer_id = '" . (int)$customer_id . "' and store_id='{$store_id}'";
+		}else{
+		    $sql="SELECT a.*,c.* FROM `" . DB_PREFIX . "customer` c left join `".DB_PREFIX."address` a on c.customer_id=a.customer_id WHERE  c.customer_id = '" . (int)$customer_id . "'";
+		}
+
+		$query = $this->db->query($sql);
+
+		return $query->row;
+	}
+	
+	
 
 }
 ?>

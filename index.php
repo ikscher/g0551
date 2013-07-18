@@ -1,9 +1,9 @@
 <?php
+/*首页地址*/
 // Version
 define('VERSION', '1.5.4');
 
-ini_set("memory_limit","259M");
-
+ini_set("memory_limit","256M");
 
 date_default_timezone_set("asia/shanghai");
 // Configuration
@@ -227,7 +227,7 @@ if (isset($request->get['tracking']) && !isset($request->cookie['tracking'])) {
 $registry->set('currency', new Currency($registry));
 
 // Tax
-$registry->set('tax', new Tax($registry));
+//$registry->set('tax', new Tax($registry));
 
 // Weight
 $registry->set('weight', new Weight($registry));
@@ -245,20 +245,23 @@ $registry->set('encryption', new Encryption($config->get('config_encryption')));
 $controller = new Front($registry);
 
 // Maintenance Mode
-$controller->addPreAction(new Action('common/maintenance'));
+ $controller->addPreAction(new Action('common/maintenance'));
 
 // SEO URL's
-$controller->addPreAction(new Action('common/seo_url'));	
+ $controller->addPreAction(new Action('common/seo_url'));	
 	
 // Router
 if (isset($request->get['route'])) {
 	$action = new Action($request->get['route']);
 } else {
-	$action = new Action('common/home');
+    $action = new Action('try/try');
+	//$action = new Action('common/home');
 }
 
 // Dispatch
 $controller->dispatch($action, new Action('error/not_found'));
+
+
 
 // Output
 $response->output();

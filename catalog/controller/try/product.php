@@ -78,8 +78,10 @@ class ControllerTryProduct extends Controller {
 			$images=array();
 			$productImages=$this->model_catalog_product->getProductImages($v['product_id']);
 			foreach($productImages as $v_){
-				$v_['small_image']=$this->model_tool_image->resize($v_['image'],59,59);
-				$v_['large_image']=$this->model_tool_image->resize($v_['image'],460,460);
+				//$v_['small_image']=$this->model_tool_image->resize($v_['image'],59,59);
+				//$v_['large_image']=$this->model_tool_image->resize($v_['image'],460,460);
+				$v_['small_image']=$this->model_tool_image->generate($v_['image'],59,59,'scale');
+				$v_['large_image']=$this->model_tool_image->generate($v_['image'],460,460,'scale');
 				$images[]=$v_;
 			}
 			
