@@ -2,16 +2,7 @@
 
 class ControllerTryTry extends Controller { 
 	public function index() {
-		/* if (!$this->customer->isLogged()) {
-	  		//$this->session->data['redirect'] = $this->url->link('try/try', '', 'SSL');
-	  
-	  		$this->redirect($this->url->link('account/login', '', 'SSL'));
-    	}  */
-	
-		//$this->language->load('try/try');
-
-		// $this->document->setTitle($this->language->get('heading_title'));
-        
+		
 		$this->data['heading_title'] = $this->language->get('heading_title');
 
 	 
